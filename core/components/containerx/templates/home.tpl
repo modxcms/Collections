@@ -1,1 +1,0 @@
-<div id="containerx-panel-home-div"></div>

@@ -13,7 +13,7 @@ class ContainerXDeleteMultipleProcessor extends modObjectProcessor {
     public function process() {
         $ids = $this->getProperty('ids',null);
         if (empty($ids)) {
-            return $this->failure($this->modx->lexicon('articles.articles_err_ns_multiple'));
+            return $this->failure($this->modx->lexicon('containerx.children.err_ns_multiple'));
         }
         $ids = is_array($ids) ? $ids : explode(',',$ids);
 

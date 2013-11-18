@@ -5,7 +5,13 @@
     ,"author": "Jan Peca"
     ,"version": "0.0.1"
     ,"package":{
-
+        "systemSettings": [{
+            "key": "mgr_date_format"
+            ,"value": "%b %d"
+        },{
+            "key": "mgr_time_format"
+            ,"value": "%H:%I %p"
+        }]
     }
     ,"extensionPackage": {}
 }

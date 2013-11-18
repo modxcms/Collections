@@ -30,6 +30,7 @@ class ContainerXItemUpdateManagerController extends ResourceUpdateManagerControl
         $this->addLastJavascript($containerxJsUrl.'sections/category/update.js');
         $this->addLastJavascript($containerxJsUrl.'widgets/category/containerx.panel.category.js');
         $this->addLastJavascript($containerxJsUrl.'widgets/category/containerx.grid.resources.js');
+        $this->addLastJavascript($containerxJsUrl.'extra/containerx.combo.js');
 
         $this->loadExtendedFields();
 

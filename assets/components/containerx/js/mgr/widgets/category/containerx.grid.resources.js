@@ -15,14 +15,13 @@ ContainerX.grid.ContainerContainerX = function(config) {
         ,fields: ['id','pagetitle',
             'publishedon','publishedon_date','publishedon_time',
             'uri','uri_override','preview_url',
-            'createdby','createdby_username','categories',
-            'actions','action_edit','content']
+            'createdby','actions','action_edit']
         ,paging: true
         ,remoteSort: true
         ,cls: 'containerx-grid'
         ,bodyCssClass: 'grid-with-buttons'
         ,sm: this.sm
-        ,emptyText: _('containerx.containerx_none')
+        ,emptyText: _('containerx.children.none')
         ,columns: [this.sm,{
             header: _('publishedon')
             ,dataIndex: 'publishedon'
@@ -66,9 +65,16 @@ ContainerX.grid.ContainerContainerX = function(config) {
                 ,scope: this
             }]
         },'->',{
+            xtype: 'containerx-combo-filter-status'
+            ,id: 'containerx-grid-filter-status'
+            ,value: ''
+            ,listeners: {
+                'select': {fn:this.filterStatus,scope:this}
+            }
+        },{
             xtype: 'textfield'
             ,name: 'search'
-            ,id: 'containerx-article-search'
+            ,id: 'containerx-child-search'
             ,emptyText: _('search_ellipsis')
             ,listeners: {
                 'change': {fn: this.search, scope: this}
@@ -110,7 +116,7 @@ Ext.extend(ContainerX.grid.ContainerContainerX,MODx.grid.Grid,{
         });
         m.push({
             text: _('containerx.children.delete')
-            ,handler: this.duplicateChild
+            ,handler: this.deleteChild
         });
         return m;
     }
@@ -133,7 +139,7 @@ Ext.extend(ContainerX.grid.ContainerContainerX,MODx.grid.Grid,{
             action: 'mgr/resource/getList'
             ,'parent': MODx.request.id
         };
-        Ext.getCmp('containerx-article-search').reset();
+        Ext.getCmp('containerx-child-search').reset();
         this.getBottomToolbar().changePage(1);
         this.refresh();
     }
@@ -201,8 +207,8 @@ Ext.extend(ContainerX.grid.ContainerContainerX,MODx.grid.Grid,{
 
     ,deleteChild: function(btn,e) {
         MODx.msg.confirm({
-            title: _('containerx.article_delete')
-            ,text: _('containerx.article_delete_confirm')
+            title: _('containerx.children.delete')
+            ,text: _('containerx.children.delete_confirm')
             ,url: MODx.config.connectors_url+'resource/index.php'
             ,params: {
                 action: 'delete'
@@ -219,8 +225,8 @@ Ext.extend(ContainerX.grid.ContainerContainerX,MODx.grid.Grid,{
         if (cs === false) return false;
 
         MODx.msg.confirm({
-            title: _('containerx.article_delete_multiple')
-            ,text: _('containerx.article_delete_multiple_confirm')
+            title: _('containerx.children.delete_multiple')
+            ,text: _('containerx.children.delete_multiple_confirm')
             ,url: this.config.url
             ,params: {
                 action: 'mgr/resource/deletemultiple'

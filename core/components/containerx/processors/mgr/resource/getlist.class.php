@@ -10,15 +10,10 @@ class ContainerXResourcerGetListProcessor extends modObjectGetListProcessor {
     public $defaultSortField = 'createdon';
     public $defaultSortDirection = 'DESC';
     public $checkListPermission = true;
-    public $objectType = 'article';
-    public $languageTopics = array('resource','articles:default');
+    public $languageTopics = array('resource','containerx:default');
 
     /** @var modAction $editAction */
     public $editAction;
-    /** @var modTemplateVar $tvTags */
-    public $tvTags;
-    /** @var ArticlesContainer $container */
-    public $container;
     /** @var boolean $commentsEnabled */
     public $commentsEnabled = false;
 
@@ -27,14 +22,11 @@ class ContainerXResourcerGetListProcessor extends modObjectGetListProcessor {
             'namespace' => 'core',
             'controller' => 'resource/update',
         ));
-        $this->defaultSortField = $this->modx->getOption('articles.default_article_sort_field',null,'createdon');
 
         return parent::initialize();
     }
 
     public function prepareQueryBeforeCount(xPDOQuery $c) {
-        $c->leftJoin('modUser','CreatedBy');
-
         $parent = $this->getProperty('parent',null);
         if (!empty($parent)) {
             $c->where(array(
@@ -48,9 +40,6 @@ class ContainerXResourcerGetListProcessor extends modObjectGetListProcessor {
                 'OR:description:LIKE' => '%'.$query.'%',
                 'OR:introtext:LIKE' => '%'.$query.'%',
             );
-            if ($this->tvTags) {
-                $queryWhere['OR:Tags.value:LIKE'] = '%'.$query.'%';
-            }
             $c->where($queryWhere);
         }
         $filter = $this->getProperty('filter','');
@@ -89,17 +78,6 @@ class ContainerXResourcerGetListProcessor extends modObjectGetListProcessor {
         return $c;
     }
 
-
-    public function prepareQueryAfterCount(xPDOQuery $c) {
-        $c->select($this->modx->getSelectColumns('modResource','modResource'));
-        $c->select(array(
-            'createdby_username' => 'CreatedBy.username',
-        ));
-
-
-        return $c;
-    }
-
     /**
      * @param xPDOObject $object
      * @return array
@@ -114,18 +92,14 @@ class ContainerXResourcerGetListProcessor extends modObjectGetListProcessor {
 
         if (!empty($resourceArray['publishedon'])) {
             $publishedon = strtotime($resourceArray['publishedon']);
-            $resourceArray['publishedon_date'] = strftime($this->modx->getOption('articles.mgr_date_format',null,'%b %d'),$publishedon);
-            $resourceArray['publishedon_time'] = strftime($this->modx->getOption('articles.mgr_time_format',null,'%H:%I %p'),$publishedon);
+            $resourceArray['publishedon_date'] = strftime($this->modx->getOption('containerx.mgr_date_format',null,'%b %d'),$publishedon);
+            $resourceArray['publishedon_time'] = strftime($this->modx->getOption('containerx.mgr_time_format',null,'%H:%I %p'),$publishedon);
             $resourceArray['publishedon'] = strftime('%b %d, %Y %H:%I %p',$publishedon);
         }
         $resourceArray['action_edit'] = '?a='.$this->editAction->get('id').'&action=post/update&id='.$resourceArray['id'];
-        if (!array_key_exists('comments',$resourceArray)) $resourceArray['comments'] = 0;
 
         $this->modx->getContext($resourceArray['context_key']);
         $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'],$resourceArray['context_key']);
-
-        $trimLength = $this->modx->getOption('articles.mgr_article_content_preview_length',null,300);
-        $resourceArray['content'] = strip_tags($this->ellipsis($object->getContent(),$trimLength));
 
         $resourceArray['actions'] = array();
         $resourceArray['actions'][] = array(
