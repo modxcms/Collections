@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<model package="containerx" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="containerx">
+    <object class="ContainerXItem" extends="modResource" />
+</model>

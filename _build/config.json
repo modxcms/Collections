@@ -1,0 +1,11 @@
+{
+    "name": "ContainerX"
+    ,"lowCaseName": "containerx"
+    ,"description": "Hides resources under this container in tree. Adding grid int o the update resource panel."
+    ,"author": "Jan Peca"
+    ,"version": "0.0.1"
+    ,"package":{
+
+    }
+    ,"extensionPackage": {}
+}
