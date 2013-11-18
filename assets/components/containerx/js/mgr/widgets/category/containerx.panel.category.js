@@ -20,8 +20,8 @@ Ext.extend(ContainerX.panel.Category,MODx.panel.Resource,{
 
         if (config.mode == 'update') {
             it.push({
-                title: _('containerx.category.locations')
-                ,id: 'containerx-category-locations'
+                title: _('containerx.children')
+                ,id: 'containerx-category-resources'
                 ,cls: 'modx-resource-tab'
                 ,layout: 'form'
                 ,labelAlign: 'top'
@@ -38,7 +38,7 @@ Ext.extend(ContainerX.panel.Category,MODx.panel.Resource,{
         }
 
         it.push({
-            title: _('containerx.system.type_name')
+            title: _(this.classLexiconKey)
             ,id: 'modx-resource-settings'
             ,cls: 'modx-resource-tab'
             ,layout: 'form'
@@ -52,23 +52,6 @@ Ext.extend(ContainerX.panel.Category,MODx.panel.Resource,{
                 ,width: 400
             }
             ,items: this.getMainFields(config)
-        });
-
-        it.push({
-            title: _('containerx.category.extended_fields')
-            ,id: 'containerx-category-extended-fields'
-            ,cls: 'modx-resource-tab'
-            ,layout: 'form'
-            ,labelAlign: 'top'
-            ,labelSeparator: ''
-            ,bodyCssClass: 'tab-panel-wrapper main-wrapper'
-            ,autoHeight: true
-            ,defaults: {
-                border: false
-                ,msgTarget: 'under'
-                ,width: 400
-            }
-            ,items: this.getExtendedFields(config)
         });
 
         it.push({
@@ -105,7 +88,7 @@ Ext.extend(ContainerX.panel.Category,MODx.panel.Resource,{
             ,items: it
             ,listeners: {
                 'tabchange': function(tabs, tab) {
-                    if (tab.id == 'containerx-category-locations') {
+                    if (tab.id == 'containerx-category-resources') {
                         Ext.getCmp('modx-resource-content').hide();
                     } else {
                         Ext.getCmp('modx-resource-content').show();
@@ -135,18 +118,9 @@ Ext.extend(ContainerX.panel.Category,MODx.panel.Resource,{
         return its;
     }
 
-    ,getExtendedFields: function(config) {
-        return [{
-            'xtype': 'textfield'
-            ,fieldLabel: _('containerx.category.color')
-            ,description: _('containerx.category.color_help')
-            ,name: 'color'
-        }];
-    }
-
     ,getLocationsTab: function(config) {
         return [{
-            'xtype': 'containerx-grid-locations'
+            'xtype': 'containerx-grid-children'
             ,url: ContainerX.connectorUrl
             ,anchor: '100%'
         }];

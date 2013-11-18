@@ -17,6 +17,8 @@ class ContainerXItemUpdateManagerController extends ResourceUpdateManagerControl
         $connectorUrl = $containerxAssetsUrl.'connector.php';
         $containerxJsUrl = $containerxAssetsUrl.'js/mgr/';
 
+        $this->addCss($containerxAssetsUrl . 'css/mgr.css');
+
         $this->addJavascript($managerUrl.'assets/modext/util/datetime.js');
         $this->addJavascript($managerUrl.'assets/modext/widgets/element/modx.panel.tv.renders.js');
         $this->addJavascript($managerUrl.'assets/modext/widgets/resource/modx.grid.resource.security.local.js');
@@ -27,7 +29,7 @@ class ContainerXItemUpdateManagerController extends ResourceUpdateManagerControl
         $this->addJavascript($containerxJsUrl.'containerx.js');
         $this->addLastJavascript($containerxJsUrl.'sections/category/update.js');
         $this->addLastJavascript($containerxJsUrl.'widgets/category/containerx.panel.category.js');
-        $this->addLastJavascript($containerxJsUrl.'widgets/location/containerx.grid.locations.js');
+        $this->addLastJavascript($containerxJsUrl.'widgets/category/containerx.grid.resources.js');
 
         $this->loadExtendedFields();
 
