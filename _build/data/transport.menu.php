@@ -2,7 +2,7 @@
 /**
  * Adds modActions and modMenus into package
  *
- * @package containerx
+ * @package collections
  * @subpackage build
  */
 

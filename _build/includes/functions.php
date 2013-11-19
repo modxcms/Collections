@@ -1,7 +1,7 @@
 <?php
 /**
  *
- * @package containerx
+ * @package collections
  * @subpackage build
  */
 

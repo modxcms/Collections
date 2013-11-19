@@ -2,7 +2,7 @@
 /**
  * Loads system settings into build
  *
- * @package containerx
+ * @package collections
  * @subpackage build
  */
 $settings = array();

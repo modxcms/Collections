@@ -4,7 +4,7 @@
  * in a directory outside of the MODx webroot. They are not required to set
  * for basic usage.
  *
- * @package containerx
+ * @package collections
  * @subpackage build
  */
 

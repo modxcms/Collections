@@ -2,7 +2,7 @@
 /**
  * Define the MODX path constants necessary for installation
  *
- * @package containerx
+ * @package collections
  * @subpackage build
  */
 define('MODX_BASE_PATH', dirname(dirname(dirname(dirname(__FILE__)))) . '/modx/');

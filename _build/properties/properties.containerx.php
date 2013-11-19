@@ -1,67 +1,67 @@
 <?php
 /**
- * Properties for the ContainerX snippet.
+ * Properties for the Collections snippet.
  *
- * @package containerx
+ * @package collections
  * @subpackage build
  */
 $properties = array(
     array(
         'name' => 'tpl',
-        'desc' => 'prop_containerx.tpl_desc',
+        'desc' => 'prop_collections.tpl_desc',
         'type' => 'textfield',
         'options' => '',
         'value' => 'Item',
-        'lexicon' => 'containerx:properties',
+        'lexicon' => 'collections:properties',
     ),
     array(
         'name' => 'sortBy',
-        'desc' => 'prop_containerx.sortby_desc',
+        'desc' => 'prop_collections.sortby_desc',
         'type' => 'textfield',
         'options' => '',
         'value' => 'name',
-        'lexicon' => 'containerx:properties',
+        'lexicon' => 'collections:properties',
     ),
     array(
         'name' => 'sortDir',
-        'desc' => 'prop_containerx.sortdir_desc',
+        'desc' => 'prop_collections.sortdir_desc',
         'type' => 'textfield',
         'options' => '',
         'value' => 'ASC',
-        'lexicon' => 'containerx:properties',
+        'lexicon' => 'collections:properties',
     ),
     array(
         'name' => 'limit',
-        'desc' => 'prop_containerx.limit_desc',
+        'desc' => 'prop_collections.limit_desc',
         'type' => 'textfield',
         'options' => '',
         'value' => 5,
-        'lexicon' => 'containerx:properties',
+        'lexicon' => 'collections:properties',
     ),
     array(
         'name' => 'outputSeparator',
-        'desc' => 'prop_containerx.outputseparator_desc',
+        'desc' => 'prop_collections.outputseparator_desc',
         'type' => 'textfield',
         'options' => '',
         'value' => '',
-        'lexicon' => 'containerx:properties',
+        'lexicon' => 'collections:properties',
     ),
     array(
         'name' => 'toPlaceholder',
-        'desc' => 'prop_containerx.toplaceholder_desc',
+        'desc' => 'prop_collections.toplaceholder_desc',
         'type' => 'textfield',
         'options' => '',
         'value' => true,
-        'lexicon' => 'containerx:properties',
+        'lexicon' => 'collections:properties',
     ),
 /*
     array(
         'name' => '',
-        'desc' => 'prop_containerx.',
+        'desc' => 'prop_collections.',
         'type' => 'textfield',
         'options' => '',
         'value' => '',
-        'lexicon' => 'containerx:properties',
+        'lexicon' => 'collections:properties',
     ),
     */
 );

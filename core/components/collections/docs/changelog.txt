@@ -1,0 +1,5 @@
+Changelog for Collections.
+
+Collections 0.0.1
+==============
+- Initial release.
