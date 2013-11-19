@@ -12,9 +12,34 @@ $collections = $modx->getService(
 
 $eventName = $modx->event->name;
 switch($eventName) {
+    case 'OnDocFormPrerender':
+        $inject = false;
+
+        /** @var modResource $parent */
+        $parent = $resource->Parent;
+        if (!$parent) {
+            if (isset($_GET['parent'])) {
+                $parent = intval($_GET['parent']);
+
+                $parent = $modx->getObject('modResource', $parent);
+                if ($parent){
+                    $inject = ($parent->class_key == 'CollectionsContainer');
+                }
+            }
+        } else {
+            $inject = ($parent->class_key == 'CollectionsContainer');
+        }
+
+        if ($inject) {
+            $jsurl = $collections->config['jsUrl'].'mgr/';
+            $modx->regClientStartupScript($jsurl.'extra/hijackclose.js');
+        }
+
+        break;
+
     case 'OnBeforeDocFormSave':
         /** @var modResource $parent */
-        $parent = $modx->getObject('modResource', $resource->parent);
+        $parent = $resource->Parent;
         if ($parent) {
             if ($parent->class_key == 'CollectionsContainer') {
                 $resource->set('show_in_tree', 0);
@@ -28,6 +53,7 @@ switch($eventName) {
         }
 
         break;
+
     case 'OnResourceSort':
         foreach ($nodes as $node) {
             /** @var modResource $resource */
