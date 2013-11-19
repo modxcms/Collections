@@ -1,4 +1,10 @@
 <?php
+/**
+ * Update controller for Collections Container
+ *
+ * @package collections
+ * @subpackage controller
+ */
 class CollectionsContainerUpdateManagerController extends ResourceUpdateManagerController {
     /** @var CollectionsCategory $resource */
     public $resource;

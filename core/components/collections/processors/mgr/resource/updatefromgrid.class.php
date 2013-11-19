@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Update menu index from a row update
+ *
+ * @package collections
+ * @subpackage processors.resource
+ */
 class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
     public $classKey = 'modResource';
 

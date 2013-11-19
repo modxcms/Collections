@@ -1,4 +1,10 @@
 <?php
+/**
+ * Create controller for Collections Container
+ *
+ * @package collections
+ * @subpackage controller
+ */
 class CollectionsContainerCreateManagerController extends ResourceCreateManagerController {
     public function getLanguageTopics() {
         return array('resource','collections:default');
