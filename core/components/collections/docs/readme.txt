@@ -1,14 +1,9 @@
-|=========================|
-|#########################|
-|#                       #|
-|#       Collections     #|
-|#                       #|
-|#        0.0.1          #|
-|#                       #|
-|#       Jan Peca        #|
-|#   pecajan@gmail.com   #|
-|#                       #|
-|#########################|
-|=========================|
+=====================
+     Collections
+     0.5.0 alpha
 
+      Jan Peca
+  pecajan@gmail.com
+=====================
 
+An Extra for MODX Revolution that provides for Resource Collections managed by CollectionContainer Resources.
