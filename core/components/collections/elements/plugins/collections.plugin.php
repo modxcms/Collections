@@ -62,6 +62,15 @@ switch($eventName) {
             $resource->set('show_in_tree', 1);
         }
 
+        if ($resource->class_key == 'CollectionsContainer') {
+            $resource->set('show_in_tree', 1);
+        } else {
+            $hasChildren = ($resource->hasChildren() != 0);
+            if ($hasChildren) {
+                $resource->set('show_in_tree', 1);
+            }
+        }
+
         break;
 
     case 'OnResourceSort':
@@ -85,6 +94,10 @@ switch($eventName) {
                     } else {
                         $resource->set('show_in_tree', 1);
                         $parent->set('show_in_tree', 1);
+                    }
+
+                    if ($resource->class_key == 'CollectionsContainer') {
+                        $resource->set('show_in_tree', 1);
                     }
 
                     $parent->save();
