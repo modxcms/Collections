@@ -109,4 +109,28 @@ switch($eventName) {
         }
 
         break;
+
+    case 'OnBeforeEmptyTrash':
+        foreach ($ids as $id) {
+            /** @var modResource $resource */
+            $resource = $modx->getObject('modResource', $id);
+            if ($resource) {
+                /** @var modResource $parent */
+                $parent = $resource->Parent;
+                if ($parent) {
+                    /** @var modResource $grandParent */
+                    $grandParent = $parent->Parent;
+                    if ($grandParent) {
+                        if ($grandParent->class_key == 'CollectionsContainer') {
+                            $parentHasOtherChildren = ($parent->hasChildren() > 1);
+                            if ($parentHasOtherChildren == false) {
+                                $parent->set('show_in_tree', 0);
+                                $parent->save();
+                            }
+                        }
+                    }
+                }
+            }
+        }
+        break;
 }

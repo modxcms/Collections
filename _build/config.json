@@ -3,12 +3,12 @@
     ,"lowCaseName": "collections"
     ,"description": "Hides resources under this container in tree. Adding grid int o the update resource panel."
     ,"author": "Jan Peca"
-    ,"version": "0.0.6"
+    ,"version": "0.6.0"
     ,"package":{
         "elements": {
             "plugins": [{
                 "name": "Collections"
-                ,"events": ["OnBeforeDocFormSave", "OnResourceSort", "OnDocFormPrerender"]
+                ,"events": ["OnBeforeDocFormSave", "OnResourceSort", "OnDocFormPrerender", "OnBeforeEmptyTrash"]
             }]
 
         }
