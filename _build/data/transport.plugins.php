@@ -14,7 +14,8 @@ $events = array();
 $e = array(
     'OnBeforeDocFormSave',
     'OnResourceSort',
-    'OnDocFormPrerender'
+    'OnDocFormPrerender',
+    'OnBeforeEmptyTrash'
 );
 
 foreach ($e as $ev) {

@@ -1,22 +1,28 @@
 Changelog for Collections.
 
-Collections 0.0.5
+Collections 0.6.0
+===================
+- Fixed proper showing Collections Container under another Collections Container
+- Fixed proper showing normal containers with children under CRC
+- Added listener for Before Empty Trash event to hide Resources that are under Collections Container and that will not have other children after the trash will be cleaned
+
+Collections 0.5.0
 ===================
 - Updated the plugin to inject JS for handling cancel button in Resource Update panel
 
-Collections 0.0.4
+Collections 0.4.0
 ===================
 - Added plugin that handles correct setting of show_in_tree parameter for Resources after creating a new Resource or sorting resources
 
-Collections 0.0.3
+Collections 0.3.0
 ===================
 - Visual improvements for grid with children
 
-Collections 0.0.2
+Collections 0.2.0
 ===================
 - Extended Resource Update panel with new Tab that contains grid with children
 
 
-Collections 0.0.1
+Collections 0.1.0
 ===================
 - Initial release.
