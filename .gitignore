@@ -4,4 +4,6 @@ config.core.php
 .settings
 nbproject
 .project
-_packages
+_packages/*.*
+!_packages/.gitignore
+!_packages/*.zip
