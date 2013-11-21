@@ -74,9 +74,6 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
         ));
 
-        $c->prepare();
-        $this->modx->chromephp->log($c->toSQL());
-
         return $c;
     }
 

@@ -11,7 +11,7 @@ require_once MODX_CORE_PATH . 'model/modx/modrequest.class.php';
  * @package collections
  * @extends modRequest
  */
-class CollectionsControllerRequest extends modRequest {
+class CollectionControllerRequest extends modRequest {
     public $Collections = null;
     public $actionVar = 'action';
     public $defaultAction = 'home';
