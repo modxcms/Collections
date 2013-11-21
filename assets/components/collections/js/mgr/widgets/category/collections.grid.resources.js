@@ -26,7 +26,7 @@ Collections.grid.ContainerCollections = function(config) {
         ,columns: [this.sm,{
             header: _('publishedon')
             ,dataIndex: 'publishedon'
-            ,width: 80
+            ,width: 50
             ,sortable: true
             ,renderer: {fn:this._renderPublished,scope:this}
         },{
@@ -39,7 +39,7 @@ Collections.grid.ContainerCollections = function(config) {
         },{
             header: _('collections.children.menuindex')
             ,dataIndex: 'menuindex'
-            ,width: 150
+            ,width: 50
             ,sortable: true
             ,editor: {
                 xtype: 'numberfield'
@@ -49,7 +49,7 @@ Collections.grid.ContainerCollections = function(config) {
         },{
             header: _('alias')
             ,dataIndex: 'alias'
-            ,width: 150
+            ,width: 100
             ,sortable: true
         }]
         ,tbar: [{
