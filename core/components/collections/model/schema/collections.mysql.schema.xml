@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model package="collections" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="collections">
-    <object class="CollectionsContainer" extends="modResource" />
+    <object class="CollectionContainer" extends="modResource" />
 </model>

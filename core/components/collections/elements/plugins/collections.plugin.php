@@ -33,11 +33,11 @@ switch($eventName) {
 
                 $parent = $modx->getObject('modResource', $parent);
                 if ($parent){
-                    $inject = ($parent->class_key == 'CollectionsContainer');
+                    $inject = ($parent->class_key == 'CollectionContainer');
                 }
             }
         } else {
-            $inject = ($parent->class_key == 'CollectionsContainer');
+            $inject = ($parent->class_key == 'CollectionContainer');
         }
 
         if ($inject) {
@@ -51,7 +51,7 @@ switch($eventName) {
         /** @var modResource $parent */
         $parent = $resource->Parent;
         if ($parent) {
-            if ($parent->class_key == 'CollectionsContainer') {
+            if ($parent->class_key == 'CollectionContainer') {
                 $resource->set('show_in_tree', 0);
             } else {
                 $resource->set('show_in_tree', 1);
@@ -62,7 +62,7 @@ switch($eventName) {
             $resource->set('show_in_tree', 1);
         }
 
-        if ($resource->class_key == 'CollectionsContainer') {
+        if ($resource->class_key == 'CollectionContainer') {
             $resource->set('show_in_tree', 1);
         } else {
             $hasChildren = ($resource->hasChildren() != 0);
@@ -76,13 +76,13 @@ switch($eventName) {
         if ($original) {
             if ($original->class_key != $resource->class_key) {
                 // Switch to CollectionContainer
-                if (($original->class_key != 'CollectionsContainer') && ($resource->class_key == 'CollectionsContainer')) {
+                if (($original->class_key != 'CollectionContainer') && ($resource->class_key == 'CollectionContainer')) {
                     $children = $resource->Children;
                     /** @var modResource $child */
                     foreach ($children as $child) {
                         $child->set('show_in_tree', 0);
 
-                        if ($child->class_key == 'CollectionsContainer') {
+                        if ($child->class_key == 'CollectionContainer') {
                             $child->set('show_in_tree', 1);
                         }
 
@@ -95,7 +95,7 @@ switch($eventName) {
                 }
 
                 // Switch from CollectionContainer
-                if (($original->class_key == 'CollectionsContainer') && ($resource->class_key != 'CollectionsContainer')) {
+                if (($original->class_key == 'CollectionContainer') && ($resource->class_key != 'CollectionContainer')) {
                     $children = $resource->Children;
                     /** @var modResource $child */
                     foreach ($children as $child) {
@@ -118,7 +118,7 @@ switch($eventName) {
                 /** @var modResource $parent */
                 $parent = $resource->Parent;
                 if ($parent) {
-                    $parentIsCRC = ($parent->class_key == 'CollectionsContainer');
+                    $parentIsCRC = ($parent->class_key == 'CollectionContainer');
 
                     if ($parentIsCRC == true) {
                         if ($hasChildren == false) {
@@ -131,7 +131,7 @@ switch($eventName) {
                         $parent->set('show_in_tree', 1);
                     }
 
-                    if ($resource->class_key == 'CollectionsContainer') {
+                    if ($resource->class_key == 'CollectionContainer') {
                         $resource->set('show_in_tree', 1);
                     }
 
@@ -156,7 +156,7 @@ switch($eventName) {
                     /** @var modResource $grandParent */
                     $grandParent = $parent->Parent;
                     if ($grandParent) {
-                        if ($grandParent->class_key == 'CollectionsContainer') {
+                        if ($grandParent->class_key == 'CollectionContainer') {
                             $parentHasOtherChildren = ($parent->hasChildren() > 1);
                             if ($parentHasOtherChildren == false) {
                                 $parent->set('show_in_tree', 0);

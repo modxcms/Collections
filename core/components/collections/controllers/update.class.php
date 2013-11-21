@@ -5,7 +5,7 @@
  * @package collections
  * @subpackage controller
  */
-class CollectionsContainerUpdateManagerController extends ResourceUpdateManagerController {
+class CollectionContainerUpdateManagerController extends ResourceUpdateManagerController {
     /** @var CollectionsCategory $resource */
     public $resource;
 

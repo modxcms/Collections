@@ -70,7 +70,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         }
 
         $c->where(array(
-            'class_key:!=' => 'CollectionsContainer',
+            'class_key:!=' => 'CollectionContainer',
             "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
         ));
 

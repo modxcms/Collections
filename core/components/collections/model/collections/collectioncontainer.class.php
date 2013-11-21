@@ -2,11 +2,11 @@
 /**
  * @package collections
  */
-class CollectionsContainer extends modResource {
+class CollectionContainer extends modResource {
     public $showInContextMenu = true;
     function __construct(xPDO & $xpdo) {
         parent :: __construct($xpdo);
-        $this->set('class_key','CollectionsContainer');
+        $this->set('class_key','CollectionContainer');
     }
 
     public static function getControllerPath(xPDO &$modx) {

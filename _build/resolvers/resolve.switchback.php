@@ -10,7 +10,7 @@ if ($object->xpdo) {
             $modx =& $object->xpdo;
 
             $c = $modx->newQuery('modResource');
-            $c->where(array('class_key' => 'CollectionsContainer'));
+            $c->where(array('class_key' => 'CollectionContainer'));
 
             $collections = $modx->getCollection('modResource', $c);
             /** @var modResource $collection */

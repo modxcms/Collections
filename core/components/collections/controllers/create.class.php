@@ -5,7 +5,7 @@
  * @package collections
  * @subpackage controller
  */
-class CollectionsContainerCreateManagerController extends ResourceCreateManagerController {
+class CollectionContainerCreateManagerController extends ResourceCreateManagerController {
     public function getLanguageTopics() {
         return array('resource','collections:default');
     }
@@ -16,7 +16,7 @@ class CollectionsContainerCreateManagerController extends ResourceCreateManagerC
      * @return string
      */
     public function getPageTitle() {
-        return $this->modx->lexicon('collections.system.new_category');
+        return $this->modx->lexicon('collections.system.new_container');
     }
 
 }

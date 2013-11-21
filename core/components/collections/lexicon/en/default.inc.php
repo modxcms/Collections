@@ -8,10 +8,10 @@
 $_lang['collections'] = 'Collections';
 
 // System lexicons
-$_lang['collections.system.type_name'] = 'Collections Container';
-$_lang['collections.system.text_create'] = 'Collections Container';
-$_lang['collections.system.text_create_here'] = 'Create a Collections Container here';
-$_lang['collections.system.new_category'] = 'New Collections Category';
+$_lang['collections.system.type_name'] = 'Collection Container';
+$_lang['collections.system.text_create'] = 'Collection Container';
+$_lang['collections.system.text_create_here'] = 'Create a Collection Container here';
+$_lang['collections.system.new_container'] = 'New Collection Container';
 $_lang['collections.system.all'] = 'All';
 
 // Global lexicons
