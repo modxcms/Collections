@@ -5,7 +5,7 @@
  * @package collections
  * @subpackage processors.resource
  */
-class CollectionsResourcerGetListProcessor extends modObjectGetListProcessor {
+class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public $classKey = 'modResource';
     public $defaultSortField = 'createdon';
     public $defaultSortDirection = 'DESC';
@@ -132,4 +132,4 @@ class CollectionsResourcerGetListProcessor extends modObjectGetListProcessor {
         return $resourceArray;
     }
 }
-return 'CollectionsResourcerGetListProcessor';
+return 'CollectionsResourceGetListProcessor';
