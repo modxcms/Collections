@@ -71,6 +71,41 @@ switch($eventName) {
             }
         }
 
+        /** @var modResource $original */
+        $original = $modx->getObject('modResource', $resource->id);
+        if ($original) {
+            if ($original->class_key != $resource->class_key) {
+                // Switch to CollectionContainer
+                if (($original->class_key != 'CollectionsContainer') && ($resource->class_key == 'CollectionsContainer')) {
+                    $children = $resource->Children;
+                    /** @var modResource $child */
+                    foreach ($children as $child) {
+                        $child->set('show_in_tree', 0);
+
+                        if ($child->class_key == 'CollectionsContainer') {
+                            $child->set('show_in_tree', 1);
+                        }
+
+                        if ($child->hasChildren() > 0) {
+                            $child->set('show_in_tree', 1);
+                        }
+
+                        $child->save();
+                    }
+                }
+
+                // Switch from CollectionContainer
+                if (($original->class_key == 'CollectionsContainer') && ($resource->class_key != 'CollectionsContainer')) {
+                    $children = $resource->Children;
+                    /** @var modResource $child */
+                    foreach ($children as $child) {
+                        $child->set('show_in_tree', 1);
+                        $child->save();
+                    }
+                }
+            }
+        }
+
         break;
 
     case 'OnResourceSort':
