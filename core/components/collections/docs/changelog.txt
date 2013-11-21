@@ -1,5 +1,9 @@
 Changelog for Collections.
 
+Collections 0.8.1
+===================
+- Fixed showing aliases in children grid
+
 Collections 0.8.0
 ===================
 - Renamed CollectionsContainer to CollectionContainer

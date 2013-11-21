@@ -1,6 +1,6 @@
 =====================
      Collections
-     0.8.0 alpha
+     0.8.1 beta
 
       Jan Peca
   pecajan@gmail.com
