@@ -1,5 +1,10 @@
 Changelog for Collections.
 
+Collections 0.8.2
+===================
+- Finished renaming CollectionsContainer -> CollectionContainer
+- Removed chromephp log calls
+
 Collections 0.8.1
 ===================
 - Fixed showing aliases in children grid
