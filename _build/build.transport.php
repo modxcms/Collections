@@ -14,7 +14,7 @@ set_time_limit(0);
 /* define package */
 define('PKG_NAME','Collections');
 define('PKG_NAME_LOWER',strtolower(PKG_NAME));
-define('PKG_VERSION','0.6.0');
+define('PKG_VERSION','0.7.0');
 define('PKG_RELEASE','beta');
 
 /* define sources */
@@ -107,6 +107,9 @@ $attr = array(
 $vehicle = $builder->createVehicle($category,$attr);
 
 $modx->log(modX::LOG_LEVEL_INFO,'Adding file resolvers to category...');
+$vehicle->resolve('php',array(
+    'source' => $sources['resolvers'] . 'resolve.switchback.php',
+));
 $vehicle->resolve('file',array(
     'source' => $sources['source_assets'],
     'target' => "return MODX_ASSETS_PATH . 'components/';",

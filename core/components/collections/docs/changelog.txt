@@ -1,5 +1,10 @@
 Changelog for Collections.
 
+Collections 0.7.0
+===================
+- Added switchback resolver that will switch all Collections Containers back to modDocument and set show_in_tree to 1 for all Collections children on uninstall
+- Added support for handle class_key switch from CollectionsContainer and to CollectionsContainer
+
 Collections 0.6.0
 ===================
 - Fixed proper showing Collections Container under another Collections Container
