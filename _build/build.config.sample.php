@@ -7,6 +7,7 @@
  */
 define('MODX_BASE_PATH', dirname(dirname(dirname(dirname(__FILE__)))) . '/modx/');
 define('MODX_CORE_PATH', MODX_BASE_PATH . 'core/');
+define('MODX_PACKAGES_PATH',dirname(dirname(__FILE__)).'/_packages/');
 define('MODX_MANAGER_PATH', MODX_BASE_PATH . 'manager/');
 define('MODX_CONNECTORS_PATH', MODX_BASE_PATH . 'connectors/');
 define('MODX_ASSETS_PATH', MODX_BASE_PATH . 'assets/');
