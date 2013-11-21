@@ -14,7 +14,7 @@ Collections.grid.ContainerCollections = function(config) {
         ,saveParams: {
             resource: MODx.request.id
         }
-        ,fields: ['id','pagetitle',
+        ,fields: ['id','pagetitle', 'alias',
             'publishedon','publishedon_date','publishedon_time',
             'uri','uri_override','preview_url','actions','action_edit','menuindex']
         ,paging: true
