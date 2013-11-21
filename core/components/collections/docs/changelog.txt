@@ -1,5 +1,10 @@
 Changelog for Collections.
 
+Collections 0.8.0
+===================
+- Renamed CollectionsContainer to CollectionContainer
+- Fixed returning proper count of children under Collection Container
+
 Collections 0.7.0
 ===================
 - Added switchback resolver that will switch all Collections Containers back to modDocument and set show_in_tree to 1 for all Collections children on uninstall

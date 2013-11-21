@@ -1,6 +1,6 @@
 =====================
      Collections
-     0.7.0 alpha
+     0.8.0 alpha
 
       Jan Peca
   pecajan@gmail.com
