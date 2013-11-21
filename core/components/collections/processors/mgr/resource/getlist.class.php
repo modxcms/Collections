@@ -33,6 +33,7 @@ class CollectionsResourcerGetListProcessor extends modObjectGetListProcessor {
                 'parent' => $parent,
             ));
         }
+
         $query = $this->getProperty('query',null);
         if (!empty($query)) {
             $queryWhere = array(
@@ -68,12 +69,13 @@ class CollectionsResourcerGetListProcessor extends modObjectGetListProcessor {
                 break;
         }
 
-        $parent = $this->getProperty('parent');
-        if (!empty($parent)) {
-            $c->where(array(
-                'parent' => $parent,
-            ));
-        }
+        $c->where(array(
+            'class_key:!=' => 'CollectionsContainer',
+            "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
+        ));
+
+        $c->prepare();
+        $this->modx->chromephp->log($c->toSQL());
 
         return $c;
     }
@@ -83,11 +85,6 @@ class CollectionsResourcerGetListProcessor extends modObjectGetListProcessor {
      * @return array
      */
     public function prepareRow(xPDOObject $object) {
-
-        if ($object->hasChildren() > 0 || $object->class_key == 'Collections') {
-            return;
-        }
-
         $resourceArray = parent::prepareRow($object);
 
         if (!empty($resourceArray['publishedon'])) {
@@ -133,23 +130,6 @@ class CollectionsResourcerGetListProcessor extends modObjectGetListProcessor {
             );
         }
         return $resourceArray;
-    }
-
-    public function ellipsis($string,$length = 300) {
-        if (strlen($string) > $length) {
-            $string = substr($string,0,$length).'...';
-        }
-        return $string;
-    }
-
-    public function process() {
-        $beforeQuery = $this->beforeQuery();
-        if ($beforeQuery !== true) {
-            return $this->failure($beforeQuery);
-        }
-        $data = $this->getData();
-        $list = $this->iterate($data);
-        return $this->outputArray($list,count($list));
     }
 }
 return 'CollectionsResourcerGetListProcessor';
