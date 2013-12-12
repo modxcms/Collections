@@ -10,3 +10,9 @@ Collections is a MODX Revolution Extra that adds a custom `CollectionContainer` 
 
 ####Sub Collections
 Just like the MODX Resource Tree itself, Collections supports nesting. You can create a Collection within another Collection. Sub Collection Containers will be displayed in the resource tree and their children will be displayed in the grid view.
+
+####Drag n Drop
+You can drag n drop Resources into a Collections container and if they don't have children of their own they will be listed in the grid. If they do have children, they'll just remain in the Tree as usual.
+
+####Alternatives
+@goldsky recently released an Extra called "GridClassKey" that does similar things, without drag n drop and some other logic. BUT it does sport some very nifty Ext JS features, like Advanced Search of items in the grid. You have options.
