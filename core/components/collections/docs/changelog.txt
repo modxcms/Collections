@@ -1,5 +1,9 @@
 Changelog for Collections.
 
+Collections 1.0.0
+===================
+- Published in MODX extras
+
 Collections 0.8.2
 ===================
 - Finished renaming CollectionsContainer -> CollectionContainer
