@@ -370,6 +370,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 case 'edit':
                     this.editChild();
                     break;
+                case 'duplicate':
+                    this.duplicateChild();
+                    break;
                 case 'publish':
                     this.publishChild();
                     break;
