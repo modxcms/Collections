@@ -8,7 +8,7 @@
 $_lang['collections'] = 'Collections';
 
 // System lexicons
-$_lang['collections.system.type_name'] = 'Collection Container';
+$_lang['collections.system.type_name'] = 'Collection';
 $_lang['collections.system.text_create'] = 'Collection Container';
 $_lang['collections.system.text_create_here'] = 'Create a Collection Container here';
 $_lang['collections.system.new_container'] = 'New Collection Container';

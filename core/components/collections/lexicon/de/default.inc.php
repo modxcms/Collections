@@ -5,7 +5,7 @@
  * @package collections
  * @subpackage lexicon
  */
-$_lang['collections'] = 'Collections';
+$_lang['collections'] = 'Sammlungen';
 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Sammlung';
