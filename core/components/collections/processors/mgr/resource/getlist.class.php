@@ -101,6 +101,10 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             'text' => $this->modx->lexicon('edit'),
         );
         $resourceArray['actions'][] = array(
+            'className' => 'duplicate',
+            'text' => $this->modx->lexicon('duplicate'),
+        );
+        $resourceArray['actions'][] = array(
             'className' => 'view',
             'text' => $this->modx->lexicon('view'),
         );
