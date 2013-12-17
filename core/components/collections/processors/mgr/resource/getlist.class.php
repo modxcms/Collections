@@ -84,12 +84,21 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public function prepareRow(xPDOObject $object) {
         $resourceArray = parent::prepareRow($object);
 
-        if (!empty($resourceArray['publishedon'])) {
-            $publishedon = strtotime($resourceArray['publishedon']);
+        if (!empty($resourceArray['publishedon']) || !empty($resourceArray['pub_date'])) {
+            $publishedon = strtotime($resourceArray['publishedon']) == '' ? strtotime($resourceArray['pub_date']) : strtotime($resourceArray['publishedon']);
+            $this->modx->log(modX::LOG_LEVEL_ERROR, '[' . $elementname . '] publishedon tsamp ' . $publishedon);
             $resourceArray['publishedon_date'] = strftime($this->modx->getOption('collections.mgr_date_format',null,'%b %d'),$publishedon);
-            $resourceArray['publishedon_time'] = strftime($this->modx->getOption('collections.mgr_time_format',null,'%H:%I %p'),$publishedon);
+            $resourceArray['publishedon_time'] = strftime($this->modx->getOption('collections.mgr_time_format',null,'%H:%M %p'),$publishedon);
             $resourceArray['publishedon'] = strftime('%b %d, %Y %H:%I %p',$publishedon);
         }
+
+        if (!empty($resourceArray['unpub_date'])) {
+            $unpublishon = strtotime($resourceArray['unpub_date']);
+            $resourceArray['unpublishon_date'] = strftime($this->modx->getOption('collections.mgr_date_format',null,'%b %d'),$unpublishon);
+            $resourceArray['unpublishon_time'] = strftime($this->modx->getOption('collections.mgr_time_format',null,'%H:%M %p'),$unpublishon);
+            $resourceArray['unpublishon'] = strftime('%b %d, %Y %H:%I %p',$unpublishon);
+        }
+
         $resourceArray['action_edit'] = '?a='.$this->editAction->get('id').'&action=post/update&id='.$resourceArray['id'];
 
         $this->modx->getContext($resourceArray['context_key']);
