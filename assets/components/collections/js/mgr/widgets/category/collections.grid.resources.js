@@ -6,6 +6,7 @@ Collections.grid.ContainerCollections = function(config) {
         ,title: _('collections.collections')
         ,url: Collections.connector_url
         ,autosave: true
+        ,stateful: true
         ,save_action: 'mgr/resource/updatefromgrid'
         ,baseParams: {
             action: 'mgr/resource/getList'
@@ -16,7 +17,6 @@ Collections.grid.ContainerCollections = function(config) {
         }
         ,fields: ['id','pagetitle', 'alias',
             'publishedon','publishedon_date','publishedon_time',
-            'unpublishon', 'unpublishon_date', 'unpublishon_time',
             'uri','uri_override','preview_url','actions','action_edit','menuindex']
         ,paging: true
         ,remoteSort: true
@@ -30,12 +30,6 @@ Collections.grid.ContainerCollections = function(config) {
             ,width: 60
             ,sortable: true
             ,renderer: {fn:this._renderPublished,scope:this}
-        },{
-            header: _('resource_unpublishdate')
-            ,dataIndex: 'unpublishon'
-            ,width: 60
-            ,sortable: true
-            ,renderer: {fn:this._renderUnpublishon,scope:this}
         },{
             header: _('pagetitle')
             ,dataIndex: 'pagetitle'
@@ -168,11 +162,6 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             +'</tpl>',{
             compiled: true
         });
-        this.tplUnpublishon = new Ext.XTemplate('<tpl for=".">'
-            +'<div class="collections-grid-date">{unpublishon_date}<span class="collections-grid-time">{unpublishon_time}</span></div>'
-            +'</tpl>',{
-            compiled: true
-        });
         this.tplComments = new Ext.XTemplate('<tpl for=".">'
             +'<div class="collections-grid-comments"><span>{comments}</span></div>'
             +'</tpl>',{
@@ -194,9 +183,6 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,_renderPublished:function(v,md,rec) {
         return this.tplPublished.apply(rec.data);
-    }
-    ,_renderUnpublishon:function(v,md,rec) {
-        return this.tplUnpublishon.apply(rec.data);
     }
     ,_renderPageTitle:function(v,md,rec) {
         return this.tplPageTitle.apply(rec.data);
@@ -227,7 +213,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         });
         w.config.hasChildren = false;
         w.setValues(r);
-        w.show(e.target);
+        w.show();
         return false;
     }
 

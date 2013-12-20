@@ -86,7 +86,6 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         if (!empty($resourceArray['publishedon']) || !empty($resourceArray['pub_date'])) {
             $publishedon = strtotime($resourceArray['publishedon']) == '' ? strtotime($resourceArray['pub_date']) : strtotime($resourceArray['publishedon']);
-            $this->modx->log(modX::LOG_LEVEL_ERROR, '[' . $elementname . '] publishedon tsamp ' . $publishedon);
             $resourceArray['publishedon_date'] = strftime($this->modx->getOption('collections.mgr_date_format',null,'%b %d'),$publishedon);
             $resourceArray['publishedon_time'] = strftime($this->modx->getOption('collections.mgr_time_format',null,'%H:%M %p'),$publishedon);
             $resourceArray['publishedon'] = strftime('%b %d, %Y %H:%I %p',$publishedon);
