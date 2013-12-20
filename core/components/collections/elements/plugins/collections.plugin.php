@@ -22,6 +22,10 @@ $collections = $modx->getService(
 
 $eventName = $modx->event->name;
 switch($eventName) {
+    case 'OnManagerPageInit':
+        $cssFile = $collections->getOption('assets_url').'css/mgr.css';
+        $modx->regClientCSS($cssFile);
+        break;
     case 'OnDocFormPrerender':
         $inject = false;
 

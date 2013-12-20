@@ -7,6 +7,7 @@
 class Collections {
     /** @var \modX $modx */
     public $modx;
+    public $namespace = 'collections';
     /** @var array $config */
     public $config = array();
     /** @var array $chunks */
@@ -14,9 +15,10 @@ class Collections {
 
     function __construct(modX &$modx,array $config = array()) {
         $this->modx =& $modx;
+        $this->namespace = $this->getOption('namespace', $config, 'collections');
 
-        $corePath = $this->modx->getOption('collections.core_path',$config,$this->modx->getOption('core_path').'components/collections/');
-        $assetsUrl = $this->modx->getOption('collections.assets_url',$config,$this->modx->getOption('assets_url').'components/collections/');
+        $corePath = $this->getOption('core_path', $config, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/collections/');
+        $assetsUrl = $this->getOption('assets_url', $config, $this->modx->getOption('assets_url', null, MODX_ASSETS_URL) . 'components/collections/');
         $connectorUrl = $assetsUrl.'connector.php';
 
         $this->config = array_merge(array(
@@ -41,50 +43,25 @@ class Collections {
     }
 
     /**
-     * Gets a Chunk and caches it; also falls back to file-based templates
-     * for easier debugging.
+     * Get a local configuration option or a namespaced system setting by key.
      *
-     * @access public
-     * @param string $name The name of the Chunk
-     * @param array $properties The properties for the Chunk
-     * @return string The processed content of the Chunk
+     * @param string $key The option key to search for.
+     * @param array $options An array of options that override local options.
+     * @param mixed $default The default value returned if the option is not found locally or as a
+     * namespaced system setting; by default this value is null.
+     * @return mixed The option value or the default value specified.
      */
-    public function getChunk($name,array $properties = array()) {
-        $chunk = null;
-        if (!isset($this->chunks[$name])) {
-            $chunk = $this->modx->getObject('modChunk',array('name' => $name),true);
-            if (empty($chunk)) {
-                $chunk = $this->_getTplChunk($name,$this->config['chunkSuffix']);
-                if ($chunk == false) return false;
+    public function getOption($key, $options = array(), $default = null) {
+        $option = $default;
+        if (!empty($key) && is_string($key)) {
+            if ($options != null && array_key_exists($key, $options)) {
+                $option = $options[$key];
+            } elseif (array_key_exists($key, $this->config)) {
+                $option = $this->config[$key];
+            } elseif (array_key_exists("{$this->namespace}.{$key}", $this->modx->config)) {
+                $option = $this->modx->getOption("{$this->namespace}.{$key}");
             }
-            $this->chunks[$name] = $chunk->getContent();
-        } else {
-            $o = $this->chunks[$name];
-            $chunk = $this->modx->newObject('modChunk');
-            $chunk->setContent($o);
         }
-        $chunk->setCacheable(false);
-        return $chunk->process($properties);
-    }
-    /**
-     * Returns a modChunk object from a template file.
-     *
-     * @access private
-     * @param string $name The name of the Chunk. Will parse to name.chunk.tpl by default.
-     * @param string $suffix The suffix to add to the chunk filename.
-     * @return modChunk/boolean Returns the modChunk object if found, otherwise
-     * false.
-     */
-    private function _getTplChunk($name,$suffix = '.chunk.tpl') {
-        $chunk = false;
-        $f = $this->config['chunksPath'].strtolower($name).$suffix;
-        if (file_exists($f)) {
-            $o = file_get_contents($f);
-            /** @var modChunk $chunk */
-            $chunk = $this->modx->newObject('modChunk');
-            $chunk->set('name',$name);
-            $chunk->setContent($o);
-        }
-        return $chunk;
+        return $option;
     }
 }

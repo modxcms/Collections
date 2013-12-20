@@ -1,8 +1,3 @@
-.required:before {
-    content: "* ";
-    color: red;
-}
-
 .collections-grid-date {
     color:#a0a0a0;
     font-family:arial, Helvetica, sans-serif;
@@ -133,4 +128,8 @@
 
 .ext-strict .x-form-field-trigger-wrap .x-form-text, .ext-strict .x-small-editor .x-form-field-trigger-wrap .x-form-text {
     text-shadow:none !important;
+}
+
+.icon-collectioncontainer .x-tree-node-icon {
+    background-image: url(i/collection.png) !important;
 }
