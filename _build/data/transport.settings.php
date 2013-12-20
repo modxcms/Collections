@@ -18,7 +18,7 @@ $settings['collections.mgr_date_format']->fromArray(array(
 $settings['collections.mgr_time_format'] = $modx->newObject('modSystemSetting');
 $settings['collections.mgr_time_format']->set('key', 'collections.mgr_time_format');
 $settings['collections.mgr_time_format']->fromArray(array(
-    'value' => '%H:%I %p',
+    'value' => '%H:%M %p',
     'xtype' => 'textfield',
     'namespace' => 'collections',
 ));

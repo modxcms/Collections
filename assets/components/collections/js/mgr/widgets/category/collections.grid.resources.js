@@ -6,6 +6,7 @@ Collections.grid.ContainerCollections = function(config) {
         ,title: _('collections.collections')
         ,url: Collections.connector_url
         ,autosave: true
+        ,stateful: true
         ,save_action: 'mgr/resource/updatefromgrid'
         ,baseParams: {
             action: 'mgr/resource/getList'
@@ -26,7 +27,7 @@ Collections.grid.ContainerCollections = function(config) {
         ,columns: [this.sm,{
             header: _('publishedon')
             ,dataIndex: 'publishedon'
-            ,width: 50
+            ,width: 60
             ,sortable: true
             ,renderer: {fn:this._renderPublished,scope:this}
         },{
@@ -49,7 +50,7 @@ Collections.grid.ContainerCollections = function(config) {
         },{
             header: _('alias')
             ,dataIndex: 'alias'
-            ,width: 100
+            ,width: 75
             ,sortable: true
         }]
         ,tbar: [{
@@ -212,7 +213,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         });
         w.config.hasChildren = false;
         w.setValues(r);
-        w.show(e.target);
+        w.show();
         return false;
     }
 
@@ -369,6 +370,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                     break;
                 case 'edit':
                     this.editChild();
+                    break;
+                case 'duplicate':
+                    this.duplicateChild();
                     break;
                 case 'publish':
                     this.publishChild();
