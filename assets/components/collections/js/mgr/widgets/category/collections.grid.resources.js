@@ -17,7 +17,8 @@ Collections.grid.ContainerCollections = function(config) {
         }
         ,fields: ['id','pagetitle', 'alias',
             'publishedon','publishedon_date','publishedon_time',
-            'uri','uri_override','preview_url','actions','action_edit','menuindex']
+            'uri','uri_override','preview_url','actions','action_edit','menuindex',
+            'menutitle', 'hidemenu', 'template', 'unpublishedon','unpublishedon_date','unpublishedon_time',]
         ,paging: true
         ,remoteSort: true
         ,cls: 'collections-grid'
@@ -52,6 +53,36 @@ Collections.grid.ContainerCollections = function(config) {
             ,dataIndex: 'alias'
             ,width: 75
             ,sortable: true
+        },{
+            header: _('resource_menutitle')
+            ,dataIndex: 'menutitle'
+            ,width: 75
+            ,sortable: true
+            ,hidden: true
+        },{
+            header: _('resource_hide_from_menus')
+            ,dataIndex: 'hidemenu'
+            ,width: 75
+            ,renderer: this.rendYesNo
+            ,sortable: true
+            ,hidden: true
+        },{
+            header: _('template')
+            ,dataIndex: 'template'
+            ,width: 75
+            ,sortable: true
+            ,editor: {
+                xtype: 'modx-combo-template'
+                ,renderer: true
+            }
+            ,hidden: true
+        },{
+            header: _('resource_unpublishdate')
+            ,dataIndex: 'unpublishedon'
+            ,width: 60
+            ,sortable: true
+            ,renderer: {fn:this._renderUnpublished,scope:this}
+            ,hidden: true
         }]
         ,tbar: [{
             text: _('collections.children.create')
@@ -162,6 +193,11 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             +'</tpl>',{
             compiled: true
         });
+        this.tplUnpublished = new Ext.XTemplate('<tpl for=".">'
+            +'<div class="collections-grid-date">{unpublishedon_date}<span class="collections-grid-time">{unpublishedon_time}</span></div>'
+            +'</tpl>',{
+            compiled: true
+        });
         this.tplComments = new Ext.XTemplate('<tpl for=".">'
             +'<div class="collections-grid-comments"><span>{comments}</span></div>'
             +'</tpl>',{
@@ -183,6 +219,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,_renderPublished:function(v,md,rec) {
         return this.tplPublished.apply(rec.data);
+    }
+    ,_renderUnpublished:function(v,md,rec) {
+        return this.tplUnpublished.apply(rec.data);
     }
     ,_renderPageTitle:function(v,md,rec) {
         return this.tplPageTitle.apply(rec.data);

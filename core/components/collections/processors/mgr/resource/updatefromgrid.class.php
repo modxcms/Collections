@@ -27,6 +27,7 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
         }
 
         $this->object->set('menuindex', $this->getProperty('menuindex'));
+        $this->object->set('template', $this->getProperty('template'));
 
         /* Run the beforeSave method and allow stoppage */
         $canSave = $this->beforeSave();

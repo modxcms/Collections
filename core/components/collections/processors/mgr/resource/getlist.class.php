@@ -23,6 +23,12 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             'controller' => 'resource/update',
         ));
 
+        $sortBy = $this->getProperty('sort');
+
+        if ($sortBy == 'unpublishedon') {
+            $this->setProperty('sort', 'unpub_date');
+        }
+
         return parent::initialize();
     }
 
@@ -93,9 +99,9 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         if (!empty($resourceArray['unpub_date'])) {
             $unpublishon = strtotime($resourceArray['unpub_date']);
-            $resourceArray['unpublishon_date'] = strftime($this->modx->getOption('collections.mgr_date_format',null,'%b %d'),$unpublishon);
-            $resourceArray['unpublishon_time'] = strftime($this->modx->getOption('collections.mgr_time_format',null,'%H:%M %p'),$unpublishon);
-            $resourceArray['unpublishon'] = strftime('%b %d, %Y %H:%I %p',$unpublishon);
+            $resourceArray['unpublishedon_date'] = strftime($this->modx->getOption('collections.mgr_date_format',null,'%b %d'),$unpublishon);
+            $resourceArray['unpublishedon_time'] = strftime($this->modx->getOption('collections.mgr_time_format',null,'%H:%M %p'),$unpublishon);
+            $resourceArray['unpublishedon'] = strftime('%b %d, %Y %H:%I %p',$unpublishon);
         }
 
         $resourceArray['action_edit'] = '?a='.$this->editAction->get('id').'&action=post/update&id='.$resourceArray['id'];
