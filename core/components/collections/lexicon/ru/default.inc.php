@@ -9,7 +9,7 @@ $_lang['collections'] = 'Collections';
 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Коллекция';
-$_lang['collections.system.text_create'] = 'Коллекция';
+$_lang['collections.system.text_create'] = 'Добавить коллекцию';
 $_lang['collections.system.text_create_here'] = 'Создать коллекцию здесь';
 $_lang['collections.system.new_container'] = 'Новая коллекция';
 $_lang['collections.system.all'] = 'Все';
