@@ -1,5 +1,28 @@
 Changelog for Collections.
 
+Collections 1.1.0
+===================
+- #9 Added duplicate button
+- #10 Added icon for Collection into the Resource tree
+- #11 Make grid stateful and added some more columns (until clearing cache grid keeps showed/hidden columns and their order)
+- Renamed "Collection container" to "Collection"
+- #7 Added German translation (thanks to pepebe)
+- #12 Added Czech translation
+- #14 Added Dutch translation (thanks to @mark_hamstra)
+- #15 Added French translation (thanks to @rtripault)
+- #16 #17 Added Russian translation (thanks to vanchelo)
+
+Collections 1.1.0
+===================
+- #9 Added duplicate button
+- #10 Added icon for Collection into the Resource tree
+- #11 Make grid stateful and added some more columns (until clearing cache grid keeps showed/hidden columns and their order)
+- Renamed "Collection container" to "Collection"
+- #7 Added German translation (thanks to pepebe)
+- #12 Added Czech translation
+- #14 Added Dutch translation (thanks to @mark_hamstra)
+- #15 Added French translation (thanks to @rtripault)
+
 Collections 1.0.0
 ===================
 - Published in MODX extras
