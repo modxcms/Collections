@@ -1,6 +1,6 @@
 =====================
      Collections
-     1.0.0 pl
+     1.1.0 pl
 
       Jan Peca
   pecajan@gmail.com

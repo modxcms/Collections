@@ -11,7 +11,7 @@ Collections 1.1.0
 - #14 Added Dutch translation (thanks to @mark_hamstra)
 - #15 Added French translation (thanks to @rtripault)
 - #16 #17 Added Russian translation (thanks to vanchelo)
-- #18 show_in_tree conflict
+- #18 Fixed show_in_tree conflict
 
 Collections 1.0.0
 ===================
