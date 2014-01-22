@@ -15,7 +15,8 @@ $e = array(
     'OnBeforeDocFormSave',
     'OnResourceBeforeSort',
     'OnDocFormPrerender',
-    'OnBeforeEmptyTrash'
+    'OnBeforeEmptyTrash',
+    'OnManagerPageInit'
 );
 
 foreach ($e as $ev) {

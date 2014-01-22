@@ -22,6 +22,9 @@ class Collections {
         $connectorUrl = $assetsUrl.'connector.php';
 
         $this->config = array_merge(array(
+            'assets_url' => $assetsUrl,
+            'core_path' => $corePath,
+
             'assetsUrl' => $assetsUrl,
             'cssUrl' => $assetsUrl.'css/',
             'jsUrl' => $assetsUrl.'js/',
