@@ -56,28 +56,44 @@ switch($eventName) {
         $parent = $resource->Parent;
         if ($parent) {
             if ($parent->class_key == 'CollectionContainer') {
-                $resource->set('show_in_tree', 0);
-            } else {
-                $resource->set('show_in_tree', 1);
-                $parent->set('show_in_tree', 1);
-                $parent->save();
+                $hasChildren = ($resource->hasChildren() != 0);
+                if ($hasChildren) {
+                    $resource->set('show_in_tree', 1);
+                } else {
+                    $resource->set('show_in_tree', 0);
+                }
             }
-        } else {
-            $resource->set('show_in_tree', 1);
         }
 
         if ($resource->class_key == 'CollectionContainer') {
             $resource->set('show_in_tree', 1);
-        } else {
-            $hasChildren = ($resource->hasChildren() != 0);
-            if ($hasChildren) {
-                $resource->set('show_in_tree', 1);
-            }
         }
 
         /** @var modResource $original */
         $original = $modx->getObject('modResource', $resource->id);
         if ($original) {
+
+            /** @var modResource $originalParent */
+            $originalParent = $original->Parent;
+            if ($originalParent) {
+                if ($originalParent->class_key == 'CollectionContainer') {
+                    $resource->set('show_in_tree', 1);
+                } else {
+                    /** @var modResource $originalGreatParent */
+                    $originalGreatParent = $originalParent->Parent;
+                    if ($originalGreatParent && ($originalGreatParent->class_key == 'CollectionContainer')) {
+                        $resource->set('show_in_tree', 1);
+
+                        $originalParentHasOtherChildren = ($originalParent->hasChildren() > 1);
+                        if (!$originalParentHasOtherChildren) {
+                            $originalParent->set('show_in_tree', 0);
+                            $originalParent->save();
+                        }
+                    }
+                }
+            }
+
+            // Switch Resource type
             if ($original->class_key != $resource->class_key) {
                 // Switch to CollectionContainer
                 if (($original->class_key != 'CollectionContainer') && ($resource->class_key == 'CollectionContainer')) {
@@ -112,37 +128,66 @@ switch($eventName) {
 
         break;
 
-    case 'OnResourceSort':
+    case 'OnResourceBeforeSort':
         foreach ($nodes as $node) {
             /** @var modResource $resource */
             $resource = $modx->getObject('modResource', $node['id']);
             if ($resource) {
                 $hasChildren = ($resource->hasChildren() != 0);
 
-                /** @var modResource $parent */
-                $parent = $resource->Parent;
-                if ($parent) {
-                    $parentIsCRC = ($parent->class_key == 'CollectionContainer');
+                /** @var modResource $originalParent */
+                $originalParent = $resource->Parent;
 
-                    if ($parentIsCRC == true) {
+                /** @var modResource $parent */
+                $parent = $modx->getObject('modResource', $node['parent']);
+
+                if (($parent && $originalParent && $parent->id == $originalParent->id) || (!$parent && !$originalParent)) {
+                    continue;
+                }
+
+                if ($parent) {
+                    if ($parent->class_key == 'CollectionContainer') {
                         if ($hasChildren == false) {
                             $resource->set('show_in_tree', 0);
                         } else {
                             $resource->set('show_in_tree', 1);
                         }
                     } else {
-                        $resource->set('show_in_tree', 1);
-                        $parent->set('show_in_tree', 1);
+                        /** @var modResource $greatParent */
+                        $greatParent = $parent->Parent;
+                        if ($greatParent && ($greatParent->class_key == 'CollectionContainer')) {
+                            $parent->set('show_in_tree', 1);
+                            $parent->save();
+                        }
+
+                        if (($originalParent->class_key == 'CollectionContainer') && ($parent->class_key != 'CollectionContainer')) {
+                            $resource->set('show_in_tree', 1);
+                        }
+
                     }
-
-                    if ($resource->class_key == 'CollectionContainer') {
+                } else {
+                    if ($originalParent && ($originalParent->class_key == 'CollectionContainer')) {
                         $resource->set('show_in_tree', 1);
                     }
-
-                    $parent->save();
-                    $resource->save();
-
                 }
+
+                if ($originalParent) {
+                    /** @var modResource $originalGreatParent */
+                    $originalGreatParent = $originalParent->Parent;
+                    if ($originalGreatParent && ($originalGreatParent->class_key = 'CollectionContainer')) {
+                        $originalParentHasOtherChildren = ($originalParent->hasChildren() > 1);
+                        if (!$originalParentHasOtherChildren) {
+                            $originalParent->set('show_in_tree', 0);
+                            $originalParent->save();
+                        }
+                    }
+                }
+
+                if ($resource->class_key == 'CollectionContainer') {
+                    $resource->set('show_in_tree', 1);
+                }
+
+                $resource->save();
             }
 
         }
