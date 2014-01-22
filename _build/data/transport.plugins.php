@@ -13,7 +13,7 @@ $events = array();
 
 $e = array(
     'OnBeforeDocFormSave',
-    'OnResourceSort',
+    'OnResourceBeforeSort',
     'OnDocFormPrerender',
     'OnBeforeEmptyTrash'
 );
