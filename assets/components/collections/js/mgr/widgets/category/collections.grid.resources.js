@@ -240,7 +240,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         var r = {
             resource: this.menu.record.id
             ,is_folder: false
-            ,name: _('duplicate_of',{name: this.menu.record.pagetitle})
+            ,name: _('duplicate_of',{name: this.menu.record.data.pagetitle})
         };
         var w = MODx.load({
             xtype: 'modx-window-resource-duplicate'
