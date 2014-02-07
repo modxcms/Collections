@@ -1,5 +1,9 @@
 Changelog for Collections.
 
+Collections 1.1.1
+===================
+- #20 Fixed after re-save child set show_in_tree 1
+
 Collections 1.1.0
 ===================
 - #9 Added duplicate button
