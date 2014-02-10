@@ -37,6 +37,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         $this->addLastJavascript($collectionsJsUrl.'widgets/category/collections.panel.category.js');
         $this->addLastJavascript($collectionsJsUrl.'widgets/category/collections.grid.resources.js');
         $this->addLastJavascript($collectionsJsUrl.'extra/collections.combo.js');
+        $this->addLastJavascript($collectionsJsUrl.'extra/griddraganddrop.js');
 
         $this->loadExtendedFields();
 

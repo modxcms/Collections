@@ -31,3 +31,6 @@ $_lang['collections.children.undelete_multiple'] = 'Undelete selected';
 $_lang['collections.children.none'] = 'This resource don\'t have any children.';
 $_lang['collections.children.err_ns_multiple'] = 'You have to select at least one children.';
 $_lang['collections.children.menuindex'] = 'Menu index';
+
+$_lang['collections.err.parent_ns'] = 'Parent is not specified.';
+$_lang['collections.err.bad_sort_column'] = 'Sort grid by <strong>[[+column]]</strong> to use drag & drop sorting.';

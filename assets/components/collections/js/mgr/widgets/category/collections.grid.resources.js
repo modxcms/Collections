@@ -4,10 +4,12 @@ Collections.grid.ContainerCollections = function(config) {
     Ext.applyIf(config,{
         id: 'collections-grid-container-collections'
         ,title: _('collections.collections')
-        ,url: Collections.connector_url
+        ,url: Collections.connectorUrl
         ,autosave: true
         ,stateful: true
         ,save_action: 'mgr/resource/updatefromgrid'
+        ,ddGroup: 'collectionChildDDGroup'
+        ,enableDragDrop: true
         ,baseParams: {
             action: 'mgr/resource/getList'
             ,'parent': MODx.request.id
@@ -145,6 +147,8 @@ Collections.grid.ContainerCollections = function(config) {
     this._makeTemplates();
     this.on('rowclick',MODx.fireResourceFormChange);
     this.on('click', this.handleButtons, this);
+    this.on('render', this.registerGridDropTarget, this);
+    this.on('beforedestroy', this.destroyScrollManager, this);
 };
 Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     getMenu: function() {
@@ -428,5 +432,58 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             }
         }
     }
+
+    ,getDragDropText: function(){
+        if (this.store.sortInfo == undefined || this.store.sortInfo.field != 'menuindex') {
+            return _('collections.err.bad_sort_column', {column: 'menuindex'});
+        }
+
+        return this.selModel.selections.items[0].data.pagetitle;
+    }
+
+    ,registerGridDropTarget: function() {
+        var ddrow = new Ext.ux.dd.GridReorderDropTarget(this, {
+            copy: false
+            ,sortCol: 'menuindex'
+            ,listeners: {
+                'beforerowmove': function(objThis, oldIndex, newIndex, records) {
+                }
+
+                ,'afterrowmove': function(objThis, oldIndex, newIndex, records) {
+                    MODx.Ajax.request({
+                        url: Collections.connectorUrl
+                        ,params: {
+                            action: 'mgr/resource/ddreorder'
+                            ,idItem: records.pop().id
+                            ,oldIndex: oldIndex
+                            ,newIndex: newIndex
+                            ,parent: MODx.request.id
+                        }
+                        ,listeners: {
+                            'success': {
+                                fn: function(r) {
+                                    this.target.grid.refresh();
+                                },scope: this
+                            }
+                        }
+                    });
+                }
+
+                ,'beforerowcopy': function(objThis, oldIndex, newIndex, records) {
+                }
+
+                ,'afterrowcopy': function(objThis, oldIndex, newIndex, records) {
+                }
+            }
+        });
+
+        Ext.dd.ScrollManager.register(this.getView().getEditorParent());
+    }
+
+    ,destroyScrollManager: function() {
+        Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
+    }
+
+
 });
 Ext.reg('collections-grid-children',Collections.grid.ContainerCollections);
