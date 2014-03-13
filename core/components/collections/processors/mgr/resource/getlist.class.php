@@ -42,10 +42,13 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         $query = $this->getProperty('query',null);
         if (!empty($query)) {
+            $c->leftJoin('modUserProfile', 'CreatedBy', array('CreatedBy.internalKey = modResource.createdby'));
+
             $queryWhere = array(
                 'pagetitle:LIKE' => '%'.$query.'%',
                 'OR:description:LIKE' => '%'.$query.'%',
                 'OR:introtext:LIKE' => '%'.$query.'%',
+                'OR:CreatedBy.fullname:LIKE' => '%'.$query.'%',
             );
             $c->where($queryWhere);
         }
