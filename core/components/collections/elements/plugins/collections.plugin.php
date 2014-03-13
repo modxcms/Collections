@@ -77,7 +77,9 @@ switch($eventName) {
             $originalParent = $original->Parent;
             if ($originalParent && (!$parent || ($originalParent->id != $parent->id))) {
                 if ($originalParent->class_key == 'CollectionContainer') {
-                    $resource->set('show_in_tree', 1);
+                    if ($parent->class_key != 'CollectionContainer') {
+                        $resource->set('show_in_tree', 1);
+                    }
                 } else {
                     /** @var modResource $originalGreatParent */
                     $originalGreatParent = $originalParent->Parent;
