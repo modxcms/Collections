@@ -9,6 +9,12 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
                 return false;
             }
 
+            var search = Ext.getCmp('collections-child-search');
+            var filter = Ext.getCmp('collections-grid-filter-status');
+            if (search.getValue() != '' || filter.getValue() != '') {
+                return false;
+            }
+
             // determine the row
             var t = Ext.lib.Event.getTarget(e);
             var rindex = this.grid.getView().findRowIndex(t);
@@ -42,6 +48,12 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
         }
         ,notifyOver: function(dd, e, data) {
             if (data.grid.store.sortInfo == undefined || data.grid.store.sortInfo.field != this.sortCol) {
+                return this.dropNotAllowed;
+            }
+
+            var search = Ext.getCmp('collections-child-search');
+            var filter = Ext.getCmp('collections-grid-filter-status');
+            if (search.getValue() != '' || filter.getValue() != '') {
                 return this.dropNotAllowed;
             }
 

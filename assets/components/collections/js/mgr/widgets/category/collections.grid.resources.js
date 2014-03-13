@@ -187,6 +187,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             ,'parent': MODx.request.id
         };
         Ext.getCmp('collections-child-search').reset();
+        Ext.getCmp('collections-grid-filter-status').reset();
         this.getBottomToolbar().changePage(1);
         this.refresh();
     }
@@ -436,6 +437,12 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     ,getDragDropText: function(){
         if (this.store.sortInfo == undefined || this.store.sortInfo.field != 'menuindex') {
             return _('collections.err.bad_sort_column', {column: 'menuindex'});
+        }
+
+        var search = Ext.getCmp('collections-child-search');
+        var filter = Ext.getCmp('collections-grid-filter-status');
+        if (search.getValue() != '' || filter.getValue() != '') {
+            return _('collections.err.clear_filter');
         }
 
         return this.selModel.selections.items[0].data.pagetitle;

@@ -34,3 +34,4 @@ $_lang['collections.children.menuindex'] = 'Menu index';
 
 $_lang['collections.err.parent_ns'] = 'Parent is not specified.';
 $_lang['collections.err.bad_sort_column'] = 'Sort grid by <strong>[[+column]]</strong> to use drag & drop sorting.';
+$_lang['collections.err.clear_filter'] = 'Please clear <strong>filter</strong> and <strong>search</strong> to use drag & drop sorting.';
