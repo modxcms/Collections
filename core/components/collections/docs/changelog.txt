@@ -1,5 +1,13 @@
 Changelog for Collections.
 
+
+- Added ability to search via created by full name
+- Added ability to search via created by username
+- Fixed switching child between two Collections
+- Fixed switching great parent to Collections when moving last child
+- Fixed child name after creating a duplicate
+- Added drag & drop sort by menuindex
+
 Collections 1.1.1
 ===================
 - #20 Fixed after re-save child set show_in_tree 1
