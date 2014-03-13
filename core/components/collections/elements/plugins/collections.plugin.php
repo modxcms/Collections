@@ -176,7 +176,7 @@ switch($eventName) {
                 if ($originalParent) {
                     /** @var modResource $originalGreatParent */
                     $originalGreatParent = $originalParent->Parent;
-                    if ($originalGreatParent && ($originalGreatParent->class_key = 'CollectionContainer')) {
+                    if ($originalGreatParent && ($originalGreatParent->class_key == 'CollectionContainer')) {
                         $originalParentHasOtherChildren = ($originalParent->hasChildren() > 1);
                         if (!$originalParentHasOtherChildren) {
                             $originalParent->set('show_in_tree', 0);
