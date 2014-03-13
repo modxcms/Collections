@@ -1,6 +1,7 @@
 Changelog for Collections.
 
-
+Collections 1.2.0
+===================
 - Added ability to search via created by full name
 - Added ability to search via created by username
 - Fixed switching child between two Collections
