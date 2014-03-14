@@ -8,19 +8,39 @@
 $settings = array();
 
 $settings['collections.mgr_date_format'] = $modx->newObject('modSystemSetting');
-$settings['collections.mgr_date_format']->set('key', 'collections.mgr_date_format');
 $settings['collections.mgr_date_format']->fromArray(array(
-    'value' => '%b %d',
-    'xtype' => 'textfield',
-    'namespace' => 'collections',
+	'key'		=> 'collections.mgr_date_format',
+    'value'		=> '%b %d',
+    'xtype'		=> 'textfield',
+    'namespace'	=> 'collections',
+    'area'		=> ''
 ));
 
 $settings['collections.mgr_time_format'] = $modx->newObject('modSystemSetting');
-$settings['collections.mgr_time_format']->set('key', 'collections.mgr_time_format');
 $settings['collections.mgr_time_format']->fromArray(array(
-    'value' => '%H:%M %p',
-    'xtype' => 'textfield',
-    'namespace' => 'collections',
+	'key'		=> 'collections.mgr_time_format',
+    'value'		=> '%H:%M %p',
+    'xtype'		=> 'textfield',
+    'namespace'	=> 'collections',
+    'area'		=> ''
+));
+
+$settings['collections.mgr_default_sort_field'] = $modx->newObject('modSystemSetting');
+$settings['collections.mgr_default_sort_field']->fromArray(array(
+	'key'		=> 'collections.mgr_default_sort_field',
+    'value'		=> 'createdon',
+    'xtype'		=> 'textfield',
+    'namespace'	=> 'collections',
+    'area'		=> ''
+));
+
+$settings['collections.mgr_default_sort_dir'] = $modx->newObject('modSystemSetting');
+$settings['collections.mgr_default_sort_dir']->fromArray(array(
+	'key'		=> 'collections.mgr_default_sort_dir',
+    'value'		=> 'DESC',
+    'xtype'		=> 'textfield',
+    'namespace'	=> 'collections',
+    'area'		=> ''
 ));
 
 return $settings;

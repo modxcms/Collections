@@ -18,10 +18,18 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public $commentsEnabled = false;
 
     public function initialize() {
+        // cannot access $this->modx above, so we hae to set the values from the system settings here
+        $defaultSortField = $this->modx->getOption('collections.mgr_default_sort_field',null,$defaultSortField);
+        $defaultSortDirection = $this->modx->getOption('collections.mgr_default_sort_dir',null,$defaultSortDirection);
+
         $this->editAction = $this->modx->getObject('modAction',array(
             'namespace' => 'core',
             'controller' => 'resource/update',
         ));
+
+        // re-set the sorting properties
+        $this->setProperty('sort', $defaultSortField);
+        $this->setProperty('dir', $defaultSortDirection);
 
         $sortBy = $this->getProperty('sort');
 
