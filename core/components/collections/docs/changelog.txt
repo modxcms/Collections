@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- English and German lexicon updates
+
 Collections 1.2.0
 ===================
 - Added ability to search via created by full name

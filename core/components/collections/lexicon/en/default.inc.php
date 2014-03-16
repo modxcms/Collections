@@ -7,6 +7,12 @@
  */
 $_lang['collections'] = 'Collections';
 
+// Settings lexicons
+$_lang['setting_collections.mgr_date_format'] = 'Grid date format';
+$_lang['setting_collections.mgr_date_format_desc'] = 'Placeholders from strftime() can be used here.';
+$_lang['setting_collections.mgr_time_format'] = 'Grid time format';
+$_lang['setting_collections.mgr_time_format_desc'] = 'Placeholders from strftime() can be used here.';
+
 // System lexicons
 $_lang['collections.system.type_name'] = 'Collection';
 $_lang['collections.system.text_create'] = 'Collection';
