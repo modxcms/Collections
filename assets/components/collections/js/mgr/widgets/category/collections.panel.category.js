@@ -16,109 +16,42 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
     }
 
     ,getFields: function(config) {
-        var it = [];
+        var fields = Collections.panel.Category.superclass.getFields.call(this,config);
 
-        if (config.mode == 'update') {
-            it.push({
-                title: _('collections.children')
-                ,id: 'collections-category-resources'
-                ,cls: 'modx-resource-tab'
-                ,layout: 'form'
-                ,labelAlign: 'top'
-                ,labelSeparator: ''
-                ,bodyCssClass: 'tab-panel-wrapper main-wrapper'
-                ,autoHeight: true
-                ,defaults: {
-                    border: false
-                    ,msgTarget: 'under'
-                    ,width: 400
-                }
-                ,items: this.getLocationsTab(config)
-            });
-        }
-
-        it.push({
-            title: _(this.classLexiconKey)
-            ,id: 'modx-resource-settings'
-            ,cls: 'modx-resource-tab'
-            ,layout: 'form'
-            ,labelAlign: 'top'
-            ,labelSeparator: ''
-            ,bodyCssClass: 'tab-panel-wrapper main-wrapper'
-            ,autoHeight: true
-            ,defaults: {
-                border: false
-                ,msgTarget: 'under'
-                ,width: 400
-            }
-            ,items: this.getMainFields(config)
-        });
-
-        it.push({
-            id: 'modx-page-settings'
-            ,title: _('settings')
-            ,cls: 'modx-resource-tab'
-            ,layout: 'form'
-            ,forceLayout: true
-            ,deferredRender: false
-            ,labelWidth: 200
-            ,bodyCssClass: 'main-wrapper'
-            ,autoHeight: true
-            ,defaults: {
-                border: false
-                ,msgTarget: 'under'
-            }
-            ,items: this.getSettingFields(config)
-        });
-        if (config.show_tvs && MODx.config.tvs_below_content != 1) {
-            it.push(this.getTemplateVariablesPanel(config));
-        }
-        if (MODx.perm.resourcegroup_resource_list == 1) {
-            it.push(this.getAccessPermissionsTab(config));
-        }
-        var its = [];
-        its.push(this.getPageHeader(config),{
-            id:'modx-resource-tabs'
-            ,xtype: 'modx-tabs'
-            ,forceLayout: true
-            ,deferredRender: false
-            ,collapsible: true
-            ,animCollapse: false
-            ,itemId: 'tabs'
-            ,items: it
-            ,listeners: {
-                'tabchange': function(tabs, tab) {
-                    if (tab.id == 'collections-category-resources') {
-                        Ext.getCmp('modx-resource-content').hide();
-                    } else {
-                        Ext.getCmp('modx-resource-content').show();
-                    }
-                }
+        var tabs = fields.filter(function (row) {
+            if(row.id == 'modx-resource-tabs') {
+                return row;
+            } else {
+                return false;
             }
         });
-        var ct = this.getContentField(config);
-        if (ct) {
-            its.push({
-                title: _('resource_content')
-                ,id: 'modx-resource-content'
-                ,layout: 'form'
-                ,bodyCssClass: 'main-wrapper'
-                ,autoHeight: true
-                ,collapsible: true
-                ,animCollapse: false
-                ,hideMode: 'offsets'
-                ,items: ct
-                ,style: 'margin-top: 10px'
-            });
+
+        if (tabs != false && tabs[0]) {
+        	if (config.mode == 'update') {
+	            tabs[0].items.unshift({
+	                title: _('collections.children')
+	                ,id: 'collections-category-resources'
+	                ,cls: 'modx-resource-tab'
+	                ,layout: 'form'
+	                ,labelAlign: 'top'
+	                ,labelSeparator: ''
+	                ,bodyCssClass: 'tab-panel-wrapper main-wrapper'
+	                ,autoHeight: true
+	                ,defaults: {
+	                    border: false
+	                    ,msgTarget: 'under'
+	                    ,width: 400
+	                }
+	                ,items: this.getCollectionsChildrenTab(config)
+	            });
+	        }
+            
         }
-        if (MODx.config.tvs_below_content == 1) {
-            var tvs = this.getTemplateVariablesPanel(config);
-            its.push(tvs);
-        }
-        return its;
+
+        return fields;
     }
 
-    ,getLocationsTab: function(config) {
+    ,getCollectionsChildrenTab: function(config) {
         return [{
             'xtype': 'collections-grid-children'
             ,url: Collections.connectorUrl
