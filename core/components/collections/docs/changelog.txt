@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Added ability to drag and drop child to resource tree to change parent
 - English and German lexicon updates
 
 Collections 1.2.0

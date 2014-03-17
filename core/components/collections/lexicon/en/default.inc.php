@@ -22,6 +22,8 @@ $_lang['collections.system.all'] = 'All';
 
 // Global lexicons
 $_lang['collections.global.search'] = 'Search';
+$_lang['collections.global.change_order'] = 'Change order of: [[+child]]';
+$_lang['collections.global.change_parent'] = 'Change parent of: [[+child]]';
 
 // Children
 $_lang['collections.children'] = 'Children';
@@ -41,3 +43,4 @@ $_lang['collections.children.menuindex'] = 'Menu index';
 $_lang['collections.err.parent_ns'] = 'Parent is not specified.';
 $_lang['collections.err.bad_sort_column'] = 'Sort grid by <strong>[[+column]]</strong> to use drag & drop sorting.';
 $_lang['collections.err.clear_filter'] = 'Please clear <strong>filter</strong> and <strong>search</strong> to use drag & drop sorting.';
+$_lang['collections.err.common'] = 'Error occurred during the action.';

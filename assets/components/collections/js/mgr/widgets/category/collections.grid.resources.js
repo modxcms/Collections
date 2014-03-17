@@ -9,7 +9,7 @@ Collections.grid.ContainerCollections = function(config) {
         ,stateful: true
         ,save_action: 'mgr/resource/updatefromgrid'
         ,ddGroup: 'collectionChildDDGroup'
-        ,enableDragDrop: true
+        ,enableDragDrop: false
         ,baseParams: {
             action: 'mgr/resource/getList'
             ,'parent': MODx.request.id
@@ -445,10 +445,79 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             return _('collections.err.clear_filter');
         }
 
-        return this.selModel.selections.items[0].data.pagetitle;
+        return _('collections.global.change_order', {child: this.selModel.selections.items[0].data.pagetitle});
+    }
+
+    ,getDragDropTextOverTree: function(){
+        return _('collections.global.change_parent', {child: this.selModel.selections.items[0].data.pagetitle});
     }
 
     ,registerGridDropTarget: function() {
+
+        this.getView().dragZone = new Ext.grid.GridDragZone(this, {
+            ddGroup : 'modx-treedrop-dd'
+            ,originals: {}
+            ,onEndDrag: function() {
+                var t = Ext.getCmp('modx-resource-tree');
+                t.dropZone.appendOnly = false;
+
+                t.dropZone.onNodeDrop = this.originals.onNodeDrop;
+                t.dropZone.onNodeOver = this.originals.onNodeOver;
+
+                t.on('nodedragover', t._handleDrop, t);
+                t.on('beforenodedrop', t._handleDrop, t);
+
+                return true;
+            }
+            ,onInitDrag: function(e) {
+                var data = this.dragData;
+                this.ddel.innerHTML = this.grid.getDragDropText();
+                this.proxy.update(this.ddel);
+
+                var t = Ext.getCmp('modx-resource-tree');
+                t.dropZone.appendOnly = true;
+
+
+                t.removeListener('nodedragover', t._handleDrop);
+                t.removeListener('beforenodedrop', t._handleDrop);
+
+                this.originals.onNodeDrop = t.dropZone.onNodeDrop;
+                this.originals.onNodeOver = t.dropZone.onNodeOver;
+
+                t.dropZone.onNodeDrop = function (nodeData, source, e) {
+                    MODx.Ajax.request({
+                        url: Collections.connectorUrl
+                        ,params: {
+                            action: 'mgr/resource/changeparent'
+                            ,id: source.dragData.selections[0].id
+                            ,parent: nodeData.node.attributes.id
+                        }
+                        ,listeners: {
+                            'success': {
+                                fn: function(r) {
+                                    source.grid.refresh();
+                                    return true;
+                                },scope: this
+                            }
+                        }
+                    });
+
+                    return true;
+                };
+
+                t.dropZone.onNodeOver = function (nodeData, source,e, data) {
+                    source.ddel.innerHTML = source.grid.getDragDropTextOverTree();
+                    source.proxy.update(source.ddel);
+
+                    return this.dropAllowed;
+                };
+
+                return true;
+            }
+        });
+        this.getView().dragZone.addToGroup('modx-treedrop-dd');
+        this.getView().dragZone.addToGroup('collectionChildDDGroup');
+
         var ddrow = new Ext.ux.dd.GridReorderDropTarget(this, {
             copy: false
             ,sortCol: 'menuindex'
