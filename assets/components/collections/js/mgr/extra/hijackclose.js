@@ -1,5 +1,9 @@
 MODx.on("ready",function() {
     var update = Ext.getCmp('modx-page-update-resource');
+    if (!update) {
+        return;
+    }
+    
     var parentId = update.config.record.parent;
 
     var cancelHandler = function(btn,e) {
