@@ -21,6 +21,17 @@ class Collections {
         $assetsUrl = $this->getOption('assets_url', $config, $this->modx->getOption('assets_url', null, MODX_ASSETS_URL) . 'components/collections/');
         $connectorUrl = $assetsUrl.'connector.php';
 
+        $taggerCorePath = $modx->getOption('tagger.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/tagger/');
+        /** @var Collections $collections */
+        $tagger = $modx->getService(
+            'tagger',
+            'Tagger',
+            $taggerCorePath . 'model/tagger/',
+            array(
+                'core_path' => $taggerCorePath
+            )
+        );
+
         $this->config = array_merge(array(
             'assets_url' => $assetsUrl,
             'core_path' => $corePath,
@@ -39,6 +50,8 @@ class Collections {
             'snippetsPath' => $corePath.'elements/snippets/',
             'processorsPath' => $corePath.'processors/',
             'templatesPath' => $corePath.'templates/',
+
+            'taggerInstalled' => $tagger instanceof Tagger,
         ),$config);
 
         $this->modx->addPackage('collections',$this->config['modelPath']);

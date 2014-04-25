@@ -52,6 +52,17 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                 'OR:CreatedByProfile.fullname:LIKE' => '%'.$query.'%',
                 'OR:CreatedBy.username:LIKE' => '%'.$query.'%',
             );
+
+            $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null,  false);
+            if ($taggerInstalled) {
+                $c->leftJoin('TaggerTagResource', 'TagResource', array('TagResource.resource = modResource.id'));
+                $c->leftJoin('TaggerTag', 'Tag', array('Tag.id = TagResource.tag'));
+
+                array_push($queryWhere, array(
+                    'OR:Tag.tag:LIKE' => '%'.$query.'%',
+                ));
+            }
+
             $c->where($queryWhere);
         }
         $filter = $this->getProperty('filter','');

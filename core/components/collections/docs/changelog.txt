@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Support for Tagger in search field in Children tab
 - Added ability to drag and drop child to resource tree to change parent
 - English and German lexicon updates
 
