@@ -22,15 +22,20 @@ class Collections {
         $connectorUrl = $assetsUrl.'connector.php';
 
         $taggerCorePath = $modx->getOption('tagger.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/tagger/');
-        /** @var Collections $collections */
-        $tagger = $modx->getService(
-            'tagger',
-            'Tagger',
-            $taggerCorePath . 'model/tagger/',
-            array(
-                'core_path' => $taggerCorePath
-            )
-        );
+
+        if (file_exists($taggerCorePath . 'model/tagger/tagger.class.php')) {
+            /** @var Tagger $tagger */
+            $tagger = $modx->getService(
+                'tagger',
+                'Tagger',
+                $taggerCorePath . 'model/tagger/',
+                array(
+                    'core_path' => $taggerCorePath
+                )
+            );
+        } else {
+            $tagger = null;
+        }
 
         $this->config = array_merge(array(
             'assets_url' => $assetsUrl,
