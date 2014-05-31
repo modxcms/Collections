@@ -136,4 +136,5 @@
 
 .icon-collectioncontainer .x-tree-elbow-plus {
     background-image: none;
+    cursor: default;
 }
