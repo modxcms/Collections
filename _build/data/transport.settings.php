@@ -23,4 +23,12 @@ $settings['collections.mgr_time_format']->fromArray(array(
     'namespace' => 'collections',
 ));
 
+$settings['mgr_tree_icon_collectioncontainer'] = $modx->newObject('modSystemSetting');
+$settings['mgr_tree_icon_collectioncontainer']->set('key', 'mgr_tree_icon_collectioncontainer');
+$settings['mgr_tree_icon_collectioncontainer']->fromArray(array(
+    'value' => 'icon-collectioncontainer',
+    'xtype' => 'textfield',
+    'namespace' => 'collections',
+));
+
 return $settings;
