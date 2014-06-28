@@ -12,17 +12,10 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public $checkListPermission = true;
     public $languageTopics = array('resource','collections:default');
 
-    /** @var modAction $editAction */
-    public $editAction;
     /** @var boolean $commentsEnabled */
     public $commentsEnabled = false;
 
     public function initialize() {
-        $this->editAction = $this->modx->getObject('modAction',array(
-            'namespace' => 'core',
-            'controller' => 'resource/update',
-        ));
-
         $sortBy = $this->getProperty('sort');
 
         if ($sortBy == 'unpublishedon') {
@@ -120,7 +113,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             $resourceArray['unpublishedon'] = strftime('%b %d, %Y %H:%I %p',$unpublishon);
         }
 
-        $resourceArray['action_edit'] = '?a='.$this->editAction->get('id').'&action=post/update&id='.$resourceArray['id'];
+        $resourceArray['action_edit'] = '?a=resource/update&action=post/update&id='.$resourceArray['id'];
 
         $this->modx->getContext($resourceArray['context_key']);
         $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'],$resourceArray['context_key']);

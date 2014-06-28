@@ -8,7 +8,6 @@
  * This plugin handles setting proper show_in_tree parameter (OnBeforeDocFormSave, OnResourceSort)
  *
  */
-
 $corePath = $modx->getOption('collections.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/collections/');
 /** @var Collections $collections */
 $collections = $modx->getService(

@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Support for Revolution 2.3
 - Fixed checking for Tagger
 
 Collections 1.3.1

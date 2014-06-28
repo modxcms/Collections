@@ -5,7 +5,7 @@
  * @package collections
  * @subpackage processors.resource
  */
-class ArticlePublishMultipleProcessor extends modObjectProcessor {
+class CollectionsPublishMultipleProcessor extends modObjectProcessor {
     public $classKey = 'modResource';
     public $languageTopics = array('resource','collections:default');
 
@@ -25,4 +25,4 @@ class ArticlePublishMultipleProcessor extends modObjectProcessor {
         return $this->success();
     }
 }
-return 'ArticlePublishMultipleProcessor';
+return 'CollectionsPublishMultipleProcessor';

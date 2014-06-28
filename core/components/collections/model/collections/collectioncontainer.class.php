@@ -4,6 +4,7 @@
  */
 class CollectionContainer extends modResource {
     public $showInContextMenu = true;
+    public $allowDrop = 1;
     function __construct(xPDO & $xpdo) {
         parent :: __construct($xpdo);
         $this->set('class_key','CollectionContainer');

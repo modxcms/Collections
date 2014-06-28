@@ -13,12 +13,12 @@ MODx.on("ready",function() {
                 if (e == 'yes') {
                     MODx.releaseLock(MODx.request.id);
                     MODx.sleep(400);
-                    MODx.loadPage(MODx.action['resource/update'], 'id='+parentId);
+                    MODx.loadPage('resource/update', 'id='+parentId);
                 }
             },this);
         } else {
             MODx.releaseLock(MODx.request.id);
-            MODx.loadPage(MODx.action['resource/update'], 'id='+parentId);
+            MODx.loadPage('resource/update', 'id='+parentId);
         }
     };
 

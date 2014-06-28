@@ -130,6 +130,6 @@
     text-shadow:none !important;
 }
 
-.icon-collectioncontainer .x-tree-node-icon {
-    background-image: url(i/collection.png) !important;
+.icon-collectioncontainer:before {
+    content: url(i/collection.png) !important;
 }

@@ -235,7 +235,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.loadPage(MODx.request.a, 'id='+this.menu.record.id);
     }
     ,createChild: function(btn,e) {
-        MODx.loadPage(MODx.action['resource/create'], 'parent='+MODx.request.id+'&context_key='+MODx.ctx);
+        MODx.loadPage('resource/create', 'parent='+MODx.request.id+'&context_key='+MODx.ctx);
     }
     ,viewChild: function(btn,e) {
         window.open(this.menu.record.data.preview_url);
@@ -265,9 +265,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.msg.confirm({
             title: _('collections.children.delete')
             ,text: _('collections.children.delete_confirm')
-            ,url: MODx.config.connectors_url+'resource/index.php'
+            ,url: MODx.config.connectors_url
             ,params: {
-                action: 'delete'
+                action: 'resource/delete'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -320,9 +320,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,undeleteChild: function(btn,e) {
         MODx.Ajax.request({
-            url: MODx.config.connectors_url+'resource/index.php'
+            url: MODx.config.connectors_url
             ,params: {
-                action: 'undelete'
+                action: 'resource/undelete'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -373,9 +373,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,publishChild: function(btn,e) {
         MODx.Ajax.request({
-            url: MODx.config.connectors_url+'resource/index.php'
+            url: MODx.config.connectors_url
             ,params: {
-                action: 'publish'
+                action: 'resource/publish'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -386,9 +386,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,unpublishChild: function(btn,e) {
         MODx.Ajax.request({
-            url: MODx.config.connectors_url+'resource/index.php'
+            url: MODx.config.connectors_url
             ,params: {
-                action: 'unpublish'
+                action: 'resource/unpublish'
                 ,id: this.menu.record.id
             }
             ,listeners: {
