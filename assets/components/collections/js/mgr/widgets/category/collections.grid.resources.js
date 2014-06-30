@@ -457,6 +457,15 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         this.getView().dragZone = new Ext.grid.GridDragZone(this, {
             ddGroup : 'modx-treedrop-dd'
             ,originals: {}
+            ,handleMouseDown: function(e) {
+                // Disable drag and drop for clicking on checkbox (to select a row)
+                if (e.target.className == 'x-grid3-row-checker') {
+                    return false;
+                }
+
+                Ext.grid.GridDragZone.superclass.handleMouseDown.apply(this, arguments);
+                return true;
+            }
             ,onEndDrag: function() {
                 var t = Ext.getCmp('modx-resource-tree');
                 t.dropZone.appendOnly = false;
@@ -470,6 +479,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 return true;
             }
             ,onInitDrag: function(e) {
+                debugger;
                 var data = this.dragData;
                 this.ddel.innerHTML = this.grid.getDragDropText();
                 this.proxy.update(this.ddel);
