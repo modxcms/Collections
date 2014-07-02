@@ -1,5 +1,8 @@
 Changelog for Collections.
 
+Collections 1.3.2
+===================
+- Hotfix for confirm navigation dialog
 - Fixed selecting multiple rows
 - Fixed checking for Tagger
 
