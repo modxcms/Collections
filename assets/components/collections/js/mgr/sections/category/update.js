@@ -12,7 +12,7 @@ Ext.extend(Collections.page.UpdateCategory,MODx.page.UpdateResource,{
         var btns = [];
         if (cfg.canSave == 1) {
             btns.push({
-                process: 'update'
+                process: 'resource/update'
                 ,text: _('save')
                 ,method: 'remote'
                 ,checkDirty: false
@@ -33,7 +33,7 @@ Ext.extend(Collections.page.UpdateCategory,MODx.page.UpdateResource,{
             btns.push('-');
         }
         btns.push({
-            process: 'preview'
+            process: 'resource/preview'
             ,text: _('view')
             ,handler: this.preview
             ,scope: this

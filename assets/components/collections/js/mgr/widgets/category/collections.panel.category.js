@@ -1,5 +1,7 @@
 Collections.panel.Category = function(config) {
     config = config || {};
+    // Hotfix, try to find better solution
+    MODx.config.confirm_navigation = 0;
     Collections.panel.Category.superclass.constructor.call(this,config);
 };
 Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
