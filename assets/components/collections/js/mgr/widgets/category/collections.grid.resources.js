@@ -479,7 +479,6 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 return true;
             }
             ,onInitDrag: function(e) {
-                debugger;
                 var data = this.dragData;
                 this.ddel.innerHTML = this.grid.getDragDropText();
                 this.proxy.update(this.ddel);
