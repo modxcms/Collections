@@ -5,6 +5,15 @@
     ,"author": "Jan Peca"
     ,"version": "2.0.0"
     ,"package":{
+        "actions": [{
+            "id": 1
+            ,"controller": "index"
+        }],
+        "menus": [{
+            "text": "collections.menu.collection_templates"
+            ,"description": "collections.menu.collection_templates_desc"
+            ,"action": 1
+        }],
         "elements": {
             "plugins": [{
                 "name": "Collections"
@@ -14,11 +23,23 @@
         }
         ,"systemSettings": [{
             "key": "mgr_date_format"
-            ,"value": "%b %d"
+            ,"value": "M d"
         },{
             "key": "mgr_time_format"
-            ,"value": "%H:%I %p"
+            ,"value": "g:i a"
+        },{
+            "key": "mgr_datetime_format"
+            ,"value": "M d, g:i a"
+        },{
+            "key": "user_js"
+            ,"value": ""
+        },{
+            "key": "user_css"
+            ,"value": ""
         }]
+    }
+    ,"database":{
+        "tables": ["CollectionSetting", "CollectionTemplate", "CollectionTemplateColumn", "CollectionResourceTemplate"]
     }
     ,"extensionPackage": {}
 }

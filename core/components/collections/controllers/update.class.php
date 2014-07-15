@@ -6,11 +6,11 @@
  * @subpackage controller
  */
 class CollectionContainerUpdateManagerController extends ResourceUpdateManagerController {
-    /** @var CollectionsCategory $resource */
+    /** @var modResource $resource */
     public $resource;
 
     public function getLanguageTopics() {
-        return array('resource','collections:default');
+        return array('resource','collections:default', 'collections:templates');
     }
 
     /**
@@ -25,6 +25,11 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
 
         $this->addCss($collectionsAssetsUrl . 'css/mgr.css');
 
+        $userCSS = $this->modx->getOption('collections.user_css', '');
+        if ($userCSS != '') {
+            $this->addCss($userCSS);
+        }
+
         $this->addJavascript($managerUrl.'assets/modext/util/datetime.js');
         $this->addJavascript($managerUrl.'assets/modext/widgets/element/modx.panel.tv.renders.js');
         $this->addJavascript($managerUrl.'assets/modext/widgets/resource/modx.grid.resource.security.local.js');
@@ -38,8 +43,28 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         $this->addLastJavascript($collectionsJsUrl.'widgets/category/collections.grid.resources.js');
         $this->addLastJavascript($collectionsJsUrl.'extra/collections.combo.js');
         $this->addLastJavascript($collectionsJsUrl.'extra/griddraganddrop.js');
+        $this->addLastJavascript($collectionsJsUrl.'extra/collections.renderers.js');
 
-        $this->loadExtendedFields();
+        $userJS = $this->modx->getOption('collections.user_js', '');
+        if ($userJS != '') {
+            $this->addLastJavascript($userJS);
+        }
+
+        $collectionsTemplate = $this->getCollectionsTemplate();
+
+        $response = $this->modx->runProcessor('system/derivatives/getlist', array(
+            'skip' => 'modXMLRPCResource',
+            'class' => 'modResource',
+        ));
+
+        $response = $this->modx->fromJSON($response->response);
+        if ($response == '') {
+            $response = array();
+        } else {
+            $response = $response['results'];
+        }
+
+        $this->loadConfig();
 
         $this->addHtml('
         <script type="text/javascript">
@@ -49,6 +74,8 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         MODx.config.publish_document = "'.$this->canPublish.'";
         MODx.onDocFormRender = "'.$this->onDocFormRender.'";
         MODx.ctx = "'.$this->resource->get('context_key').'";
+        Collections.template = ' . $collectionsTemplate . ';
+        Collections.resourceDerivatives = ' . $this->modx->toJSON($response) . ';
         Ext.onReady(function() {
             MODx.load({
                 xtype: "collections-page-category-update"
@@ -73,15 +100,91 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         $this->loadRichTextEditor();
     }
 
-    public function loadExtendedFields() {
-        /** @var CollectionsCategoryExtendedFields $extendedFields */
-        $extendedFields = $this->resource->ExtendedFields;
-        if($extendedFields){
-            $extendedFieldsArray = $extendedFields->toArray();
-            unset($extendedFieldsArray['category']);
-            unset($extendedFieldsArray['id']);
+    public function getCollectionsTemplate() {
+        $template = null;
 
-            $this->resourceArray = array_merge($extendedFieldsArray, $this->resourceArray);
+        /** @var CollectionSetting $collectionSetting */
+        $collectionSetting = $this->modx->getObject('CollectionSetting', array('collection' => $this->resource->id));
+        if ($collectionSetting) {
+            if (intval($collectionSetting->template) > 0) {
+                $template = $collectionSetting->Template;
+            }
+        }
+
+        if ($template == null) {
+            /** @var CollectionResourceTemplate $resourceTemplate */
+            $resourceTemplate = $this->modx->getObject('CollectionResourceTemplate', array('resource_template' => $this->resource->template));
+            if ($resourceTemplate) {
+                $template = $resourceTemplate->CollectionTemplate;
+            } else {
+                $template = $this->modx->getObject('CollectionTemplate', array('global_template' => 1));
+            }
+        }
+
+        $c = $this->modx->newQuery('CollectionTemplateColumn');
+        $c->sortby('position', 'ASC');
+        $c->where(array(
+            'template' => $template->id
+        ));
+
+        $columns = $this->modx->getIterator('CollectionTemplateColumn', $c);
+
+        $templateOptions = array(
+            'fields' => array('actions', 'action_edit'),
+            'columns' => array(),
+            'sort' => array(
+                'field' => $template->sort_field,
+                'dir' => $template->sort_dir,
+            ),
+            'pageSize' => $template->page_size,
+            'bulkActions' => $template->bulk_actions,
+            'allowDD' => $template->allow_dd,
+        );
+
+        foreach ($columns as $column) {
+            /** @var CollectionTemplateColumn $column */
+
+            $templateOptions['fields'][] = $column->name;
+
+            $header = $this->modx->lexicon($column->label);
+            if ($header == null) {
+                $header = $column->label;
+            }
+
+            $columnDef = array(
+                'header' => $header,
+                'dataIndex' => $column->name,
+                'hidden' => $column->hidden,
+                'sortable' => $column->sortable,
+                'width' => $column->width,
+            );
+
+            if ($column->editor != '') {
+                $editorObj = $this->modx->fromJSON($column->editor);
+                if ($editorObj == null) {
+                    $editorObj = array(
+                        'xtype' => $column->editor,
+                        'renderer' => false
+                    );
+                }
+
+                $columnDef['editor'] = $editorObj;
+            }
+
+            if ($column->renderer != '') {
+                $columnDef['renderer'] = $column->renderer;
+            }
+
+            $templateOptions['columns'][] = $columnDef;
+        }
+
+        return $this->modx->toJSON($templateOptions);
+    }
+
+    public function loadConfig() {
+        $config = $this->modx->getObject('CollectionSetting', array('collection' => $this->resource->id));
+        if ($config) {
+            $this->resourceArray['collections_template'] = $config->template;
         }
     }
 }

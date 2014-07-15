@@ -18,7 +18,7 @@ MODx.on("ready",function() {
             },this);
         } else {
             MODx.releaseLock(MODx.request.id);
-            MODx.loadPage('resource/update', 'id='+parentId);
+            MODx.loadPage(MODx.action['resource/update'], 'id='+parentId);
         }
     };
 

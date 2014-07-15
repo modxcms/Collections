@@ -15,7 +15,7 @@ set_time_limit(0);
 define('PKG_NAME','Collections');
 define('PKG_NAME_LOWER',strtolower(PKG_NAME));
 define('PKG_VERSION','2.0.0');
-define('PKG_RELEASE','alpha1');
+define('PKG_RELEASE','pl');
 
 /* define sources */
 $root = dirname(dirname(__FILE__)).'/';
@@ -119,7 +119,16 @@ $vehicle->resolve('file',array(
     'target' => "return MODX_CORE_PATH . 'components/';",
 ));
 $vehicle->resolve('php',array(
+    'source' => $sources['resolvers'] . 'resolve.tables.php',
+));
+$vehicle->resolve('php',array(
     'source' => $sources['resolvers'] . 'resolve.extension_package.php',
+));
+$vehicle->resolve('php',array(
+    'source' => $sources['resolvers'] . 'resolve.defaulttemplate.php',
+));
+$vehicle->resolve('php',array(
+    'source' => $sources['resolvers'] . 'resolve.updatefromfirst.php',
 ));
 $builder->putVehicle($vehicle);
 
@@ -141,6 +150,42 @@ if (!is_array($settings)) {
 }
 unset($settings,$setting,$attributes);
 
+/* load menu */
+$menus = include $sources['data'].'transport.menu.php';
+if (empty($menus)) {
+    $modx->log(modX::LOG_LEVEL_ERROR,'Could not package in menu.');
+}
+else {
+    $attributes = array (
+        xPDOTransport::PRESERVE_KEYS => true,
+        xPDOTransport::UPDATE_OBJECT => true,
+        xPDOTransport::UNIQUE_KEY => 'text',
+        xPDOTransport::RELATED_OBJECTS => true,
+        xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array(
+            'Action' => array (
+                xPDOTransport::PRESERVE_KEYS => false,
+                xPDOTransport::UPDATE_OBJECT => true,
+                xPDOTransport::UNIQUE_KEY => array ('namespace','controller'),
+                xPDOTransport::RELATED_OBJECTS => true,
+                xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array(
+                    'Children' => array(
+                        xPDOTransport::PRESERVE_KEYS => false,
+                        xPDOTransport::UPDATE_OBJECT => true,
+                        xPDOTransport::UNIQUE_KEY => array ('namespace','controller'),
+                    ),
+                ),
+            ),
+        ),
+    );
+
+    foreach ($menus as $menu) {
+        $vehicle = $builder->createVehicle($menu, $attributes);
+        $builder->putVehicle($vehicle);
+    }
+
+    $modx->log(modX::LOG_LEVEL_INFO,'Adding in PHP resolvers...');
+
+}
 
 /* now pack in the license file, readme and setup options */
 $builder->setPackageAttributes(array(

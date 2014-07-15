@@ -53,6 +53,44 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
         return fields;
     }
 
+    ,getSettingFields: function(config) {
+        var fields = Collections.panel.Category.superclass.getSettingFields.call(this,config);
+
+        fields.push([{
+            layout:'column'
+            ,border: false
+            ,anchor: '100%'
+            ,defaults: {
+                labelSeparator: ''
+                ,labelAlign: 'top'
+                ,border: false
+                ,layout: 'form'
+                ,msgTarget: 'under'
+            }
+            ,items:[{
+                columnWidth: 1
+                ,border: false
+                ,defaults: {
+                    msgTarget: 'under'
+                }
+                ,items: [{
+                    xtype: 'collections-combo-collections-template'
+                    ,fieldLabel: _('collections.template.template')
+                    ,name: 'collections_template'
+                    ,hiddenName: 'collections_template'
+                    ,anchor: '100%'
+                    ,url: Collections.connectorUrl
+                    ,baseParams: {
+                        action: 'mgr/template/getlist'
+                        ,addEmpty: 1
+                    }
+                }]
+            }]
+        }]);
+
+        return fields;
+    }
+
     ,getCollectionsChildrenTab: function(config) {
         return [{
             'xtype': 'collections-grid-children'

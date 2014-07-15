@@ -3,7 +3,7 @@ var Collections = function(config) {
     Collections.superclass.constructor.call(this,config);
 };
 Ext.extend(Collections,Ext.Component,{
-    page:{},window:{},grid:{},tree:{},panel:{},combo:{},config: {}
+    page:{},window:{},grid:{},tree:{},panel:{},combo:{},config: {},renderer: {}
 });
 Ext.reg('collections',Collections);
 Collections = new Collections();

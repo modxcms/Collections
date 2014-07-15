@@ -26,7 +26,7 @@ abstract class CollectionsBaseManagerController extends modExtraManagerControlle
 }
 
 class IndexManagerController extends CollectionsBaseManagerController {
-    public static function getDefaultController() { return 'home'; }
+    public static function getDefaultController() { return 'template'; }
 }
 
 

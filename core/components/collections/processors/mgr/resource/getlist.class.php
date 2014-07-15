@@ -12,14 +12,55 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public $checkListPermission = true;
     public $languageTopics = array('resource','collections:default');
 
-    /** @var boolean $commentsEnabled */
-    public $commentsEnabled = false;
+    public $tvColumns = array();
+    public $taggerColumns = array();
 
     public function initialize() {
-        $sortBy = $this->getProperty('sort');
+        $parent = $this->getProperty('parent',null);
+        if (empty($parent)) {
+            return false;
+        }
 
-        if ($sortBy == 'unpublishedon') {
-            $this->setProperty('sort', 'unpub_date');
+        $template = null;
+
+        /** @var CollectionSetting $collectionSetting */
+        $collectionSetting = $this->modx->getObject('CollectionSetting', array('collection' => $parent));
+        if ($collectionSetting) {
+            if (intval($collectionSetting->template) > 0) {
+                $template = $collectionSetting->Template;
+            }
+        }
+
+        if ($template == null) {
+            /** @var CollectionResourceTemplate $resourceTemplate */
+            $resourceTemplate = $this->modx->getObject('CollectionResourceTemplate', array('resource_template' => $parent));
+            if ($resourceTemplate) {
+                $template = $resourceTemplate->CollectionTemplate;
+            } else {
+                $template = $this->modx->getObject('CollectionTemplate', array('global_template' => 1));
+            }
+        }
+
+        $templateColumnsQuery = $this->modx->newQuery('CollectionTemplateColumn');
+        $templateColumnsQuery->where(array(
+            'template' => $template->id,
+        ));
+        $templateColumnsQuery->where(array(
+            'name:LIKE' => 'tv_%',
+            'OR:name:LIKE' => 'tagger_%',
+        ));
+        $templateColumnsQuery->select($this->modx->getSelectColumns('CollectionTemplateColumn', '', '', array('name')));
+        $templateColumnsQuery->prepare();
+        $templateColumnsQuery->stmt->execute();
+
+        $columns = $templateColumnsQuery->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+        foreach ($columns as $column) {
+            if (strpos($column, 'tv_') !== false) {
+                $this->tvColumns[] = $column;
+            } else {
+                $this->taggerColumns[] = $column;
+            }
         }
 
         return parent::initialize();
@@ -27,11 +68,10 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
     public function prepareQueryBeforeCount(xPDOQuery $c) {
         $parent = $this->getProperty('parent',null);
-        if (!empty($parent)) {
-            $c->where(array(
-                'parent' => $parent,
-            ));
-        }
+
+        $c->where(array(
+            'parent' => $parent,
+        ));
 
         $query = $this->getProperty('query',null);
         if (!empty($query)) {
@@ -89,31 +129,53 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
         ));
 
+        foreach ($this->tvColumns as $column) {
+            $name = str_replace('tv_', '', $column);
+
+            $c->leftJoin('modTemplateVarResource', 'TemplateVarResources_' . $column, 'TemplateVarResources_'.$column.'.contentid = modResource.id');
+            $c->leftJoin('modTemplateVar', 'TemplateVar_' . $column, 'TemplateVar_'.$column.'.id = TemplateVarResources_'.$column.'.tmplvarid AND TemplateVar_'.$column.'.name = \'' . $name .'\'');
+        }
+
+        return $c;
+    }
+
+    public function prepareQueryAfterCount(xPDOQuery $c) {
+
+        $c->select($this->modx->getSelectColumns('modResource', 'modResource'));
+
+        foreach ($this->tvColumns as $column) {
+            $c->select(array(
+                $column => 'TemplateVarResources_' . $column . '.value'
+            ));
+        }
+
+        $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null,  false);
+        if ($taggerInstalled) {
+            foreach ($this->taggerColumns as $column) {
+                $c->select(array(
+                    $column => '(SELECT group_concat(t.tag SEPARATOR \', \') FROM `modx_tagger_tag_resources` tr LEFT JOIN `modx_tagger_tags` t ON t.id = tr.tag LEFT JOIN `modx_tagger_groups` tg ON tg.id = t.group WHERE tr.resource = modResource.id AND tg.alias = \'' . str_replace('tagger_', '', $column) . '\' group by t.group)'
+                ));
+            }
+        }
+
+//        $c->prepare();
+//        die(var_dump($c->toSQL()));
+
         return $c;
     }
 
     /**
-     * @param xPDOObject $object
+     * @param modResource $object
      * @return array
      */
-    public function prepareRow(xPDOObject $object) {
+    public function prepareRow($object) {
         $resourceArray = parent::prepareRow($object);
 
-        if (!empty($resourceArray['publishedon']) || !empty($resourceArray['pub_date'])) {
-            $publishedon = strtotime($resourceArray['publishedon']) == '' ? strtotime($resourceArray['pub_date']) : strtotime($resourceArray['publishedon']);
-            $resourceArray['publishedon_date'] = strftime($this->modx->getOption('collections.mgr_date_format',null,'%b %d'),$publishedon);
-            $resourceArray['publishedon_time'] = strftime($this->modx->getOption('collections.mgr_time_format',null,'%H:%M %p'),$publishedon);
-            $resourceArray['publishedon'] = strftime('%b %d, %Y %H:%I %p',$publishedon);
-        }
-
-        if (!empty($resourceArray['unpub_date'])) {
-            $unpublishon = strtotime($resourceArray['unpub_date']);
-            $resourceArray['unpublishedon_date'] = strftime($this->modx->getOption('collections.mgr_date_format',null,'%b %d'),$unpublishon);
-            $resourceArray['unpublishedon_time'] = strftime($this->modx->getOption('collections.mgr_time_format',null,'%H:%M %p'),$unpublishon);
-            $resourceArray['unpublishedon'] = strftime('%b %d, %Y %H:%I %p',$unpublishon);
-        }
-
         $resourceArray['action_edit'] = '?a=resource/update&action=post/update&id='.$resourceArray['id'];
+
+//        foreach($this->templateColumns as $column) {
+//            $resourceArray[$column] = $object->getTVValue(str_replace('tv_', '', $column));
+//        }
 
         $this->modx->getContext($resourceArray['context_key']);
         $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'],$resourceArray['context_key']);

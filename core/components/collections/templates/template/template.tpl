@@ -1,0 +1,1 @@
+<div id="collections-panel-template-div"></div>

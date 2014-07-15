@@ -12,4 +12,15 @@ $xpdo_meta_map['CollectionContainer']= array (
   'fieldMeta' => 
   array (
   ),
+  'composites' => 
+  array (
+    'Setting' => 
+    array (
+      'class' => 'CollectionSetting',
+      'local' => 'id',
+      'foreign' => 'collection',
+      'cardinality' => 'one',
+      'owner' => 'local',
+    ),
+  ),
 );

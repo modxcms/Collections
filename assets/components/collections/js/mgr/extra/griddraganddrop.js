@@ -5,14 +5,18 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
         ,sortCol: 'menuindex'
         ,gridDropTarget: this
         ,notifyDrop: function(dd, e, data){
-            if (data.grid.store.sortInfo == undefined || data.grid.store.sortInfo.field != this.sortCol) {
-                return false;
+            if (data.grid.config.baseParams.sort != this.sortCol) {
+                if (data.grid.store.sortInfo == undefined || data.grid.store.sortInfo.field != this.sortCol) {
+                    return false;
+                }
             }
 
             var search = Ext.getCmp('collections-child-search');
             var filter = Ext.getCmp('collections-grid-filter-status');
-            if (search.getValue() != '' || filter.getValue() != '') {
-                return false;
+            if (search != undefined && filter != undefined) {
+                if (search.getValue() != '' || filter.getValue() != '') {
+                    return false;
+                }
             }
 
             // determine the row
@@ -50,14 +54,18 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
             this.grid.getView().dragZone.ddel.innerHTML = this.grid.getDragDropText();
             this.grid.getView().dragZone.proxy.update(this.grid.getView().dragZone.ddel);
 
-            if (data.grid.store.sortInfo == undefined || data.grid.store.sortInfo.field != this.sortCol) {
-                return this.dropNotAllowed;
+            if (data.grid.config.baseParams.sort != this.sortCol) {
+                if (data.grid.store.sortInfo == undefined || data.grid.store.sortInfo.field != this.sortCol) {
+                    return this.dropNotAllowed;
+                }
             }
 
             var search = Ext.getCmp('collections-child-search');
             var filter = Ext.getCmp('collections-grid-filter-status');
-            if (search.getValue() != '' || filter.getValue() != '') {
-                return this.dropNotAllowed;
+            if (search != undefined && filter != undefined) {
+                if (search.getValue() != '' || filter.getValue() != '') {
+                    return this.dropNotAllowed;
+                }
             }
 
             var t = Ext.lib.Event.getTarget(e);

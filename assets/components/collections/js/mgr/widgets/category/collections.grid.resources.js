@@ -6,110 +6,109 @@ Collections.grid.ContainerCollections = function(config) {
         ,title: _('collections.collections')
         ,url: Collections.connectorUrl
         ,autosave: true
-        ,stateful: true
         ,save_action: 'mgr/resource/updatefromgrid'
         ,ddGroup: 'collectionChildDDGroup'
         ,enableDragDrop: false
         ,baseParams: {
             action: 'mgr/resource/getList'
-            ,'parent': MODx.request.id
+            ,parent: MODx.request.id
+            ,sort: Collections.template.sort.field
+            ,dir: Collections.template.sort.dir
         }
         ,saveParams: {
             resource: MODx.request.id
         }
-        ,fields: ['id','pagetitle', 'alias',
-            'publishedon','publishedon_date','publishedon_time',
-            'uri','uri_override','preview_url','actions','action_edit','menuindex',
-            'menutitle', 'hidemenu', 'template', 'unpublishedon','unpublishedon_date','unpublishedon_time',]
+        ,fields: Collections.template.fields
         ,paging: true
         ,remoteSort: true
+        ,pageSize: Collections.template.pageSize
         ,cls: 'collections-grid'
         ,bodyCssClass: 'grid-with-buttons'
         ,sm: this.sm
         ,emptyText: _('collections.children.none')
-        ,columns: [this.sm,{
-            header: _('publishedon')
-            ,dataIndex: 'publishedon'
-            ,width: 60
-            ,sortable: true
-            ,renderer: {fn:this._renderPublished,scope:this}
-        },{
-            header: _('pagetitle')
-            ,dataIndex: 'pagetitle'
-            ,id: 'main'
-            ,width: 200
-            ,sortable: true
-            ,renderer: {fn:this._renderPageTitle,scope:this}
-        },{
-            header: _('collections.children.menuindex')
-            ,dataIndex: 'menuindex'
-            ,width: 50
-            ,sortable: true
-            ,editor: {
-                xtype: 'numberfield'
-                ,allowDecimals: false
-                ,allowNegative: false
-            }
-        },{
-            header: _('alias')
-            ,dataIndex: 'alias'
-            ,width: 75
-            ,sortable: true
-        },{
-            header: _('resource_menutitle')
-            ,dataIndex: 'menutitle'
-            ,width: 75
-            ,sortable: true
-            ,hidden: true
-        },{
-            header: _('resource_hide_from_menus')
-            ,dataIndex: 'hidemenu'
-            ,width: 75
-            ,renderer: this.rendYesNo
-            ,sortable: true
-            ,hidden: true
-        },{
-            header: _('template')
-            ,dataIndex: 'template'
-            ,width: 75
-            ,sortable: true
-            ,editor: {
-                xtype: 'modx-combo-template'
-                ,renderer: true
-            }
-            ,hidden: true
-        },{
-            header: _('resource_unpublishdate')
-            ,dataIndex: 'unpublishedon'
-            ,width: 60
-            ,sortable: true
-            ,renderer: {fn:this._renderUnpublished,scope:this}
-            ,hidden: true
-        }]
-        ,tbar: [{
+        ,columns: this.getColumns(config)
+        ,tbar: this.getTbar(config)
+    });
+    Collections.grid.ContainerCollections.superclass.constructor.call(this,config);
+    this.on('rowclick',MODx.fireResourceFormChange);
+    this.on('click', this.handleButtons, this);
+
+    if (Collections.template.allowDD) {
+        this.on('render', this.registerGridDropTarget, this);
+        this.on('beforedestroy', this.destroyScrollManager, this);
+    }
+};
+Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
+    getMenu: function() {
+        var m = [];
+
+        m.push({
+            text: _('collections.children.update')
+            ,handler: this.editChild
+        });
+        m.push({
+            text: _('collections.children.delete')
+            ,handler: this.deleteChild
+        });
+        return m;
+    }
+
+    ,getColumns: function(config) {
+        var columns = Collections.template.columns;
+
+        if (Collections.template.bulkActions) {
+            columns.unshift(this.sm);
+        }
+
+        return columns;
+    }
+
+    ,getTbar: function(config) {
+
+        var resourceDerivatives = [];
+
+        Ext.each(Collections.resourceDerivatives, function(item){
+            resourceDerivatives.push({
+                text: item.name
+                ,derivative: item.id
+                ,handler: this.createDerivativeChild
+                ,scope: this
+            });
+        }, this);
+
+        var items = [{
             text: _('collections.children.create')
             ,handler: this.createChild
+            ,xtype: 'splitbutton'
             ,scope: this
-        },{
-            text: _('bulk_actions')
-            ,menu: [{
-                text: _('collections.children.publish_multiple')
-                ,handler: this.publishSelected
-                ,scope: this
-            },{
-                text: _('collections.children.unpublish_multiple')
-                ,handler: this.unpublishSelected
-                ,scope: this
-            },'-',{
-                text: _('collections.children.delete_multiple')
-                ,handler: this.deleteSelected
-                ,scope: this
-            },{
-                text: _('collections.children.undelete_multiple')
-                ,handler: this.undeleteSelected
-                ,scope: this
-            }]
-        },'->',{
+            ,menu: resourceDerivatives
+        }];
+
+        if (Collections.template.bulkActions) {
+            items.push({
+                text: _('bulk_actions')
+                ,xtype: 'splitbutton'
+                ,menu: [{
+                    text: _('collections.children.publish_multiple')
+                    ,handler: this.publishSelected
+                    ,scope: this
+                },{
+                    text: _('collections.children.unpublish_multiple')
+                    ,handler: this.unpublishSelected
+                    ,scope: this
+                },'-',{
+                    text: _('collections.children.delete_multiple')
+                    ,handler: this.deleteSelected
+                    ,scope: this
+                },{
+                    text: _('collections.children.undelete_multiple')
+                    ,handler: this.undeleteSelected
+                    ,scope: this
+                }]
+            });
+        }
+
+        items.push('->',{
             xtype: 'collections-combo-filter-status'
             ,id: 'collections-grid-filter-status'
             ,value: ''
@@ -141,32 +140,11 @@ Collections.grid.ContainerCollections = function(config) {
             ,listeners: {
                 'click': {fn: this.clearFilter, scope: this}
             }
-        }]
-    });
-    Collections.grid.ContainerCollections.superclass.constructor.call(this,config);
-    this._makeTemplates();
-    this.on('rowclick',MODx.fireResourceFormChange);
-    this.on('click', this.handleButtons, this);
-    this.on('render', this.registerGridDropTarget, this);
-    this.on('beforedestroy', this.destroyScrollManager, this);
-};
-Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
-    getMenu: function() {
-        var r = this.getSelectionModel().getSelected();
-        var p = r.data.perm;
-
-        var m = [];
-
-        m.push({
-            text: _('collections.children.update')
-            ,handler: this.editChild
         });
-        m.push({
-            text: _('collections.children.delete')
-            ,handler: this.deleteChild
-        });
-        return m;
+
+        return items;
     }
+
     ,filterStatus: function(cb,nv,ov) {
         this.getStore().baseParams.filter = Ext.isEmpty(nv) || Ext.isObject(nv) ? cb.getValue() : nv;
         this.getBottomToolbar().changePage(1);
@@ -181,6 +159,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         this.refresh();
         return true;
     }
+
     ,clearFilter: function() {
         this.getStore().baseParams = {
             action: 'mgr/resource/getList'
@@ -192,55 +171,23 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         this.refresh();
     }
 
-    ,_makeTemplates: function() {
-        this.tplPublished = new Ext.XTemplate('<tpl for=".">'
-            +'<div class="collections-grid-date">{publishedon_date}<span class="collections-grid-time">{publishedon_time}</span></div>'
-            +'</tpl>',{
-            compiled: true
-        });
-        this.tplUnpublished = new Ext.XTemplate('<tpl for=".">'
-            +'<div class="collections-grid-date">{unpublishedon_date}<span class="collections-grid-time">{unpublishedon_time}</span></div>'
-            +'</tpl>',{
-            compiled: true
-        });
-        this.tplComments = new Ext.XTemplate('<tpl for=".">'
-            +'<div class="collections-grid-comments"><span>{comments}</span></div>'
-            +'</tpl>',{
-            compiled: true
-        });
-        this.tplPageTitle = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
-            +'<h3 class="main-column"><a href="{action_edit}" title="Edit {pagetitle}">{pagetitle}</a><span class="collections-id">({id})</span></h3>'
-            +'<tpl if="actions">'
-            +'<ul class="actions">'
-            +'<tpl for="actions">'
-            +'<li><a href="#" class="controlBtn {className}">{text}</a></li>'
-            +'</tpl>'
-            +'</ul>'
-            +'</tpl>'
-            +'</div></tpl>',{
-            compiled: true
-        });
-    }
-
-    ,_renderPublished:function(v,md,rec) {
-        return this.tplPublished.apply(rec.data);
-    }
-    ,_renderUnpublished:function(v,md,rec) {
-        return this.tplUnpublished.apply(rec.data);
-    }
-    ,_renderPageTitle:function(v,md,rec) {
-        return this.tplPageTitle.apply(rec.data);
-    }
     ,editChild: function(btn,e) {
         MODx.loadPage(MODx.request.a, 'id='+this.menu.record.id);
     }
+
     ,createChild: function(btn,e) {
-        MODx.loadPage('resource/create', 'parent='+MODx.request.id+'&context_key='+MODx.ctx);
+        MODx.loadPage(MODx.action['resource/create'], 'parent='+MODx.request.id+'&context_key='+MODx.ctx);
     }
+
+    ,createDerivativeChild: function(btn, e) {
+        MODx.loadPage(MODx.action['resource/create'], 'parent='+MODx.request.id+'&context_key='+MODx.ctx+'&class_key='+btn.derivative);
+    }
+
     ,viewChild: function(btn,e) {
         window.open(this.menu.record.data.preview_url);
         return false;
     }
+
     ,duplicateChild: function(btn,e) {
         var r = {
             resource: this.menu.record.id
@@ -265,9 +212,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.msg.confirm({
             title: _('collections.children.delete')
             ,text: _('collections.children.delete_confirm')
-            ,url: MODx.config.connectors_url
+            ,url: this.config.url
             ,params: {
-                action: 'resource/delete'
+                action: 'mgr/resource/delete'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -320,9 +267,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,undeleteChild: function(btn,e) {
         MODx.Ajax.request({
-            url: MODx.config.connectors_url
+            url: this.config.url
             ,params: {
-                action: 'resource/undelete'
+                action: 'mgr/resource/undelete'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -373,9 +320,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,publishChild: function(btn,e) {
         MODx.Ajax.request({
-            url: MODx.config.connectors_url
+            url: this.config.url
             ,params: {
-                action: 'resource/publish'
+                action: 'mgr/resource/publish'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -386,9 +333,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,unpublishChild: function(btn,e) {
         MODx.Ajax.request({
-            url: MODx.config.connectors_url
+            url: this.config.url
             ,params: {
-                action: 'resource/unpublish'
+                action: 'mgr/resource/unpublish'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -435,8 +382,10 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     }
 
     ,getDragDropText: function(){
-        if (this.store.sortInfo == undefined || this.store.sortInfo.field != 'menuindex') {
-            return _('collections.err.bad_sort_column', {column: 'menuindex'});
+        if (this.config.baseParams.sort != 'menuindex') {
+            if (this.store.sortInfo == undefined || this.store.sortInfo.field != 'menuindex') {
+                return _('collections.err.bad_sort_column', {column: 'menuindex'});
+            }
         }
 
         var search = Ext.getCmp('collections-child-search');
@@ -479,7 +428,6 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 return true;
             }
             ,onInitDrag: function(e) {
-                debugger;
                 var data = this.dragData;
                 this.ddel.innerHTML = this.grid.getDragDropText();
                 this.proxy.update(this.ddel);
@@ -569,7 +517,5 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     ,destroyScrollManager: function() {
         Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
     }
-
-
 });
 Ext.reg('collections-grid-children',Collections.grid.ContainerCollections);

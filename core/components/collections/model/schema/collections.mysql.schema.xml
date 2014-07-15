@@ -1,4 +1,58 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <model package="collections" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="collections">
-    <object class="CollectionContainer" extends="modResource" />
+    <object class="CollectionContainer" extends="modResource">
+        <composite alias="Setting" class="CollectionSetting" local="id" foreign="collection" cardinality="one" owner="local" />
+    </object>
+
+        <object class="CollectionSetting" table="collection_settings" extends="xPDOSimpleObject">
+        <field key="collection" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="unique" />
+        <field key="template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+
+        <aggregate alias="Collection" class="CollectionContainer" local="collection" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Template" class="CollectionTemplate" local="template" foreign="id" cardinality="one" owner="local" />
+    </object>
+
+    <object class="CollectionTemplate" table="collection_templates" extends="xPDOSimpleObject">
+        <field key="name" dbtype="varchar" precision="50" phptype="string" null="false" index="unique" />
+        <field key="description" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="global_template" dbtype="int" precision="1" phptype="boolean" null="false" default="0" />
+
+        <field key="bulk_actions" dbtype="int" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="allow_dd" dbtype="int" precision="1" phptype="boolean" null="false" default="1" />
+        <field key="page_size" dbtype="int" precision="10" phptype="integer" null="false" default="20" />
+        <field key="sort_field" dbtype="varchar" precision="100" phptype="string" null="false" default="id" />
+        <field key="sort_dir" dbtype="varchar" precision="4" phptype="string" null="false" default="asc" />
+
+        <aggregate alias="Setting" class="CollectionSetting" local="id" foreign="template" cardinality="one" owner="local" />
+        <composite alias="Columns" class="CollectionTemplateColumn" local="id" foreign="template" cardinality="many" owner="local" />
+        <composite alias="ResourceTemplates" class="CollectionResourceTemplate" local="id" foreign="collection_template" cardinality="one" owner="local" />
+    </object>
+
+    <object class="CollectionTemplateColumn" table="collection_template_columns" extends="xPDOSimpleObject">
+        <field key="template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" />
+        <field key="label" dbtype="varchar" precision="50" phptype="string" null="false" />
+        <field key="name" dbtype="varchar" precision="50" phptype="string" null="false" />
+        <field key="hidden" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="sortable" dbtype="tinyint" attributes="unsigned" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="width" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="100" />
+        <field key="editor" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="renderer" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="position" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
+
+        <aggregate alias="Template" class="CollectionTemplate" local="template" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="CollectionResourceTemplate" table="collection_resource_template" extends="xPDOObject">
+        <field key="collection_template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+        <field key="resource_template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
+            <column key="collection_template" length="" collation="A" null="false" />
+            <column key="resource_template" length="" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="CollectionTemplate" class="CollectionTemplate" local="collection_template" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="ResourceTemplate" class="modTemplate" local="resource_template" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
 </model>

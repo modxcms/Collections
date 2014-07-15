@@ -1,4 +1,8 @@
 <?php
+require_once MODX_CORE_PATH.'model/modx/modprocessor.class.php';
+require_once MODX_CORE_PATH.'model/modx/processors/resource/create.class.php';
+require_once MODX_CORE_PATH.'model/modx/processors/resource/update.class.php';
+
 /**
  * @package collections
  */
@@ -25,5 +29,43 @@ class CollectionContainer extends modResource {
     public function getResourceTypeName() {
         $this->xpdo->lexicon->load('collections:default');
         return $this->xpdo->lexicon('collections.system.type_name');
+    }
+}
+
+class CollectionContainerCreateProcessor extends modResourceCreateProcessor {
+    public function afterSave() {
+        $collectionsTemplate = (int) $this->getProperty('collections_template');
+
+        $config = $this->modx->getObject('CollectionSetting', array('collection' => $this->object->id));
+
+        if (!$config) {
+            $config = $this->modx->newObject('CollectionSetting');
+            $config->set('collection', $this->object->id);
+        }
+
+        $config->set('template', $collectionsTemplate);
+
+        $config->save();
+
+        return parent::afterSave();
+    }
+}
+
+class CollectionContainerUpdateProcessor extends modResourceUpdateProcessor {
+    public function afterSave() {
+        $collectionsTemplate = (int) $this->getProperty('collections_template');
+
+        $config = $this->modx->getObject('CollectionSetting', array('collection' => $this->object->id));
+
+        if (!$config) {
+            $config = $this->modx->newObject('CollectionSetting');
+            $config->set('collection', $this->object->id);
+        }
+
+        $config->set('template', $collectionsTemplate);
+
+        $config->save();
+
+        return parent::afterSave();
     }
 }

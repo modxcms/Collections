@@ -1,8 +1,8 @@
 =====================
      Collections
-     1.3.1 pl
+     2.0.0 pl
 
-      Jan Peca
+      John Peca
   pecajan@gmail.com
 =====================
 
