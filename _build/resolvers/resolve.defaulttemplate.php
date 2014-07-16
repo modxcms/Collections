@@ -20,8 +20,8 @@ if ($object->xpdo) {
                 $template->set('bulk_actions', true);
                 $template->set('allow_dd', true);
                 $template->set('page_size', 10);
-                $template->set('sort_field', 'menuindex');
-                $template->set('sort_dir', 'asc');
+                $template->set('sort_field', 'publishedon');
+                $template->set('sort_dir', 'desc');
 
                 $columns = array();
                 $columns[0] = $modx->newObject('CollectionTemplateColumn');

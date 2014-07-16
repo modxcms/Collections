@@ -158,9 +158,6 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             }
         }
 
-//        $c->prepare();
-//        die(var_dump($c->toSQL()));
-
         return $c;
     }
 
@@ -172,10 +169,6 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         $resourceArray = parent::prepareRow($object);
 
         $resourceArray['action_edit'] = '?a=resource/update&action=post/update&id='.$resourceArray['id'];
-
-//        foreach($this->templateColumns as $column) {
-//            $resourceArray[$column] = $object->getTVValue(str_replace('tv_', '', $column));
-//        }
 
         $this->modx->getContext($resourceArray['context_key']);
         $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'],$resourceArray['context_key']);
