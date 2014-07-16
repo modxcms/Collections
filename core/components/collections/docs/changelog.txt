@@ -1,5 +1,9 @@
 Changelog for Collections.
 
+Collections 2.0.1
+===================
+- Fixed saving collections container in Revolution 2.2.x
+
 Collections 2.0.0
 ===================
 - Added collections templates
