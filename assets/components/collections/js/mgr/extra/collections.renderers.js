@@ -36,7 +36,7 @@ Collections.renderer.pagetitleLink = function(value, metaData, record, rowIndex,
 
 Collections.renderer.datetimeTwoLines = function(value, metaData, record, rowIndex, colIndex, store) {
     if (value == 0) return '';
-
+    value = value.replace(/-/g,'/');
     var dateTime = new Date(value);
     var date = dateTime.format(MODx.config['collections.mgr_date_format']);
     var time = dateTime.format(MODx.config['collections.mgr_time_format']);
@@ -46,7 +46,7 @@ Collections.renderer.datetimeTwoLines = function(value, metaData, record, rowInd
 
 Collections.renderer.datetime = function(value, metaData, record, rowIndex, colIndex, store) {
     if (value == 0) return '';
-
+    value = value.replace(/-/g,'/');
     var dateTime = new Date(value);
     dateTime = dateTime.format(MODx.config['collections.mgr_datetime_format']);
 
