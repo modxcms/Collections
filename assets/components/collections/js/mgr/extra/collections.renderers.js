@@ -37,9 +37,10 @@ Collections.renderer.pagetitleLink = function(value, metaData, record, rowIndex,
 Collections.renderer.datetimeTwoLines = function(value, metaData, record, rowIndex, colIndex, store) {
     if (value == 0) return '';
 
-    var dateTime = new Date(value);
-    var date = dateTime.format(MODx.config['collections.mgr_date_format']);
-    var time = dateTime.format(MODx.config['collections.mgr_time_format']);
+    var d = Date.parseDate(value, 'Y-m-d H:i:s');
+
+    var date = Ext.util.Format.date(d, MODx.config['collections.mgr_date_format']);
+    var time = Ext.util.Format.date(d, MODx.config['collections.mgr_time_format']);
 
     return '<div class="collections-grid-date">' + date + '<span class="collections-grid-time">' + time + '</span></div>';
 };
@@ -47,8 +48,7 @@ Collections.renderer.datetimeTwoLines = function(value, metaData, record, rowInd
 Collections.renderer.datetime = function(value, metaData, record, rowIndex, colIndex, store) {
     if (value == 0) return '';
 
-    var dateTime = new Date(value);
-    dateTime = dateTime.format(MODx.config['collections.mgr_datetime_format']);
+    var d = Date.parseDate(value, 'Y-m-d H:i:s');
 
-    return dateTime;
+    return Ext.util.Format.date(d,MODx.config['collections.mgr_datetime_format']);
 };
