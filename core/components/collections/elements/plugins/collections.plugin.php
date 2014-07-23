@@ -219,3 +219,5 @@ switch($eventName) {
         }
         break;
 }
+
+return;
