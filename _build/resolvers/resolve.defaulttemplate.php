@@ -15,7 +15,7 @@ if ($object->xpdo) {
                 /** @var CollectionTemplate $template */
                 $template = $modx->newObject('CollectionTemplate');
                 $template->set('name', 'Default view');
-                $template->set('description', 'Default view bundled with Collections package.');
+                $template->set('description', 'A default view that works well for blogs.');
                 $template->set('global_template', true);
                 $template->set('bulk_actions', true);
                 $template->set('allow_dd', true);
