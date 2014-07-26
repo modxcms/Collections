@@ -127,6 +127,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'template' => $template->id
         ));
 
+        /** @var CollectionTemplateColumn[] $columns */
         $columns = $this->modx->getIterator('CollectionTemplateColumn', $c);
 
         $templateOptions = array(
@@ -139,11 +140,14 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'pageSize' => $template->page_size,
             'bulkActions' => $template->bulk_actions,
             'allowDD' => $template->allow_dd,
+            'resource_type_selection' => $template->resource_type_selection,
+            'children' => array(
+                'template' => $template->child_template,
+                'resource_type' => $template->child_resource_type,
+            )
         );
 
         foreach ($columns as $column) {
-            /** @var CollectionTemplateColumn $column */
-
             $templateOptions['fields'][] = $column->name;
 
             $header = $this->modx->lexicon($column->label);

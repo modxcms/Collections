@@ -56,6 +56,13 @@ if ($object->xpdo) {
                 $time->save();
             }
 
+            if ($oldPackage && $oldPackage->compareVersion('2.1.0-pl', '>')) {
+                $manager = $modx->getManager();
+                $manager->addField('CollectionTemplate', 'child_template');
+                $manager->addField('CollectionTemplate', 'child_resource_type');
+                $manager->addField('CollectionTemplate', 'resource_type_selection');
+            }
+
             break;
     }
 }

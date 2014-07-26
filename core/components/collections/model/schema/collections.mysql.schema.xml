@@ -22,6 +22,9 @@
         <field key="page_size" dbtype="int" precision="10" phptype="integer" null="false" default="20" />
         <field key="sort_field" dbtype="varchar" precision="100" phptype="string" null="false" default="id" />
         <field key="sort_dir" dbtype="varchar" precision="4" phptype="string" null="false" default="asc" />
+        <field key="child_template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="true" />
+        <field key="child_resource_type" dbtype="varchar" precision="100" phptype="string" null="false" default="modDocument" />
+        <field key="resource_type_selection" dbtype="int" precision="1" phptype="boolean" null="false" default="1" />
 
         <aggregate alias="Setting" class="CollectionSetting" local="id" foreign="template" cardinality="one" owner="local" />
         <composite alias="Columns" class="CollectionTemplateColumn" local="id" foreign="template" cardinality="many" owner="local" />

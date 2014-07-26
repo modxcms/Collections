@@ -310,6 +310,71 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                         }]
                     }]
                 }]
+            },{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
+                        columnWidth:.4
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'collections-combo-single-template'
+                            ,fieldLabel: _('collections.template.child_template')
+                            ,name: 'child_template'
+                            ,hiddenName: 'child_template'
+                            ,allowBlank: true
+                            ,editable: true
+                        }]
+                    },{
+                        columnWidth:.4
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'modx-combo-class-derivatives'
+                            ,fieldLabel: _('collections.template.child_resource_type')
+                            ,name: 'child_resource_type'
+                            ,hiddenName: 'child_resource_type'
+                            ,allowBlank: false
+                            ,editable: false
+                            ,value: (config.record) ? config.record.child_resource_type : 'modDocument'
+                        }]
+                    },{
+                        columnWidth:.2
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'modx-combo-boolean'
+                            ,fieldLabel: _('collections.template.resource_type_selection')
+                            ,name: 'resource_type_selection'
+                            ,hiddenName: 'resource_type_selection'
+                            ,value: (config.record) ? config.record.resource_type_selection : true
+                        }]
+                    }]
+                }]
             }]
         }];
     }

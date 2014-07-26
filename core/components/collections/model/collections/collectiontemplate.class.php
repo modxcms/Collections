@@ -10,6 +10,9 @@
  * @property int $page_size
  * @property string $sort_field
  * @property string $sort_dir
+ * @property int $child_template
+ * @property string $child_resource_type
+ * @property bool $resource_type_selection
  *
  * @property CollectionSetting $Setting
  * @property array $Columns

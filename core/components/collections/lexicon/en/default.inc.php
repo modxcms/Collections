@@ -74,6 +74,9 @@ $_lang['collections.template.set_as_global'] = 'Set as global template';
 $_lang['collections.template.global_template'] = 'Global template';
 $_lang['collections.template.template'] = 'Collection\'s template';
 $_lang['collections.template.empty'] = '(use global default)';
+$_lang['collections.template.child_template'] = 'Default children\'s template';
+$_lang['collections.template.child_resource_type'] = 'Default children\'s resource type';
+$_lang['collections.template.resource_type_selection'] = 'Resource type selection';
 
 $_lang['collections.template.column.none'] = 'This template don\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

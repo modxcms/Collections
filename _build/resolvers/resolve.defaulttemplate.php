@@ -22,6 +22,9 @@ if ($object->xpdo) {
                 $template->set('page_size', 10);
                 $template->set('sort_field', 'publishedon');
                 $template->set('sort_dir', 'desc');
+                $template->set('child_template', null);
+                $template->set('child_resource_type', 'modDocument');
+                $template->set('resource_type_selection', true);
 
                 $columns = array();
                 $columns[0] = $modx->newObject('CollectionTemplateColumn');

@@ -104,3 +104,22 @@ Collections.combo.CollectionsTemplate = function(config) {
 };
 Ext.extend(Collections.combo.CollectionsTemplate,MODx.combo.ComboBox);
 Ext.reg('collections-combo-collections-template',Collections.combo.CollectionsTemplate);
+
+Collections.combo.SingleTemplate = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        name: 'resource_template'
+        ,hiddenName: 'resource_template'
+        ,displayField: 'templatename'
+        ,valueField: 'id'
+        ,fields: ['templatename','id']
+        ,pageSize: 20
+        ,url: Collections.config.connectorUrl
+        ,baseParams:{
+            action: 'mgr/extra/gettemplates'
+        }
+    });
+    Collections.combo.SingleTemplate.superclass.constructor.call(this,config);
+};
+Ext.extend(Collections.combo.SingleTemplate,MODx.combo.ComboBox);
+Ext.reg('collections-combo-single-template',Collections.combo.SingleTemplate);

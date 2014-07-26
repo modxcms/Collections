@@ -65,24 +65,35 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,getTbar: function(config) {
 
-        var resourceDerivatives = [];
+        var items = [];
 
-        Ext.each(Collections.resourceDerivatives, function(item){
-            resourceDerivatives.push({
-                text: item.name
-                ,derivative: item.id
-                ,handler: this.createDerivativeChild
+        if (Collections.template.resource_type_selection) {
+            var resourceDerivatives = [];
+
+            Ext.each(Collections.resourceDerivatives, function(item){
+                resourceDerivatives.push({
+                    text: item.name
+                    ,derivative: item.id
+                    ,handler: this.createDerivativeChild
+                    ,scope: this
+                });
+            }, this);
+
+            items.push({
+                text: _('collections.children.create')
+                ,handler: this.createChild
+                ,xtype: 'splitbutton'
+                ,scope: this
+                ,menu: resourceDerivatives
+            });
+        } else {
+            items.push({
+                text: _('collections.children.create')
+                ,handler: this.createChild
                 ,scope: this
             });
-        }, this);
+        }
 
-        var items = [{
-            text: _('collections.children.create')
-            ,handler: this.createChild
-            ,xtype: 'splitbutton'
-            ,scope: this
-            ,menu: resourceDerivatives
-        }];
 
         if (Collections.template.bulkActions) {
             items.push({
@@ -176,11 +187,21 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     }
 
     ,createChild: function(btn,e) {
-        MODx.loadPage(MODx.action['resource/create'], 'parent='+MODx.request.id+'&context_key='+MODx.ctx);
+        var template = '';
+        if (Collections.template.children.template != null) {
+            template = '&template=' + Collections.template.children.template;
+        }
+
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + MODx.request.id + '&context_key=' + MODx.ctx + '&class_key=' + Collections.template.children.resource_type + template);
     }
 
     ,createDerivativeChild: function(btn, e) {
-        MODx.loadPage(MODx.action['resource/create'], 'parent='+MODx.request.id+'&context_key='+MODx.ctx+'&class_key='+btn.derivative);
+        var template = '';
+        if (Collections.template.children.template != null) {
+            template = '&template=' + Collections.template.children.template;
+        }
+
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + MODx.request.id + '&context_key=' + MODx.ctx + '&class_key=' + btn.derivative + template);
     }
 
     ,viewChild: function(btn,e) {

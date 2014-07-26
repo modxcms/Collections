@@ -24,20 +24,20 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
             $this->setProperty('global_template', true);
         } else {
             $this->setProperty('global_template', false);
+
+            $templatesCount = $this->modx->getCount('CollectionTemplate', array('global_template' => 1, 'id:!=' => $this->object->id));
+            if ($templatesCount == 0) {
+                $this->setProperty('global_template', true);
+            }
         }
 
-        $bulkActions = $this->getProperty('bulk_actions');
-        if ($bulkActions == 'true') {
-            $this->setProperty('bulk_actions', true);
-        } else {
-            $this->setProperty('bulk_actions', false);
-        }
+        $this->handleComboBoolean('bulk_actions');
+        $this->handleComboBoolean('allow_dd');
+        $this->handleComboBoolean('resource_type_selection');
 
-        $allowDD = $this->getProperty('allow_dd');
-        if ($allowDD == 'true') {
-            $this->setProperty('allow_dd', true);
-        } else {
-            $this->setProperty('allow_dd', false);
+        $childTemplate = $this->getProperty('child_template');
+        if ($childTemplate == '') {
+            $this->setProperty('child_template', null);
         }
 
         $templates = $this->getProperty('templates');
@@ -87,6 +87,15 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         $column->set('width', 40);
         $column->set('template', $this->object->id);
         $column->save();
+    }
+
+    public function handleComboBoolean($property) {
+        $boolean = $this->getProperty($property);
+        if ($boolean == 'true') {
+            $this->setProperty($property, true);
+        } else {
+            $this->setProperty($property, false);
+        }
     }
 
 }

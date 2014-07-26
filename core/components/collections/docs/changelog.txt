@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Added children default template, default resource type and allow resource type selection options to collection's templates
 - Fixed View button
 - Fixed logging messages from plugin
 

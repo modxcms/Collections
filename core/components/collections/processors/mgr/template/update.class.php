@@ -31,18 +31,13 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
             }
         }
 
-        $bulkActions = $this->getProperty('bulk_actions');
-        if ($bulkActions == 'true') {
-            $this->setProperty('bulk_actions', true);
-        } else {
-            $this->setProperty('bulk_actions', false);
-        }
+        $this->handleComboBoolean('bulk_actions');
+        $this->handleComboBoolean('allow_dd');
+        $this->handleComboBoolean('resource_type_selection');
 
-        $allowDD = $this->getProperty('allow_dd');
-        if ($allowDD == 'true') {
-            $this->setProperty('allow_dd', true);
-        } else {
-            $this->setProperty('allow_dd', false);
+        $childTemplate = $this->getProperty('child_template');
+        if ($childTemplate == '') {
+            $this->setProperty('child_template', null);
         }
 
         $templates = $this->getProperty('templates');
@@ -81,6 +76,15 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
         $this->object->setTemplates($templates);
 
         return parent::afterSave();
+    }
+
+    public function handleComboBoolean($property) {
+        $boolean = $this->getProperty($property);
+        if ($boolean == 'true') {
+            $this->setProperty($property, true);
+        } else {
+            $this->setProperty($property, false);
+        }
     }
 
 }
