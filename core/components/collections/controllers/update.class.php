@@ -130,7 +130,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         $columns = $this->modx->getIterator('CollectionTemplateColumn', $c);
 
         $templateOptions = array(
-            'fields' => array('actions', 'action_edit'),
+            'fields' => array('actions', 'action_edit', 'preview_url'),
             'columns' => array(),
             'sort' => array(
                 'field' => $template->sort_field,
