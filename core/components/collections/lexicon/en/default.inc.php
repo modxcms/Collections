@@ -47,7 +47,7 @@ $_lang['collections.children.unpublish_multiple'] = 'Unpublish selected';
 $_lang['collections.children.delete_multiple'] = 'Delete selected';
 $_lang['collections.children.delete_multiple_confirm'] = 'Are you sure, that you want to delete all selected children?';
 $_lang['collections.children.undelete_multiple'] = 'Undelete selected';
-$_lang['collections.children.none'] = 'This resource don\'t have any children.';
+$_lang['collections.children.none'] = 'This resource doesn\'t have any children.';
 $_lang['collections.children.err_ns_multiple'] = 'You have to select at least one children.';
 $_lang['collections.children.menuindex'] = 'Menu index';
 
