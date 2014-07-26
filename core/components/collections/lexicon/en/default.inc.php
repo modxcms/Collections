@@ -7,8 +7,8 @@
  */
 $_lang['collections'] = 'Collections';
 
-$_lang['collections.menu.collection_templates'] = 'Collection templates';
-$_lang['collections.menu.collection_templates_desc'] = 'Define templates for collection\'s children grid.';
+$_lang['collections.menu.collection_templates'] = 'Collection views';
+$_lang['collections.menu.collection_templates_desc'] = 'Define views for collection\'s children grid.';
 
 // Settings lexicons
 $_lang['setting_collections.mgr_date_format'] = 'Grid date format';
@@ -52,33 +52,33 @@ $_lang['collections.children.err_ns_multiple'] = 'You have to select at least on
 $_lang['collections.children.menuindex'] = 'Menu index';
 
 // Template
-$_lang['collections.template.page_title'] = 'Collection templates';
-$_lang['collections.template.templates'] = 'Templates';
-$_lang['collections.template.templates_desc'] = 'Here you can manage all collection templates.';
-$_lang['collections.template.none'] = 'There are no templates yet.';
+$_lang['collections.template.page_title'] = 'Collection views';
+$_lang['collections.template.templates'] = 'Views';
+$_lang['collections.template.templates_desc'] = 'Configure the list views when users click on a Collection in the site tree. Views can show default fields, Template Variables, and custom TVs like Tagger fields. Collection values can be configured to be individually and bulk editable directly from lists.';
+$_lang['collections.template.none'] = 'There are no views yet.';
 $_lang['collections.template.name'] = 'Name';
 $_lang['collections.template.description'] = 'Description';
-$_lang['collections.template.add'] = 'Add template';
-$_lang['collections.template.new_template'] = 'New template';
-$_lang['collections.template.update_template'] = 'Update template';
-$_lang['collections.template.remove'] = 'Remove template';
-$_lang['collections.template.remove_confirm'] = 'Are you sure, you want to remove this template?';
-$_lang['collections.template.update'] = 'Update template';
+$_lang['collections.template.add'] = 'Add view';
+$_lang['collections.template.new_template'] = 'New view';
+$_lang['collections.template.update_template'] = 'Update view';
+$_lang['collections.template.remove'] = 'Remove view';
+$_lang['collections.template.remove_confirm'] = 'Are you sure, you want to remove this view?';
+$_lang['collections.template.update'] = 'Update view';
 $_lang['collections.template.default_for_templates'] = 'Default for templates';
 $_lang['collections.template.bulk_actions'] = 'Allow bulk actions';
 $_lang['collections.template.allow_dd'] = 'Allow drag & drop';
 $_lang['collections.template.page_size'] = 'Page size';
 $_lang['collections.template.sort_field'] = 'Sort field';
 $_lang['collections.template.sort_dir'] = 'Sort direction';
-$_lang['collections.template.set_as_global'] = 'Set as global template';
-$_lang['collections.template.global_template'] = 'Global template';
-$_lang['collections.template.template'] = 'Collection\'s template';
+$_lang['collections.template.set_as_global'] = 'Set as global view';
+$_lang['collections.template.global_template'] = 'Global view';
+$_lang['collections.template.template'] = 'Collection\'s view';
 $_lang['collections.template.empty'] = '(use global default)';
 $_lang['collections.template.child_template'] = 'Default children\'s template';
 $_lang['collections.template.child_resource_type'] = 'Default children\'s resource type';
 $_lang['collections.template.resource_type_selection'] = 'Resource type selection';
 
-$_lang['collections.template.column.none'] = 'This template don\'t have columns yet.';
+$_lang['collections.template.column.none'] = 'This view don\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';
 $_lang['collections.template.column.label'] = 'Label';
 $_lang['collections.template.column.add'] = 'Add column';
@@ -93,16 +93,16 @@ $_lang['collections.template.column.editor'] = 'Editor';
 $_lang['collections.template.column.renderer'] = 'Renderer';
 
 $_lang['collections.err.parent_ns'] = 'Parent is not specified.';
-$_lang['collections.err.template_ns'] = 'Template is not specified.';
+$_lang['collections.err.template_ns'] = 'View is not specified.';
 $_lang['collections.err.bad_sort_column'] = 'Sort grid by <strong>[[+column]]</strong> to use drag & drop sorting.';
 $_lang['collections.err.clear_filter'] = 'Please clear <strong>filter</strong> and <strong>search</strong> to use drag & drop sorting.';
 $_lang['collections.err.common'] = 'Error occurred during the action.';
 $_lang['collections.err.template_ns_name'] = 'Name is not specified.';
 $_lang['collections.err.column_ns_name'] = 'Name is not specified.';
 $_lang['collections.err.column_ae_name'] = 'Column with this name already exists.';
-$_lang['collections.err.template_resource_template_aiu_s'] = 'Template <strong>[[+templates]]</strong> already has assigned Collection Template.';
-$_lang['collections.err.template_resource_template_aiu_p'] = 'Templates <strong>[[+templates]]</strong> already have assigned Collection Template.';
+$_lang['collections.err.template_resource_template_aiu_s'] = 'Template <strong>[[+templates]]</strong> already has assigned Collection View.';
+$_lang['collections.err.template_resource_template_aiu_p'] = 'Templates <strong>[[+templates]]</strong> already have assigned Collection View.';
 $_lang['collections.err.cant_remove_id_column'] = 'You can\'t remove ID columns. This column is required, if you don\'t want to see this column set <strong>hidden</strong> parameter to <strong>true</strong>.';
 $_lang['collections.err.column_name_cant_change'] = 'You can\'t change name of ID columns. This column is required, if you don\'t want to see this column set <strong>hidden</strong> parameter to <strong>true</strong>.';
-$_lang['collections.err.template_remove_last'] = 'You can\'t remove the last template.';
-$_lang['collections.err.template_remove_global'] = 'You can\'t remove global template. Please set different template as a global and repeat this action.';
+$_lang['collections.err.template_remove_last'] = 'You can\'t remove the last view.';
+$_lang['collections.err.template_remove_global'] = 'You can\'t remove global view. Please set different view as a global and repeat this action.';

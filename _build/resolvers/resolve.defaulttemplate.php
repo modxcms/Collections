@@ -14,8 +14,8 @@ if ($object->xpdo) {
             if ($templates == 0) {
                 /** @var CollectionTemplate $template */
                 $template = $modx->newObject('CollectionTemplate');
-                $template->set('name', 'Default template');
-                $template->set('description', 'Default template bundled with Collections package.');
+                $template->set('name', 'Default view');
+                $template->set('description', 'Default view bundled with Collections package.');
                 $template->set('global_template', true);
                 $template->set('bulk_actions', true);
                 $template->set('allow_dd', true);
