@@ -81,6 +81,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             $queryWhere = array(
                 'pagetitle:LIKE' => '%'.$query.'%',
                 'OR:description:LIKE' => '%'.$query.'%',
+                'OR:alias:LIKE' => '%'.$query.'%',
                 'OR:introtext:LIKE' => '%'.$query.'%',
                 'OR:CreatedByProfile.fullname:LIKE' => '%'.$query.'%',
                 'OR:CreatedBy.username:LIKE' => '%'.$query.'%',
