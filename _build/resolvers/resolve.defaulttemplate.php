@@ -14,7 +14,7 @@ if ($object->xpdo) {
             if ($templates == 0) {
                 /** @var CollectionTemplate $template */
                 $template = $modx->newObject('CollectionTemplate');
-                $template->set('name', 'Default view');
+                $template->set('name', 'Blog');
                 $template->set('description', 'A default view that works well for blogs.');
                 $template->set('global_template', true);
                 $template->set('bulk_actions', true);
