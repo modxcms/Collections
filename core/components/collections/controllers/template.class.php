@@ -24,6 +24,7 @@ class CollectionsTemplateManagerController extends CollectionsBaseManagerControl
     public function process(array $scriptProperties = array()) {}
 
     public function loadCustomCssJs() {
+        $this->addLastJavascript($this->collections->getOption('jsUrl').'mgr/widgets/template/template.window.js');
         $this->addLastJavascript($this->collections->getOption('jsUrl').'mgr/widgets/template/template.grid.js');
         $this->addLastJavascript($this->collections->getOption('jsUrl').'mgr/widgets/template/home.panel.js');
         $this->addLastJavascript($this->collections->getOption('jsUrl').'mgr/sections/template/home.js');

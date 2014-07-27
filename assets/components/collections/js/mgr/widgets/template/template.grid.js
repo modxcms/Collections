@@ -49,6 +49,14 @@ Ext.extend(Collections.grid.Template,MODx.grid.Grid,{
             text: _('collections.template.update')
             ,handler: this.editTemplate
         });
+
+        m.push({
+            text: _('collections.template.duplicate')
+            ,handler: this.duplicateTemplate
+        });
+
+        m.push('-');
+
         m.push({
             text: _('collections.template.remove')
             ,handler: this.removeTemplate
@@ -79,6 +87,29 @@ Ext.extend(Collections.grid.Template,MODx.grid.Grid,{
                 'success': {fn:function(r) { this.refresh(); },scope:this}
             }
         });
+
+        return true;
+    }
+
+    ,duplicateTemplate: function(btn,e) {
+        if (!this.menu.record) return false;
+
+        var r = {};
+
+        r.name = 'Copy of ' + this.menu.record.name;
+        r.id = this.menu.record.id;
+
+        var updateColumn = MODx.load({
+            xtype: 'collections-window-template-duplicate'
+            ,record: r
+            ,listeners: {
+                'success': {fn:function() { this.refresh(); },scope:this}
+            }
+        });
+
+        updateColumn.fp.getForm().reset();
+        updateColumn.fp.getForm().setValues(r);
+        updateColumn.show(e.target);
 
         return true;
     }

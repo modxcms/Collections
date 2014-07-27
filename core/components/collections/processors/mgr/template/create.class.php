@@ -17,6 +17,10 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
 
         if (empty($name)) {
             $this->addFieldError('name',$this->modx->lexicon('collections.err.template_ns_name'));
+        } else {
+            if ($this->doesAlreadyExist(array('name' => $name))) {
+                $this->addFieldError('name',$this->modx->lexicon('collections.err.template_ae_name'));
+            }
         }
 
         $global = $this->getProperty('global_template');

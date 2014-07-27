@@ -2,8 +2,6 @@ Collections.window.TemplateColumn = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         title: _('collections.template.column.add')
-        ,height: 150
-        ,width: 475
         ,closeAction: 'close'
         ,isUpdate: false
         ,url: Collections.config.connectorUrl

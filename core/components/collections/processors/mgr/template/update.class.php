@@ -17,6 +17,10 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
 
         if (empty($name)) {
             $this->addFieldError('name',$this->modx->lexicon('collections.err.template_ns_name'));
+        } else {
+            if ($this->modx->getCount($this->classKey, array('name' => $name, 'id:!=' => $this->object->id)) > 0) {
+                $this->addFieldError('name',$this->modx->lexicon('collections.err.template_ae_name'));
+            }
         }
 
         $global = $this->getProperty('global_template');
