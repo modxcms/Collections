@@ -1,5 +1,10 @@
 Changelog for Collections.
 
+Collections 2.1.0
+===================
+- Added option to duplicate Collection's view
+- Updated layout for create/update view's column
+- Added view,update,delete,duplicate,publish items to children's grid context menu
 - Added children default template, default resource type and allow resource type selection options to collection's templates
 - Fixed View button
 - Fixed logging messages from plugin

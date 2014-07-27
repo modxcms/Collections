@@ -15,7 +15,7 @@ set_time_limit(0);
 define('PKG_NAME','Collections');
 define('PKG_NAME_LOWER',strtolower(PKG_NAME));
 define('PKG_VERSION','2.1.0');
-define('PKG_RELEASE','dev');
+define('PKG_RELEASE','pl');
 
 /* define sources */
 $root = dirname(dirname(__FILE__)).'/';
