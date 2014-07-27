@@ -176,37 +176,44 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         $resourceArray['actions'] = array();
         $resourceArray['actions'][] = array(
+            'className' => 'view',
+            'text' => $this->modx->lexicon('view'),
+            'key' => 'view',
+        );
+        $resourceArray['actions'][] = array(
             'className' => 'edit',
             'text' => $this->modx->lexicon('edit'),
+            'key' => 'edit',
         );
         $resourceArray['actions'][] = array(
             'className' => 'duplicate',
             'text' => $this->modx->lexicon('duplicate'),
+            'key' => 'duplicate',
         );
-        $resourceArray['actions'][] = array(
-            'className' => 'view',
-            'text' => $this->modx->lexicon('view'),
-        );
-        if (!empty($resourceArray['deleted'])) {
-            $resourceArray['actions'][] = array(
-                'className' => 'undelete',
-                'text' => $this->modx->lexicon('undelete'),
-            );
-        } else {
-            $resourceArray['actions'][] = array(
-                'className' => 'delete',
-                'text' => $this->modx->lexicon('delete'),
-            );
-        }
         if (!empty($resourceArray['published'])) {
             $resourceArray['actions'][] = array(
                 'className' => 'unpublish',
                 'text' => $this->modx->lexicon('unpublish'),
+                'key' => 'unpublish',
             );
         } else {
             $resourceArray['actions'][] = array(
                 'className' => 'publish orange',
                 'text' => $this->modx->lexicon('publish'),
+                'key' => 'publish',
+            );
+        }
+        if (!empty($resourceArray['deleted'])) {
+            $resourceArray['actions'][] = array(
+                'className' => 'undelete',
+                'text' => $this->modx->lexicon('undelete'),
+                'key' => 'undelete',
+            );
+        } else {
+            $resourceArray['actions'][] = array(
+                'className' => 'delete',
+                'text' => $this->modx->lexicon('delete'),
+                'key' => 'delete',
             );
         }
         return $resourceArray;

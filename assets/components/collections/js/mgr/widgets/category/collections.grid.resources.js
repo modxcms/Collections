@@ -41,15 +41,19 @@ Collections.grid.ContainerCollections = function(config) {
 Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     getMenu: function() {
         var m = [];
+        if (!this.menu.record) return m;
 
-        m.push({
-            text: _('collections.children.update')
-            ,handler: this.editChild
-        });
-        m.push({
-            text: _('collections.children.delete')
-            ,handler: this.deleteChild
-        });
+        Ext.each(this.menu.record.actions, function(item) {
+            if (item.key == 'delete' || item.key == 'undelete') {
+                m.push('-');
+            }
+
+            m.push({
+                text: _('collections.children.' + item.key)
+                ,handler: 'this.' + item.key + 'Child'
+            });
+        }, this);
+
         return m;
     }
 
@@ -205,7 +209,12 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     }
 
     ,viewChild: function(btn,e) {
-        window.open(this.menu.record.data.preview_url);
+        if (!this.menu.record.data) {
+            window.open(this.menu.record.preview_url);
+        } else {
+            window.open(this.menu.record.data.preview_url);
+        }
+
         return false;
     }
 
