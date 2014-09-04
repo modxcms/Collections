@@ -166,7 +166,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
      * @param modResource $object
      * @return array
      */
-    public function prepareRow($object) {
+    public function prepareRow(xPDOObject $object) {
         $resourceArray = parent::prepareRow($object);
 
         $resourceArray['action_edit'] = '?a=resource/update&action=post/update&id='.$resourceArray['id'];
