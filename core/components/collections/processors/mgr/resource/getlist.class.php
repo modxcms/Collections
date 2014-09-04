@@ -169,7 +169,13 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public function prepareRow($object) {
         $resourceArray = parent::prepareRow($object);
 
-        $resourceArray['action_edit'] = '?a=resource/update&action=post/update&id='.$resourceArray['id'];
+        $version = $this->modx->getVersionData();
+
+        if ($version['major_version'] < 3) {
+            $resourceArray['action_edit'] = '?a=30&id='.$resourceArray['id'];
+        } else {
+            $resourceArray['action_edit'] = '?a=resource/update&action=post/update&id='.$resourceArray['id'];
+        }
 
         $this->modx->getContext($resourceArray['context_key']);
         $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'],$resourceArray['context_key']);
