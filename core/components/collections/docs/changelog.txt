@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Fix strict standards error (PHP 5.4+) in resource/getlist processor
 - Fix not working editlink on pagetitle click in grid
 
 Collections 2.1.0

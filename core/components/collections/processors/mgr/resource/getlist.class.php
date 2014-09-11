@@ -163,10 +163,10 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     }
 
     /**
-     * @param modResource $object
+     * @param xPDOObject $object
      * @return array
      */
-    public function prepareRow($object) {
+    public function prepareRow(xPDOObject $object) {
         $resourceArray = parent::prepareRow($object);
 
         $version = $this->modx->getVersionData();
