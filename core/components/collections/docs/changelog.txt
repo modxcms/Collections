@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Added data controller to show resource owerview page
 - Fix # being appended to manager url when clicking a button
 - Fix strict standards error (PHP 5.4+) in resource/getlist processor
 - Fix not working editlink on pagetitle click in grid
