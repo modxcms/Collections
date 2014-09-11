@@ -125,10 +125,10 @@ $vehicle->resolve('php',array(
     'source' => $sources['resolvers'] . 'resolve.extension_package.php',
 ));
 $vehicle->resolve('php',array(
-    'source' => $sources['resolvers'] . 'resolve.defaulttemplate.php',
+    'source' => $sources['resolvers'] . 'resolve.updatefromfirst.php',
 ));
 $vehicle->resolve('php',array(
-    'source' => $sources['resolvers'] . 'resolve.updatefromfirst.php',
+    'source' => $sources['resolvers'] . 'resolve.defaulttemplate.php',
 ));
 $builder->putVehicle($vehicle);
 
