@@ -3,7 +3,7 @@ var pagetitleWithButtons = new Ext.XTemplate('<tpl for="."><div class="collectio
     +'<tpl if="actions">'
     +'<ul class="actions">'
     +'<tpl for="actions">'
-    +'<li><a href="#" class="controlBtn {className}">{text}</a></li>'
+    +'<li><a href="javascript:void(0);" class="controlBtn {className}">{text}</a></li>'
     +'</tpl>'
     +'</ul>'
     +'</tpl>'
