@@ -215,6 +215,11 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                 'text' => $this->modx->lexicon('undelete'),
                 'key' => 'undelete',
             );
+            $resourceArray['actions'][] = array(
+                'className' => 'remove',
+                'text' => $this->modx->lexicon('collections.children.remove_action'),
+                'key' => 'remove',
+            );
         } else {
             $resourceArray['actions'][] = array(
                 'className' => 'delete',

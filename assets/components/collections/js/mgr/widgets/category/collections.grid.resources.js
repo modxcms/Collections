@@ -259,6 +259,21 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         });
     }
 
+    ,removeChild: function(btn,e) {
+        MODx.msg.confirm({
+            title: _('collections.children.remove')
+            ,text: _('collections.children.remove_confirm')
+            ,url: this.config.url
+            ,params: {
+                action: 'mgr/resource/remove'
+                ,id: this.menu.record.id
+            }
+            ,listeners: {
+                'success':{fn:this.refresh,scope:this}
+            }
+        });
+    }
+
     ,deleteSelected: function(btn,e) {
         var cs = this.getSelectedAsList();
         if (cs === false) return false;
@@ -409,6 +424,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                     break;
                 case 'view':
                     this.viewChild();
+                    break;
+                case 'remove':
+                    this.removeChild();
                     break;
                 default:
                     window.location = record.data.edit_action;

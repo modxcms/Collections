@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Added an option to permanently remove deleted resource
 - Fixed duplicate action from context menu
 - Added data controller to show resource owerview page
 - Fix # being appended to manager url when clicking a button

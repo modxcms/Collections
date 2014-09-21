@@ -55,6 +55,9 @@ $_lang['collections.children.undelete_multiple'] = 'Undelete selected';
 $_lang['collections.children.none'] = 'This resource doesn\'t have any children.';
 $_lang['collections.children.err_ns_multiple'] = 'You have to select at least one children.';
 $_lang['collections.children.menuindex'] = 'Menu index';
+$_lang['collections.children.remove_action'] = 'Remove';
+$_lang['collections.children.remove'] = 'Remove child';
+$_lang['collections.children.remove_confirm'] = 'Are you sure, you want to remove this child?<br /><strong>This operation is permanent and can\'t be reverted.</strong>';
 
 // Template
 $_lang['collections.template.page_title'] = 'Collection views';
