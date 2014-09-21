@@ -57,7 +57,13 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         foreach ($columns as $column) {
             if (strpos($column, 'tv_') !== false) {
-                $this->tvColumns[] = $column;
+                $tvName = preg_replace('/tv_/', '', $column, 1);
+
+                $tv = $this->modx->getObject('modTemplateVar', array('name' => $tvName));
+
+                if ($tv) {
+                    $this->tvColumns[] = array('id' => $tv->id, 'name' => $tvName, 'column' => $column);
+                }
             } else {
                 $this->taggerColumns[] = $column;
             }
@@ -131,10 +137,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         ));
 
         foreach ($this->tvColumns as $column) {
-            $name = str_replace('tv_', '', $column);
-
-            $c->leftJoin('modTemplateVarResource', 'TemplateVarResources_' . $column, 'TemplateVarResources_'.$column.'.contentid = modResource.id');
-            $c->leftJoin('modTemplateVar', 'TemplateVar_' . $column, 'TemplateVar_'.$column.'.id = TemplateVarResources_'.$column.'.tmplvarid AND TemplateVar_'.$column.'.name = \'' . $name .'\'');
+            $c->leftJoin('modTemplateVarResource', 'TemplateVarResources_' . $column['column'], 'TemplateVarResources_' . $column['column'] . '.contentid = modResource.id AND TemplateVarResources_' . $column['column'] . '.tmplvarid = ' . $column['id']);
         }
 
         return $c;
@@ -146,7 +149,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         foreach ($this->tvColumns as $column) {
             $c->select(array(
-                $column => 'TemplateVarResources_' . $column . '.value'
+                $column['column'] => 'TemplateVarResources_' . $column['column'] . '.value'
             ));
         }
 

@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Fixed showing data in TV columns
 - Added an option to permanently remove deleted resource
 - Fixed duplicate action from context menu
 - Added data controller to show resource owerview page
