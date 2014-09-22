@@ -9,17 +9,7 @@ Collections.panel.Template = function(config) {
             action: 'mgr/template/create'
         }
         ,useLoadingMask: true
-        ,items: [{
-            html: '<h2>' + ((config.isUpdate == true)? _('collections.template.update_template') : _('collections.template.new_template')) + '</h2>'
-            ,border: false
-            ,cls: 'modx-page-header'
-        },{
-            name: 'id'
-            ,xtype: 'hidden'
-        },this.getItems(config),{
-            html: '<br />'
-            ,bodyCssClass: 'transparent-background'
-        },this.getTemplateOptions(config),this.getColumnsGrid(config)]
+        ,items: this.getItems(config)
         ,listeners: {
             'setup': {
                 fn: this.setup
@@ -83,8 +73,22 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
         Ext.apply(o.form.baseParams,d);
     }
 
-    ,getItems: function(config){
-        var items = [{
+    ,getItems: function(config) {
+        return [{
+            html: '<h2>' + ((config.isUpdate == true)? _('collections.template.update_template') : _('collections.template.new_template')) + '</h2>'
+            ,border: false
+            ,cls: 'modx-page-header'
+        },{
+            name: 'id'
+            ,xtype: 'hidden'
+        },this.getGeneralFields(config),{
+            html: '<br />'
+            ,bodyCssClass: 'transparent-background'
+        },this.getTemplateOptions(config),this.getColumnsGrid(config)];
+    }
+
+    ,getGeneralFields: function(config){
+        return [{
             deferredRender: false
             ,border: true
             ,defaults: {
@@ -154,8 +158,6 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                 }]
             }]
         }];
-
-        return items;
     }
 
     ,getColumnsGrid: function(config) {
@@ -212,7 +214,7 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
     }
 
     ,getTemplateOptions: function(config) {
-        return[{
+        return [{
             deferredRender: false
             ,border: true
             ,defaults: {
