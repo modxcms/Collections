@@ -24,8 +24,8 @@ class OnDocFormPrerender extends CollectionsPlugin {
         }
 
         if ($inject) {
-            $jsurl = $this->collections->getOption('jsUrl') . 'mgr/';
-            $this->modx->regClientStartupScript($jsurl . 'extra/hijackclose.js');
+            $jsUrl = $this->collections->getOption('jsUrl') . 'mgr/';
+            $this->modx->regClientStartupScript($jsUrl . 'extra/hijackclose.js');
         }
     }
 }

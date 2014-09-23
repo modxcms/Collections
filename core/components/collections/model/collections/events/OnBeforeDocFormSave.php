@@ -11,15 +11,8 @@ class OnBeforeDocFormSave extends CollectionsPlugin {
 
         /** @var \modResource $parent */
         $parent = $resource->Parent;
-        if ($parent) {
-            if ($parent->class_key == 'CollectionContainer') {
-                $hasChildren = ($resource->hasChildren() != 0);
-                if ($hasChildren) {
-                    $resource->set('show_in_tree', 1);
-                } else {
-                    $resource->set('show_in_tree', 0);
-                }
-            }
+        if ($parent && ($parent->class_key == 'CollectionContainer')) {
+            $this->handleParent($resource);
         }
 
         if ($resource->class_key == 'CollectionContainer') {
@@ -29,60 +22,108 @@ class OnBeforeDocFormSave extends CollectionsPlugin {
         /** @var \modResource $original */
         $original = $this->modx->getObject('modResource', $resource->id);
         if ($original) {
+            $this->handleOriginal($original, $parent, $resource);
+        }
+    }
 
-            /** @var \modResource $originalParent */
-            $originalParent = $original->Parent;
-            if ($originalParent && (!$parent || ($originalParent->id != $parent->id))) {
-                if ($originalParent->class_key == 'CollectionContainer') {
-                    if ($parent->class_key != 'CollectionContainer') {
-                        $resource->set('show_in_tree', 1);
-                    }
-                } else {
-                    /** @var \modResource $originalGreatParent */
-                    $originalGreatParent = $originalParent->Parent;
-                    if ($originalGreatParent && ($originalGreatParent->class_key == 'CollectionContainer')) {
-                        $resource->set('show_in_tree', 1);
+    /**
+     * @param \modResource $resource
+     */
+    protected function handleParent($resource) {
+        if ($resource->hasChildren() != 0) {
+            $resource->set('show_in_tree', 1);
+        } else {
+            $resource->set('show_in_tree', 0);
+        }
+    }
 
-                        $originalParentHasOtherChildren = ($originalParent->hasChildren() > 1);
-                        if (!$originalParentHasOtherChildren) {
-                            $originalParent->set('show_in_tree', 0);
-                            $originalParent->save();
-                        }
-                    }
+    /**
+     * @param \modResource $original
+     * @param \modResource $parent
+     * @param \modResource $resource
+     */
+    protected function handleOriginal($original, $parent, $resource) {
+        /** @var \modResource $originalParent */
+        $originalParent = $original->Parent;
+
+        if ($originalParent && (!$parent || ($originalParent->id != $parent->id))) {
+            $this->handleOriginalParent($parent, $resource, $originalParent);
+        }
+
+        if ($original->class_key != $resource->class_key) {
+            $this->switchResourceType($original, $resource);
+
+        }
+    }
+
+    /**
+     * @param \modResource $parent
+     * @param \modResource $resource
+     * @param \modResource $originalParent
+     */
+    protected function handleOriginalParent($parent, $resource, $originalParent) {
+        if ($originalParent->class_key == 'CollectionContainer') {
+            if ($parent->class_key != 'CollectionContainer') {
+                $resource->set('show_in_tree', 1);
+            }
+        } else {
+            /** @var \modResource $originalGreatParent */
+            $originalGreatParent = $originalParent->Parent;
+
+            if ($originalGreatParent && ($originalGreatParent->class_key == 'CollectionContainer')) {
+                $resource->set('show_in_tree', 1);
+
+                if ($originalParent->hasChildren() == 0) {
+                    $originalParent->set('show_in_tree', 0);
+                    $originalParent->save();
                 }
             }
+        }
+    }
 
-            // Switch Resource type
-            if ($original->class_key != $resource->class_key) {
-                // Switch to CollectionContainer
-                if (($original->class_key != 'CollectionContainer') && ($resource->class_key == 'CollectionContainer')) {
-                    $children = $resource->Children;
-                    /** @var \modResource $child */
-                    foreach ($children as $child) {
-                        $child->set('show_in_tree', 0);
+    /**
+     * @param \modResource $original
+     * @param \modResource $resource
+     */
+    protected function switchResourceType($original, $resource) {
+        if (($original->class_key != 'CollectionContainer') && ($resource->class_key == 'CollectionContainer')) {
+            $this->switchToCollections($resource);
+        }
 
-                        if ($child->class_key == 'CollectionContainer') {
-                            $child->set('show_in_tree', 1);
-                        }
+        if (($original->class_key == 'CollectionContainer') && ($resource->class_key != 'CollectionContainer')) {
+            $this->switchFromCollections($resource);
+        }
+    }
 
-                        if ($child->hasChildren() > 0) {
-                            $child->set('show_in_tree', 1);
-                        }
+    /**
+     * @param \modResource $resource
+     */
+    protected function switchToCollections($resource) {
+        /** @var \modResource[] $children */
+        $children = $resource->Children;
 
-                        $child->save();
-                    }
-                }
+        foreach ($children as $child) {
+            $child->set('show_in_tree', 0);
 
-                // Switch from CollectionContainer
-                if (($original->class_key == 'CollectionContainer') && ($resource->class_key != 'CollectionContainer')) {
-                    $children = $resource->Children;
-                    /** @var \modResource $child */
-                    foreach ($children as $child) {
-                        $child->set('show_in_tree', 1);
-                        $child->save();
-                    }
-                }
+            if ($child->class_key == 'CollectionContainer') {
+                $child->set('show_in_tree', 1);
             }
+
+            if ($child->hasChildren() > 0) {
+                $child->set('show_in_tree', 1);
+            }
+
+            $child->save();
+        }
+    }
+
+    protected function switchFromCollections($resource) {
+        /** @var \modResource[] $children */
+        $children = $resource->Children;
+
+        foreach ($children as $child) {
+            $child->set('show_in_tree', 1);
+            $child->save();
         }
     }
 }
