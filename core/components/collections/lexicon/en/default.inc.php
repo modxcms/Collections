@@ -86,6 +86,8 @@ $_lang['collections.template.child_template'] = 'Default children\'s template';
 $_lang['collections.template.child_resource_type'] = 'Default children\'s resource type';
 $_lang['collections.template.resource_type_selection'] = 'Resource type selection';
 $_lang['collections.template.duplicate'] = 'Duplicate view';
+$_lang['collections.template.grid_settings'] = 'Grid settings';
+$_lang['collections.template.children_settings'] = 'Children\'s settings';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

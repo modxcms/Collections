@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Added tabs to Collection views to split its settings
 - Splitted Setting tab to vtabs for Resource settings and Collections settings
 - Improved close button in collection's childs
 - Fixed showing data in TV columns
