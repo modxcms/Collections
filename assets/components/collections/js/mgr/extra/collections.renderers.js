@@ -52,3 +52,9 @@ Collections.renderer.datetime = function(value, metaData, record, rowIndex, colI
 
     return Ext.util.Format.date(d,MODx.config['collections.mgr_datetime_format']);
 };
+
+Collections.renderer.image = function(value, metaData, record, rowIndex, colIndex, store) {
+    if (value != '' && value != null) {
+        return '<img src="' + MODx.config.base_url + value + '" width="64">';
+    }
+};
