@@ -138,3 +138,7 @@
 .transparent-background {
     background-color: transparent;
 }
+
+.collections-setting-vtab {
+    padding: 0px;
+}

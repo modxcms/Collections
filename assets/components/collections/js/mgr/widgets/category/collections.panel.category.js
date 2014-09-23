@@ -54,25 +54,14 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
     }
 
     ,getSettingFields: function(config) {
-        var fields = Collections.panel.Category.superclass.getSettingFields.call(this,config);
-
-        fields.push([{
-            layout:'column'
-            ,border: false
-            ,anchor: '100%'
-            ,defaults: {
-                labelSeparator: ''
-                ,labelAlign: 'top'
-                ,border: false
-                ,layout: 'form'
-                ,msgTarget: 'under'
-            }
-            ,items:[{
-                columnWidth: 1
-                ,border: false
-                ,defaults: {
-                    msgTarget: 'under'
-                }
+        return [{
+            xtype: 'modx-vtabs'
+            ,ctCls: 'collections-setting-vtab'
+            ,items: [{
+                title: _('resource')
+                ,items: Collections.panel.Category.superclass.getSettingFields.call(this,config)
+            },{
+                title: _('collections')
                 ,items: [{
                     xtype: 'collections-combo-collections-template'
                     ,fieldLabel: _('collections.template.template')
@@ -86,9 +75,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
                     }
                 }]
             }]
-        }]);
-
-        return fields;
+        }];
     }
 
     ,getCollectionsChildrenTab: function(config) {

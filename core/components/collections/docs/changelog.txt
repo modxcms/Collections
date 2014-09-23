@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Splitted Setting tab to vtabs for Resource settings and Collections settings
 - Improved close button in collection's childs
 - Fixed showing data in TV columns
 - Added an option to permanently remove deleted resource
