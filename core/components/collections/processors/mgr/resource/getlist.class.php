@@ -32,8 +32,11 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         }
 
         if ($template == null) {
+            /** @var modResource $parentObject */
+            $parentObject = $this->modx->getObject('modResource', $parent);
+
             /** @var CollectionResourceTemplate $resourceTemplate */
-            $resourceTemplate = $this->modx->getObject('CollectionResourceTemplate', array('resource_template' => $parent));
+            $resourceTemplate = $this->modx->getObject('CollectionResourceTemplate', array('resource_template' => $parentObject->template));
             if ($resourceTemplate) {
                 $template = $resourceTemplate->CollectionTemplate;
             } else {
