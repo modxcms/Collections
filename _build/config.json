@@ -2,8 +2,8 @@
     "name": "Collections"
     ,"lowCaseName": "collections"
     ,"description": "Hides resources under this container in tree. Adding grid int o the update resource panel."
-    ,"author": "Jan Peca"
-    ,"version": "2.1.0"
+    ,"author": "John Peca"
+    ,"version": "2.2.0"
     ,"package":{
         "actions": [{
             "id": 1

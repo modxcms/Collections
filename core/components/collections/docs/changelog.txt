@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+Collections 2.2.0
+===================
 - Added an option to set position of Content field
 - Added an options to set Tab's and New child's button label
 - Added Collections.renderer.image for rendering images
