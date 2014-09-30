@@ -22,5 +22,13 @@ $xpdo_meta_map['CollectionContainer']= array (
       'cardinality' => 'one',
       'owner' => 'local',
     ),
+    'Selection' => 
+    array (
+      'class' => 'CollectionSelection',
+      'local' => 'id',
+      'foreign' => 'collection',
+      'cardinality' => 'many',
+      'owner' => 'local',
+    ),
   ),
 );

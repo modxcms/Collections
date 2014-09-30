@@ -94,4 +94,46 @@ class Collections {
 
         return $array;
     }
+
+    /**
+     * @param modResource $resource
+     * @return bool
+     */
+    public function isSelection($resource) {
+        //@TODO: Check for ResourceSetting
+
+        $template = $this->getCollectionsView($resource);
+
+        if ($template->selection == 1) return true;
+
+        return false;
+    }
+
+    /**
+     * @param modResource $collection
+     * @return CollectionTemplate
+     */
+    public function getCollectionsView($collection) {
+        $template = null;
+
+        /** @var CollectionSetting $collectionSetting */
+        $collectionSetting = $this->modx->getObject('CollectionSetting', array('collection' => $collection->id));
+        if ($collectionSetting) {
+            if (intval($collectionSetting->template) > 0) {
+                $template = $collectionSetting->Template;
+            }
+        }
+
+        if ($template == null) {
+            /** @var CollectionResourceTemplate $resourceTemplate */
+            $resourceTemplate = $this->modx->getObject('CollectionResourceTemplate', array('resource_template' => $collection->template));
+            if ($resourceTemplate) {
+                $template = $resourceTemplate->CollectionTemplate;
+            } else {
+                $template = $this->modx->getObject('CollectionTemplate', array('global_template' => 1));
+            }
+        }
+
+        return $template;
+    }
 }

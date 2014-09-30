@@ -23,12 +23,8 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
             }
         }
 
-        $global = $this->getProperty('global_template');
-        if ($global == 'true') {
-            $this->setProperty('global_template', true);
-        } else {
-            $this->setProperty('global_template', false);
-
+        $global = $this->handleComboBoolean('global_template');
+        if ($global == false) {
             $templatesCount = $this->modx->getCount('CollectionTemplate', array('global_template' => 1, 'id:!=' => $this->object->id));
             if ($templatesCount == 0) {
                 $this->setProperty('global_template', true);
@@ -38,6 +34,7 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
         $this->handleComboBoolean('bulk_actions');
         $this->handleComboBoolean('allow_dd');
         $this->handleComboBoolean('resource_type_selection');
+        $this->handleComboBoolean('selection');
 
         $childTemplate = $this->getProperty('child_template');
         if ($childTemplate == '') {
@@ -94,11 +91,16 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
 
     public function handleComboBoolean($property) {
         $boolean = $this->getProperty($property);
+
         if ($boolean == 'true') {
             $this->setProperty($property, true);
-        } else {
-            $this->setProperty($property, false);
+
+            return true;
         }
+
+        $this->setProperty($property, false);
+
+        return false;
     }
 
 }

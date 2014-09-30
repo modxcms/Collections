@@ -111,11 +111,23 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
     }
 
     ,getCollectionsChildrenTab: function(config) {
-        return [{
+        var items = [];
+        if (Collections.template.selection) {
+            items.push({
+                html: '<p>Attention! Those are linked Resources. If you change anything, it will appear in the original Resource as well.</p>'
+                ,border: false
+                ,bodyCssClass: 'panel-desc'
+                ,anchor: '100%'
+            });
+        }
+
+        items.push({
             'xtype': 'collections-grid-children'
             ,url: Collections.connectorUrl
             ,anchor: '100%'
-        }];
+        });
+
+        return items;
     }
 
 });

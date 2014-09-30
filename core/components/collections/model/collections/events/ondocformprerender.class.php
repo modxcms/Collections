@@ -19,6 +19,11 @@ class OnDocFormPrerender extends CollectionsPlugin {
             $inject = ($parent->class_key == 'CollectionContainer');
         }
 
+        if (!$inject) {
+            $selection = $this->modx->getCount('CollectionSelection', array('resource' => $this->scriptProperties['resource']->id));
+            if ($selection > 0) $inject = true;
+        }
+
         if ($inject) {
             $jsUrl = $this->collections->getOption('jsUrl') . 'mgr/';
             $this->modx->regClientStartupScript($jsUrl . 'extra/hijackclose.js');

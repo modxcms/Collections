@@ -42,6 +42,10 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                         fn: function(r) {
                             this.getForm().setValues(r.object);
 
+                            if (r.object.selection == true) {
+                                Ext.getCmp('collections-panel-template-children_settings').disable();
+                            }
+
                             this.fireEvent('ready', r.object);
                             MODx.fireEvent('ready');
                         },
@@ -222,6 +226,10 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                 },{
                     title: _('collections.template.children_settings')
                     ,items: this.getChildrenSettingsFields(config)
+                    ,id: 'collections-panel-template-children_settings'
+                },{
+                    title: _('collections.template.selections_settings')
+                    ,items: this.getSelectionsSettingsFields(config)
                 }]
         }];
 
@@ -488,6 +496,69 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,allowBlank: false
                             ,editable: false
                             ,value: (config.record) ? config.record.child_resource_type : 'modDocument'
+                        }]
+                    }]
+                }]
+            }]
+        }];
+    }
+
+    ,getSelectionsSettingsFields: function(config) {
+        return [{
+            deferredRender: false
+            ,border: true
+            ,defaults: {
+                autoHeight: true
+                ,layout: 'form'
+                ,labelWidth: 150
+                ,bodyCssClass: 'main-wrapper'
+                ,layoutOnTabChange: true
+            }
+            ,items: [{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
+                        columnWidth: 1
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'modx-combo-boolean'
+                            ,fieldLabel: _('collections.template.selection_enabled')
+                            ,name: 'selection'
+                            ,hiddenName: 'selection'
+                            ,editable: false
+                            ,value: (config.record) ? config.record.selection : false
+                            ,listeners: {
+                                select: function(combo, val) {
+                                    var childrenSettings = Ext.getCmp('collections-panel-template-children_settings');
+
+                                    if (val.data.v == true) {
+                                        childrenSettings.disable();
+                                    } else {
+                                        childrenSettings.enable();
+                                    }
+
+                                }
+                                , scope: this
+                            }
                         }]
                     }]
                 }]

@@ -74,6 +74,8 @@ class CollectionsResourceRemoveProcessor extends modProcessor {
             $templateVarResource->remove();
         }
 
+        $this->modx->removeCollection('CollectionSelection', array('resource' => $this->resource->id));
+
         if ($this->resource->remove() == false) {
             return $this->failure($this->modx->lexicon('resource_err_delete'));
         }

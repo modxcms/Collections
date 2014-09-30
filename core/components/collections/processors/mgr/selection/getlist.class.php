@@ -1,11 +1,11 @@
 <?php
 /**
- * Get list of Children
+ * Get list of Selections
  *
  * @package collections
- * @subpackage processors.resource
+ * @subpackage processors.selection
  */
-class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
+class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
     public $classKey = 'modResource';
     public $defaultSortField = 'createdon';
     public $defaultSortDirection = 'DESC';
@@ -21,8 +21,28 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             return false;
         }
 
-        $parentObject = $this->modx->getObject('modResource', $parent);
-        $template = $this->modx->collections->getCollectionsView($parentObject);
+        $template = null;
+
+        /** @var CollectionSetting $collectionSetting */
+        $collectionSetting = $this->modx->getObject('CollectionSetting', array('collection' => $parent));
+        if ($collectionSetting) {
+            if (intval($collectionSetting->template) > 0) {
+                $template = $collectionSetting->Template;
+            }
+        }
+
+        if ($template == null) {
+            /** @var modResource $parentObject */
+            $parentObject = $this->modx->getObject('modResource', $parent);
+
+            /** @var CollectionResourceTemplate $resourceTemplate */
+            $resourceTemplate = $this->modx->getObject('CollectionResourceTemplate', array('resource_template' => $parentObject->template));
+            if ($resourceTemplate) {
+                $template = $resourceTemplate->CollectionTemplate;
+            } else {
+                $template = $this->modx->getObject('CollectionTemplate', array('global_template' => 1));
+            }
+        }
 
         $templateColumnsQuery = $this->modx->newQuery('CollectionTemplateColumn');
         $templateColumnsQuery->where(array(
@@ -56,10 +76,12 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     }
 
     public function prepareQueryBeforeCount(xPDOQuery $c) {
+        $c->leftJoin('CollectionSelection', 'CollectionSelection', 'modResource.id = CollectionSelection.resource');
+
         $parent = $this->getProperty('parent',null);
 
         $c->where(array(
-            'parent' => $parent,
+            'CollectionSelection.collection' => $parent,
         ));
 
         $query = $this->getProperty('query',null);
@@ -120,7 +142,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         ));
 
         foreach ($this->tvColumns as $column) {
-            $c->leftJoin('modTemplateVarResource', '`TemplateVarResources_' . $column['column'] . '`', '`TemplateVarResources_' . $column['column'] . '`.`contentid` = modResource.id AND `TemplateVarResources_' . $column['column'] . '`.`tmplvarid` = ' . $column['id']);
+            $c->leftJoin('modTemplateVarResource', 'TemplateVarResources_' . $column['column'], 'TemplateVarResources_' . $column['column'] . '.contentid = modResource.id AND TemplateVarResources_' . $column['column'] . '.tmplvarid = ' . $column['id']);
         }
 
         return $c;
@@ -132,7 +154,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         foreach ($this->tvColumns as $column) {
             $c->select(array(
-                '`' . $column['column'] . '`' => '`TemplateVarResources_' . $column['column'] . '`.`value`'
+                $column['column'] => 'TemplateVarResources_' . $column['column'] . '.value'
             ));
         }
 
@@ -140,7 +162,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         if ($taggerInstalled) {
             foreach ($this->taggerColumns as $column) {
                 $c->select(array(
-                    '`' . $column . '`' => '(SELECT group_concat(t.tag SEPARATOR \', \') FROM `modx_tagger_tag_resources` tr LEFT JOIN `modx_tagger_tags` t ON t.id = tr.tag LEFT JOIN `modx_tagger_groups` tg ON tg.id = t.group WHERE tr.resource = modResource.id AND tg.alias = \'' . preg_replace('/tagger_/', '', $column, 1) . '\' group by t.group)'
+                    $column => '(SELECT group_concat(t.tag SEPARATOR \', \') FROM `modx_tagger_tag_resources` tr LEFT JOIN `modx_tagger_tags` t ON t.id = tr.tag LEFT JOIN `modx_tagger_groups` tg ON tg.id = t.group WHERE tr.resource = modResource.id AND tg.alias = \'' . str_replace('tagger_', '', $column) . '\' group by t.group)'
                 ));
             }
         }
@@ -177,11 +199,6 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             'text' => $this->modx->lexicon('edit'),
             'key' => 'edit',
         );
-        $resourceArray['actions'][] = array(
-            'className' => 'duplicate',
-            'text' => $this->modx->lexicon('duplicate'),
-            'key' => 'duplicate',
-        );
         if (!empty($resourceArray['published'])) {
             $resourceArray['actions'][] = array(
                 'className' => 'unpublish',
@@ -213,7 +230,13 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                 'key' => 'delete',
             );
         }
+        $resourceArray['actions'][] = array(
+            'className' => 'unlink',
+            'text' => $this->modx->lexicon('collections.selection.unlink_action'),
+            'key' => 'unlink',
+        );
+
         return $resourceArray;
     }
 }
-return 'CollectionsResourceGetListProcessor';
+return 'CollectionsSelectionGetListProcessor';

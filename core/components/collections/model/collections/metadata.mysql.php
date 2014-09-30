@@ -14,5 +14,6 @@ $xpdo_meta_map = array (
   'xPDOObject' => 
   array (
     0 => 'CollectionResourceTemplate',
+    1 => 'CollectionSelection',
   ),
 );

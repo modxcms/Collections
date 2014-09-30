@@ -14,7 +14,6 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
 
     public function beforeSet() {
         $name = $this->getProperty('name');
-
         if (empty($name)) {
             $this->addFieldError('name',$this->modx->lexicon('collections.err.template_ns_name'));
         } else {
@@ -23,12 +22,8 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
             }
         }
 
-        $global = $this->getProperty('global_template');
-        if ($global == 'true') {
-            $this->setProperty('global_template', true);
-        } else {
-            $this->setProperty('global_template', false);
-
+        $global = $this->handleComboBoolean('global_template');
+        if ($global == false) {
             $templatesCount = $this->modx->getCount('CollectionTemplate', array('global_template' => 1, 'id:!=' => $this->object->id));
             if ($templatesCount == 0) {
                 $this->setProperty('global_template', true);
@@ -57,20 +52,20 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         $templates = $this->getProperty('templates');
         $templates = $this->modx->collections->explodeAndClean($templates);
 
-        $c = $this->modx->newQuery('CollectionResourceTemplate');
-        $c->leftJoin('modTemplate', 'ResourceTemplate');
-        $c->where(array(
-            'resource_template:IN' => $templates,
-        ));
-        $c->select($this->modx->getSelectColumns('modTemplate', 'ResourceTemplate', '', array('templatename')));
+        if (!empty($templates)) {
+            $validateTemplates = $this->validateTemplates($templates);
+            if ($validateTemplates !== true) {
+                return $validateTemplates;
+            }
+        }
 
-        $c->prepare();
-        $c->stmt->execute();
-        $existingTemplates = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-        $existingTemplatesCount = count($existingTemplates);
-        if ($existingTemplatesCount > 0) {
-            $type = ($existingTemplatesCount > 1) ? 'p' : 's';
-            return $this->modx->lexicon('collections.err.template_resource_template_aiu_' . $type, array('templates' => implode(',', $existingTemplates)));
+        $selection = $this->handleComboBoolean('selection');
+        if ($selection == true) {
+            $switched = $this->handleSelectionSwitch($global, $templates);
+
+            if ($switched !== true) {
+                return $switched;
+            }
         }
 
         return parent::beforeSet();
@@ -93,6 +88,9 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         return parent::afterSave();
     }
 
+    /**
+     * Adds an ID column to the view
+     */
     public function addIdColumn() {
         $column = $this->modx->newObject('CollectionTemplateColumn');
         $column->set('name', 'id');
@@ -103,14 +101,171 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         $column->save();
     }
 
+    /**
+     * Transforms string true/false value to boolean
+     *
+     * @param string $property
+     * @return bool
+     */
     public function handleComboBoolean($property) {
         $boolean = $this->getProperty($property);
+
         if ($boolean == 'true') {
             $this->setProperty($property, true);
-        } else {
-            $this->setProperty($property, false);
+
+            return true;
         }
+
+        $this->setProperty($property, false);
+
+        return false;
     }
+
+    /**
+     * Handles switch to Selection when Global view is set
+     * or when there are templates specified
+     *
+     * @param bool $global
+     * @param int[] $templates
+     * @return bool|string
+     */
+    public function handleSelectionSwitch($global, $templates) {
+        if (($global == false) && empty($templates)) return true;
+
+        if ($global == true) {
+            $globalSwitch = $this->handleSelectionSwitchForGlobalView();
+            if ($globalSwitch !== true) {
+                return $globalSwitch;
+            }
+        }
+
+        if (!empty($templates)) {
+            $templatesSwitch = $this->handleSelectionSwitchForTemplates($templates);
+            if ($templatesSwitch !== true) {
+                return $templatesSwitch;
+            }
+        }
+
+        return true;
+    }
+
+    /**
+     * When View is set as global,
+     * will check if there are any templates (unassigned to other view)
+     * that have Collections with children
+     *
+     * @return bool|string
+     */
+    public function handleSelectionSwitchForGlobalView() {
+        //@TODO: Look for CollectionSetting if there is not an override for View
+        //@TODO: Look for CollectionSetting if there is not an override for Selection
+        $templatesQuery = $this->modx->newQuery('CollectionResourceTemplate');
+        $templatesQuery->leftJoin('CollectionTemplate', 'CollectionTemplate');
+
+        $templatesQuery->where(array(
+            'CollectionTemplate.selection' => 0,
+        ));
+
+        $templatesQuery->select($this->modx->getSelectColumns('CollectionResourceTemplate', 'CollectionResourceTemplate', '', array('resource_template')));
+
+        $templatesQuery->prepare();
+        $templatesQuery->stmt->execute();
+
+        $templates = $templatesQuery->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+        $resourcesQuery = $this->modx->newQuery('modResource');
+        $resourcesQuery->where(array(
+            'class_key' => 'CollectionContainer'
+        ));
+
+        if (!empty($templates)) {
+            $resourcesQuery->where(array(
+                'template:NOT IN' => $templates
+            ));
+        }
+
+        /** @var modResource[] $resources */
+        $resources = $this->modx->getIterator('modResource', $resourcesQuery);
+
+        return $this->checkResourcesForChildren($resources);
+    }
+
+    /**
+     * When templates are assigned to View,
+     * will check if there are any Collections using those templates
+     * and having children
+     *
+     * @param int[] $templates
+     * @return bool|string
+     */
+    public function handleSelectionSwitchForTemplates($templates) {
+        //@TODO: Look for CollectionSetting if there is not an override for View
+        //@TODO: Look for CollectionSetting if there is not an override for Selection
+        $resourcesQuery = $this->modx->newQuery('modResource');
+        $resourcesQuery->where(array(
+            'class_key' => 'CollectionContainer'
+        ));
+
+        if (!empty($templates)) {
+            $resourcesQuery->where(array(
+                'template:IN' => $templates
+            ));
+        }
+
+        /** @var modResource[] $resources */
+        $resources = $this->modx->getIterator('modResource', $resourcesQuery);
+
+        return $this->checkResourcesForChildren($resources);
+    }
+
+    /**
+     * Check if any of given Resources has children
+     *
+     * @param modResource[] $resources
+     * @return bool|string
+     */
+    public function checkResourcesForChildren(array $resources) {
+        $withChildren = array();
+
+        foreach ($resources as $resource) {
+            if ($resource->hasChildren()) $withChildren[] = '- ' . $resource->pagetitle . ' (' . $resource->id . ')';
+        }
+
+        if (!empty($withChildren)) {
+            $type = (count($withChildren) > 1) ? 's' : '';
+            return $this->modx->lexicon('collection.err.selection_resource' . $type . '_children', array('resources' => implode('<br />', $withChildren)));
+        }
+
+        return true;
+    }
+
+    /**
+     * Validates if given templates are not used in other View
+     *
+     * @param int[] $templates
+     * @return bool|string
+     */
+    public function validateTemplates($templates) {
+        $c = $this->modx->newQuery('CollectionResourceTemplate');
+        $c->leftJoin('modTemplate', 'ResourceTemplate');
+        $c->where(array(
+            'resource_template:IN' => $templates,
+        ));
+        $c->select($this->modx->getSelectColumns('modTemplate', 'ResourceTemplate', '', array('templatename')));
+
+        $c->prepare();
+        $c->stmt->execute();
+        $existingTemplates = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        $existingTemplatesCount = count($existingTemplates);
+
+        if ($existingTemplatesCount > 0) {
+            $type = ($existingTemplatesCount > 1) ? 'p' : 's';
+            return $this->modx->lexicon('collections.err.template_resource_template_aiu_' . $type, array('templates' => implode(', ', $existingTemplates)));
+        }
+
+        return true;
+    }
+
 
 }
 return 'CollectionsTemplateCreateProcessor';

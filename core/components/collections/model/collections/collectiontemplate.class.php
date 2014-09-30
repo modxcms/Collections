@@ -16,6 +16,7 @@
  * @property string $tab_label
  * @property string $button_label
  * @property string $content_place
+ * @property bool $selection
  *
  * @property CollectionSetting $Setting
  * @property array $Columns

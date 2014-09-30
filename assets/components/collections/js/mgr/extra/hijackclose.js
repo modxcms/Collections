@@ -1,6 +1,6 @@
 Ext.override(MODx.page.UpdateResource, {
     cancel: function(btn,e) {
-        var parentId = this.config.record.parent;
+        var parentId = MODx.request.selection ? MODx.request.selection : this.config.record.parent;
 
         var fp = Ext.getCmp(this.config.formpanel);
         if (fp && fp.isDirty()) {

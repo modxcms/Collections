@@ -9,6 +9,8 @@ class OnBeforeEmptyTrash extends CollectionsPlugin {
             $resource = $this->modx->getObject('modResource', $id);
             if (!$resource) return;
 
+            $this->modx->removeCollection('CollectionSelection', array('resource' => $resource->id));
+
             /** @var \modResource $parent */
             $parent = $resource->Parent;
             if (!$parent) return;

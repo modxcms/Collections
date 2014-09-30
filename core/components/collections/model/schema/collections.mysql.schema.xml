@@ -2,6 +2,7 @@
 <model package="collections" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="collections">
     <object class="CollectionContainer" extends="modResource">
         <composite alias="Setting" class="CollectionSetting" local="id" foreign="collection" cardinality="one" owner="local" />
+        <composite alias="Selection" class="CollectionSelection" local="id" foreign="collection" cardinality="many" owner="local" />
     </object>
 
         <object class="CollectionSetting" table="collection_settings" extends="xPDOSimpleObject">
@@ -28,6 +29,7 @@
         <field key="tab_label" dbtype="varchar" precision="255" phptype="string" null="false" default="collections.children" />
         <field key="button_label" dbtype="varchar" precision="255" phptype="string" null="false" default="collections.children.create" />
         <field key="content_place" dbtype="varchar" precision="255" phptype="string" null="false" default="original" />
+        <field key="selection" dbtype="int" precision="1" phptype="boolean" null="false" default="0" />
 
         <aggregate alias="Setting" class="CollectionSetting" local="id" foreign="template" cardinality="one" owner="local" />
         <composite alias="Columns" class="CollectionTemplateColumn" local="id" foreign="template" cardinality="many" owner="local" />
@@ -59,6 +61,20 @@
 
         <aggregate alias="CollectionTemplate" class="CollectionTemplate" local="collection_template" foreign="id" cardinality="one" owner="foreign" />
         <aggregate alias="ResourceTemplate" class="modTemplate" local="resource_template" foreign="id" cardinality="one" owner="foreign" />
+    </object>
+
+    <object class="CollectionSelection" table="collection_selections" extends="xPDOObject">
+        <field key="collection" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+        <field key="resource" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="pk" />
+
+        <index alias="PRIMARY" name="PRIMARY" primary="true" unique="true" type="BTREE">
+            <column key="collection" length="" collation="A" null="false" />
+            <column key="resource" length="" collation="A" null="false" />
+        </index>
+
+        <aggregate alias="Collection" class="CollectionContainer" local="collection" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="CollectionSetting" class="CollectionSetting" local="collection" foreign="id" cardinality="one" owner="foreign" />
+        <aggregate alias="Resource" class="modResource" local="resource" foreign="id" cardinality="one" owner="foreign" />
     </object>
 
 </model>

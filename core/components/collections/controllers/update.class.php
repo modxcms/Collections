@@ -41,6 +41,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         $this->addLastJavascript($collectionsJsUrl.'sections/category/update.js');
         $this->addLastJavascript($collectionsJsUrl.'widgets/category/collections.panel.category.js');
         $this->addLastJavascript($collectionsJsUrl.'widgets/category/collections.grid.resources.js');
+        $this->addLastJavascript($collectionsJsUrl.'widgets/category/collections.window.js');
         $this->addLastJavascript($collectionsJsUrl.'extra/collections.combo.js');
         $this->addLastJavascript($collectionsJsUrl.'extra/griddraganddrop.js');
         $this->addLastJavascript($collectionsJsUrl.'extra/collections.renderers.js');
@@ -71,6 +72,8 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         // <![CDATA[
         Collections.assetsUrl = "'.$collectionsAssetsUrl.'";
         Collections.connectorUrl = "'.$connectorUrl.'";
+        Collections.config = '.$this->modx->toJSON($this->modx->collections->config).';
+        Collections.config.connector_url = "'.$this->modx->collections->config['connectorUrl'].'";
         MODx.config.publish_document = "'.$this->canPublish.'";
         MODx.onDocFormRender = "'.$this->onDocFormRender.'";
         MODx.ctx = "'.$this->resource->get('context_key').'";
@@ -101,25 +104,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
     }
 
     public function getCollectionsTemplate() {
-        $template = null;
-
-        /** @var CollectionSetting $collectionSetting */
-        $collectionSetting = $this->modx->getObject('CollectionSetting', array('collection' => $this->resource->id));
-        if ($collectionSetting) {
-            if (intval($collectionSetting->template) > 0) {
-                $template = $collectionSetting->Template;
-            }
-        }
-
-        if ($template == null) {
-            /** @var CollectionResourceTemplate $resourceTemplate */
-            $resourceTemplate = $this->modx->getObject('CollectionResourceTemplate', array('resource_template' => $this->resource->template));
-            if ($resourceTemplate) {
-                $template = $resourceTemplate->CollectionTemplate;
-            } else {
-                $template = $this->modx->getObject('CollectionTemplate', array('global_template' => 1));
-            }
-        }
+        $template = $this->modx->collections->getCollectionsView($this->resource);
 
         $c = $this->modx->newQuery('CollectionTemplateColumn');
         $c->sortby('position', 'ASC');
@@ -148,6 +133,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'tab_label' => $template->tab_label,
             'button_label' => $template->button_label,
             'content_place' => $template->content_place,
+            'selection' => $template->selection,
         );
 
         foreach ($columns as $column) {

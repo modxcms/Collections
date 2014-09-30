@@ -3,9 +3,9 @@ class OnResourceBeforeSort extends CollectionsPlugin {
 
     public function run() {
         /** @var \modResource[] $nodes */
-        $nodes = $this->scriptProperties['nodes'];
+        $nodes =& $this->scriptProperties['nodes'];
 
-        foreach ($nodes as $node) {
+        foreach ($nodes as $id => $node) {
             /** @var \modResource $resource */
             $resource = $this->modx->getObject('modResource', $node['id']);
             if (!$resource) continue;
@@ -18,6 +18,11 @@ class OnResourceBeforeSort extends CollectionsPlugin {
 
             if (($parent && $originalParent && $parent->id == $originalParent->id) || (!$parent && !$originalParent)) {
                 continue;
+            }
+
+            $skip = $this->handleDropToSelection($parent, $resource, $originalParent);
+            if ($skip === true) {
+                $this->scriptProperties['nodes'][$id]['parent'] = "1";
             }
 
             $this->handleParent($parent, $resource, $originalParent);
@@ -80,5 +85,22 @@ class OnResourceBeforeSort extends CollectionsPlugin {
             $originalParent->set('show_in_tree', 0);
             $originalParent->save();
         }
+    }
+
+    /**
+     * @param \modResource $parent
+     * @param \modResource $resource
+     */
+    protected function handleDropToSelection($parent, $resource) {
+        if ($parent->class_key == 'CollectionContainer' && $this->modx->collections->isSelection($parent)) {
+            $link = $this->modx->newObject('CollectionSelection');
+            $link->set('resource', $resource->id);
+            $link->set('collection', $parent->id);
+            $link->save();
+
+            return true;
+        }
+
+        return false;
     }
 }
