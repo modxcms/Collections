@@ -63,6 +63,12 @@ if ($object->xpdo) {
                 $manager->addField('CollectionTemplate', 'resource_type_selection');
             }
 
+            if ($oldPackage && $oldPackage->compareVersion('2.2.0-pl', '>')) {
+                $manager = $modx->getManager();
+                $manager->addField('CollectionTemplate', 'tab_label');
+                $manager->addField('CollectionTemplate', 'button_label');
+            }
+
             break;
     }
 }

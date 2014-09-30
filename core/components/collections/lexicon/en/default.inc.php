@@ -88,6 +88,8 @@ $_lang['collections.template.resource_type_selection'] = 'Resource type selectio
 $_lang['collections.template.duplicate'] = 'Duplicate view';
 $_lang['collections.template.grid_settings'] = 'Grid settings';
 $_lang['collections.template.children_settings'] = 'Children\'s settings';
+$_lang['collections.template.tab_label'] = 'Tab\'s label';
+$_lang['collections.template.button_label'] = 'New child\'s button label';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

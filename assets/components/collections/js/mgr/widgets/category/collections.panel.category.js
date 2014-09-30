@@ -31,7 +31,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
         if (tabs != false && tabs[0]) {
         	if (config.mode == 'update') {
 	            tabs[0].items.unshift({
-	                title: _('collections.children')
+	                title: (_(Collections.template.tab_label) == undefined) ? Collections.template.tab_label : _(Collections.template.tab_label)
 	                ,id: 'collections-category-resources'
 	                ,cls: 'modx-resource-tab'
 	                ,layout: 'form'

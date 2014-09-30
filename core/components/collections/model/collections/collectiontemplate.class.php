@@ -13,6 +13,8 @@
  * @property int $child_template
  * @property string $child_resource_type
  * @property bool $resource_type_selection
+ * @property string $tab_label
+ * @property string $button_label
  *
  * @property CollectionSetting $Setting
  * @property array $Columns

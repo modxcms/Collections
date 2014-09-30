@@ -10,7 +10,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
     public $resource;
 
     public function getLanguageTopics() {
-        return array('resource','collections:default', 'collections:templates');
+        return array('resource','collections:default', 'collections:templates', 'collections:custom');
     }
 
     /**
@@ -144,7 +144,9 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'children' => array(
                 'template' => $template->child_template,
                 'resource_type' => $template->child_resource_type,
-            )
+            ),
+            'tab_label' => $template->tab_label,
+            'button_label' => $template->button_label,
         );
 
         foreach ($columns as $column) {

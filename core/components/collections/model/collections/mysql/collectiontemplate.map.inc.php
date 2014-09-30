@@ -20,6 +20,8 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'child_template' => NULL,
     'child_resource_type' => 'modDocument',
     'resource_type_selection' => 1,
+    'tab_label' => 'collections.children',
+    'button_label' => 'collections.children.create',
   ),
   'fieldMeta' => 
   array (
@@ -110,6 +112,22 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'boolean',
       'null' => false,
       'default' => 1,
+    ),
+    'tab_label' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'collections.children',
+    ),
+    'button_label' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'collections.children.create',
     ),
   ),
   'composites' => 

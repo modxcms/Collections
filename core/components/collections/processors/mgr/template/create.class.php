@@ -44,6 +44,16 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
             $this->setProperty('child_template', null);
         }
 
+        $tabLabel = $this->getProperty('tab_label');
+        if (empty($tabLabel)) {
+            $this->setProperty('tab_label', 'collections.children');
+        }
+
+        $buttonLabel = $this->getProperty('button_label');
+        if (empty($buttonLabel)) {
+            $this->setProperty('button_label', 'collections.children.create');
+        }
+
         $templates = $this->getProperty('templates');
         $templates = $this->modx->collections->explodeAndClean($templates);
 

@@ -84,7 +84,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             }, this);
 
             items.push({
-                text: _('collections.children.create')
+                text: (_(Collections.template.button_label) == undefined) ? Collections.template.button_label : _(Collections.template.button_label)
                 ,handler: this.createChild
                 ,xtype: 'splitbutton'
                 ,scope: this
@@ -92,7 +92,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             });
         } else {
             items.push({
-                text: _('collections.children.create')
+                text: (_(Collections.template.button_label) == undefined) ? Collections.template.button_label : _(Collections.template.button_label)
                 ,handler: this.createChild
                 ,scope: this
             });
