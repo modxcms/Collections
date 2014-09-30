@@ -6,7 +6,7 @@ Collections is a MODX Revolution Extra that adds a custom `CollectionContainer` 
 1. Any direct child resource will be hidden from the Resource Tree in the Manager, and listed in a grid view (similar to Articles) under a dedicated "Children" tab, for which the label can be customized.
 2. Any children that themselves have children will be shown in the Tree, to be managed normally.
 
-![Collections Children Grid](http://modx.com/assets/i/blogs/yj/Collections-CMP.png)
+![Collections Children Grid](http://modx.com/assets/i/blogs/yj/Collections-Grid-View.png)
 
 ####Sub Collections
 Just like the MODX Resource Tree itself, Collections supports nesting. You can create a Collection within another Collection. Sub Collection Containers will be displayed in the resource tree and their children will be displayed in the grid view.
