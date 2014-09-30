@@ -6,7 +6,7 @@ Collections is a MODX Revolution Extra that adds a custom `CollectionContainer` 
 1. Any direct child resource will be hidden from the Resource Tree in the Manager, and listed in a grid view (similar to Articles) under a dedicated "Children" tab, for which the label can be customized.
 2. Any children that themselves have children will be shown in the Tree, to be managed normally.
 
-![Collections Children Grid](https://www.dropbox.com/s/pbiko6nzjqerrex/Screenshot%202014-09-30%2013.37.48.png?dl=0)
+![Collections Children Grid](http://modx.com/assets/i/blogs/yj/Collections-CMP.png)
 
 ####Sub Collections
 Just like the MODX Resource Tree itself, Collections supports nesting. You can create a Collection within another Collection. Sub Collection Containers will be displayed in the resource tree and their children will be displayed in the grid view.
@@ -17,8 +17,8 @@ You can drag n drop Resources into a Collections container and if they don't hav
 ###Custom Views
 As of version 2.x, Collections supports customizable views. Views are configured in Collections Custom Manager Page (CMP):
 
-![Collections CMP] (https://www.dropbox.com/s/7djsr574beesndl/Screenshot%202014-09-30%2013.38.38.png?dl=0)
-![Collections New View] (https://www.dropbox.com/s/amy0ytglcyp7gm7/Screenshot%202014-09-30%2013.39.56.png?dl=0)
+![Collections CMP] (http://modx.com/assets/i/blogs/yj/Collections-CMP.png)
+![Collections New View] (http://modx.com/assets/i/blogs/yj/Collections-New-View.png)
 
 ###Resources
 The official documentation for Collections can be found here: [http://rtfm.modx.com/extras/revo/collections] (http://rtfm.modx.com/extras/revo/collections)
