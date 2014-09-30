@@ -17,6 +17,13 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
         };
     }
 
+    ,getContentField: function(config) {
+        if (Collections.template.content_place == 'none') return false;
+        if (Collections.template.content_place == 'in-tab') return false;
+
+        return Collections.panel.Category.superclass.getContentField.call(this,config);
+    }
+
     ,getFields: function(config) {
         var fields = Collections.panel.Category.superclass.getFields.call(this,config);
 
@@ -28,8 +35,22 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
             }
         });
 
+
         if (tabs != false && tabs[0]) {
         	if (config.mode == 'update') {
+
+                if (Collections.template.content_place == 'original-except-children') {
+                    tabs[0].listeners = {
+                        tabchange: function(t, tab) {
+                            if (tab.id == 'collections-category-resources') {
+                                Ext.getCmp('modx-resource-content').hide();
+                            } else {
+                                Ext.getCmp('modx-resource-content').show();
+                            }
+                        }
+                    };
+                }
+
 	            tabs[0].items.unshift({
 	                title: (_(Collections.template.tab_label) == undefined) ? Collections.template.tab_label : _(Collections.template.tab_label)
 	                ,id: 'collections-category-resources'
@@ -46,6 +67,17 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
 	                }
 	                ,items: this.getCollectionsChildrenTab(config)
 	            });
+
+                if (Collections.template.content_place == 'in-tab') {
+                    tabs[0].items.splice(2,0,{
+                        title: _('resource_content')
+                        ,layout: 'form'
+                        ,bodyCssClass: 'main-wrapper'
+                        ,autoHeight: true
+                        ,hideMode: 'offsets'
+                        ,items: Collections.panel.Category.superclass.getContentField.call(this,config)
+                    });
+                }
 	        }
             
         }

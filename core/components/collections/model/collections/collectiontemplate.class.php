@@ -15,6 +15,7 @@
  * @property bool $resource_type_selection
  * @property string $tab_label
  * @property string $button_label
+ * @property string $content_place
  *
  * @property CollectionSetting $Setting
  * @property array $Columns

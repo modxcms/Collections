@@ -27,6 +27,7 @@
         <field key="resource_type_selection" dbtype="int" precision="1" phptype="boolean" null="false" default="1" />
         <field key="tab_label" dbtype="varchar" precision="255" phptype="string" null="false" default="collections.children" />
         <field key="button_label" dbtype="varchar" precision="255" phptype="string" null="false" default="collections.children.create" />
+        <field key="content_place" dbtype="varchar" precision="255" phptype="string" null="false" default="original" />
 
         <aggregate alias="Setting" class="CollectionSetting" local="id" foreign="template" cardinality="one" owner="local" />
         <composite alias="Columns" class="CollectionTemplateColumn" local="id" foreign="template" cardinality="many" owner="local" />

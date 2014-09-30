@@ -147,6 +147,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             ),
             'tab_label' => $template->tab_label,
             'button_label' => $template->button_label,
+            'content_place' => $template->content_place,
         );
 
         foreach ($columns as $column) {

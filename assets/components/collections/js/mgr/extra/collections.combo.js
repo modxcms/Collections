@@ -123,3 +123,31 @@ Collections.combo.SingleTemplate = function(config) {
 };
 Ext.extend(Collections.combo.SingleTemplate,MODx.combo.ComboBox);
 Ext.reg('collections-combo-single-template',Collections.combo.SingleTemplate);
+
+Collections.combo.ContentPlace = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        store: new Ext.data.SimpleStore({
+            fields: ['d','v']
+            ,data: [
+                [_('collections.template.content_place_original') ,'original'],
+                [_('collections.template.content_place_in_tab') ,'in-tab'],
+                [_('collections.template.content_place_original_except_children') ,'original-except-children'],
+                [_('collections.template.content_place_none') ,'none']
+            ]
+        })
+        ,displayField: 'd'
+        ,valueField: 'v'
+        ,mode: 'local'
+        ,value: 'original'
+        ,triggerAction: 'all'
+        ,editable: false
+        ,selectOnFocus: false
+        ,preventRender: true
+        ,forceSelection: true
+        ,enableKeyEvents: true
+    });
+    Collections.combo.ContentPlace.superclass.constructor.call(this,config);
+};
+Ext.extend(Collections.combo.ContentPlace,MODx.combo.ComboBox);
+Ext.reg('collections-combo-content-place',Collections.combo.ContentPlace);

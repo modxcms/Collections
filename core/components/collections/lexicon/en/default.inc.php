@@ -90,6 +90,11 @@ $_lang['collections.template.grid_settings'] = 'Grid settings';
 $_lang['collections.template.children_settings'] = 'Children\'s settings';
 $_lang['collections.template.tab_label'] = 'Tab\'s label';
 $_lang['collections.template.button_label'] = 'New child\'s button label';
+$_lang['collections.template.content_place_original'] = 'Original';
+$_lang['collections.template.content_place_in_tab'] = 'In tab';
+$_lang['collections.template.content_place_none'] = 'None';
+$_lang['collections.template.content_place'] = 'Content\'s place';
+$_lang['collections.template.content_place_original_except_children'] = 'Original except children';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

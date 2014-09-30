@@ -22,6 +22,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'resource_type_selection' => 1,
     'tab_label' => 'collections.children',
     'button_label' => 'collections.children.create',
+    'content_place' => 'original',
   ),
   'fieldMeta' => 
   array (
@@ -128,6 +129,14 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => 'collections.children.create',
+    ),
+    'content_place' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'original',
     ),
   ),
   'composites' => 

@@ -67,6 +67,7 @@ if ($object->xpdo) {
                 $manager = $modx->getManager();
                 $manager->addField('CollectionTemplate', 'tab_label');
                 $manager->addField('CollectionTemplate', 'button_label');
+                $manager->addField('CollectionTemplate', 'content_place');
             }
 
             break;

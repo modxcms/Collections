@@ -1,6 +1,7 @@
 Changelog for Collections.
 
-- Added options to set Tab's and New child's button label
+- Added an option to set position of Content field
+- Added an options to set Tab's and New child's button label
 - Added Collections.renderer.image for rendering images
 - Added tabs to Collection views to split its settings
 - Splitted Setting tab to vtabs for Resource settings and Collections settings

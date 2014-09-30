@@ -384,7 +384,7 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                         ,border: false
                     }
                     ,items: [{
-                        columnWidth:.5
+                        columnWidth:.3
                         ,border: false
                         ,defaults: {
                             msgTarget: 'under'
@@ -394,10 +394,10 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             xtype: 'textfield'
                             ,fieldLabel: _('collections.template.tab_label')
                             ,name: 'tab_label'
-                            ,value: (config.record) ? config.record.tab_label : false
+                            ,value: (config.record) ? config.record.tab_label : 'collections.children'
                         }]
                     },{
-                        columnWidth:.5
+                        columnWidth:.3
                         ,border: false
                         ,defaults: {
                             msgTarget: 'under'
@@ -407,7 +407,21 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             xtype: 'textfield'
                             ,fieldLabel: _('collections.template.button_label')
                             ,name: 'button_label'
-                            ,value: (config.record) ? config.record.button_label : true
+                            ,value: (config.record) ? config.record.button_label : 'collections.children.create'
+                        }]
+                    },{
+                        columnWidth:.4
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'collections-combo-content-place'
+                            ,fieldLabel: _('collections.template.content_place')
+                            ,name: 'content_place'
+                            ,hiddenName: 'content_place'
+                            ,value: (config.record) ? config.record.button_label : 'original'
                         }]
                     }]
                 }]
