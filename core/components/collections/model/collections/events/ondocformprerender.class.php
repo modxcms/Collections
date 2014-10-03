@@ -1,8 +1,4 @@
 <?php
-
-namespace collections\events;
-
-
 class OnDocFormPrerender extends CollectionsPlugin {
 
     public function run() {

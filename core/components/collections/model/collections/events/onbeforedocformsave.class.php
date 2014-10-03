@@ -1,8 +1,5 @@
 <?php
 
-namespace collections\events;
-
-
 class OnBeforeDocFormSave extends CollectionsPlugin {
 
     public function run() {

@@ -1,7 +1,4 @@
 <?php
-
-namespace collections\events;
-
 class OnBeforeEmptyTrash extends CollectionsPlugin {
 
     public function run() {

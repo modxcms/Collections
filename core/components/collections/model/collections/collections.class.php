@@ -61,8 +61,6 @@ class Collections {
 
         $this->modx->addPackage('collections',$this->config['modelPath']);
         $this->modx->lexicon->load('collections:default');
-
-        spl_autoload_register(array($this, 'autoLoad'));
     }
 
     /**
@@ -95,16 +93,5 @@ class Collections {
         $array = array_filter($array);            // Remove empty values from array
 
         return $array;
-    }
-
-    public function autoLoad($class) {
-        $file = $this->getOption('modelPath');
-        $file .= $class . '.php';
-
-        $file = str_replace('\\', '/', $file);
-
-        if (file_exists($file)) {
-            require_once($file);
-        }
     }
 }

@@ -1,6 +1,4 @@
 <?php
-namespace collections\events;
-
 abstract class CollectionsPlugin {
 
     /** @var \modX $modx */

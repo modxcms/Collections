@@ -19,10 +19,11 @@ $collections = $modx->getService(
     )
 );
 
-$className = '\collections\events\\' . $modx->event->name;
+$modx->loadClass('CollectionsPlugin', $collections->getOption('modelPath') . 'collections/events/', true, true);
+$modx->loadClass($modx->event->name, $collections->getOption('modelPath') . 'collections/events/', true, true);
 
-if (class_exists($className)) {
-    $handler = new $className($modx, $scriptProperties);
+if (class_exists($modx->event->name)) {
+    $handler = new $modx->event->name($modx, $scriptProperties);
     $handler->run();
 }
 
