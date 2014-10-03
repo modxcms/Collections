@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+Collections 2.2.1
+===================
 - Fixed PHP 5.2 compatibility
 
 Collections 2.2.0
