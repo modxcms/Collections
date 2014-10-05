@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Fixed rendering TV and Tagger columns with dash in name/alias
+
 Collections 2.2.1
 ===================
 - Fixed PHP 5.2 compatibility

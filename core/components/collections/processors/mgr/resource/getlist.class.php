@@ -140,7 +140,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         ));
 
         foreach ($this->tvColumns as $column) {
-            $c->leftJoin('modTemplateVarResource', 'TemplateVarResources_' . $column['column'], 'TemplateVarResources_' . $column['column'] . '.contentid = modResource.id AND TemplateVarResources_' . $column['column'] . '.tmplvarid = ' . $column['id']);
+            $c->leftJoin('modTemplateVarResource', '`TemplateVarResources_' . $column['column'] . '`', '`TemplateVarResources_' . $column['column'] . '`.`contentid` = modResource.id AND `TemplateVarResources_' . $column['column'] . '`.`tmplvarid` = ' . $column['id']);
         }
 
         return $c;
@@ -152,7 +152,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         foreach ($this->tvColumns as $column) {
             $c->select(array(
-                $column['column'] => 'TemplateVarResources_' . $column['column'] . '.value'
+                '`' . $column['column'] . '`' => '`TemplateVarResources_' . $column['column'] . '`.`value`'
             ));
         }
 
@@ -160,7 +160,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         if ($taggerInstalled) {
             foreach ($this->taggerColumns as $column) {
                 $c->select(array(
-                    $column => '(SELECT group_concat(t.tag SEPARATOR \', \') FROM `modx_tagger_tag_resources` tr LEFT JOIN `modx_tagger_tags` t ON t.id = tr.tag LEFT JOIN `modx_tagger_groups` tg ON tg.id = t.group WHERE tr.resource = modResource.id AND tg.alias = \'' . str_replace('tagger_', '', $column) . '\' group by t.group)'
+                    '`' . $column . '`' => '(SELECT group_concat(t.tag SEPARATOR \', \') FROM `modx_tagger_tag_resources` tr LEFT JOIN `modx_tagger_tags` t ON t.id = tr.tag LEFT JOIN `modx_tagger_groups` tg ON tg.id = t.group WHERE tr.resource = modResource.id AND tg.alias = \'' . preg_replace('/tagger_/', '', $column, 1) . '\' group by t.group)'
                 ));
             }
         }
