@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+Collections 2.2.2
+===================
 - Fixed rendering TV and Tagger columns with dash in name/alias
 
 Collections 2.2.1
