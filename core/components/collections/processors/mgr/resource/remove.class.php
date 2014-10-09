@@ -51,6 +51,14 @@ class CollectionsResourceRemoveProcessor extends modProcessor {
 
         if (!$this->resource->checkPolicy('delete')) return $this->failure($this->modx->lexicon('resource_err_delete'));
 
+        $resources = array($this->resource);
+        $ids = array($this->resource->id);
+
+        $this->modx->invokeEvent('OnBeforeEmptyTrash',array(
+            'ids' => &$ids,
+            'resources' => &$resources,
+        ));
+
         $this->handleChildren();
 
         /** @var modResourceGroupResource[] $resourceGroupResources */
@@ -69,6 +77,12 @@ class CollectionsResourceRemoveProcessor extends modProcessor {
         if ($this->resource->remove() == false) {
             return $this->failure($this->modx->lexicon('resource_err_delete'));
         }
+
+        $this->modx->invokeEvent('OnEmptyTrash',array(
+            'num_deleted' => 1,
+            'resources' => &$resources,
+            'ids' => &$ids,
+        ));
 
         $this->logManagerAction();
 

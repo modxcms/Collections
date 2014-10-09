@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Fire OnBeforeEmptyTrash and OnEmptyTrash when removing Resource via Collections
+
 Collections 2.2.2
 ===================
 - Fixed rendering TV and Tagger columns with dash in name/alias
