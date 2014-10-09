@@ -2,10 +2,13 @@
 <model package="collections" baseClass="xPDOObject" platform="mysql" defaultEngine="MyISAM" phpdoc-package="collections">
     <object class="CollectionContainer" extends="modResource">
         <composite alias="Setting" class="CollectionSetting" local="id" foreign="collection" cardinality="one" owner="local" />
+    </object>
+
+    <object class="SelectionContainer" extends="CollectionContainer">
         <composite alias="Selection" class="CollectionSelection" local="id" foreign="collection" cardinality="many" owner="local" />
     </object>
 
-        <object class="CollectionSetting" table="collection_settings" extends="xPDOSimpleObject">
+    <object class="CollectionSetting" table="collection_settings" extends="xPDOSimpleObject">
         <field key="collection" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" index="unique" />
         <field key="template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
 

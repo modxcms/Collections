@@ -2,10 +2,10 @@
 /**
  * @package collections
  */
-$xpdo_meta_map['CollectionContainer']= array (
+$xpdo_meta_map['SelectionContainer']= array (
   'package' => 'collections',
   'version' => NULL,
-  'extends' => 'modResource',
+  'extends' => 'CollectionContainer',
   'fields' => 
   array (
   ),
@@ -14,12 +14,12 @@ $xpdo_meta_map['CollectionContainer']= array (
   ),
   'composites' => 
   array (
-    'Setting' => 
+    'Selection' => 
     array (
-      'class' => 'CollectionSetting',
+      'class' => 'CollectionSelection',
       'local' => 'id',
       'foreign' => 'collection',
-      'cardinality' => 'one',
+      'cardinality' => 'many',
       'owner' => 'local',
     ),
   ),

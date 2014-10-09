@@ -30,6 +30,9 @@ $_lang['collections.system.text_create'] = 'Collection';
 $_lang['collections.system.text_create_here'] = 'Create a Collection here';
 $_lang['collections.system.new_container'] = 'New Collection';
 $_lang['collections.system.all'] = 'All';
+$_lang['collections.system.selection.text_create_here'] = 'Create a Selection here';
+$_lang['collections.system.text_create'] = 'Selection';
+$_lang['collections.system.selection.type_name'] = 'Selection';
 
 // Global lexicons
 $_lang['collections.global.search'] = 'Search';

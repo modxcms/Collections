@@ -5,6 +5,10 @@ $xpdo_meta_map = array (
   array (
     0 => 'CollectionContainer',
   ),
+  'CollectionContainer' => 
+  array (
+    0 => 'SelectionContainer',
+  ),
   'xPDOSimpleObject' => 
   array (
     0 => 'CollectionSetting',
