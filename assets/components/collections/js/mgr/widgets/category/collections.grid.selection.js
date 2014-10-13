@@ -6,7 +6,7 @@ Collections.grid.ContainerSelection = function(config) {
         ,title: _('collections.collections')
         ,url: Collections.connectorUrl
         ,autosave: true
-        ,save_action: 'mgr/resource/updatefromgrid'
+        ,save_action: 'mgr/selection/updatefromgrid'
         ,ddGroup: 'collectionChildDDGroup'
         ,enableDragDrop: Collections.template.allowDD
         ,baseParams: {
@@ -16,7 +16,7 @@ Collections.grid.ContainerSelection = function(config) {
             ,dir: Collections.template.sort.dir
         }
         ,saveParams: {
-            resource: MODx.request.id
+            collection: MODx.request.id
         }
         ,fields: Collections.template.fields
         ,paging: true

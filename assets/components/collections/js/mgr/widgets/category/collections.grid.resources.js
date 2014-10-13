@@ -15,9 +15,6 @@ Collections.grid.ContainerCollections = function(config) {
             ,sort: Collections.template.sort.field
             ,dir: Collections.template.sort.dir
         }
-        ,saveParams: {
-            resource: MODx.request.id
-        }
         ,fields: Collections.template.fields
         ,paging: true
         ,remoteSort: true

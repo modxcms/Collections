@@ -9,7 +9,8 @@ class SelectionContainer extends CollectionContainer {
 
     function __construct(xPDO & $xpdo) {
         parent :: __construct($xpdo);
-        $this->set('class_key','SelectionContainer');
+        $this->set('class_key', 'SelectionContainer');
+        $this->set('hide_children_in_tree', 1);
     }
 
     public static function getControllerPath(xPDO &$modx) {
@@ -17,7 +18,8 @@ class SelectionContainer extends CollectionContainer {
     }
 
     public function getContextMenuText() {
-        $this->xpdo->lexicon->load('collections:default');
+        $this->xpdo->lexicon->load('collections:default', 'collections:selections');
+
         return array(
             'text_create' => $this->xpdo->lexicon('selections.system.text_create'),
             'text_create_here' => $this->xpdo->lexicon('selections.system.text_create_here'),
@@ -25,7 +27,7 @@ class SelectionContainer extends CollectionContainer {
     }
 
     public function getResourceTypeName() {
-        $this->xpdo->lexicon->load('collections:default');
+        $this->xpdo->lexicon->load('collections:default', 'collections:selections');
         return $this->xpdo->lexicon('selections.system.type_name');
     }
 }
