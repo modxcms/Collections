@@ -7,7 +7,7 @@
  */
 class CollectionContainerCreateManagerController extends ResourceCreateManagerController {
     public function getLanguageTopics() {
-        return array('resource','collections:default');
+        return array('resource','collections:default', 'collections:selections');
     }
 
     /**

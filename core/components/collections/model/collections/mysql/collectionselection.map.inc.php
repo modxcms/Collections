@@ -11,6 +11,7 @@ $xpdo_meta_map['CollectionSelection']= array (
   array (
     'collection' => NULL,
     'resource' => NULL,
+    'menuindex' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -31,6 +32,15 @@ $xpdo_meta_map['CollectionSelection']= array (
       'phptype' => 'integer',
       'null' => false,
       'index' => 'pk',
+    ),
+    'menuindex' => 
+    array (
+      'dbtype' => 'int',
+      'attributes' => 'unsigned',
+      'precision' => '10',
+      'phptype' => 'integer',
+      'null' => false,
+      'default' => 0,
     ),
   ),
   'indexes' => 

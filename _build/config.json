@@ -40,6 +40,10 @@
             "key": "mgr_tree_icon_collectioncontainer"
             ,"value": "collectioncontainer"
             ,"namespace": ""
+        },{
+            "key": "mgr_tree_icon_selectioncontainer"
+            ,"value": "selectioncontainer"
+            ,"namespace": ""
         }]
     }
     ,"database":{

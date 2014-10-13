@@ -61,6 +61,7 @@ class Collections {
 
         $this->modx->addPackage('collections',$this->config['modelPath']);
         $this->modx->lexicon->load('collections:default');
+        $this->modx->lexicon->load('collections:selections');
     }
 
     /**

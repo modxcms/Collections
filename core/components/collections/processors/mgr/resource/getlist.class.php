@@ -215,5 +215,29 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         }
         return $resourceArray;
     }
+
+    /**
+     * Get the data of the query
+     * @return array
+     */
+    public function getData() {
+        $data = array();
+        $limit = intval($this->getProperty('limit'));
+        $start = intval($this->getProperty('start'));
+
+        /* query for chunks */
+        $c = $this->modx->newQuery($this->classKey);
+        $c = $this->prepareQueryBeforeCount($c);
+        $data['total'] = $this->modx->getCount($this->classKey,$c);
+        $c = $this->prepareQueryAfterCount($c);
+
+        $c->sortby($this->getProperty('sort'),$this->getProperty('dir'));
+        if ($limit > 0) {
+            $c->limit($limit,$start);
+        }
+
+        $data['results'] = $this->modx->getCollection($this->classKey,$c);
+        return $data;
+    }
 }
 return 'CollectionsResourceGetListProcessor';

@@ -30,9 +30,6 @@ $_lang['collections.system.text_create'] = 'Collection';
 $_lang['collections.system.text_create_here'] = 'Create a Collection here';
 $_lang['collections.system.new_container'] = 'New Collection';
 $_lang['collections.system.all'] = 'All';
-$_lang['collections.system.selection.text_create_here'] = 'Create a Selection here';
-$_lang['collections.system.text_create'] = 'Selection';
-$_lang['collections.system.selection.type_name'] = 'Selection';
 
 // Global lexicons
 $_lang['collections.global.search'] = 'Search';
@@ -61,25 +58,6 @@ $_lang['collections.children.menuindex'] = 'Menu index';
 $_lang['collections.children.remove_action'] = 'Remove';
 $_lang['collections.children.remove'] = 'Remove child';
 $_lang['collections.children.remove_confirm'] = 'Are you sure, you want to remove this child?<br /><strong>This operation is permanent and can\'t be reverted.</strong>';
-
-// Selection
-$_lang['collections.selection.create'] = 'Link resource';
-$_lang['collections.selection.resource'] = 'Resource';
-$_lang['collections.selection.view'] = 'View resource';
-$_lang['collections.selection.edit'] = 'Update resource';
-$_lang['collections.selection.publish'] = 'Publish resource';
-$_lang['collections.selection.unpublish'] = 'Unpublish resource';
-$_lang['collections.selection.duplicate'] = 'Duplicate resource';
-$_lang['collections.selection.delete'] = 'Delete resource';
-$_lang['collections.selection.delete_confirm'] = 'Are you sure, that you want to delete this Resource?';
-$_lang['collections.selection.undelete'] = 'Undelete resource';
-$_lang['collections.selection.unlink'] = 'Unlink resource';
-$_lang['collections.selection.unlink_confirm'] = 'Are you sure, that you want to unlink this Resource?  ';
-$_lang['collections.selection.unlink_action'] = 'Unlink';
-$_lang['collections.selection.delete_multiple'] = 'Delete selected';
-$_lang['collections.selection.delete_multiple_confirm'] = 'Are you sure, that you want to delete all selected Resources?';
-$_lang['collections.selection.remove'] = 'Remove resource';
-$_lang['collections.selection.remove_confirm'] = 'Are you sure, you want to remove this Resource?<br /><strong>This operation is permanent and can\'t be reverted.</strong>';
 
 // Template
 $_lang['collections.template.page_title'] = 'Collection views';
@@ -149,7 +127,3 @@ $_lang['collections.err.column_name_cant_change'] = 'You can\'t change name of I
 $_lang['collections.err.template_remove_last'] = 'You can\'t remove the last view.';
 $_lang['collections.err.template_remove_global'] = 'You can\'t remove global view. Please set different view as a global and repeat this action.';
 $_lang['collections.err.template_ae_name'] = 'Template with this name already exists.';
-$_lang['collection.err.selection_resource_children'] = 'Unfortunatelly it\'s not possible to make this view as a Selection, following resource has children: <br /> [[+resources]]';
-$_lang['collection.err.selection_resources_children'] = 'Unfortunatelly it\'s not possible to make this view as a Selection, following resources have children: <br /> [[+resources]]';
-$_lang['collections.err.selection_res_col_ns'] = 'Resource or Collection was not specified.';
-$_lang['collections.err.cant_set_parent_selection'] = 'You can\'t set Selection as a parent resource.';

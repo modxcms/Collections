@@ -50,7 +50,7 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
             }
 
             m.push({
-                text: _('collections.selection.' + item.key)
+                text: _('selections.' + item.key)
                 ,handler: 'this.' + item.key + 'Child'
             });
         }, this);
@@ -72,7 +72,7 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
         var items = [];
 
         items.push({
-            text: _('collections.selection.create')
+            text: _('selections.create')
             ,handler: this.createSelection
             ,scope: this
         });
@@ -167,7 +167,7 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
     ,createSelection: function(btn, e) {
         var createSelection = MODx.load({
             xtype: 'collections-window-selection'
-            ,title: _('collections.selection.create')
+            ,title: _('selections.create')
             ,record: {collection: MODx.request.id}
             ,listeners: {
                 'success': {fn:function() { this.refresh(); },scope:this}
@@ -237,8 +237,8 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
 
     ,deleteChild: function(btn,e) {
         MODx.msg.confirm({
-            title: _('collections.selection.delete')
-            ,text: _('collections.selection.delete_confirm')
+            title: _('selections.delete')
+            ,text: _('selections.delete_confirm')
             ,url: this.config.url
             ,params: {
                 action: 'mgr/resource/delete'
@@ -252,8 +252,8 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
 
     ,removeChild: function(btn,e) {
         MODx.msg.confirm({
-            title: _('collections.selection.remove')
-            ,text: _('collections.selection.remove_confirm')
+            title: _('selections.remove')
+            ,text: _('selections.remove_confirm')
             ,url: this.config.url
             ,params: {
                 action: 'mgr/resource/remove'
@@ -270,8 +270,8 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
         if (cs === false) return false;
 
         MODx.msg.confirm({
-            title: _('collections.selection.delete_multiple')
-            ,text: _('collections.selection.delete_multiple_confirm')
+            title: _('selections.delete_multiple')
+            ,text: _('selections.delete_multiple_confirm')
             ,url: this.config.url
             ,params: {
                 action: 'mgr/resource/deletemultiple'
@@ -388,8 +388,8 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
 
     ,unlinkChild: function(btn,e) {
         MODx.msg.confirm({
-            title: _('collections.selection.unlink')
-            ,text: _('collections.selection.unlink_confirm')
+            title: _('selections.unlink')
+            ,text: _('selections.unlink_confirm')
             ,url: this.config.url
             ,params: {
                 action: 'mgr/selection/remove'

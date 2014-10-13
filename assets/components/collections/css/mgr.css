@@ -131,6 +131,10 @@
     content: "\f0c9";
 }
 
+.selectioncontainer:before {
+    content: "\f005";
+}
+
 .icon-collectioncontainer .x-tree-node-icon {
     background-image: url(i/collection.png) !important;
 }

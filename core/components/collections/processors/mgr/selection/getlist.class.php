@@ -7,8 +7,8 @@
  */
 class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
     public $classKey = 'modResource';
-    public $defaultSortField = 'createdon';
-    public $defaultSortDirection = 'DESC';
+    public $defaultSortField = 'menuindex';
+    public $defaultSortDirection = 'ASC';
     public $checkListPermission = true;
     public $languageTopics = array('resource','collections:default');
 
@@ -136,10 +136,10 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
                 break;
         }
 
-        $c->where(array(
-            'class_key:!=' => 'CollectionContainer',
-            "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
-        ));
+//        $c->where(array(
+//            'class_key:!=' => 'CollectionContainer',
+//            "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
+//        ));
 
         foreach ($this->tvColumns as $column) {
             $c->leftJoin('modTemplateVarResource', 'TemplateVarResources_' . $column['column'], 'TemplateVarResources_' . $column['column'] . '.contentid = modResource.id AND TemplateVarResources_' . $column['column'] . '.tmplvarid = ' . $column['id']);
@@ -150,7 +150,8 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
 
     public function prepareQueryAfterCount(xPDOQuery $c) {
 
-        $c->select($this->modx->getSelectColumns('modResource', 'modResource'));
+        $c->select($this->modx->getSelectColumns('modResource', 'modResource', '', array('menuindex'), true));
+        $c->select($this->modx->getSelectColumns('CollectionSelection', 'CollectionSelection', '', array('menuindex')));
 
         foreach ($this->tvColumns as $column) {
             $c->select(array(
@@ -237,6 +238,30 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
         );
 
         return $resourceArray;
+    }
+
+    /**
+     * Get the data of the query
+     * @return array
+     */
+    public function getData() {
+        $data = array();
+        $limit = intval($this->getProperty('limit'));
+        $start = intval($this->getProperty('start'));
+
+        /* query for chunks */
+        $c = $this->modx->newQuery($this->classKey);
+        $c = $this->prepareQueryBeforeCount($c);
+        $data['total'] = $this->modx->getCount($this->classKey,$c);
+        $c = $this->prepareQueryAfterCount($c);
+
+        $c->sortby($this->getProperty('sort'),$this->getProperty('dir'));
+        if ($limit > 0) {
+            $c->limit($limit,$start);
+        }
+
+        $data['results'] = $this->modx->getCollection($this->classKey,$c);
+        return $data;
     }
 }
 return 'CollectionsSelectionGetListProcessor';

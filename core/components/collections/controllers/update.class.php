@@ -10,7 +10,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
     public $resource;
 
     public function getLanguageTopics() {
-        return array('resource','collections:default', 'collections:templates', 'collections:custom');
+        return array('resource','collections:default', 'collections:templates', 'collections:custom', 'collections:selections');
     }
 
     /**

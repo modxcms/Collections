@@ -1,4 +1,5 @@
 <?php
+require_once dirname(__FILE__) . '/collectioncontainer.class.php';
 /**
  * @package collections
  */
@@ -18,14 +19,14 @@ class SelectionContainer extends CollectionContainer {
     public function getContextMenuText() {
         $this->xpdo->lexicon->load('collections:default');
         return array(
-            'text_create' => $this->xpdo->lexicon('collections.system.selection.text_create'),
-            'text_create_here' => $this->xpdo->lexicon('collections.system.selection.text_create_here'),
+            'text_create' => $this->xpdo->lexicon('selections.system.text_create'),
+            'text_create_here' => $this->xpdo->lexicon('selections.system.text_create_here'),
         );
     }
 
     public function getResourceTypeName() {
         $this->xpdo->lexicon->load('collections:default');
-        return $this->xpdo->lexicon('collections.system.selection.type_name');
+        return $this->xpdo->lexicon('selections.system.type_name');
     }
 }
 ?>

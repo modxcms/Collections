@@ -37,8 +37,20 @@ class CollectionsSelectionCreateProcessor extends modObjectCreateProcessor {
         $collection = $this->getProperty('collection');
         $resource = $this->getProperty('resource');
 
+        $menuindex = $this->modx->newQuery('CollectionSelection');
+        $menuindex->where(array('collection' => $collection));
+        $menuindex->sortby('menuindex', 'DESC');
+        $menuindex->limit(1);
+        $menuindex->select($this->modx->getSelectColumns('CollectionSelection', 'CollectionSelection', '', array('menuindex')));
+
+        $menuindex->prepare();
+        $menuindex->stmt->execute();
+
+        $lastMenuindex = (int) $menuindex->stmt->fetchColumn(0);
+
         $this->object->set('collection', $collection);
         $this->object->set('resource', $resource);
+        $this->object->set('menuindex', $lastMenuindex + 1);
 
         return parent::beforeSave();
     }

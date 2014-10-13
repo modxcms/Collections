@@ -9,7 +9,7 @@ require_once dirname(dirname(__FILE__)) . '/index.class.php';
  */
 class CollectionsTemplateManagerController extends CollectionsBaseManagerController {
     public function getLanguageTopics() {
-        return array('collections:default');
+        return array('collections:default', 'collections:selections');
     }
 
     /**

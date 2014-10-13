@@ -2,6 +2,7 @@
 /**
  * @property int $collection
  * @property int $resource
+ * @property int $menuindex
  *
  * @property CollectionContainer $Collection
  * @property CollectionSetting $CollectionSetting
