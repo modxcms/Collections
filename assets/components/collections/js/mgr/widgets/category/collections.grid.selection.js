@@ -8,7 +8,7 @@ Collections.grid.ContainerSelection = function(config) {
         ,autosave: true
         ,save_action: 'mgr/resource/updatefromgrid'
         ,ddGroup: 'collectionChildDDGroup'
-        ,enableDragDrop: false
+        ,enableDragDrop: Collections.template.allowDD
         ,baseParams: {
             action: 'mgr/selection/getlist'
             ,parent: MODx.request.id
@@ -33,7 +33,7 @@ Collections.grid.ContainerSelection = function(config) {
     this.on('rowclick',MODx.fireResourceFormChange);
     this.on('click', this.handleButtons, this);
 
-    if (Collections.template.allowDD && !Collections.template.selection) {
+    if (Collections.template.allowDD) {
         this.on('render', this.registerGridDropTarget, this);
         this.on('beforedestroy', this.destroyScrollManager, this);
     }
@@ -181,24 +181,6 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
         MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + '&selection=' + MODx.request.id);
     }
 
-    ,createChild: function(btn,e) {
-        var template = '';
-        if (Collections.template.children.template != null) {
-            template = '&template=' + Collections.template.children.template;
-        }
-
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + MODx.request.id + '&context_key=' + MODx.ctx + '&class_key=' + Collections.template.children.resource_type + template);
-    }
-
-    ,createDerivativeChild: function(btn, e) {
-        var template = '';
-        if (Collections.template.children.template != null) {
-            template = '&template=' + Collections.template.children.template;
-        }
-
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + MODx.request.id + '&context_key=' + MODx.ctx + '&class_key=' + btn.derivative + template);
-    }
-
     ,viewChild: function(btn,e) {
         if (!this.menu.record.data) {
             window.open(this.menu.record.preview_url);
@@ -206,32 +188,6 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
             window.open(this.menu.record.data.preview_url);
         }
 
-        return false;
-    }
-
-    ,duplicateChild: function(btn,e) {
-        var r = {
-            resource: this.menu.record.id
-            ,is_folder: false
-        };
-
-        if (this.menu.record.data != undefined) {
-            r.name = _('duplicate_of', {name: this.menu.record.data.pagetitle});
-        } else {
-            r.name = _('duplicate_of', {name: this.menu.record.pagetitle});
-        }
-
-        var w = MODx.load({
-            xtype: 'modx-window-resource-duplicate'
-            ,resource: this.menu.record.id
-            ,hasChildren: false
-            ,listeners: {
-                'success': {fn:function() {this.refresh();},scope:this}
-            }
-        });
-        w.config.hasChildren = false;
-        w.setValues(r);
-        w.show();
         return false;
     }
 
@@ -465,85 +421,7 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
         return _('collections.global.change_order', {child: this.selModel.selections.items[0].data.pagetitle});
     }
 
-    ,getDragDropTextOverTree: function(){
-        return _('collections.global.change_parent', {child: this.selModel.selections.items[0].data.pagetitle});
-    }
-
     ,registerGridDropTarget: function() {
-
-        this.getView().dragZone = new Ext.grid.GridDragZone(this, {
-            ddGroup : 'modx-treedrop-dd'
-            ,originals: {}
-            ,handleMouseDown: function(e) {
-                // Disable drag and drop for clicking on checkbox (to select a row)
-                if (e.target.className == 'x-grid3-row-checker') {
-                    return false;
-                }
-
-                Ext.grid.GridDragZone.superclass.handleMouseDown.apply(this, arguments);
-                return true;
-            }
-            ,onEndDrag: function() {
-                var t = Ext.getCmp('modx-resource-tree');
-                t.dropZone.appendOnly = false;
-
-                t.dropZone.onNodeDrop = this.originals.onNodeDrop;
-                t.dropZone.onNodeOver = this.originals.onNodeOver;
-
-                t.on('nodedragover', t._handleDrop, t);
-                t.on('beforenodedrop', t._handleDrop, t);
-
-                return true;
-            }
-            ,onInitDrag: function(e) {
-                var data = this.dragData;
-                this.ddel.innerHTML = this.grid.getDragDropText();
-                this.proxy.update(this.ddel);
-
-                var t = Ext.getCmp('modx-resource-tree');
-                t.dropZone.appendOnly = true;
-
-
-                t.removeListener('nodedragover', t._handleDrop);
-                t.removeListener('beforenodedrop', t._handleDrop);
-
-                this.originals.onNodeDrop = t.dropZone.onNodeDrop;
-                this.originals.onNodeOver = t.dropZone.onNodeOver;
-
-                t.dropZone.onNodeDrop = function (nodeData, source, e) {
-                    MODx.Ajax.request({
-                        url: Collections.connectorUrl
-                        ,params: {
-                            action: 'mgr/resource/changeparent'
-                            ,id: source.dragData.selections[0].id
-                            ,parent: nodeData.node.attributes.id
-                        }
-                        ,listeners: {
-                            'success': {
-                                fn: function(r) {
-                                    source.grid.refresh();
-                                    return true;
-                                },scope: this
-                            }
-                        }
-                    });
-
-                    return true;
-                };
-
-                t.dropZone.onNodeOver = function (nodeData, source,e, data) {
-                    source.ddel.innerHTML = source.grid.getDragDropTextOverTree();
-                    source.proxy.update(source.ddel);
-
-                    return this.dropAllowed;
-                };
-
-                return true;
-            }
-        });
-        this.getView().dragZone.addToGroup('modx-treedrop-dd');
-        this.getView().dragZone.addToGroup('collectionChildDDGroup');
-
         var ddrow = new Ext.ux.dd.GridReorderDropTarget(this, {
             copy: false
             ,sortCol: 'menuindex'
@@ -555,7 +433,7 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
                     MODx.Ajax.request({
                         url: Collections.connectorUrl
                         ,params: {
-                            action: 'mgr/resource/ddreorder'
+                            action: 'mgr/selection/ddreorder'
                             ,idItem: records.pop().id
                             ,oldIndex: oldIndex
                             ,newIndex: newIndex
