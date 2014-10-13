@@ -36,6 +36,10 @@
         },{
             "key": "user_css"
             ,"value": ""
+        },{
+            "key": "mgr_tree_icon_collectioncontainer"
+            ,"value": "collectioncontainer"
+            ,"namespace": ""
         }]
     }
     ,"database":{

@@ -128,7 +128,7 @@
 }
 
 .collectioncontainer:before {
-    content: url(i/collection.png) !important;
+    content: "\f0c9";
 }
 
 .icon-collectioncontainer .x-tree-node-icon {
