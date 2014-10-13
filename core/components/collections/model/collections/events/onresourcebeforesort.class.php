@@ -20,10 +20,6 @@ class OnResourceBeforeSort extends CollectionsPlugin {
                 continue;
             }
 
-            $skip = $this->handleDropToSelection($parent, $resource, $originalParent);
-            if ($skip === true) {
-                $this->scriptProperties['nodes'][$id]['parent'] = "1";
-            }
 
             $this->handleParent($parent, $resource, $originalParent);
 
@@ -85,22 +81,5 @@ class OnResourceBeforeSort extends CollectionsPlugin {
             $originalParent->set('show_in_tree', 0);
             $originalParent->save();
         }
-    }
-
-    /**
-     * @param \modResource $parent
-     * @param \modResource $resource
-     */
-    protected function handleDropToSelection($parent, $resource) {
-        if ($parent->class_key == 'CollectionContainer' && $this->modx->collections->isSelection($parent)) {
-            $link = $this->modx->newObject('CollectionSelection');
-            $link->set('resource', $resource->id);
-            $link->set('collection', $parent->id);
-            $link->save();
-
-            return true;
-        }
-
-        return false;
     }
 }

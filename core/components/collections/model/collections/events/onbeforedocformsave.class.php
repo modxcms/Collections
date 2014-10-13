@@ -8,14 +8,10 @@ class OnBeforeDocFormSave extends CollectionsPlugin {
 
         /** @var \modResource $parent */
         $parent = $resource->Parent;
-        if ($parent && ($parent->class_key == 'CollectionContainer')) {
-            if ($this->modx->collections->isSelection($parent)) {
-                $this->modx->event->_output = $this->modx->lexicon('collections.err.cant_set_parent_selection');
+        if ($parent && ($parent->class_key == 'SelectionContainer')) {
+            $this->modx->event->_output = $this->modx->lexicon('collections.err.cant_set_parent_selection');
 
-                return;
-            }
-
-            $this->handleParent($resource);
+            return;
         }
 
         if ($resource->class_key == 'CollectionContainer') {
