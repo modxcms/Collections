@@ -150,23 +150,50 @@ Collections.combo.ContentPlace = function(config) {
     Collections.combo.ContentPlace.superclass.constructor.call(this,config);
 };
 Ext.extend(Collections.combo.ContentPlace,MODx.combo.ComboBox);
-Ext.reg('collections-combo-content-place',Collections.combo.ContentPlace);
 
 Collections.combo.Resource = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         name: 'resource'
         ,hiddenName: 'resource'
-        ,displayField: 'pagetitle'
-        ,valueField: 'id'
-        ,fields: ['pagetitle','id']
-        ,pageSize: 20
-        ,url: MODx.config.connector_url ? MODx.config.connector_url : MODx.config.connectors_url
-        ,baseParams:{
-            action: MODx.config.connector_url ? 'resource/getlist' : ''
-        }
-    });
+    ,displayField: 'pagetitle'
+    ,valueField: 'id'
+    ,fields: ['pagetitle','id']
+    ,pageSize: 20
+    ,url: MODx.config.connector_url ? MODx.config.connector_url : MODx.config.connectors_url
+    ,baseParams:{
+    action: MODx.config.connector_url ? 'resource/getlist' : ''
+}
+});
     Collections.combo.Resource.superclass.constructor.call(this,config);
 };
 Ext.extend(Collections.combo.Resource,MODx.combo.ComboBox);
 Ext.reg('collections-combo-resource',Collections.combo.Resource);
+Ext.reg('collections-combo-content-place',Collections.combo.ContentPlace);
+
+Collections.combo.ViewFor = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        store: new Ext.data.SimpleStore({
+            fields: ['d','v']
+            ,data: [
+                [_('collections.template.view_for_all'), 0],
+                [_('collections.template.view_for_collections'), 1],
+                [_('collections.template.view_for_selections'), 2]
+            ]
+        })
+        ,displayField: 'd'
+        ,valueField: 'v'
+        ,mode: 'local'
+        ,value: 'view_for'
+        ,triggerAction: 'all'
+        ,editable: false
+        ,selectOnFocus: false
+        ,preventRender: true
+        ,forceSelection: true
+        ,enableKeyEvents: true
+    });
+    Collections.combo.ViewFor.superclass.constructor.call(this,config);
+};
+Ext.extend(Collections.combo.ViewFor,MODx.combo.ComboBox);
+Ext.reg('collections-combo-view-for',Collections.combo.ViewFor);

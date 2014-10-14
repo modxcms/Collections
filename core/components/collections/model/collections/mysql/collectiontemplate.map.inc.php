@@ -23,7 +23,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'tab_label' => 'collections.children',
     'button_label' => 'collections.children.create',
     'content_place' => 'original',
-    'selection' => 0,
+    'view_for' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -139,11 +139,12 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'null' => false,
       'default' => 'original',
     ),
-    'selection' => 
+    'view_for' => 
     array (
       'dbtype' => 'int',
       'precision' => '1',
-      'phptype' => 'boolean',
+      'phptype' => 'integer',
+      'attributes' => 'unsigned',
       'null' => false,
       'default' => 0,
     ),

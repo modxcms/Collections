@@ -97,6 +97,10 @@ $_lang['collections.template.content_place'] = 'Content\'s place';
 $_lang['collections.template.content_place_original_except_children'] = 'Original except children';
 $_lang['collections.template.selections_settings'] = 'Selection\'s settings';
 $_lang['collections.template.selection_enabled'] = 'Use as a Selection';
+$_lang['collections.template.view_for'] = 'View for';
+$_lang['collections.template.view_for_all'] = 'Collections & Selections';
+$_lang['collections.template.view_for_collections'] = 'Collections';
+$_lang['collections.template.view_for_selections'] = 'Selections';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';
