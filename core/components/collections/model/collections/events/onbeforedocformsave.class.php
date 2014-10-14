@@ -21,6 +21,29 @@ class OnBeforeDocFormSave extends CollectionsPlugin {
         /** @var \modResource $original */
         $original = $this->modx->getObject('modResource', $resource->id);
         if ($original) {
+            if ($resource->class_key == 'SelectionContainer' && $original->class_key != 'SelectionContainer') {
+                if ($resource->hasChildren()) {
+                    $this->modx->event->_output = $this->modx->lexicon('collections.err.cant_switch_to_selection_children');
+
+                    return;
+                }
+
+                $resource->set('hide_children_in_tree', 1);
+                $resource->save();
+            }
+
+            if ($resource->class_key != 'SelectionContainer' && $original->class_key == 'SelectionContainer') {
+                $linkedResources = $this->modx->getCount('CollectionSelection', array('collection' => $resource->id));
+                if ($linkedResources > 0) {
+                    $this->modx->event->_output = $this->modx->lexicon('collections.err.cant_switch_from_selection_linked');
+
+                    return;
+                }
+
+                $resource->set('hide_children_in_tree', 0);
+                $resource->save();
+            }
+
             $this->handleOriginal($original, $parent, $resource);
         }
     }
