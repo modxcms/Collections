@@ -97,20 +97,6 @@ class Collections {
     }
 
     /**
-     * @param modResource $resource
-     * @return bool
-     */
-    public function isSelection($resource) {
-        //@TODO: Check for ResourceSetting
-
-        $template = $this->getCollectionsView($resource);
-
-        if ($template->selection == 1) return true;
-
-        return false;
-    }
-
-    /**
      * @param modResource $collection
      * @return CollectionTemplate
      */
