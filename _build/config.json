@@ -18,6 +18,9 @@
             "plugins": [{
                 "name": "Collections"
                 ,"events": ["OnManagerPageInit", "OnBeforeDocFormSave", "OnResourceBeforeSort", "OnDocFormPrerender", "OnBeforeEmptyTrash"]
+            }],
+            "snippets": [{
+                "name": "Selections"
             }]
 
         }
