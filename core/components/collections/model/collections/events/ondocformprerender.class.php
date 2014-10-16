@@ -4,22 +4,25 @@ class OnDocFormPrerender extends CollectionsPlugin {
     public function run() {
         $inject = false;
 
-        /** @var \modResource $parent */
+        /** @var modResource $resource */
+        $resource = $this->scriptProperties['resource'];
+        /** @var modResource $parent */
         $parent = $this->scriptProperties['resource']->Parent;
+
         if (!$parent) {
             if (isset($_GET['parent'])) {
                 $parent = intval($_GET['parent']);
 
                 $parent = $this->modx->getObject('modResource', $parent);
                 if ($parent){
-                    $inject = ($parent->class_key == 'CollectionContainer');
+                    $inject = ($parent->class_key == 'CollectionContainer' && $resource->class_key != 'CollectionContainer' && $resource->hasChildren() == 0);
                 }
             }
         } else {
-            $inject = ($parent->class_key == 'CollectionContainer');
+            $inject = ($parent->class_key == 'CollectionContainer' && $resource->class_key != 'CollectionContainer' && $resource->hasChildren() == 0);
         }
 
-        if (!$inject) {
+        if (!$inject && intval($_GET['selection'] > 0)) {
             $selection = $this->modx->getCount('CollectionSelection', array('resource' => $this->scriptProperties['resource']->id));
             if ($selection > 0) $inject = true;
         }

@@ -293,7 +293,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     }
 
     ,editChild: function(btn,e) {
-        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + '&selection=' + MODx.request.id);
+        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id);
     }
 
     ,createChild: function(btn,e) {

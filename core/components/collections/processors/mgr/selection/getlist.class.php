@@ -152,6 +152,7 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
 
         $c->select($this->modx->getSelectColumns('modResource', 'modResource', '', array('menuindex'), true));
         $c->select($this->modx->getSelectColumns('CollectionSelection', 'CollectionSelection', '', array('menuindex')));
+        $c->select($this->modx->getSelectColumns('CollectionSelection', 'CollectionSelection', 'cs_', array('collection')));
 
         foreach ($this->tvColumns as $column) {
             $c->select(array(
@@ -181,13 +182,13 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
         $version = $this->modx->getVersionData();
 
         if ($version['major_version'] < 3) {
-            $resourceArray['action_edit'] = '?a=30&id='.$resourceArray['id'];
+            $resourceArray['action_edit'] = '?a=30&id=' . $resourceArray['id'] . '&selection=' . $resourceArray['cs_collection'];
         } else {
-            $resourceArray['action_edit'] = '?a=resource/update&action=post/update&id='.$resourceArray['id'];
+            $resourceArray['action_edit'] = '?a=resource/update&action=post/update&id=' . $resourceArray['id'] . '&selection=' . $resourceArray['cs_collection'];
         }
 
         $this->modx->getContext($resourceArray['context_key']);
-        $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'],$resourceArray['context_key']);
+        $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'], $resourceArray['context_key']);
 
         $resourceArray['actions'] = array();
         $resourceArray['actions'][] = array(
