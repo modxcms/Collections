@@ -1,6 +1,6 @@
 <?php
 /**
- * Selections
+ * getSelections
  *
  * DESCRIPTION
  *
@@ -8,25 +8,32 @@
  * It will allows you to select all linked resources under specific Selection with a usage of getResources snippet.
  * Returns distinct list of linked Resources for given Selections
  *
+ * getResources are required
+ *
  * PROPERTIES:
  *
- * &sortdir     string  optional    Direction of sorting by linked resource's menuindex. Default: ASC
- * &selections   string  optional    Comma separated list of Selection IDs for which should be retrieved linked resources. Default: empty string
- * $sort        integer optional    If set to 0, sortby property will not be generated and you can specify it manually in getResources call. Default: 1
+ * &sortdir                 string  optional    Direction of sorting by linked resource's menuindex. Default: ASC
+ * &selections              string  optional    Comma separated list of Selection IDs for which should be retrieved linked resources. Default: empty string
+ * &getResourcesSnippet     string  optional    Name of getResources snippet. Default: getResources
  *
  * USAGE:
  *
- * [[getResources? [[!Selections? &selection=`1`]] &tpl=`rowTpl`]]
- * [[getResources? [[!Selections? &selection=`1` &sort=`0`]] &tpl=`rowTpl` &sortby=`RAND()`]]
+ * [[getSelections? &selections=`1` &tpl=`rowTpl`]]
+ * [[getSelections? &selections=`1` &tpl=`rowTpl` &sortby=`RAND()`]]
  *
  */
 
 $collections = $modx->getService('collections','Collections',$modx->getOption('collections.core_path',null,$modx->getOption('core_path').'components/collections/').'model/collections/',$scriptProperties);
 if (!($collections instanceof Collections)) return '';
 
-$sort = (int) $modx->getOption('sort', $scriptProperties, 1);
+$getResourcesSnippet = $modx->getOption('getResourcesSnippet', $scriptProperties, 'getResources');
+
+$getResourcesExists = $modx->getCount('modSnippet', array('name' => $getResourcesSnippet));
+if ($getResourcesExists == 0) return 'getResources not found';
+
 $sortDir = $modx->getOption('sortdir', $scriptProperties, 'asc');
 $selections = $modx->getOption('selections', $scriptProperties, '');
+$sortBy = $modx->getOption('sortby', $scriptProperties, '');
 
 $selections = $modx->collections->explodeAndClean($selections);
 
@@ -42,7 +49,7 @@ if (!empty($selections)) {
     ));
 }
 
-if ($sort == 1) {
+if ($sortBy == '') {
     $linkedResourcesQuery->sortby('menuindex', $sortDir);
 }
 
@@ -57,12 +64,16 @@ $linkedResourcesQuery->stmt->execute();
 $linkedResources = $linkedResourcesQuery->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 $linkedResources = implode(',', $linkedResources);
 
-$output = '&resources=`' . $linkedResources . '`';
+$properties = $scriptProperties;
+unset($properties['selections']);
 
-if ($sort == 1) {
-    $output .= ' &sortby=`FIELD(modResource.id, ' . $linkedResources . ' )` &sortdir=`asc`';
+$properties['resources'] = $linkedResources;
+
+if ($sortBy == '') {
+    $properties['sortby'] = 'FIELD(modResource.id, ' . $linkedResources . ' )';
+    $properties['sortdir'] = 'asc';
 }
 
-return $output;
+return $modx->runSnippet($getResourcesSnippet, $properties);
 
 

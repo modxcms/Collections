@@ -20,7 +20,7 @@
                 ,"events": ["OnManagerPageInit", "OnBeforeDocFormSave", "OnResourceBeforeSort", "OnDocFormPrerender", "OnBeforeEmptyTrash"]
             }],
             "snippets": [{
-                "name": "Selections"
+                "name": "getSelections"
             }]
 
         }
