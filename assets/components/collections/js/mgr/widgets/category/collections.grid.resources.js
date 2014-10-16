@@ -569,6 +569,10 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             if (this.store.sortInfo == undefined || this.store.sortInfo.field != 'menuindex') {
                 return _('collections.err.bad_sort_column', {column: 'menuindex'});
             }
+        } else {
+            if (this.store.sortInfo != undefined && this.store.sortInfo.field != 'menuindex') {
+                return _('collections.err.bad_sort_column', {column: 'menuindex'});
+            }
         }
 
         var search = Ext.getCmp('collections-child-search');

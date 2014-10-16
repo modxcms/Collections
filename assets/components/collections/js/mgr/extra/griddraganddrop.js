@@ -9,6 +9,10 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
                 if (data.grid.store.sortInfo == undefined || data.grid.store.sortInfo.field != this.sortCol) {
                     return false;
                 }
+            } else {
+                if (data.grid.store.sortInfo != undefined && data.grid.store.sortInfo.field != this.sortCol) {
+                    return false;
+                }
             }
 
             var search = Ext.getCmp('collections-child-search');
@@ -56,6 +60,10 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
 
             if (data.grid.config.baseParams.sort != this.sortCol) {
                 if (data.grid.store.sortInfo == undefined || data.grid.store.sortInfo.field != this.sortCol) {
+                    return this.dropNotAllowed;
+                }
+            } else {
+                if (data.grid.store.sortInfo != undefined && data.grid.store.sortInfo.field != this.sortCol) {
                     return this.dropNotAllowed;
                 }
             }
