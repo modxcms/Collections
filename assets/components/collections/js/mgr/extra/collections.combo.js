@@ -150,26 +150,32 @@ Collections.combo.ContentPlace = function(config) {
     Collections.combo.ContentPlace.superclass.constructor.call(this,config);
 };
 Ext.extend(Collections.combo.ContentPlace,MODx.combo.ComboBox);
+Ext.reg('collections-combo-content-place',Collections.combo.ContentPlace);
 
 Collections.combo.Resource = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         name: 'resource'
         ,hiddenName: 'resource'
-    ,displayField: 'pagetitle'
-    ,valueField: 'id'
-    ,fields: ['pagetitle','id']
-    ,pageSize: 20
-    ,url: MODx.config.connector_url ? MODx.config.connector_url : MODx.config.connectors_url
-    ,baseParams:{
-    action: MODx.config.connector_url ? 'resource/getlist' : ''
-}
-});
+        ,displayField: 'pagetitle'
+        ,valueField: 'id'
+        ,fields: ['pagetitle','id']
+        ,pageSize: 20
+        ,editable: true
+        ,triggerAction: 'all'
+        ,typeAhead: true
+        ,forceSelection: true
+        ,selectOnFocus: false
+        ,url: Collections.config.connectorUrl
+        ,baseParams:{
+            action: 'mgr/extra/getresources'
+        }
+    });
     Collections.combo.Resource.superclass.constructor.call(this,config);
 };
 Ext.extend(Collections.combo.Resource,MODx.combo.ComboBox);
 Ext.reg('collections-combo-resource',Collections.combo.Resource);
-Ext.reg('collections-combo-content-place',Collections.combo.ContentPlace);
+
 
 Collections.combo.ViewFor = function(config) {
     config = config || {};

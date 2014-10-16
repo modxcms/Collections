@@ -19,7 +19,7 @@ Ext.extend(Collections.window.Selection,MODx.Window, {
             ,hidden: true
         },{
             xtype: 'collections-combo-resource'
-            ,fieldLabel: _('collections.selection.resource')
+            ,fieldLabel: _('selections.resource')
             ,name: 'resource'
             ,hiddenName: 'resource'
             ,anchor: '100%'
