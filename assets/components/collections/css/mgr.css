@@ -139,6 +139,10 @@
     background-image: url(i/collection.png) !important;
 }
 
+.icon-selectioncontainer .x-tree-node-icon {
+    background-image: url(i/collection.png) !important;
+}
+
 .transparent-background {
     background-color: transparent;
 }
