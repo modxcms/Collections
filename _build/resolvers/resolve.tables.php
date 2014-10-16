@@ -16,6 +16,7 @@ if ($object->xpdo) {
             $manager->createObjectContainer('CollectionTemplate');
             $manager->createObjectContainer('CollectionTemplateColumn');
             $manager->createObjectContainer('CollectionResourceTemplate');
+            $manager->createObjectContainer('CollectionSelection');
 
             break;
     }

@@ -9,4 +9,4 @@ $snippets[0]->fromArray(array(
     'snippet' => getSnippetContent($sources['snippets'].'/getselections.snippet.php'),
 ),'',true,true);
 
-return $plugins;
+return $snippets;

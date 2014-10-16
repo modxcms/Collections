@@ -55,5 +55,13 @@ $settings['mgr_tree_icon_collectioncontainer']->fromArray(array(
     'namespace' => 'collections',
 ));
 
+$settings['mgr_tree_icon_selectioncontainer'] = $modx->newObject('modSystemSetting');
+$settings['mgr_tree_icon_selectioncontainer']->set('key', 'mgr_tree_icon_selectioncontainer');
+$settings['mgr_tree_icon_selectioncontainer']->fromArray(array(
+    'value' => 'selectioncontainer',
+    'xtype' => 'textfield',
+    'namespace' => 'collections',
+));
+
 
 return $settings;

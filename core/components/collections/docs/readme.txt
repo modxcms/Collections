@@ -1,9 +1,9 @@
 =====================
      Collections
-     2.0.2 pl
+     3.0.0 pl
 
       John Peca
-  pecajan@gmail.com
+     john@modx.com
 =====================
 
 An Extra for MODX Revolution that provides for Resource Collections managed by CollectionContainer Resources.
