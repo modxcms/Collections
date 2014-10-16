@@ -8,7 +8,7 @@ Collections.grid.ContainerSelection = function(config) {
         ,autosave: true
         ,save_action: 'mgr/selection/updatefromgrid'
         ,ddGroup: 'collectionChildDDGroup'
-        ,enableDragDrop: Collections.template.allowDD
+        ,enableDragDrop: false
         ,baseParams: {
             action: 'mgr/selection/getlist'
             ,parent: MODx.request.id
@@ -422,6 +422,23 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
     }
 
     ,registerGridDropTarget: function() {
+        this.getView().dragZone = new Ext.grid.GridDragZone(this, {
+            ddGroup : 'collectionChildDDGroup'
+            ,originals: {}
+            ,handleMouseDown: function(e) {
+                // Disable drag and drop for clicking on checkbox (to select a row)
+                if (e.target.className == 'x-grid3-row-checker') {
+                    return false;
+                }
+
+                Ext.grid.GridDragZone.superclass.handleMouseDown.apply(this, arguments);
+                return true;
+            }
+
+
+        });
+        this.getView().dragZone.addToGroup('collectionChildDDGroup');
+
         var ddrow = new Ext.ux.dd.GridReorderDropTarget(this, {
             copy: false
             ,sortCol: 'menuindex'
