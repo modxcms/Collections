@@ -9,20 +9,25 @@ Collections.window.Selection = function(config) {
         ,fields: this.getFields(config)
     });
     Collections.window.Selection.superclass.constructor.call(this,config);
+
+    this.on('show',function() {
+        var fld = this.fp.getForm().items.itemAt(0);
+        fld.focus(false,200);
+    },this);
 };
 Ext.extend(Collections.window.Selection,MODx.Window, {
 
     getFields: function(config) {
         return [{
-            xtype: 'textfield'
-            ,name: 'collection'
-            ,hidden: true
-        },{
             xtype: 'collections-combo-resource'
             ,fieldLabel: _('selections.resource')
+            ,id: 'testtest'
             ,name: 'resource'
             ,hiddenName: 'resource'
             ,anchor: '100%'
+        },{
+            xtype: 'hidden'
+            ,name: 'collection'
         }];
     }
 });

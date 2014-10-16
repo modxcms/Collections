@@ -233,7 +233,7 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
         }
         $resourceArray['actions'][] = array(
             'className' => 'unlink',
-            'text' => $this->modx->lexicon('collections.selection.unlink_action'),
+            'text' => $this->modx->lexicon('selections.unlink_action'),
             'key' => 'unlink',
         );
 

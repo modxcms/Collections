@@ -97,6 +97,10 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
                     text: _('collections.children.undelete_multiple')
                     ,handler: this.undeleteSelected
                     ,scope: this
+                }, '-', {
+                    text: _('selections.unlink_multiple')
+                    ,handler: this.unlinkSelected
+                    ,scope: this
                 }]
             });
         }
@@ -358,8 +362,27 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
                 },scope:this}
             }
         });
+    }
 
+    ,unlinkSelected: function(btn,e) {
+        var cs = this.getSelectedAsList();
+        if (cs === false) return false;
 
+        MODx.Ajax.request({
+            url: this.config.url
+            ,params: {
+                action: 'mgr/selection/removemultiple'
+                ,resources: cs
+                ,collection: MODx.request.id
+            }
+            ,listeners: {
+                'success': {fn:function(r) {
+                    this.getSelectionModel().clearSelections(true);
+                    this.refresh();
+                },scope:this}
+            }
+        });
+        return true;
     }
 
 
