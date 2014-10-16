@@ -17,6 +17,7 @@
  * @property string $button_label
  * @property string $content_place
  * @property int $view_for
+ * @property string $link_label
  *
  * @property CollectionSetting $Setting
  * @property array $Columns

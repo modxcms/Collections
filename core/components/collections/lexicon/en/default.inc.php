@@ -86,7 +86,7 @@ $_lang['collections.template.child_template'] = 'Default children\'s template';
 $_lang['collections.template.child_resource_type'] = 'Default children\'s resource type';
 $_lang['collections.template.resource_type_selection'] = 'Resource type selection';
 $_lang['collections.template.duplicate'] = 'Duplicate view';
-$_lang['collections.template.grid_settings'] = 'Grid settings';
+$_lang['collections.template.general_settings'] = 'General settings';
 $_lang['collections.template.children_settings'] = 'Children\'s settings';
 $_lang['collections.template.tab_label'] = 'Tab\'s label';
 $_lang['collections.template.button_label'] = 'New child\'s button label';
@@ -101,6 +101,8 @@ $_lang['collections.template.view_for'] = 'View for';
 $_lang['collections.template.view_for_all'] = 'Collections & Selections';
 $_lang['collections.template.view_for_collections'] = 'Collections';
 $_lang['collections.template.view_for_selections'] = 'Selections';
+$_lang['collections.template.collections_settings'] = 'Collection\'s settings';
+$_lang['collections.template.link_label'] = 'New link\'s button label';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

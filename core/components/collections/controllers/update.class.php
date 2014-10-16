@@ -104,6 +104,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
     }
 
     public function getCollectionsTemplate() {
+        /** @var CollectionTemplate $template */
         $template = $this->modx->collections->getCollectionsView($this->resource);
 
         $c = $this->modx->newQuery('CollectionTemplateColumn');
@@ -132,6 +133,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             ),
             'tab_label' => $template->tab_label,
             'button_label' => $template->button_label,
+            'link_label' => $template->link_label,
             'content_place' => $template->content_place,
             'selection' => $template->selection,
         );

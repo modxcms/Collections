@@ -24,6 +24,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'button_label' => 'collections.children.create',
     'content_place' => 'original',
     'view_for' => 0,
+    'link_label' => 'selections.create',
   ),
   'fieldMeta' => 
   array (
@@ -147,6 +148,14 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'attributes' => 'unsigned',
       'null' => false,
       'default' => 0,
+    ),
+    'link_label' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'selections.create',
     ),
   ),
   'composites' => 

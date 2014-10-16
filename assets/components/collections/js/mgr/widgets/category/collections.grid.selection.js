@@ -72,7 +72,7 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
         var items = [];
 
         items.push({
-            text: _('selections.create')
+            text: (_(Collections.template.link_label) == undefined) ? Collections.template.link_label : _(Collections.template.link_label)
             ,handler: this.createSelection
             ,scope: this
         });

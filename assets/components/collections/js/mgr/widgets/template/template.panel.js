@@ -226,18 +226,20 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
         return [{
                 xtype: 'modx-vtabs'
                 ,items: [{
-                    title: _('collections.template.grid_settings')
-                    ,items: this.getGridSettingsFields(config)
+                    title: _('collections.template.general_settings')
+                    ,items: this.getGeneralSettingsFields(config)
                 },{
-                    title: _('collections.template.children_settings')
-                    ,items: this.getChildrenSettingsFields(config)
-                    ,id: 'collections-panel-template-children_settings'
+                    title: _('collections.template.collections_settings')
+                    ,items: this.getCollectionsSettingsFields(config)
+                },{
+                    title: _('collections.template.selections_settings')
+                    ,items: this.getSelectionsSettingsFields(config)
                 }]
         }];
 
     }
 
-    ,getGridSettingsFields: function(config) {
+    ,getGeneralSettingsFields: function(config) {
         return [{
             deferredRender: false
             ,border: true
@@ -367,11 +369,11 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,anchor: '100%'
                         }
                         ,items: [{
-                            xtype: 'modx-combo-boolean'
-                            ,fieldLabel: _('collections.template.resource_type_selection')
-                            ,name: 'resource_type_selection'
-                            ,hiddenName: 'resource_type_selection'
-                            ,value: (config.record) ? config.record.resource_type_selection : true
+                            xtype: 'collections-combo-content-place'
+                            ,fieldLabel: _('collections.template.content_place')
+                            ,name: 'content_place'
+                            ,hiddenName: 'content_place'
+                            ,value: (config.record) ? config.record.button_label : 'original'
                         }]
                     }]
                 }]
@@ -413,12 +415,7 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             msgTarget: 'under'
                             ,anchor: '100%'
                         }
-                        ,items: [{
-                            xtype: 'textfield'
-                            ,fieldLabel: _('collections.template.button_label')
-                            ,name: 'button_label'
-                            ,value: (config.record) ? config.record.button_label : 'collections.children.create'
-                        }]
+                        ,items: []
                     },{
                         columnWidth:.4
                         ,border: false
@@ -426,20 +423,14 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             msgTarget: 'under'
                             ,anchor: '100%'
                         }
-                        ,items: [{
-                            xtype: 'collections-combo-content-place'
-                            ,fieldLabel: _('collections.template.content_place')
-                            ,name: 'content_place'
-                            ,hiddenName: 'content_place'
-                            ,value: (config.record) ? config.record.button_label : 'original'
-                        }]
+                        ,items: []
                     }]
                 }]
             }]
         }];
     }
 
-    ,getChildrenSettingsFields: function(config) {
+    ,getCollectionsSettingsFields: function(config) {
         return [{
             deferredRender: false
             ,border: true
@@ -451,6 +442,56 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                 ,layoutOnTabChange: true
             }
             ,items: [{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
+                        columnWidth:.5
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'modx-combo-boolean'
+                            ,fieldLabel: _('collections.template.resource_type_selection')
+                            ,name: 'resource_type_selection'
+                            ,hiddenName: 'resource_type_selection'
+                            ,value: (config.record) ? config.record.resource_type_selection : true
+                        }]
+                    },{
+                        columnWidth:.5
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'modx-combo-class-derivatives'
+                            ,fieldLabel: _('collections.template.child_resource_type')
+                            ,name: 'child_resource_type'
+                            ,hiddenName: 'child_resource_type'
+                            ,allowBlank: false
+                            ,editable: false
+                            ,value: (config.record) ? config.record.child_resource_type : 'modDocument'
+                        }]
+                    }]
+                }]
+            },{
                 defaults: {
                     msgTarget: 'side'
                     ,autoHeight: true
@@ -491,13 +532,58 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,anchor: '100%'
                         }
                         ,items: [{
-                            xtype: 'modx-combo-class-derivatives'
-                            ,fieldLabel: _('collections.template.child_resource_type')
-                            ,name: 'child_resource_type'
-                            ,hiddenName: 'child_resource_type'
-                            ,allowBlank: false
-                            ,editable: false
-                            ,value: (config.record) ? config.record.child_resource_type : 'modDocument'
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.button_label')
+                            ,name: 'button_label'
+                            ,value: (config.record) ? config.record.button_label : 'collections.children.create'
+                        }]
+                    }]
+                }]
+            }]
+        }];
+    }
+
+    ,getSelectionsSettingsFields: function(config) {
+        return [{
+            deferredRender: false
+            ,border: true
+            ,defaults: {
+                autoHeight: true
+                ,layout: 'form'
+                ,labelWidth: 150
+                ,bodyCssClass: 'main-wrapper'
+                ,layoutOnTabChange: true
+            }
+            ,items: [{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
+                        columnWidth:.5
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.link_label')
+                            ,name: 'link_label'
+                            ,value: (config.record) ? config.record.link_label : 'selections.create'
                         }]
                     }]
                 }]
