@@ -51,6 +51,11 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
             $this->setProperty('button_label', 'collections.children.create');
         }
 
+        $linkLabel = $this->getProperty('link_label');
+        if (empty($linkLabel)) {
+            $this->setProperty('link_label', 'selections.create');
+        }
+
         $templates = $this->getProperty('templates');
         $templates = $this->modx->collections->explodeAndClean($templates);
 
