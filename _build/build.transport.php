@@ -75,34 +75,50 @@ $modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($settings).' system setting
 unset($settings,$setting,$attributes);
 
 /* add plugins */
+$modx->log(modX::LOG_LEVEL_INFO,'Adding in plugins.');
 $plugins = include $sources['data'].'transport.plugins.php';
-if (!is_array($plugins)) { $modx->log(modX::LOG_LEVEL_FATAL,'Adding plugins failed.'); }
-$attributes= array(
-    xPDOTransport::UNIQUE_KEY => 'name',
-    xPDOTransport::PRESERVE_KEYS => false,
-    xPDOTransport::UPDATE_OBJECT => true,
-    xPDOTransport::RELATED_OBJECTS => true,
-    xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
-        'PluginEvents' => array(
-            xPDOTransport::PRESERVE_KEYS => true,
-            xPDOTransport::UPDATE_OBJECT => false,
-            xPDOTransport::UNIQUE_KEY => array('pluginid','event'),
-        ),
-    ),
-);
-foreach ($plugins as $plugin) {
-    $vehicle = $builder->createVehicle($plugin, $attributes);
-    $builder->putVehicle($vehicle);
+if (is_array($plugins)) {
+    $category->addMany($plugins);
+} else {
+    $modx->log(modX::LOG_LEVEL_FATAL,'Adding plugins failed.');
 }
-$modx->log(modX::LOG_LEVEL_INFO,'Packaged in '.count($plugins).' plugins.'); flush();
-unset($plugins,$plugin,$attributes);
+
+/* add snippets */
+$modx->log(modX::LOG_LEVEL_INFO,'Adding in snippets.');
+$snippets = include $sources['data'].'transport.snippets.php';
+
+if (is_array($snippets)) {
+    $category->addMany($snippets);
+} else {
+    $modx->log(modX::LOG_LEVEL_FATAL,'Adding snippets failed.');
+}
 
 /* create category vehicle */
 $attr = array(
     xPDOTransport::UNIQUE_KEY => 'category',
     xPDOTransport::PRESERVE_KEYS => false,
     xPDOTransport::UPDATE_OBJECT => true,
-    xPDOTransport::RELATED_OBJECTS => false,
+    xPDOTransport::RELATED_OBJECTS => true,
+    xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
+        'Snippets' => array(
+            xPDOTransport::PRESERVE_KEYS => false,
+            xPDOTransport::UPDATE_OBJECT => true,
+            xPDOTransport::UNIQUE_KEY => 'name',
+        ),
+        'Plugins' => array(
+            xPDOTransport::UNIQUE_KEY => 'name',
+            xPDOTransport::PRESERVE_KEYS => false,
+            xPDOTransport::UPDATE_OBJECT => true,
+            xPDOTransport::RELATED_OBJECTS => true,
+            xPDOTransport::RELATED_OBJECT_ATTRIBUTES => array (
+                'PluginEvents' => array(
+                    xPDOTransport::PRESERVE_KEYS => true,
+                    xPDOTransport::UPDATE_OBJECT => false,
+                    xPDOTransport::UNIQUE_KEY => array('pluginid','event'),
+                ),
+            ),
+        ),
+    )
 );
 $vehicle = $builder->createVehicle($category,$attr);
 
