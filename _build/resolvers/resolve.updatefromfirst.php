@@ -70,6 +70,13 @@ if ($object->xpdo) {
                 $manager->addField('CollectionTemplate', 'content_place');
             }
 
+            if ($oldPackage && $oldPackage->compareVersion('3.0.0-pl', '>')) {
+                $manager = $modx->getManager();
+                $manager->addField('CollectionTemplate', 'view_for');
+                $manager->addField('CollectionTemplate', 'link_label');
+                $manager->addField('CollectionTemplate', 'php_renderer');
+            }
+
             break;
     }
 }

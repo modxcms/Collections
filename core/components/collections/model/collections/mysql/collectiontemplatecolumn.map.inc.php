@@ -17,6 +17,7 @@ $xpdo_meta_map['CollectionTemplateColumn']= array (
     'width' => 100,
     'editor' => '',
     'renderer' => '',
+    'php_renderer' => '',
     'position' => 0,
   ),
   'fieldMeta' => 
@@ -79,6 +80,14 @@ $xpdo_meta_map['CollectionTemplateColumn']= array (
       'default' => '',
     ),
     'renderer' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
+    ),
+    'php_renderer' => 
     array (
       'dbtype' => 'varchar',
       'precision' => '255',

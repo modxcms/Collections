@@ -5,7 +5,6 @@ Collections.window.TemplateColumn = function(config) {
         ,closeAction: 'close'
         ,isUpdate: false
         ,width: 600
-        ,height: 380
         ,url: Collections.config.connectorUrl
         ,action: 'mgr/template/column/create'
         ,fields: this.getFields(config)
@@ -56,18 +55,53 @@ Ext.extend(Collections.window.TemplateColumn,MODx.Window, {
             ,name: 'renderer'
             ,anchor: '100%'
         },{
-            xtype: 'xcheckbox'
-            ,fieldLabel: _('collections.template.column.hidden')
-            ,name: 'hidden'
+            xtype: 'textfield'
+            ,fieldLabel: _('collections.template.column.php_renderer')
+            ,name: 'php_renderer'
             ,anchor: '100%'
-            ,allowBlank: false
         },{
-            xtype: 'xcheckbox'
-            ,fieldLabel: _('collections.template.column.sortable')
-            ,name: 'sortable'
+            html: '<br />'
+        },{
+            layout: 'column'
+            ,border: false
             ,anchor: '100%'
-            ,allowBlank: false
+            ,defaults: {
+                layout: 'form'
+                ,labelAlign: 'top'
+                ,labelSeparator: ''
+                ,anchor: '100%'
+                ,border: false
+            }
+            ,items: [{
+                columnWidth:.5
+                ,border: false
+                ,defaults: {
+                    msgTarget: 'under'
+                    ,anchor: '100%'
+                }
+                ,items: [{
+                    xtype: 'xcheckbox'
+                    ,fieldLabel: _('collections.template.column.hidden')
+                    ,name: 'hidden'
+                    ,anchor: '100%'
+                    ,allowBlank: false
+                }]
+            },{
+                columnWidth: .5
+                ,border: false
+                ,defaults: {
+                    msgTarget: 'under'
+                    ,anchor: '100%'
+                }
+                ,items: [{
+                    xtype: 'xcheckbox'
+                    ,fieldLabel: _('collections.template.column.sortable')
+                    ,name: 'sortable'
+                    ,anchor: '100%'
+                    ,allowBlank: false
 
+                }]
+            }]
         }];
     },
     getFields: function(config) {

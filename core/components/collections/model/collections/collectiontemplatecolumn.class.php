@@ -8,6 +8,10 @@
  * @property bool $hidden
  * @property bool $sortable
  * @property int $width
+ * @property string $editor
+ * @property string $renderer
+ * @property string $php_renderer
+ * @property int $position
  *
  * @property CollectionTemplate $Template
  *

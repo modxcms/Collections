@@ -15,6 +15,8 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public $tvColumns = array();
     public $taggerColumns = array();
 
+    public $columnRenderer = array();
+
     public function initialize() {
         $parent = $this->getProperty('parent',null);
         if (empty($parent)) {
@@ -31,24 +33,32 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         $templateColumnsQuery->where(array(
             'name:LIKE' => 'tv_%',
             'OR:name:LIKE' => 'tagger_%',
+            'OR:php_renderer:!=' => '',
         ));
-        $templateColumnsQuery->select($this->modx->getSelectColumns('CollectionTemplateColumn', '', '', array('name')));
+        $templateColumnsQuery->select($this->modx->getSelectColumns('CollectionTemplateColumn', '', '', array('name', 'php_renderer')));
         $templateColumnsQuery->prepare();
         $templateColumnsQuery->stmt->execute();
 
-        $columns = $templateColumnsQuery->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-
-        foreach ($columns as $column) {
-            if (strpos($column, 'tv_') !== false) {
-                $tvName = preg_replace('/tv_/', '', $column, 1);
+        while ($column = $templateColumnsQuery->stmt->fetch(PDO::FETCH_ASSOC)) {
+            if (strpos($column['name'], 'tv_') !== false) {
+                $tvName = preg_replace('/tv_/', '', $column['name'], 1);
 
                 $tv = $this->modx->getObject('modTemplateVar', array('name' => $tvName));
 
                 if ($tv) {
-                    $this->tvColumns[] = array('id' => $tv->id, 'name' => $tvName, 'column' => $column);
+                    $this->tvColumns[] = array('id' => $tv->id, 'name' => $tvName, 'column' => $column['name']);
                 }
-            } else {
-                $this->taggerColumns[] = $column;
+            }
+
+            if (strpos($column['name'], 'tagger_') !== false) {
+                $this->taggerColumns[] = $column['name'];
+            }
+
+            if ($column['php_renderer'] != '') {
+                $snippet = $this->modx->getObject('modSnippet', array('name' => $column['php_renderer']));
+                if ($snippet) {
+                    $this->columnRenderer[$column['name']] = $column['php_renderer'];
+                }
             }
         }
 
@@ -152,9 +162,30 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
      * @param xPDOObject $object
      * @return array
      */
+    public function prepareRowWithRenderer(xPDOObject $object) {
+        $resourceArray = parent::prepareRow($object);
+
+        foreach ($resourceArray as $key => $column) {
+            if (!isset($this->columnRenderer[$key])) continue;
+
+            $resourceArray[$key] = $this->modx->runSnippet($this->columnRenderer[$key], array('value' => $column));
+        }
+
+        $resourceArray = $this->prepareActions($resourceArray);
+
+
+        return $resourceArray;
+    }
+
     public function prepareRow(xPDOObject $object) {
         $resourceArray = parent::prepareRow($object);
 
+        $resourceArray = $this->prepareActions($resourceArray);
+
+        return $resourceArray;
+    }
+
+    public function prepareActions($resourceArray) {
         $version = $this->modx->getVersionData();
 
         if ($version['major_version'] < 3) {
@@ -213,6 +244,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                 'key' => 'delete',
             );
         }
+
         return $resourceArray;
     }
 
@@ -238,6 +270,60 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         $data['results'] = $this->modx->getCollection($this->classKey,$c);
         return $data;
+    }
+
+    public function iterate(array $data) {
+        $list = array();
+        $list = $this->beforeIteration($list);
+        $this->currentIndex = 0;
+        /** @var xPDOObject|modAccessibleObject $object */
+        foreach ($data['results'] as $object) {
+            if ($this->checkListPermission && $object instanceof modAccessibleObject && !$object->checkPolicy('list')) continue;
+
+            $objectArray = $this->prepareRow($object);
+
+            if (!empty($objectArray) && is_array($objectArray)) {
+                $list[] = $objectArray;
+                $this->currentIndex++;
+            }
+        }
+        $list = $this->afterIteration($list);
+        return $list;
+    }
+
+    public function iterateWithRenderer(array $data) {
+        $list = array();
+        $list = $this->beforeIteration($list);
+        $this->currentIndex = 0;
+        /** @var xPDOObject|modAccessibleObject $object */
+        foreach ($data['results'] as $object) {
+            if ($this->checkListPermission && $object instanceof modAccessibleObject && !$object->checkPolicy('list')) continue;
+
+            $objectArray = $this->prepareRowWithRenderer($object);
+
+            if (!empty($objectArray) && is_array($objectArray)) {
+                $list[] = $objectArray;
+                $this->currentIndex++;
+            }
+        }
+        $list = $this->afterIteration($list);
+        return $list;
+    }
+
+    public function process() {
+        $beforeQuery = $this->beforeQuery();
+        if ($beforeQuery !== true) {
+            return $this->failure($beforeQuery);
+        }
+        $data = $this->getData();
+
+        if (count($this->columnRenderer) > 0) {
+            $list = $this->iterateWithRenderer($data);
+        } else {
+            $list = $this->iterate($data);
+        }
+
+        return $this->outputArray($list,$data['total']);
     }
 }
 return 'CollectionsResourceGetListProcessor';

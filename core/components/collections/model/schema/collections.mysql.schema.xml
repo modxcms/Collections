@@ -49,6 +49,7 @@
         <field key="width" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="100" />
         <field key="editor" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="renderer" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
+        <field key="php_renderer" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="position" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
 
         <aggregate alias="Template" class="CollectionTemplate" local="template" foreign="id" cardinality="one" owner="foreign" />

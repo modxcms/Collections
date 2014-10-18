@@ -117,6 +117,7 @@ $_lang['collections.template.column.width'] = 'Width';
 $_lang['collections.template.column.position'] = 'Position';
 $_lang['collections.template.column.editor'] = 'Editor';
 $_lang['collections.template.column.renderer'] = 'Renderer';
+$_lang['collections.template.column.php_renderer'] = 'Snippet Renderer';
 
 $_lang['collections.err.parent_ns'] = 'Parent is not specified.';
 $_lang['collections.err.template_ns'] = 'View is not specified.';
