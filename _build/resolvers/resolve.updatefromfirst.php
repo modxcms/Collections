@@ -74,7 +74,11 @@ if ($object->xpdo) {
                 $manager = $modx->getManager();
                 $manager->addField('CollectionTemplate', 'view_for');
                 $manager->addField('CollectionTemplate', 'link_label');
-                $manager->addField('CollectionTemplate', 'php_renderer');
+                $manager->addField('CollectionTemplate', 'context_menu');
+                $manager->addField('CollectionTemplate', 'buttons');
+                $manager->addField('CollectionTemplate', 'allowed_resource_types');
+
+                $manager->addField('CollectionTemplateColumn', 'php_renderer');
             }
 
             break;

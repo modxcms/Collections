@@ -2,11 +2,7 @@ Collections.grid.ContainerSelection = function(config) {
     config = config || {};
     this.sm = new Ext.grid.CheckboxSelectionModel();
     Ext.applyIf(config,{
-        id: 'collections-grid-container-selection'
-        ,title: _('collections.collections')
-        ,url: Collections.connectorUrl
-        ,autosave: true
-        ,save_action: 'mgr/selection/updatefromgrid'
+        save_action: 'mgr/selection/updatefromgrid'
         ,ddGroup: 'collectionChildDDGroup'
         ,enableDragDrop: false
         ,baseParams: {
@@ -18,18 +14,8 @@ Collections.grid.ContainerSelection = function(config) {
         ,saveParams: {
             collection: MODx.request.id
         }
-        ,fields: Collections.template.fields
-        ,paging: true
-        ,remoteSort: true
-        ,pageSize: Collections.template.pageSize
-        ,cls: 'collections-grid'
-        ,bodyCssClass: 'grid-with-buttons'
-        ,sm: this.sm
-        ,emptyText: _('collections.children.none')
-        ,columns: this.getColumns(config)
-        ,tbar: this.getTbar(config)
     });
-    Collections.grid.ContainerCollections.superclass.constructor.call(this,config);
+    Collections.grid.ContainerSelection.superclass.constructor.call(this,config);
     this.on('rowclick',MODx.fireResourceFormChange);
     this.on('click', this.handleButtons, this);
 
@@ -38,34 +24,34 @@ Collections.grid.ContainerSelection = function(config) {
         this.on('beforedestroy', this.destroyScrollManager, this);
     }
 };
-Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
-    type: Collections.template.selection ? 'selection' : 'children'
-    ,getMenu: function() {
+Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollections,{
+
+    getMenu: function() {
         var m = [];
         if (!this.menu.record) return m;
 
-        Ext.each(this.menu.record.actions, function(item) {
-            if (item.key == 'delete' || item.key == 'undelete' || item.key == 'unlink') {
-                m.push('-');
+        var addDelimiter = false;
+        Ext.each(Collections.template.context_menu, function(key) {
+            if (key == '-') {
+                addDelimiter = true;
+                return true;
             }
 
-            m.push({
-                text: _('selections.' + item.key)
-                ,handler: 'this.' + item.key + 'Child'
-            });
+            if (this.menu.record.menu_actions[key] != undefined) {
+                if (addDelimiter == true) {
+                    m.push('-');
+                    addDelimiter = false;
+                }
+
+                m.push({
+                    text: _('selections.' + key)
+                    ,handler: 'this.' + key + 'Child'
+                });
+            }
+
         }, this);
 
         return m;
-    }
-
-    ,getColumns: function(config) {
-        var columns = Collections.template.columns;
-
-        if (Collections.template.bulkActions) {
-            columns.unshift(this.sm);
-        }
-
-        return columns;
     }
 
     ,getTbar: function(config) {
@@ -185,16 +171,6 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
         MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + '&selection=' + MODx.request.id);
     }
 
-    ,viewChild: function(btn,e) {
-        if (!this.menu.record.data) {
-            window.open(this.menu.record.preview_url);
-        } else {
-            window.open(this.menu.record.data.preview_url);
-        }
-
-        return false;
-    }
-
     ,deleteChild: function(btn,e) {
         MODx.msg.confirm({
             title: _('selections.delete')
@@ -245,105 +221,6 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
             }
         });
         return true;
-    }
-
-    ,undeleteSelected: function(btn,e) {
-        var cs = this.getSelectedAsList();
-        if (cs === false) return false;
-
-        MODx.Ajax.request({
-            url: this.config.url
-            ,params: {
-                action: 'mgr/resource/undeletemultiple'
-                ,ids: cs
-            }
-            ,listeners: {
-                'success': {fn:function(r) {
-                    this.getSelectionModel().clearSelections(true);
-                    this.refresh();
-                },scope:this}
-            }
-        });
-        return true;
-    }
-
-    ,undeleteChild: function(btn,e) {
-        MODx.Ajax.request({
-            url: this.config.url
-            ,params: {
-                action: 'mgr/resource/undelete'
-                ,id: this.menu.record.id
-            }
-            ,listeners: {
-                'success':{fn:this.refresh,scope:this}
-            }
-        });
-    }
-
-    ,publishSelected: function(btn,e) {
-        var cs = this.getSelectedAsList();
-        if (cs === false) return false;
-
-        MODx.Ajax.request({
-            url: this.config.url
-            ,params: {
-                action: 'mgr/resource/publishmultiple'
-                ,ids: cs
-            }
-            ,listeners: {
-                'success': {fn:function(r) {
-                    this.getSelectionModel().clearSelections(true);
-                    this.refresh();
-                },scope:this}
-            }
-        });
-        return true;
-    }
-
-    ,unpublishSelected: function(btn,e) {
-        var cs = this.getSelectedAsList();
-        if (cs === false) return false;
-
-        MODx.Ajax.request({
-            url: this.config.url
-            ,params: {
-                action: 'mgr/resource/unpublishmultiple'
-                ,ids: cs
-            }
-            ,listeners: {
-                'success': {fn:function(r) {
-                    this.getSelectionModel().clearSelections(true);
-                    this.refresh();
-                },scope:this}
-            }
-        });
-        return true;
-    }
-
-    ,publishChild: function(btn,e) {
-        MODx.Ajax.request({
-            url: this.config.url
-            ,params: {
-                action: 'mgr/resource/publish'
-                ,id: this.menu.record.id
-            }
-            ,listeners: {
-                'success':{fn:this.refresh,scope:this}
-            }
-        });
-    }
-
-    ,unpublishChild: function(btn,e) {
-        MODx.Ajax.request({
-            url: this.config.url
-            ,params: {
-                action: 'mgr/resource/unpublish'
-                ,id: this.menu.record.id
-            }
-            ,listeners: {
-                'success':{fn:this.refresh,scope:this}
-            }
-        });
     }
 
     ,unlinkChild: function(btn,e) {
@@ -402,9 +279,6 @@ Ext.extend(Collections.grid.ContainerSelection,MODx.grid.Grid,{
                     break;
                 case 'edit':
                     this.editChild();
-                    break;
-                case 'duplicate':
-                    this.duplicateChild();
                     break;
                 case 'publish':
                     this.publishChild();

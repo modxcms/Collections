@@ -426,6 +426,74 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                         ,items: []
                     }]
                 }]
+            },{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
+                        columnWidth: 1
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.context_menu')
+                            ,description: _('collections.template.context_menu_desc')
+                            ,name: 'context_menu'
+                            ,value: (config.record) ? config.record.context_menu : 'view,edit,duplicate,publish,unpublish,-,delete,undelete,remove,-,unlink'
+                        }]
+                    }]
+                }]
+            },{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
+                        columnWidth: 1
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.buttons')
+                            ,description: _('collections.template.buttons_desc')
+                            ,name: 'buttons'
+                            ,value: (config.record) ? config.record.buttons : 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink'
+                        }]
+                    }]
+                }]
             }]
         }];
     }
@@ -536,6 +604,40 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,fieldLabel: _('collections.template.button_label')
                             ,name: 'button_label'
                             ,value: (config.record) ? config.record.button_label : 'collections.children.create'
+                        }]
+                    }]
+                }]
+            },{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
+                        columnWidth: 1
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.allowed_resource_types')
+                            ,description: _('collections.template.allowed_resource_types_desc')
+                            ,name: 'allowed_resource_types'
+                            ,value: (config.record) ? config.record.allowed_resource_types : ''
                         }]
                     }]
                 }]

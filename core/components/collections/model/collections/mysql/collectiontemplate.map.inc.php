@@ -25,6 +25,9 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'content_place' => 'original',
     'view_for' => 0,
     'link_label' => 'selections.create',
+    'context_menu' => 'view,edit,duplicate,publish,unpublish,-,delete,undelete,remove,-,unlink',
+    'buttons' => 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink',
+    'allowed_resource_types' => '',
   ),
   'fieldMeta' => 
   array (
@@ -156,6 +159,30 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => 'selections.create',
+    ),
+    'context_menu' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '512',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'view,edit,duplicate,publish,unpublish,-,delete,undelete,remove,-,unlink',
+    ),
+    'buttons' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '512',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink',
+    ),
+    'allowed_resource_types' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '512',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
     ),
   ),
   'composites' => 

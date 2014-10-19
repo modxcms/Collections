@@ -18,6 +18,9 @@
  * @property string $content_place
  * @property int $view_for
  * @property string $link_label
+ * @property string $context_menu
+ * @property string $buttons
+ * @property string $allowed_resource_types
  *
  * @property CollectionSetting $Setting
  * @property array $Columns

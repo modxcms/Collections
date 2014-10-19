@@ -34,6 +34,9 @@
         <field key="content_place" dbtype="varchar" precision="255" phptype="string" null="false" default="original" />
         <field key="view_for" dbtype="int" precision="1" phptype="integer" attributes="unsigned" null="false" default="0" />
         <field key="link_label" dbtype="varchar" precision="255" phptype="string" null="false" default="selections.create" />
+        <field key="context_menu" dbtype="varchar" precision="512" phptype="string" null="false" default="view,edit,duplicate,publish,unpublish,-,delete,undelete,remove,-,unlink" />
+        <field key="buttons" dbtype="varchar" precision="512" phptype="string" null="false" default="view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink" />
+        <field key="allowed_resource_types" dbtype="varchar" precision="512" phptype="string" null="false" default="" />
 
         <aggregate alias="Setting" class="CollectionSetting" local="id" foreign="template" cardinality="one" owner="local" />
         <composite alias="Columns" class="CollectionTemplateColumn" local="id" foreign="template" cardinality="many" owner="local" />

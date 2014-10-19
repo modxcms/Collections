@@ -17,14 +17,33 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
     public $columnRenderer = array();
 
+    public $actions = array();
+    public $buttons = array();
+
     public function initialize() {
         $parent = $this->getProperty('parent',null);
         if (empty($parent)) {
             return false;
         }
 
+        $this->setActions();
+
         $parentObject = $this->modx->getObject('modResource', $parent);
         $template = $this->modx->collections->getCollectionsView($parentObject);
+
+        $buttons = $this->modx->collections->explodeAndClean($template->buttons, ',', 1);
+        foreach ($buttons as $button) {
+            $button = $this->modx->collections->explodeAndClean($button, ':');
+
+            if (!isset($this->actions[$button[0]])) continue;
+
+            if (isset($button[1])) {
+                $this->actions[$button[0]]['className'] .= ' ' . $button[1];
+            }
+
+            $this->buttons[] = $button[0];
+        }
+
 
         $templateColumnsQuery = $this->modx->newQuery('CollectionTemplateColumn');
         $templateColumnsQuery->where(array(
@@ -63,6 +82,49 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         }
 
         return parent::initialize();
+    }
+
+    public function setActions() {
+        $this->actions['view'] = array(
+            'className' => 'view',
+            'text' => $this->modx->lexicon('view'),
+            'key' => 'view',
+        );
+        $this->actions['edit'] = array(
+            'className' => 'edit',
+            'text' => $this->modx->lexicon('edit'),
+            'key' => 'edit',
+        );
+        $this->actions['duplicate'] = array(
+            'className' => 'duplicate',
+            'text' => $this->modx->lexicon('duplicate'),
+            'key' => 'duplicate',
+        );
+        $this->actions['unpublish'] = array(
+            'className' => 'unpublish',
+            'text' => $this->modx->lexicon('unpublish'),
+            'key' => 'unpublish',
+        );
+        $this->actions['publish'] = array(
+            'className' => 'publish',
+            'text' => $this->modx->lexicon('publish'),
+            'key' => 'publish',
+        );
+        $this->actions['undelete'] = array(
+            'className' => 'undelete',
+            'text' => $this->modx->lexicon('undelete'),
+            'key' => 'undelete',
+        );
+        $this->actions['remove'] = array(
+            'className' => 'remove',
+            'text' => $this->modx->lexicon('collections.children.remove_action'),
+            'key' => 'remove',
+        );
+        $this->actions['delete'] = array(
+            'className' => 'delete',
+            'text' => $this->modx->lexicon('delete'),
+            'key' => 'delete',
+        );
     }
 
     public function prepareQueryBeforeCount(xPDOQuery $c) {
@@ -171,8 +233,9 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             $resourceArray[$key] = $this->modx->runSnippet($this->columnRenderer[$key], array('value' => $column));
         }
 
+        $resourceArray = $this->prepareSupportFields($resourceArray);
         $resourceArray = $this->prepareActions($resourceArray);
-
+        $resourceArray = $this->prepareMenuActions($resourceArray);
 
         return $resourceArray;
     }
@@ -180,12 +243,14 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public function prepareRow(xPDOObject $object) {
         $resourceArray = parent::prepareRow($object);
 
+        $resourceArray = $this->prepareSupportFields($resourceArray);
         $resourceArray = $this->prepareActions($resourceArray);
+        $resourceArray = $this->prepareMenuActions($resourceArray);
 
         return $resourceArray;
     }
 
-    public function prepareActions($resourceArray) {
+    public function prepareSupportFields($resourceArray) {
         $version = $this->modx->getVersionData();
 
         if ($version['major_version'] < 3) {
@@ -197,52 +262,68 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         $this->modx->getContext($resourceArray['context_key']);
         $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'],$resourceArray['context_key']);
 
+        return $resourceArray;
+    }
+
+    public function prepareActions($resourceArray) {
         $resourceArray['actions'] = array();
-        $resourceArray['actions'][] = array(
-            'className' => 'view',
-            'text' => $this->modx->lexicon('view'),
-            'key' => 'view',
-        );
-        $resourceArray['actions'][] = array(
-            'className' => 'edit',
-            'text' => $this->modx->lexicon('edit'),
-            'key' => 'edit',
-        );
-        $resourceArray['actions'][] = array(
-            'className' => 'duplicate',
-            'text' => $this->modx->lexicon('duplicate'),
-            'key' => 'duplicate',
-        );
-        if (!empty($resourceArray['published'])) {
-            $resourceArray['actions'][] = array(
-                'className' => 'unpublish',
-                'text' => $this->modx->lexicon('unpublish'),
-                'key' => 'unpublish',
-            );
-        } else {
-            $resourceArray['actions'][] = array(
-                'className' => 'publish orange',
-                'text' => $this->modx->lexicon('publish'),
-                'key' => 'publish',
-            );
+
+        foreach ($this->buttons as $button) {
+            if (isset($this->actions[$button])) {
+                switch ($button) {
+                    case 'publish':
+                        if (empty($resourceArray['published'])) {
+                            $resourceArray['actions'][] = $this->actions[$button];
+                        }
+                        break;
+                    case 'unpublish':
+                        if (!empty($resourceArray['published'])) {
+                            $resourceArray['actions'][] = $this->actions[$button];
+                        }
+                        break;
+                    case 'delete':
+                        if (empty($resourceArray['deleted'])) {
+                            $resourceArray['actions'][] = $this->actions[$button];
+                        }
+                        break;
+                    case 'undelete':
+                        if (!empty($resourceArray['deleted'])) {
+                            $resourceArray['actions'][] = $this->actions[$button];
+                        }
+                        break;
+                    case 'remove':
+                        if (!empty($resourceArray['deleted'])) {
+                            $resourceArray['actions'][] = $this->actions[$button];
+                        }
+                        break;
+                    default:
+                        $resourceArray['actions'][] = $this->actions[$button];
+                }
+
+            }
         }
-        if (!empty($resourceArray['deleted'])) {
-            $resourceArray['actions'][] = array(
-                'className' => 'undelete',
-                'text' => $this->modx->lexicon('undelete'),
-                'key' => 'undelete',
-            );
-            $resourceArray['actions'][] = array(
-                'className' => 'remove',
-                'text' => $this->modx->lexicon('collections.children.remove_action'),
-                'key' => 'remove',
-            );
+
+        return $resourceArray;
+    }
+
+    public function prepareMenuActions($resourceArray) {
+        $resourceArray['menu_actions'] = array();
+
+        $resourceArray['menu_actions']['view'] = $this->actions['view'];
+        $resourceArray['menu_actions']['edit'] = $this->actions['edit'];
+        $resourceArray['menu_actions']['duplicate'] = $this->actions['duplicate'];
+
+        if (!empty($resourceArray['published'])) {
+            $resourceArray['menu_actions']['unpublish'] = $this->actions['unpublish'];
         } else {
-            $resourceArray['actions'][] = array(
-                'className' => 'delete',
-                'text' => $this->modx->lexicon('delete'),
-                'key' => 'delete',
-            );
+            $resourceArray['menu_actions']['publish'] = $this->actions['publish'];
+        }
+
+        if (!empty($resourceArray['deleted'])) {
+            $resourceArray['menu_actions']['undelete'] = $this->actions['undelete'];
+            $resourceArray['menu_actions']['remove'] = $this->actions['remove'];
+        } else {
+            $resourceArray['menu_actions']['delete'] = $this->actions['delete'];
         }
 
         return $resourceArray;

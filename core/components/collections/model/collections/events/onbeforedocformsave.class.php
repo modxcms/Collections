@@ -14,6 +14,10 @@ class OnBeforeDocFormSave extends CollectionsPlugin {
             return;
         }
 
+        if ($parent && ($parent->class_key == 'CollectionContainer')) {
+            $this->handleParent($resource);
+        }
+
         if ($resource->class_key == 'CollectionContainer') {
             $resource->set('show_in_tree', 1);
         }
@@ -27,7 +31,6 @@ class OnBeforeDocFormSave extends CollectionsPlugin {
 
                     return;
                 }
-
                 $resource->set('hide_children_in_tree', 1);
                 $resource->save();
             }
@@ -39,7 +42,6 @@ class OnBeforeDocFormSave extends CollectionsPlugin {
 
                     return;
                 }
-
                 $resource->set('hide_children_in_tree', 0);
                 $resource->save();
             }

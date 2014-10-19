@@ -56,6 +56,16 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
             $this->setProperty('link_label', 'selections.create');
         }
 
+        $context_menu = $this->getProperty('context_menu');
+        if (empty($context_menu)) {
+            $this->setProperty('context_menu', 'view,edit,duplicate,publish,unpublish,-,delete,undelete,remove,-,unlink');
+        }
+
+        $buttons = $this->getProperty('buttons');
+        if (empty($buttons)) {
+            $this->setProperty('buttons', 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink');
+        }
+
         $templates = $this->getProperty('templates');
         $templates = $this->modx->collections->explodeAndClean($templates);
 

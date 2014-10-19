@@ -53,18 +53,6 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
 
         $collectionsTemplate = $this->getCollectionsTemplate();
 
-        $response = $this->modx->runProcessor('system/derivatives/getlist', array(
-            'skip' => 'modXMLRPCResource',
-            'class' => 'modResource',
-        ));
-
-        $response = $this->modx->fromJSON($response->response);
-        if ($response == '') {
-            $response = array();
-        } else {
-            $response = $response['results'];
-        }
-
         $this->loadConfig();
 
         $this->addHtml('
@@ -78,7 +66,6 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         MODx.onDocFormRender = "'.$this->onDocFormRender.'";
         MODx.ctx = "'.$this->resource->get('context_key').'";
         Collections.template = ' . $collectionsTemplate . ';
-        Collections.resourceDerivatives = ' . $this->modx->toJSON($response) . ';
         Ext.onReady(function() {
             MODx.load({
                 xtype: "collections-page-category-update"
@@ -116,8 +103,38 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         /** @var CollectionTemplateColumn[] $columns */
         $columns = $this->modx->getIterator('CollectionTemplateColumn', $c);
 
+        $derivates = array();
+
+        if ($template->resource_type_selection) {
+            $response = $this->modx->runProcessor('mgr/extra/getderivates', array(
+                'skip' => 'modXMLRPCResource',
+                'class' => 'modResource',
+            ), array(
+                'processors_path' => $this->modx->collections->getOption('processorsPath'),
+            ));
+
+            $response = $this->modx->fromJSON($response->response);
+
+            if ($response != '') {
+                if ($template->allowed_resource_types == '') {
+                    foreach ($response['results'] as $type) {
+                        $derivates[] = $type;
+                    }
+                } else {
+                    $allowedTypes = $this->modx->collections->explodeAndClean($template->allowed_resource_types);
+
+                    foreach ($allowedTypes as $type) {
+                        if (isset($response['results'][$type])) {
+                            $derivates[] = $response['results'][$type];
+                        }
+                    }
+                }
+
+            }
+        }
+
         $templateOptions = array(
-            'fields' => array('actions', 'action_edit', 'preview_url'),
+            'fields' => array('actions', 'action_edit', 'preview_url', 'menu_actions'),
             'columns' => array(),
             'sort' => array(
                 'field' => $template->sort_field,
@@ -135,7 +152,8 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'button_label' => $template->button_label,
             'link_label' => $template->link_label,
             'content_place' => $template->content_place,
-            'selection' => $template->selection,
+            'context_menu' => $this->modx->collections->explodeAndClean($template->context_menu, ',', 1),
+            'resourceDerivatives' => $derivates,
         );
 
         foreach ($columns as $column) {
