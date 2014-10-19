@@ -243,7 +243,7 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
     ,getGeneralSettingsFields: function(config) {
         return [{
             deferredRender: false
-            ,border: true
+            ,border: false
             ,defaults: {
                 autoHeight: true
                 ,layout: 'form'
@@ -502,7 +502,7 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
     ,getCollectionsSettingsFields: function(config) {
         return [{
             deferredRender: false
-            ,border: true
+            ,border: false
             ,defaults: {
                 autoHeight: true
                 ,layout: 'form'
@@ -649,7 +649,7 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
     ,getSelectionsSettingsFields: function(config) {
         return [{
             deferredRender: false
-            ,border: true
+            ,border: false
             ,defaults: {
                 autoHeight: true
                 ,layout: 'form'
