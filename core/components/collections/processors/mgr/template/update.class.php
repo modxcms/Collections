@@ -36,7 +36,7 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
         $this->handleComboBoolean('resource_type_selection');
         $this->handleComboBoolean('selection');
 
-        $childTemplate = $this->getProperty('child_template');
+        $childTemplate = $this->getProperty('child_template', '');
         if ($childTemplate == '') {
             $this->setProperty('child_template', null);
         }

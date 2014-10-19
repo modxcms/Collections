@@ -225,6 +225,7 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
     ,getTemplateOptions: function(config) {
         return [{
                 xtype: 'modx-vtabs'
+                ,deferredRender: false
                 ,items: [{
                     title: _('collections.template.general_settings')
                     ,items: this.getGeneralSettingsFields(config)
