@@ -1,5 +1,19 @@
 Changelog for Collections.
 
+Collections 3.0.0
+===================
+- Added validation for column name if contains a dot
+- Added PHP renderer (snippet) that will be used for a column
+- Added view option to define Resource Classes that will be available in resource type select
+- Added view option to define context menu items
+- Added view option to define buttons and their style
+- Fixed saving view options from not-activated tab
+- Changed default tree icon for Collections in Revo 2.3
+- Added getSelections snippet (works with getPage, getCache, etc.)
+- Updated view of Collection's settings tab
+- Updated Collections view
+- Added CRC for Selections
+- Added back button to Collection's children and revert close button to original functionality
 - Fire OnBeforeEmptyTrash and OnEmptyTrash when removing Resource via Collections
 
 Collections 2.2.2

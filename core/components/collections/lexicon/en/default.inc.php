@@ -140,3 +140,4 @@ $_lang['collections.err.column_name_cant_change'] = 'You can\'t change name of I
 $_lang['collections.err.template_remove_last'] = 'You can\'t remove the last view.';
 $_lang['collections.err.template_remove_global'] = 'You can\'t remove global view. Please set different view as a global and repeat this action.';
 $_lang['collections.err.template_ae_name'] = 'Template with this name already exists.';
+$_lang['collections.err.column_dot_name'] = 'Column name can\'t contain a dot.';
