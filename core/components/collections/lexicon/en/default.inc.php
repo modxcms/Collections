@@ -27,7 +27,7 @@ $_lang['setting_mgr_tree_icon_collectioncontainer_desc'] = 'CSS class that will 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Collection';
 $_lang['collections.system.text_create'] = 'Collection';
-$_lang['collections.system.text_create_here'] = 'Create a Collection here';
+$_lang['collections.system.text_create_here'] = 'Collection';
 $_lang['collections.system.new_container'] = 'New Collection';
 $_lang['collections.system.all'] = 'All';
 

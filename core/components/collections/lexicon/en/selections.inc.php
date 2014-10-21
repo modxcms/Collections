@@ -7,7 +7,7 @@
  */
 
 // System lexicons
-$_lang['selections.system.text_create_here'] = 'Create a Selection here';
+$_lang['selections.system.text_create_here'] = 'Selection';
 $_lang['selections.system.text_create'] = 'Selection';
 $_lang['selections.system.type_name'] = 'Selection';
 $_lang['selections.system.new_container'] = 'New Selection';
