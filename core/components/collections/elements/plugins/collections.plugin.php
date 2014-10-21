@@ -19,11 +19,13 @@ $collections = $modx->getService(
     )
 );
 
-$modx->loadClass('CollectionsPlugin', $collections->getOption('modelPath') . 'collections/events/', true, true);
-$modx->loadClass($modx->event->name, $collections->getOption('modelPath') . 'collections/events/', true, true);
+$className = 'Collections' . $modx->event->name;
 
-if (class_exists($modx->event->name)) {
-    $handler = new $modx->event->name($modx, $scriptProperties);
+$modx->loadClass('CollectionsPlugin', $collections->getOption('modelPath') . 'collections/events/', true, true);
+$modx->loadClass($className, $collections->getOption('modelPath') . 'collections/events/', true, true);
+
+if (class_exists($className)) {
+    $handler = new $className($modx, $scriptProperties);
     $handler->run();
 }
 

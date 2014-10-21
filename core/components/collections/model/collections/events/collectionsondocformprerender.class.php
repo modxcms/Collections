@@ -1,5 +1,5 @@
 <?php
-class OnDocFormPrerender extends CollectionsPlugin {
+class CollectionsOnDocFormPrerender extends CollectionsPlugin {
 
     public function run() {
         $inject = false;

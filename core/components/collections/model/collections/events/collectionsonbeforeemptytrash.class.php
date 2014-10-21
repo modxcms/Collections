@@ -1,5 +1,5 @@
 <?php
-class OnBeforeEmptyTrash extends CollectionsPlugin {
+class CollectionsOnBeforeEmptyTrash extends CollectionsPlugin {
 
     public function run() {
         $ids = $this->scriptProperties['ids'];

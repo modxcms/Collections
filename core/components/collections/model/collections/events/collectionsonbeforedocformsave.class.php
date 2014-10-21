@@ -1,6 +1,6 @@
 <?php
 
-class OnBeforeDocFormSave extends CollectionsPlugin {
+class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
 
     public function run() {
         /** @var \modResource $resource */

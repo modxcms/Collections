@@ -1,5 +1,5 @@
 <?php
-class OnManagerPageInit extends CollectionsPlugin {
+class CollectionsOnManagerPageInit extends CollectionsPlugin {
 
     public function run(){
         $cssFile = $this->collections->getOption('assetsUrl') . 'css/mgr.css';

@@ -1,5 +1,5 @@
 <?php
-class OnResourceBeforeSort extends CollectionsPlugin {
+class CollectionsOnResourceBeforeSort extends CollectionsPlugin {
 
     public function run() {
         /** @var \modResource[] $nodes */
