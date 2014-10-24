@@ -32,7 +32,10 @@ class CollectionsSelectionUpdateFromGridProcessor extends modObjectUpdateProcess
             $selection->save();
         }
 
-        $this->object->set('template', $this->getProperty('template'));
+        $properties = $this->getProperties();
+        unset($properties['menuindex']);
+
+        $this->object->fromArray($properties);
 
         /* Run the beforeSave method and allow stoppage */
         $canSave = $this->beforeSave();

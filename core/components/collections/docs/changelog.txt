@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Fixed update from grid
+
 Collections 3.0.0
 ===================
 - Added validation for column name if contains a dot
