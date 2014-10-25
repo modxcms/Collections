@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+Collections 3.0.1
+===================
 - Fixed update from grid
 
 Collections 3.0.0
