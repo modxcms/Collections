@@ -31,7 +31,7 @@ $getResourcesSnippet = $modx->getOption('getResourcesSnippet', $scriptProperties
 $getResourcesExists = $modx->getCount('modSnippet', array('name' => $getResourcesSnippet));
 if ($getResourcesExists == 0) return 'getResources not found';
 
-$sortDir = $modx->getOption('sortdir', $scriptProperties, 'asc');
+$sortDir = strtolower($modx->getOption('sortdir', $scriptProperties, 'asc'));
 $selections = $modx->getOption('selections', $scriptProperties, '');
 $sortBy = $modx->getOption('sortby', $scriptProperties, '');
 
