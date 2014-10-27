@@ -68,6 +68,7 @@ $properties = $scriptProperties;
 unset($properties['selections']);
 
 $properties['resources'] = $linkedResources;
+$properties['parents'] = '-1';
 
 if ($sortBy == '') {
     $properties['sortby'] = 'FIELD(modResource.id, ' . $linkedResources . ' )';
