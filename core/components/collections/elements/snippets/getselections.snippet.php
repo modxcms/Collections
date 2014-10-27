@@ -66,9 +66,10 @@ $linkedResources = implode(',', $linkedResources);
 
 $properties = $scriptProperties;
 unset($properties['selections']);
+unset($properties['parents']);
 
 $properties['resources'] = $linkedResources;
-$properties['parents'] = '-1';
+$properties['parents'] = -1;
 
 if ($sortBy == '') {
     $properties['sortby'] = 'FIELD(modResource.id, ' . $linkedResources . ' )';
@@ -76,5 +77,3 @@ if ($sortBy == '') {
 }
 
 return $modx->runSnippet($getResourcesSnippet, $properties);
-
-
