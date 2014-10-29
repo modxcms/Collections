@@ -66,7 +66,6 @@ $linkedResources = implode(',', $linkedResources);
 
 $properties = $scriptProperties;
 unset($properties['selections']);
-unset($properties['parents']);
 
 $properties['resources'] = $linkedResources;
 $properties['parents'] = -1;
