@@ -88,12 +88,15 @@ Ext.extend(Collections.panel.Selection,MODx.panel.Resource,{
     ,getSettingFields: function(config) {
         return [{
             xtype: 'modx-vtabs'
+            ,deferredRender: false
             ,ctCls: 'collections-setting-vtab'
             ,items: [{
                 title: _('resource')
+                ,deferredRender: false
                 ,items: Collections.panel.Category.superclass.getSettingFields.call(this,config)
             },{
                 title: _('collections')
+                ,deferredRender: false
                 ,items: [{
                     xtype: 'collections-combo-collections-template'
                     ,fieldLabel: _('collections.template.template')
