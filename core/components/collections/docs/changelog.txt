@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+Collections 3.0.2
+===================
 - Fixed saving Collections view from Resource's settings tab
 - Link Resource to Selection can be done by searching ID
 - Fixed passing sort dir int uppercase format to getSelections

@@ -1,6 +1,6 @@
 =====================
      Collections
-     3.0.1 pl
+     3.0.2 pl
 
       John Peca
      john@modx.com
