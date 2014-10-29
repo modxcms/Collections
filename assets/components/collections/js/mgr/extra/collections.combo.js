@@ -161,9 +161,10 @@ Collections.combo.Resource = function(config) {
         ,valueField: 'id'
         ,fields: ['pagetitle','id']
         ,pageSize: 20
+        ,minChars: 1
         ,editable: true
         ,triggerAction: 'all'
-        ,typeAhead: true
+        ,typeAhead: false
         ,forceSelection: true
         ,selectOnFocus: false
         ,url: Collections.config.connectorUrl

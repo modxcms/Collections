@@ -1,5 +1,10 @@
 Changelog for Collections.
 
+- Fixed saving Collections view from Resource's settings tab
+- Link Resource to Selection can be done by searching ID
+- Fixed passing sort dir int uppercase format to getSelections
+- Removed parents option from getSelections call
+
 Collections 3.0.1
 ===================
 - Fixed update from grid

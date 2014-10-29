@@ -16,7 +16,8 @@ class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcesso
         $query = $this->getProperty('query');
         if (!empty($query)) {
             $c->where(array(
-                'pagetitle:LIKE' => '%'.$query.'%'
+                'pagetitle:LIKE' => '%'.$query.'%',
+                'OR:id:=' => $query,
             ));
         }
 
