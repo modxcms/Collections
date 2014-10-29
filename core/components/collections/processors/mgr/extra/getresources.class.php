@@ -7,7 +7,7 @@
  */
 class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcessor {
     public $classKey = 'modResource';
-    public $defaultSortField = 'editedon';
+    public $defaultSortField = 'id';
     public $defaultSortDirection = 'desc';
     public $checkListPermission = true;
     public $languageTopics = array('resource','collections:default', 'collections:selections');
@@ -15,10 +15,18 @@ class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcesso
     public function prepareQueryBeforeCount(xPDOQuery $c) {
         $query = $this->getProperty('query');
         if (!empty($query)) {
-            $c->where(array(
-                'pagetitle:LIKE' => '%'.$query.'%',
-                'OR:id:=' => $query,
-            ));
+            if (stripos($query, 'http') === 0) {
+                $uri = parse_url($query, PHP_URL_PATH);
+                $uri = ltrim($uri, '/');
+                $c->where(array(
+                    'uri:=' => $uri
+                ));
+            } else {
+                $c->where(array(
+                    'pagetitle:LIKE' => '%'.$query.'%',
+                    'OR:id:=' => $query
+                ));
+            }
         }
 
         return $c;
@@ -44,8 +52,6 @@ class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcesso
 
         if (empty($sortKey)) $sortKey = $this->getProperty('sort');
         $c->sortby($sortKey,$this->getProperty('dir'));
-
-        $c->sortby('createdon',$this->getProperty('dir'));
 
         if ($limit > 0) {
             $c->limit($limit,$start);
