@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Fixed sorting by TV with dash in name
+
 Collections 3.0.2
 ===================
 - Fixed saving Collections view from Resource's settings tab

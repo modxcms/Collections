@@ -345,7 +345,7 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
         $data['total'] = $this->modx->getCount($this->classKey,$c);
         $c = $this->prepareQueryAfterCount($c);
 
-        $c->sortby($this->getProperty('sort'),$this->getProperty('dir'));
+        $c->sortby('`' . $this->getProperty('sort') . '`',$this->getProperty('dir'));
         if ($limit > 0) {
             $c->limit($limit,$start);
         }
