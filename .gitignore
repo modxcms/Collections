@@ -4,6 +4,7 @@ config.core.php
 .settings
 nbproject
 .project
+crowdin.yaml
 _packages/*.*
 !_packages/.gitignore
 !_packages/*.zip
