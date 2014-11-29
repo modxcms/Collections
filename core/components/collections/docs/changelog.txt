@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Pass whole row to snippet renderer
 - Fixed sorting by TV with dash in name
 
 Collections 3.0.2
