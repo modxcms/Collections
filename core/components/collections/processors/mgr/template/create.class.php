@@ -64,6 +64,16 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
             $this->setProperty('buttons', 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink');
         }
 
+        $backToCollection = $this->getProperty('back_to_collection_label');
+        if (empty($backToCollection)) {
+            $this->setProperty('back_to_collection_label', 'collections.children.back_to_collection_label');
+        }
+
+        $backToSelection = $this->getProperty('back_to_selection_label');
+        if (empty($backToSelection)) {
+            $this->setProperty('back_to_selection_label', 'selections.back_to_selection_label');
+        }
+
         $templates = $this->getProperty('templates');
         $templates = $this->modx->collections->explodeAndClean($templates);
 

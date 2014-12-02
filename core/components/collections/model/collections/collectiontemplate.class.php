@@ -21,6 +21,8 @@
  * @property string $context_menu
  * @property string $buttons
  * @property string $allowed_resource_types
+ * @property string $back_to_collection_label
+ * @property string $back_to_selection_label
  *
  * @property CollectionSetting $Setting
  * @property array $Columns

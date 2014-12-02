@@ -58,6 +58,7 @@ $_lang['collections.children.menuindex'] = 'Menu index';
 $_lang['collections.children.remove_action'] = 'Remove';
 $_lang['collections.children.remove'] = 'Remove child';
 $_lang['collections.children.remove_confirm'] = 'Are you sure, you want to remove this child?<br /><strong>This operation is permanent and can\'t be reverted.</strong>';
+$_lang['collections.children.back_to_collection_label'] = 'Back to Collection';
 
 // Template
 $_lang['collections.template.page_title'] = 'Collection views';
@@ -109,6 +110,8 @@ $_lang['collections.template.buttons'] = 'Buttons';
 $_lang['collections.template.buttons_desc'] = 'This setting will apply only with renderers that uses action buttons.<br />You can append value with <strong>:classname anotherclass</strong> to add a custom class to a button.<br /><strong>Valid values:</strong><br />view<br />edit<br />duplicate<br />publish<br />unpublish<br />delete<br />undelete<br />remove<br />unlink';
 $_lang['collections.template.allowed_resource_types'] = 'Allowed resource types';
 $_lang['collections.template.allowed_resource_types_desc'] = 'Specify allowed resource types in resource types selection.<br /><strong>Default resource types:</strong><br />modDocument<br />modStaticResource<br />modSymLink<br />modWebLink<br /><br /><strong>Custom Resource Types:</strong><br />CollectionContainer<br />SelectionContainer';
+$_lang['collections.template.back_to_collection'] = 'Back to Collection button label';
+$_lang['collections.template.back_to_selection'] = 'Back to Selection button label';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

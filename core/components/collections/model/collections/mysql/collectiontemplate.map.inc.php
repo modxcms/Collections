@@ -28,6 +28,8 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'context_menu' => 'view,edit,duplicate,publish,unpublish,-,delete,undelete,remove,-,unlink',
     'buttons' => 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink',
     'allowed_resource_types' => '',
+    'back_to_collection_label' => 'collections.children.back_to_collection_label',
+    'back_to_selection_label' => 'selections.back_to_selection_label',
   ),
   'fieldMeta' => 
   array (
@@ -183,6 +185,22 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => '',
+    ),
+    'back_to_collection_label' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'collections.children.back_to_collection_label',
+    ),
+    'back_to_selection_label' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'selections.back_to_selection_label',
     ),
   ),
   'composites' => 

@@ -32,6 +32,7 @@ $_lang['selections.remove'] = 'Remove resource';
 $_lang['selections.remove_confirm'] = 'Are you sure, you want to remove this Resource?<br /><strong>This operation is permanent and can\'t be reverted.</strong>';
 $_lang['selections.resource'] = 'Resource';
 $_lang['selections.unlink_multiple'] = 'Unlink multiple';
+$_lang['selections.back_to_selection_label'] = 'Back to Selection';
 
 // Errors
 $_lang['collection.err.selection_resource_children'] = 'Unfortunatelly it\'s not possible to make this view as a Selection, following resource has children: <br /> [[+resources]]';

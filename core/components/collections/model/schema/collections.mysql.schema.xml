@@ -37,6 +37,8 @@
         <field key="context_menu" dbtype="varchar" precision="512" phptype="string" null="false" default="view,edit,duplicate,publish,unpublish,-,delete,undelete,remove,-,unlink" />
         <field key="buttons" dbtype="varchar" precision="512" phptype="string" null="false" default="view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink" />
         <field key="allowed_resource_types" dbtype="varchar" precision="512" phptype="string" null="false" default="" />
+        <field key="back_to_collection_label" dbtype="varchar" precision="255" phptype="string" null="false" default="collections.children.back_to_collection_label" />
+        <field key="back_to_selection_label" dbtype="varchar" precision="255" phptype="string" null="false" default="selections.back_to_selection_label" />
 
         <aggregate alias="Setting" class="CollectionSetting" local="id" foreign="template" cardinality="one" owner="local" />
         <composite alias="Columns" class="CollectionTemplateColumn" local="id" foreign="template" cardinality="many" owner="local" />

@@ -26,14 +26,14 @@ Ext.override(MODx.page.UpdateResource, {
 
         if (MODx.request.selection) {
             buttons.unshift({
-                text: 'Back to Selection'
+                text: _(Collections_labels.back_to_selection) ? _(Collections_labels.back_to_selection) : Collections_labels.back_to_selection
                 ,handler: function() {
                     MODx.loadPage(MODx.action['resource/update'], 'id=' + MODx.request.selection);
                 }
             });
         } else {
             buttons.unshift({
-                text: 'Back to Collection'
+                text: _(Collections_labels.back_to_collection) ? _(Collections_labels.back_to_collection) : Collections_labels.back_to_collection
                 ,handler: function() {
                     MODx.loadPage(MODx.action['resource/update'], 'id=' + config.record.parent);
                 }

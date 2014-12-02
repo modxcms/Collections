@@ -627,6 +627,39 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                         ,border: false
                     }
                     ,items: [{
+                        columnWidth:.5
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.back_to_collection')
+                            ,name: 'back_to_collection_label'
+                            ,value: (config.record) ? config.record.back_to_collection_label : 'collections.children.back_to_collection_label'
+                        }]
+                    }]
+                }]
+            },{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
                         columnWidth: 1
                         ,border: false
                         ,defaults: {
@@ -687,6 +720,19 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,fieldLabel: _('collections.template.link_label')
                             ,name: 'link_label'
                             ,value: (config.record) ? config.record.link_label : 'selections.create'
+                        }]
+                    },{
+                        columnWidth:.5
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.back_to_selection')
+                            ,name: 'back_to_selection_label'
+                            ,value: (config.record) ? config.record.back_to_selection_label : 'selections.back_to_selection_label'
                         }]
                     }]
                 }]
