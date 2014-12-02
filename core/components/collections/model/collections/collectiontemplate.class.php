@@ -23,6 +23,7 @@
  * @property string $allowed_resource_types
  * @property string $back_to_collection_label
  * @property string $back_to_selection_label
+ * @property string $selection_create_sort
  *
  * @property CollectionSetting $Setting
  * @property array $Columns

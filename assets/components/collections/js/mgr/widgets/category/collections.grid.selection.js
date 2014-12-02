@@ -158,7 +158,10 @@ Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollect
         var createSelection = MODx.load({
             xtype: 'collections-window-selection'
             ,title: _('selections.create')
-            ,record: {collection: MODx.request.id}
+            ,resourcesSort: Collections.template.selection_create_sort
+            ,record: {
+                collection: MODx.request.id
+            }
             ,listeners: {
                 'success': {fn:function() { this.refresh(); },scope:this}
             }

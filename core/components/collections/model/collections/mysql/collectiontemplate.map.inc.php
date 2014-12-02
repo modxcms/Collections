@@ -30,6 +30,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'allowed_resource_types' => '',
     'back_to_collection_label' => 'collections.children.back_to_collection_label',
     'back_to_selection_label' => 'selections.back_to_selection_label',
+    'selection_create_sort' => 'id:desc',
   ),
   'fieldMeta' => 
   array (
@@ -201,6 +202,14 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => 'selections.back_to_selection_label',
+    ),
+    'selection_create_sort' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'id:desc',
     ),
   ),
   'composites' => 

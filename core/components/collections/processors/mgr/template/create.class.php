@@ -74,6 +74,11 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
             $this->setProperty('back_to_selection_label', 'selections.back_to_selection_label');
         }
 
+        $selectionCreateSort = $this->getProperty('selection_create_sort');
+        if (empty($selectionCreateSort)) {
+            $this->setProperty('selection_create_sort', 'id:desc');
+        }
+
         $templates = $this->getProperty('templates');
         $templates = $this->modx->collections->explodeAndClean($templates);
 

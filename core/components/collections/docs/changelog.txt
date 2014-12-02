@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Added option to specify sortby for Selections Resource search query
 - Added option to set label for Back to Collection/Selection button
 - Fixed displaying selection grid with TVs
 - Pass whole row to snippet renderer

@@ -12,6 +12,18 @@ class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcesso
     public $checkListPermission = true;
     public $languageTopics = array('resource','collections:default', 'collections:selections');
 
+    public function initialize() {
+        $this->setDefaultProperties(array(
+            'start' => 0,
+            'limit' => 20,
+            'sort' => $this->defaultSortField . ':' . $this->defaultSortDirection,
+            'combo' => false,
+            'query' => '',
+        ));
+
+        return parent::initialize();
+    }
+
     public function prepareQueryBeforeCount(xPDOQuery $c) {
         $query = $this->getProperty('query');
         if (!empty($query)) {
@@ -47,11 +59,21 @@ class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcesso
         $data['total'] = $this->modx->getCount($this->classKey,$c);
         $c = $this->prepareQueryAfterCount($c);
 
-        $sortClassKey = $this->getSortClassKey();
-        $sortKey = $this->modx->getSelectColumns($sortClassKey,$this->getProperty('sortAlias',$sortClassKey),'',array($this->getProperty('sort')));
+        $sorts = $this->getProperty('sort');
 
-        if (empty($sortKey)) $sortKey = $this->getProperty('sort');
-        $c->sortby($sortKey,$this->getProperty('dir'));
+        $sorts = explode(',', $sorts);
+        if (count($sorts) == 0) {
+            $c->sortby($this->defaultSortField, $this->defaultSortDirection);
+        } else {
+            foreach ($sorts as $sort) {
+                $sortParams = explode(':', $sort);
+                if (count($sortParams) == 2) {
+                    $c->sortby($sortParams[0], $sortParams[1]);
+                } else {
+                    $c->sortby($sortParams[0], $this->defaultSortDirection);
+                }
+            }
+        }
 
         if ($limit > 0) {
             $c->limit($limit,$start);

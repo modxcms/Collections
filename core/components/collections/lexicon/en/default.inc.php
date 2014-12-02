@@ -112,6 +112,7 @@ $_lang['collections.template.allowed_resource_types'] = 'Allowed resource types'
 $_lang['collections.template.allowed_resource_types_desc'] = 'Specify allowed resource types in resource types selection.<br /><strong>Default resource types:</strong><br />modDocument<br />modStaticResource<br />modSymLink<br />modWebLink<br /><br /><strong>Custom Resource Types:</strong><br />CollectionContainer<br />SelectionContainer';
 $_lang['collections.template.back_to_collection'] = 'Back to Collection button label';
 $_lang['collections.template.back_to_selection'] = 'Back to Selection button label';
+$_lang['collections.template.selection_create_sort'] = 'Resource\'s sort in Link resource window';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

@@ -21,10 +21,13 @@ Ext.extend(Collections.window.Selection,MODx.Window, {
         return [{
             xtype: 'collections-combo-resource'
             ,fieldLabel: _('selections.resource')
-            ,id: 'testtest'
             ,name: 'resource'
             ,hiddenName: 'resource'
             ,anchor: '100%'
+            ,baseParams:{
+                action: 'mgr/extra/getresources'
+                ,sort: config.resourcesSort
+            }
         },{
             xtype: 'hidden'
             ,name: 'collection'

@@ -154,6 +154,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'content_place' => $template->content_place,
             'context_menu' => $this->modx->collections->explodeAndClean($template->context_menu, ',', 1),
             'resourceDerivatives' => $derivates,
+            'selection_create_sort' => $template->selection_create_sort,
         );
 
         foreach ($columns as $column) {

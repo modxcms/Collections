@@ -736,6 +736,39 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                         }]
                     }]
                 }]
+            },{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
+                        columnWidth:.5
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.selection_create_sort')
+                            ,name: 'selection_create_sort'
+                            ,value: (config.record) ? config.record.selection_create_sort : 'id:desc'
+                        }]
+                    }]
+                }]
             }]
         }];
     }
