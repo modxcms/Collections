@@ -40,6 +40,11 @@
         <field key="back_to_collection_label" dbtype="varchar" precision="255" phptype="string" null="false" default="collections.children.back_to_collection_label" />
         <field key="back_to_selection_label" dbtype="varchar" precision="255" phptype="string" null="false" default="selections.back_to_selection_label" />
         <field key="selection_create_sort" dbtype="varchar" precision="255" phptype="string" null="false" default="id:desc" />
+        <field key="child_hide_from_menu" dbtype="int" precision="1" phptype="boolean" null="true" />
+        <field key="child_published" dbtype="int" precision="1" phptype="boolean" null="true" />
+        <field key="child_cacheable" dbtype="int" precision="1" phptype="boolean" null="true" />
+        <field key="child_searchable" dbtype="int" precision="1" phptype="boolean" null="true" />
+        <field key="child_richtext" dbtype="int" precision="1" phptype="boolean" null="true" />
 
         <aggregate alias="Setting" class="CollectionSetting" local="id" foreign="template" cardinality="one" owner="local" />
         <composite alias="Columns" class="CollectionTemplateColumn" local="id" foreign="template" cardinality="many" owner="local" />

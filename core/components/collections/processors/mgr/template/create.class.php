@@ -33,6 +33,11 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         $this->handleComboBoolean('bulk_actions');
         $this->handleComboBoolean('allow_dd');
         $this->handleComboBoolean('resource_type_selection');
+        $this->handleComboBoolean('child_hide_from_menu');
+        $this->handleComboBoolean('child_published');
+        $this->handleComboBoolean('child_cacheable');
+        $this->handleComboBoolean('child_searchable');
+        $this->handleComboBoolean('child_richtext');
 
         $childTemplate = $this->getProperty('child_template');
         if ($childTemplate == '') {
@@ -135,7 +140,7 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
      * Transforms string true/false value to boolean
      *
      * @param string $property
-     * @return bool
+     * @return bool|null
      */
     public function handleComboBoolean($property) {
         $boolean = $this->getProperty($property);
@@ -146,9 +151,15 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
             return true;
         }
 
-        $this->setProperty($property, false);
+        if ($boolean == 'false') {
+            $this->setProperty($property, false);
 
-        return false;
+            return false;
+        }
+
+        $this->setProperty($property, null);
+
+        return null;
     }
 
     /**

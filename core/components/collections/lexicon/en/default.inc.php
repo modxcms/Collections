@@ -35,6 +35,7 @@ $_lang['collections.system.all'] = 'All';
 $_lang['collections.global.search'] = 'Search';
 $_lang['collections.global.change_order'] = 'Change order of: [[+child]]';
 $_lang['collections.global.change_parent'] = 'Change parent of: [[+child]]';
+$_lang['collections.global.use_default'] = 'Use default';
 
 // Children
 $_lang['collections.children'] = 'Children';
@@ -113,6 +114,11 @@ $_lang['collections.template.allowed_resource_types_desc'] = 'Specify allowed re
 $_lang['collections.template.back_to_collection'] = 'Back to Collection button label';
 $_lang['collections.template.back_to_selection'] = 'Back to Selection button label';
 $_lang['collections.template.selection_create_sort'] = 'Resource\'s sort in Link resource window';
+$_lang['collections.template.child_hide_from_menu'] = 'Default children\'s hide from menu';
+$_lang['collections.template.child_published'] = 'Default children\'s published';
+$_lang['collections.template.child_cacheable'] = 'Default children\'s cacheable';
+$_lang['collections.template.child_searchable'] = 'Default children\'s searchable';
+$_lang['collections.template.child_richtext'] = 'Default children\'s richtext';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

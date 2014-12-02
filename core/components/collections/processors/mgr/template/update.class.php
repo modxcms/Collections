@@ -35,6 +35,11 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
         $this->handleComboBoolean('allow_dd');
         $this->handleComboBoolean('resource_type_selection');
         $this->handleComboBoolean('selection');
+        $this->handleComboBoolean('child_hide_from_menu');
+        $this->handleComboBoolean('child_published');
+        $this->handleComboBoolean('child_cacheable');
+        $this->handleComboBoolean('child_searchable');
+        $this->handleComboBoolean('child_richtext');
 
         $childTemplate = $this->getProperty('child_template', '');
         if ($childTemplate == '') {
@@ -128,9 +133,15 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
             return true;
         }
 
-        $this->setProperty($property, false);
+        if ($boolean == 'false') {
+            $this->setProperty($property, false);
 
-        return false;
+            return false;
+        }
+
+        $this->setProperty($property, null);
+
+        return null;
     }
 
 }

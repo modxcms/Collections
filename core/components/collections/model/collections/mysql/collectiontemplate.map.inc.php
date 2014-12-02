@@ -31,6 +31,11 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'back_to_collection_label' => 'collections.children.back_to_collection_label',
     'back_to_selection_label' => 'selections.back_to_selection_label',
     'selection_create_sort' => 'id:desc',
+    'child_hide_from_menu' => NULL,
+    'child_published' => NULL,
+    'child_cacheable' => NULL,
+    'child_searchable' => NULL,
+    'child_richtext' => NULL,
   ),
   'fieldMeta' => 
   array (
@@ -210,6 +215,41 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => 'id:desc',
+    ),
+    'child_hide_from_menu' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '1',
+      'phptype' => 'boolean',
+      'null' => true,
+    ),
+    'child_published' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '1',
+      'phptype' => 'boolean',
+      'null' => true,
+    ),
+    'child_cacheable' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '1',
+      'phptype' => 'boolean',
+      'null' => true,
+    ),
+    'child_searchable' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '1',
+      'phptype' => 'boolean',
+      'null' => true,
+    ),
+    'child_richtext' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '1',
+      'phptype' => 'boolean',
+      'null' => true,
     ),
   ),
   'composites' => 

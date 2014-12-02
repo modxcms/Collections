@@ -17,7 +17,7 @@
         "elements": {
             "plugins": [{
                 "name": "Collections"
-                ,"events": ["OnManagerPageInit", "OnBeforeDocFormSave", "OnResourceBeforeSort", "OnDocFormPrerender", "OnBeforeEmptyTrash"]
+                ,"events": ["OnManagerPageInit", "OnBeforeDocFormSave", "OnResourceBeforeSort", "OnDocFormPrerender", "OnBeforeEmptyTrash", "OnDocFormRender"]
             }],
             "snippets": [{
                 "name": "getSelections"

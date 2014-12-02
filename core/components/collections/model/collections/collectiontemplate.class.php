@@ -24,6 +24,11 @@
  * @property string $back_to_collection_label
  * @property string $back_to_selection_label
  * @property string $selection_create_sort
+ * @property bool|null $child_hide_from_menu
+ * @property bool|null $child_published
+ * @property bool|null $child_cacheable
+ * @property bool|null $child_searchable
+ * @property bool|null $child_richtext
  *
  * @property CollectionSetting $Setting
  * @property array $Columns

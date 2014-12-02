@@ -204,3 +204,29 @@ Collections.combo.ViewFor = function(config) {
 };
 Ext.extend(Collections.combo.ViewFor,MODx.combo.ComboBox);
 Ext.reg('collections-combo-view-for',Collections.combo.ViewFor);
+
+Collections.combo.ExtendedBoolean = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        store: new Ext.data.SimpleStore({
+            fields: ['d','v']
+            ,data: [
+                [_('collections.global.use_default'),null]
+                ,[_('yes'),true]
+                ,[_('no'),false]
+            ]
+        })
+        ,displayField: 'd'
+        ,valueField: 'v'
+        ,mode: 'local'
+        ,triggerAction: 'all'
+        ,editable: false
+        ,selectOnFocus: false
+        ,preventRender: true
+        ,forceSelection: true
+        ,enableKeyEvents: true
+    });
+    Collections.combo.ExtendedBoolean.superclass.constructor.call(this,config);
+};
+Ext.extend(Collections.combo.ExtendedBoolean,MODx.combo.ComboBox);
+Ext.reg('collections-combo-extended-boolean',Collections.combo.ExtendedBoolean);
