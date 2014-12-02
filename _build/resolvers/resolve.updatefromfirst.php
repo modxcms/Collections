@@ -81,6 +81,18 @@ if ($object->xpdo) {
                 $manager->addField('CollectionTemplateColumn', 'php_renderer');
             }
 
+            if ($oldPackage && $oldPackage->compareVersion('3.1.0-pl', '>')) {
+                $manager = $modx->getManager();
+                $manager->addField('CollectionTemplate', 'back_to_collection_label');
+                $manager->addField('CollectionTemplate', 'back_to_selection_label');
+                $manager->addField('CollectionTemplate', 'selection_create_sort');
+                $manager->addField('CollectionTemplate', 'child_hide_from_menu');
+                $manager->addField('CollectionTemplate', 'child_published');
+                $manager->addField('CollectionTemplate', 'child_cacheable');
+                $manager->addField('CollectionTemplate', 'child_searchable');
+                $manager->addField('CollectionTemplate', 'child_richtext');
+            }
+
             break;
     }
 }
