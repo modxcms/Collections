@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Fixed displaying selection grid with TVs
 - Pass whole row to snippet renderer
 - Fixed sorting by TV with dash in name
 
