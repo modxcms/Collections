@@ -148,6 +148,6 @@ $_lang['collections.err.template_resource_template_aiu_p'] = 'Templates <strong>
 $_lang['collections.err.cant_remove_id_column'] = 'You can\'t remove ID columns. This column is required, if you don\'t want to see this column set <strong>hidden</strong> parameter to <strong>true</strong>.';
 $_lang['collections.err.column_name_cant_change'] = 'You can\'t change name of ID columns. This column is required, if you don\'t want to see this column set <strong>hidden</strong> parameter to <strong>true</strong>.';
 $_lang['collections.err.template_remove_last'] = 'You can\'t remove the last view.';
-$_lang['collections.err.template_remove_global'] = 'You can\'t remove global view. Please set different view as a global and repeat this action.';
+$_lang['collections.err.template_remove_global'] = 'You can\'t remove default view. Please set different view as a default and repeat this action.';
 $_lang['collections.err.template_ae_name'] = 'Template with this name already exists.';
 $_lang['collections.err.column_dot_name'] = 'Column name can\'t contain a dot.';
