@@ -12,11 +12,11 @@ $_lang['collections.menu.collection_templates_desc'] = 'Define views for collect
 
 // Settings lexicons
 $_lang['setting_collections.mgr_date_format'] = 'Grid date format';
-$_lang['setting_collections.mgr_date_format_desc'] = 'Placeholders from http://docs.sencha.com/extjs/3.4.0/#!/api/Date-static-method-parseDate can be used here.';
+$_lang['setting_collections.mgr_date_format_desc'] = 'Placeholders from <a href="http://docs.sencha.com/extjs/3.4.0/#!/api/Date" target="_blank">http://docs.sencha.com/extjs/3.4.0/#!/api/Date</a> can be used here.';
 $_lang['setting_collections.mgr_time_format'] = 'Grid time format';
-$_lang['setting_collections.mgr_time_format_desc'] = 'Placeholders from http://docs.sencha.com/extjs/3.4.0/#!/api/Date-static-method-parseDate can be used here.';
+$_lang['setting_collections.mgr_time_format_desc'] = 'Placeholders from <a href="http://docs.sencha.com/extjs/3.4.0/#!/api/Date" target="_blank">http://docs.sencha.com/extjs/3.4.0/#!/api/Date</a> can be used here.';
 $_lang['setting_collections.mgr_datetime_format'] = 'Grid date and time format';
-$_lang['setting_collections.mgr_datetime_format_desc'] = 'Placeholders from http://docs.sencha.com/extjs/3.4.0/#!/api/Date-static-method-parseDate can be used here.';
+$_lang['setting_collections.mgr_datetime_format_desc'] = 'Placeholders from <a href="http://docs.sencha.com/extjs/3.4.0/#!/api/Date" target="_blank">http://docs.sencha.com/extjs/3.4.0/#!/api/Date</a> can be used here.';
 $_lang['setting_collections.user_js'] = 'User\'s JS file';
 $_lang['setting_collections.user_js_desc'] = 'URL to user\'s defined JS file which can contain custom renderers, etc.';
 $_lang['setting_collections.user_css'] = 'User\'s CSS file';

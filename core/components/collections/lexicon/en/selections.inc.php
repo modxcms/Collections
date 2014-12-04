@@ -35,8 +35,8 @@ $_lang['selections.unlink_multiple'] = 'Unlink multiple';
 $_lang['selections.back_to_selection_label'] = 'Back to Selection';
 
 // Errors
-$_lang['collection.err.selection_resource_children'] = 'Unfortunatelly it\'s not possible to make this view as a Selection, following resource has children: <br /> [[+resources]]';
-$_lang['collection.err.selection_resources_children'] = 'Unfortunatelly it\'s not possible to make this view as a Selection, following resources have children: <br /> [[+resources]]';
+$_lang['collection.err.selection_resource_children'] = 'Unfortunately it\'s not possible to make this view as a Selection, following resource has children: <br /> [[+resources]]';
+$_lang['collection.err.selection_resources_children'] = 'Unfortunately it\'s not possible to make this view as a Selection, following resources have children: <br /> [[+resources]]';
 $_lang['collections.err.selection_res_col_ns'] = 'Resource or Collection was not specified.';
 $_lang['collections.err.cant_set_parent_selection'] = 'You can\'t set Selection as a parent resource.';
 $_lang['collections.err.cant_switch_to_selection_children'] = 'You can\'t switch this Resource to Selection, because it has children.';
