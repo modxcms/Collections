@@ -37,7 +37,6 @@ Collections.grid.ContainerCollections = function(config) {
 };
 Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     getMenu: function() {
-        console.log('test');
         var m = [];
         if (!this.menu.record) return m;
 
