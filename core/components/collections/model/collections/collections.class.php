@@ -37,6 +37,22 @@ class Collections {
             $tagger = null;
         }
 
+        $quipCorePath = $modx->getOption('quip.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/quip/');
+
+        if (file_exists($quipCorePath . 'model/quip/quip.class.php')) {
+            /** @var Quip $quip */
+            $quip = $modx->getService(
+                'quip',
+                'Quip',
+                $quipCorePath . 'model/quip/',
+                array(
+                    'core_path' => $quipCorePath
+                )
+            );
+        } else {
+            $quip = null;
+        }
+
         $this->config = array_merge(array(
             'assets_url' => $assetsUrl,
             'core_path' => $corePath,
@@ -57,6 +73,7 @@ class Collections {
             'templatesPath' => $corePath.'templates/',
 
             'taggerInstalled' => $tagger instanceof Tagger,
+            'quipInstalled' => $quip instanceof Quip,
         ),$config);
 
         $this->modx->addPackage('collections',$this->config['modelPath']);

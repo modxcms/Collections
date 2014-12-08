@@ -14,6 +14,8 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
     public $tvColumns = array();
     public $taggerColumns = array();
+    public $useQuip = false;
+    public $useTagger = false;
 
     public $columnRenderer = array();
 
@@ -52,6 +54,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         $templateColumnsQuery->where(array(
             'name:LIKE' => 'tv_%',
             'OR:name:LIKE' => 'tagger_%',
+            'OR:name:IN' => array('quip'),
             'OR:php_renderer:!=' => '',
         ));
         $templateColumnsQuery->select($this->modx->getSelectColumns('CollectionTemplateColumn', '', '', array('name', 'php_renderer')));
@@ -73,6 +76,10 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                 $this->taggerColumns[] = $column['name'];
             }
 
+            if (strtolower($column['name']) == 'quip') {
+                $this->useQuip = true;
+            }
+
             if ($column['php_renderer'] != '') {
                 $snippet = $this->modx->getObject('modSnippet', array('name' => $column['php_renderer']));
                 if ($snippet) {
@@ -80,6 +87,13 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                 }
             }
         }
+
+        $quipInstalled = $this->modx->collections->getOption('quipInstalled', null,  false);
+        if (!$quipInstalled) {
+            $this->useQuip = false;
+        }
+
+        $this->useTagger = $this->modx->collections->getOption('taggerInstalled', null,  false);
 
         return parent::initialize();
     }
@@ -148,8 +162,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                 'OR:CreatedBy.username:LIKE' => '%'.$query.'%',
             );
 
-            $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null,  false);
-            if ($taggerInstalled) {
+            if ($this->useTagger) {
                 $c->leftJoin('TaggerTagResource', 'TagResource', array('TagResource.resource = modResource.id'));
                 $c->leftJoin('TaggerTag', 'Tag', array('Tag.id = TagResource.tag'));
 
@@ -208,13 +221,27 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             ));
         }
 
-        $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null,  false);
-        if ($taggerInstalled) {
+        if ($this->useTagger) {
             foreach ($this->taggerColumns as $column) {
                 $c->select(array(
                     '`' . $column . '`' => '(SELECT group_concat(t.tag SEPARATOR \', \') FROM `modx_tagger_tag_resources` tr LEFT JOIN `modx_tagger_tags` t ON t.id = tr.tag LEFT JOIN `modx_tagger_groups` tg ON tg.id = t.group WHERE tr.resource = modResource.id AND tg.alias = \'' . preg_replace('/tagger_/', '', $column, 1) . '\' group by t.group)'
                 ));
             }
+        }
+
+        if ($this->useQuip) {
+            $commentsQuery = $this->modx->newQuery('quipComment');
+            $commentsQuery->innerJoin('quipThread','Thread');
+            $commentsQuery->where(array(
+                'Thread.resource = modResource.id',
+            ));
+            $commentsQuery->select(array(
+                'COUNT('.$this->modx->getSelectColumns('quipComment','quipComment','',array('id')).')',
+            ));
+            $commentsQuery->prepare();
+            $c->select(array(
+                '('.$commentsQuery->toSQL().') AS '.$this->modx->escape('quip'),
+            ));
         }
 
         return $c;
