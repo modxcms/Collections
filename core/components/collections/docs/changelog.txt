@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Fixed selecting templates in Collection view in Revo 2.2.x
 - Added option to set default values for hidemenu,published,cacheable,searchable and richtext for new children
 - Added option to specify sortby for Selections Resource search query
 - Added option to set label for Back to Collection/Selection button

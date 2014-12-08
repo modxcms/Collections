@@ -23,6 +23,23 @@ Ext.reg('collections-combo-filter-status',Collections.combo.FilterStatus);
 
 Collections.combo.Template = function(config, getStore) {
     config = config || {};
+
+    if (!config.clearBtnCls) {
+        if (MODx.config.connector_url) {
+            config.clearBtnCls = 'x-form-trigger';
+        } else {
+            config.clearBtnCls = null;
+        }
+    }
+
+    if (!config.expandBtnCls) {
+        if (MODx.config.connector_url) {
+            config.expandBtnCls = 'x-form-trigger';
+        } else {
+            config.expandBtnCls = null;
+        }
+    }
+
     Ext.applyIf(config,{
         name: 'fake_templates'
         ,hiddenName: 'fake_templates'
@@ -34,8 +51,6 @@ Collections.combo.Template = function(config, getStore) {
         ,typeAhead: true
         ,editable: true
         ,forceSelection: false
-        ,clearBtnCls: 'x-form-trigger'
-        ,expandBtnCls: 'x-form-trigger'
         ,pageSize: 20
         ,url: Collections.config.connectorUrl
         ,baseParams: {
