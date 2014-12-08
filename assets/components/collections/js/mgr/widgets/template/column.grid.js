@@ -111,14 +111,12 @@ Ext.extend(Collections.grid.TemplateColumn,MODx.grid.Grid,{
             ,sortable: true
             ,editor: {xtype: 'textfield'}
             ,width: 100
-            ,renderer: Collections.renderer.qtip
         },{
             header: _('collections.template.column.name')
             ,dataIndex: 'name'
             ,sortable: true
             ,editor: {xtype: 'textfield'}
             ,width: 100
-            ,renderer: Collections.renderer.qtip
         },{
             header: _('collections.template.column.hidden')
             ,dataIndex: 'hidden'
