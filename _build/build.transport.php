@@ -146,6 +146,9 @@ $vehicle->resolve('php',array(
 $vehicle->resolve('php',array(
     'source' => $sources['resolvers'] . 'resolve.defaulttemplate.php',
 ));
+$vehicle->resolve('php',array(
+    'source' => $sources['resolvers'] . 'resolve.fixselections.php',
+));
 $builder->putVehicle($vehicle);
 
 /* load system settings */

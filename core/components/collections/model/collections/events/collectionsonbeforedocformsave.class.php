@@ -8,11 +8,6 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
 
         /** @var \modResource $parent */
         $parent = $resource->Parent;
-        if ($parent && ($parent->class_key == 'SelectionContainer')) {
-            $this->modx->event->_output = $this->modx->lexicon('collections.err.cant_set_parent_selection');
-
-            return;
-        }
 
         if ($parent && ($parent->class_key == 'CollectionContainer')) {
             $this->handleParent($resource);
@@ -26,13 +21,7 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
         $original = $this->modx->getObject('modResource', $resource->id);
         if ($original) {
             if ($resource->class_key == 'SelectionContainer' && $original->class_key != 'SelectionContainer') {
-                if ($resource->hasChildren()) {
-                    $this->modx->event->_output = $this->modx->lexicon('collections.err.cant_switch_to_selection_children');
-
-                    return;
-                }
-                $resource->set('hide_children_in_tree', 1);
-                $resource->save();
+                $this->revealChildrenInTree($resource);
             }
 
             if ($resource->class_key != 'SelectionContainer' && $original->class_key == 'SelectionContainer') {
@@ -115,7 +104,7 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
         }
 
         if (($original->class_key == 'CollectionContainer') && ($resource->class_key != 'CollectionContainer')) {
-            $this->switchFromCollections($resource);
+            $this->revealChildrenInTree($resource);
         }
     }
 
@@ -141,7 +130,7 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
         }
     }
 
-    protected function switchFromCollections($resource) {
+    protected function revealChildrenInTree($resource) {
         /** @var \modResource[] $children */
         $children = $resource->Children;
 

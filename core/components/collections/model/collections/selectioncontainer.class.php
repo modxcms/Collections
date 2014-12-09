@@ -5,12 +5,11 @@ require_once dirname(__FILE__) . '/collectioncontainer.class.php';
  */
 class SelectionContainer extends CollectionContainer {
     public $showInContextMenu = true;
-    public $allowDrop = 0;
+    public $allowDrop = 1;
 
     function __construct(xPDO & $xpdo) {
         parent :: __construct($xpdo);
         $this->set('class_key', 'SelectionContainer');
-        $this->set('hide_children_in_tree', 1);
     }
 
     public static function getControllerPath(xPDO &$modx) {

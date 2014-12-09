@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Allow children under Selections
 - Added an option to add quip column
 - Fixed selecting templates in Collection view in Revo 2.2.x
 - Added option to set default values for hidemenu,published,cacheable,searchable and richtext for new children
