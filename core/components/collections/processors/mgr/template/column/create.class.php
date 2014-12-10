@@ -22,10 +22,6 @@ class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor 
         if (empty($name)) {
             $this->addFieldError('name',$this->modx->lexicon('collections.err.column_ns_name'));
         } else {
-            if (strpos($name, '.') !== false) {
-                $this->addFieldError('name',$this->modx->lexicon('collections.err.column_dot_name'));
-            }
-
             if ($this->doesAlreadyExist(array('name' => $name, 'template' => $template))) {
                 $this->addFieldError('name',$this->modx->lexicon('collections.err.column_ae_name'));
             }

@@ -158,7 +158,8 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         );
 
         foreach ($columns as $column) {
-            $templateOptions['fields'][] = $column->name;
+            $columnName = preg_replace('/\./', '_', $column->name);
+            $templateOptions['fields'][] = $columnName;
 
             $header = $this->modx->lexicon($column->label);
             if ($header == null) {
@@ -167,7 +168,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
 
             $columnDef = array(
                 'header' => $header,
-                'dataIndex' => $column->name,
+                'dataIndex' => $columnName,
                 'hidden' => $column->hidden,
                 'sortable' => $column->sortable,
                 'width' => $column->width,
