@@ -22,10 +22,6 @@ class CollectionsTemplateColumnUpdateProcessor extends modObjectUpdateProcessor 
         if (empty($name)) {
             $this->addFieldError('name',$this->modx->lexicon('collections.err.column_ns_name'));
         } else {
-            if (strpos($name, '.') !== false) {
-                $this->addFieldError('name',$this->modx->lexicon('collections.err.column_dot_name'));
-            }
-
             if ($this->modx->getCount($this->classKey, array('name' => $name, 'template' => $template, 'id:!=' => $this->object->id)) > 0) {
                 $this->addFieldError('name',$this->modx->lexicon('collections.err.column_ae_name'));
             }

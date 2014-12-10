@@ -63,27 +63,28 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         while ($column = $templateColumnsQuery->stmt->fetch(PDO::FETCH_ASSOC)) {
             if (strpos($column['name'], 'tv_') !== false) {
-                $tvName = preg_replace('/tv_/', '', $column['name'], 1);
+                $columnName = preg_replace('/\./', '_', $column['name']);
+                $tvName = preg_replace('/^tv_/', '', $column['name']);
 
                 $tv = $this->modx->getObject('modTemplateVar', array('name' => $tvName));
 
                 if ($tv) {
-                    $this->tvColumns[] = array('id' => $tv->id, 'name' => $tvName, 'column' => $column['name']);
+                    $this->tvColumns[] = array('id' => $tv->id, 'column' => $columnName);
                 }
             }
 
-            if (strpos($column['name'], 'tagger_') !== false) {
-                $this->taggerColumns[] = $column['name'];
+            if (strpos($columnName, 'tagger_') !== false) {
+                $this->taggerColumns[] = $columnName;
             }
 
-            if (strtolower($column['name']) == 'quip') {
+            if (strtolower($columnName) == 'quip') {
                 $this->useQuip = true;
             }
 
             if ($column['php_renderer'] != '') {
                 $snippet = $this->modx->getObject('modSnippet', array('name' => $column['php_renderer']));
                 if ($snippet) {
-                    $this->columnRenderer[$column['name']] = $column['php_renderer'];
+                    $this->columnRenderer[$columnName] = $column['php_renderer'];
                 }
             }
         }
