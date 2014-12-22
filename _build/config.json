@@ -47,6 +47,10 @@
             "key": "mgr_tree_icon_selectioncontainer"
             ,"value": "selectioncontainer"
             ,"namespace": ""
+        },{
+            "key": "renderer_image_path"
+            ,"value": ""
+            ,"namespace": ""
         }]
     }
     ,"database":{
