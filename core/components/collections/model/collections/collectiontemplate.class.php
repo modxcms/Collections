@@ -29,6 +29,7 @@
  * @property bool|null $child_cacheable
  * @property bool|null $child_searchable
  * @property bool|null $child_richtext
+ * @property int $child_content_type
  *
  * @property CollectionSetting $Setting
  * @property array $Columns

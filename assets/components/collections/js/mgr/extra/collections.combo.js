@@ -245,3 +245,26 @@ Collections.combo.ExtendedBoolean = function(config) {
 };
 Ext.extend(Collections.combo.ExtendedBoolean,MODx.combo.ComboBox);
 Ext.reg('collections-combo-extended-boolean',Collections.combo.ExtendedBoolean);
+
+Collections.combo.ContentType = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        name: 'content_type'
+        ,hiddenName: 'content_type'
+        ,displayField: 'name'
+        ,valueField: 'id'
+        ,fields: ['id', 'name']
+        ,forceSelection: true
+        ,typeAhead: false
+        ,editable: false
+        ,allowBlank: true
+        ,pageSize: 20
+        ,url: Collections.config.connectorUrl
+        ,baseParams: {
+            action: 'mgr/extra/getcontenttypes'
+        }
+    });
+    Collections.combo.ContentType.superclass.constructor.call(this,config);
+};
+Ext.extend(Collections.combo.ContentType,MODx.combo.ComboBox);
+Ext.reg('collections-combo-content-type',Collections.combo.ContentType);

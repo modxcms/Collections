@@ -22,10 +22,11 @@ class CollectionsOnDocFormRender extends CollectionsPlugin {
         $this->setConfig('cache_default', $template->child_cacheable);
         $this->setConfig('richtext_default', $template->child_richtext);
         $this->setConfig('search_default', $template->child_searchable);
+        $this->setConfig('default_content_type', $template->child_content_type, 0);
     }
 
-    private function setConfig($name, $value) {
-        if ($value !== null) {
+    private function setConfig($name, $value, $default = null) {
+        if ($value !== $default) {
             $this->modx->_userConfig[$name] = intval($value);
         }
     }

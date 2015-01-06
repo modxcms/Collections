@@ -91,6 +91,7 @@ if ($object->xpdo) {
                 $manager->addField('CollectionTemplate', 'child_cacheable');
                 $manager->addField('CollectionTemplate', 'child_searchable');
                 $manager->addField('CollectionTemplate', 'child_richtext');
+                $manager->addField('CollectionTemplate', 'child_content_type');
             }
 
             break;

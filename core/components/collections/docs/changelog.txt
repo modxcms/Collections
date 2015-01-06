@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Added option to set default values for content type for new children
 - Added system setting to modify image path in image renderer
 - Allow children under Selections
 - Added an option to add quip column

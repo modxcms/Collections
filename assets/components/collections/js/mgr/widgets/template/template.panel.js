@@ -635,10 +635,10 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                         }
                         ,items: [{
                             xtype: 'collections-combo-extended-boolean'
-                            ,fieldLabel: _('collections.template.child_hide_from_menu')
-                            ,name: 'child_hide_from_menu'
-                            ,hiddenName: 'child_hide_from_menu'
-                            ,value: (config.record) ? config.record.child_hide_from_menu : null
+                            ,fieldLabel: _('collections.template.child_published')
+                            ,name: 'child_published'
+                            ,hiddenName: 'child_published'
+                            ,value: (config.record) ? config.record.child_published : null
                         }]
                     },{
                         columnWidth:.5
@@ -648,11 +648,13 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,anchor: '100%'
                         }
                         ,items: [{
-                            xtype: 'collections-combo-extended-boolean'
-                            ,fieldLabel: _('collections.template.child_published')
-                            ,name: 'child_published'
-                            ,hiddenName: 'child_published'
-                            ,value: (config.record) ? config.record.child_published : null
+                            xtype: 'collections-combo-content-type'
+                            ,fieldLabel: _('collections.template.child_content_type')
+                            ,name: 'child_content_type'
+                            ,hiddenName: 'child_content_type'
+                            ,allowBlank: true
+                            ,editable: false
+                            ,value: (config.record) ? config.record.child_content_type : 0
                         }]
                     }]
                 }]
@@ -683,10 +685,10 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                         }
                         ,items: [{
                             xtype: 'collections-combo-extended-boolean'
-                            ,fieldLabel: _('collections.template.child_cacheable')
-                            ,name: 'child_cacheable'
-                            ,hiddenName: 'child_cacheable'
-                            ,value: (config.record) ? config.record.child_cacheable : null
+                            ,fieldLabel: _('collections.template.child_hide_from_menu')
+                            ,name: 'child_hide_from_menu'
+                            ,hiddenName: 'child_hide_from_menu'
+                            ,value: (config.record) ? config.record.child_hide_from_menu : null
                         }]
                     },{
                         columnWidth:.5
@@ -697,10 +699,10 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                         }
                         ,items: [{
                             xtype: 'collections-combo-extended-boolean'
-                            ,fieldLabel: _('collections.template.child_searchable')
-                            ,name: 'child_searchable'
-                            ,hiddenName: 'child_searchable'
-                            ,value: (config.record) ? config.record.child_searchable : null
+                            ,fieldLabel: _('collections.template.child_cacheable')
+                            ,name: 'child_cacheable'
+                            ,hiddenName: 'child_cacheable'
+                            ,value: (config.record) ? config.record.child_cacheable : null
                         }]
                     }]
                 }]
@@ -743,7 +745,13 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             msgTarget: 'under'
                             ,anchor: '100%'
                         }
-                        ,items: []
+                        ,items: [{
+                            xtype: 'collections-combo-extended-boolean'
+                            ,fieldLabel: _('collections.template.child_searchable')
+                            ,name: 'child_searchable'
+                            ,hiddenName: 'child_searchable'
+                            ,value: (config.record) ? config.record.child_searchable : null
+                        }]
                     }]
                 }]
             },{
