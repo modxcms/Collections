@@ -131,6 +131,10 @@
     content: "\f0c9";
 }
 
+.x-tree-node-collapsed .collectioncontainer:before {
+    content: "\f0c9";
+}
+
 .selectioncontainer:before {
     content: "\f005";
 }
