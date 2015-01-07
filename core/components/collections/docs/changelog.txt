@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+Collections 3.1.0
+===================
 - Fixed reset filter button in Selections
 - Added option to set default values for content type for new children
 - Added system setting to modify image path in image renderer
