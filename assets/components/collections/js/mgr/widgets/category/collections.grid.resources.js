@@ -189,7 +189,6 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         Ext.getCmp('collections-child-search').reset();
         Ext.getCmp('collections-grid-filter-status').reset();
         this.getBottomToolbar().changePage(1);
-        this.refresh();
     }
 
     ,editChild: function(btn,e) {

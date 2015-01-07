@@ -145,13 +145,12 @@ Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollect
 
     ,clearFilter: function() {
         this.getStore().baseParams = {
-            action: 'mgr/resource/getList'
+            action: 'mgr/selection/getList'
             ,'parent': MODx.request.id
         };
         Ext.getCmp('collections-child-search').reset();
         Ext.getCmp('collections-grid-filter-status').reset();
         this.getBottomToolbar().changePage(1);
-        this.refresh();
     }
 
     ,createSelection: function(btn, e) {
