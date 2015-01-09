@@ -22,7 +22,7 @@ class CollectionsOnDocFormPrerender extends CollectionsPlugin {
             $inject = ($parent->class_key == 'CollectionContainer' && $resource->class_key != 'CollectionContainer' && $resource->hasChildren() == 0);
         }
 
-        if (!$inject && intval($_GET['selection'] > 0)) {
+        if (!$inject && isset($_GET['selection']) && intval($_GET['selection'] > 0)) {
             $selection = $this->modx->getCount('CollectionSelection', array('resource' => $resource->id));
             if ($selection > 0) $inject = true;
         }
