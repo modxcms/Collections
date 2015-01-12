@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Fixed back to collection/selection button on create new child page
+
 Collections 3.1.0
 ===================
 - Fixed reset filter button in Selections

@@ -43,6 +43,7 @@ class CollectionsOnDocFormPrerender extends CollectionsPlugin {
             $this->modx->regClientStartupHTMLBlock('
             <script type="text/javascript">
             Collections_labels = ' . $this->modx->toJSON($templateOptions) . ';
+            Collections_new_child = ' . ($this->scriptProperties['mode'] == 'new' ? 1 : 0) . ';
             </script>');
 
             $jsUrl = $this->collections->getOption('jsUrl') . 'mgr/';

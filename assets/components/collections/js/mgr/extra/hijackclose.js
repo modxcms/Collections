@@ -1,4 +1,4 @@
-Ext.override(MODx.page.UpdateResource, {
+Ext.override(Collections_new_child ? MODx.page.CreateResource : MODx.page.UpdateResource, {
     //cancel: function(btn,e) {
     //    var parentId = MODx.request.selection ? MODx.request.selection : this.config.record.parent;
     //
@@ -19,7 +19,7 @@ Ext.override(MODx.page.UpdateResource, {
     //}
 
     collectionsOriginals: {
-        getButtons: MODx.page.UpdateResource.prototype.getButtons
+        getButtons: Collections_new_child ? MODx.page.CreateResource.prototype.getButtons : MODx.page.UpdateResource.prototype.getButtons
     }
     ,getButtons: function(config) {
         var buttons = this.collectionsOriginals.getButtons.call(this, config);
