@@ -5,9 +5,14 @@ class CollectionsOnDocFormPrerender extends CollectionsPlugin {
         $inject = false;
 
         /** @var modResource $resource */
-        $resource = $this->scriptProperties['resource'];
-        /** @var modResource $parent */
-        $parent = $resource->Parent;
+        $resource = isset($this->scriptProperties['resource']) ? $this->scriptProperties['resource'] : null;
+
+        if ($resource) {
+            /** @var modResource $parent */
+            $parent = $resource->Parent;
+        } else {
+            $parent = null;
+        }
 
         if (!$parent) {
             if (isset($_GET['parent'])) {
