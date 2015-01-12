@@ -1,25 +1,6 @@
-Ext.override(Collections_new_child ? MODx.page.CreateResource : MODx.page.UpdateResource, {
-    //cancel: function(btn,e) {
-    //    var parentId = MODx.request.selection ? MODx.request.selection : this.config.record.parent;
-    //
-    //    var fp = Ext.getCmp(this.config.formpanel);
-    //    if (fp && fp.isDirty()) {
-    //        Ext.Msg.confirm(_('warning'),_('resource_cancel_dirty_confirm'),function(e) {
-    //            if (e == 'yes') {
-    //                fp.warnUnsavedChanges = false;
-    //                MODx.releaseLock(MODx.request.id);
-    //                MODx.sleep(400);
-    //                MODx.loadPage('resource/update', 'id=' + parentId);
-    //            }
-    //        },this);
-    //    } else {
-    //        MODx.releaseLock(MODx.request.id);
-    //        MODx.loadPage(MODx.action['resource/update'], 'id=' + parentId);
-    //    }
-    //}
-
+Ext.override(MODx.page[Collections_mode + Collections_type], {
     collectionsOriginals: {
-        getButtons: Collections_new_child ? MODx.page.CreateResource.prototype.getButtons : MODx.page.UpdateResource.prototype.getButtons
+        getButtons: MODx.page[Collections_mode + Collections_type].prototype.getButtons
     }
     ,getButtons: function(config) {
         var buttons = this.collectionsOriginals.getButtons.call(this, config);

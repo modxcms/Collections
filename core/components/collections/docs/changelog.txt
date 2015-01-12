@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Fixed back to collection/selection button for static resources/weblinks/symlinks
 - Fixed back to collection/selection button on create new child page
 
 Collections 3.1.0

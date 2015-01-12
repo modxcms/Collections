@@ -40,10 +40,40 @@ class CollectionsOnDocFormPrerender extends CollectionsPlugin {
                 'back_to_selection' => $template->back_to_selection_label,
             );
 
+            $classKey = '';
+            if (isset($_GET['class_key'])) {
+                $classKey = $_GET['class_key'];
+            } else {
+                if ($resource) {
+                    $classKey = $resource->class_key;
+                }
+            }
+
+            if ($classKey == '') $classKey = 'modDocument';
+
+            switch ($classKey) {
+                case 'modDocument':
+                    $classKey = 'Resource';
+                    break;
+                case 'modStaticResource':
+                    $classKey = 'Static';
+                    break;
+                case 'modSymLink':
+                    $classKey = 'SymLink';
+                    break;
+                case 'modWebLink':
+                    $classKey = 'WebLink';
+                    break;
+                default:
+                    $classKey = 'Resource';
+            }
+
+
             $this->modx->regClientStartupHTMLBlock('
             <script type="text/javascript">
             Collections_labels = ' . $this->modx->toJSON($templateOptions) . ';
-            Collections_new_child = ' . ($this->scriptProperties['mode'] == 'new' ? 1 : 0) . ';
+            Collections_mode = "' . ($this->scriptProperties['mode'] == 'new' ? 'Create' : 'Update') . '";
+            Collections_type = "' . $classKey . '";
             </script>');
 
             $jsUrl = $this->collections->getOption('jsUrl') . 'mgr/';
