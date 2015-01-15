@@ -479,6 +479,8 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             }
             ,onEndDrag: function() {
                 var t = Ext.getCmp('modx-resource-tree');
+                if (!t.dropZone) return false;
+
                 t.dropZone.appendOnly = false;
 
                 t.dropZone.onNodeDrop = this.originals.onNodeDrop;
@@ -495,6 +497,8 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 this.proxy.update(this.ddel);
 
                 var t = Ext.getCmp('modx-resource-tree');
+                if (!t.dropZone) return false;
+
                 t.dropZone.appendOnly = true;
 
 
