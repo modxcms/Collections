@@ -23,6 +23,8 @@ $_lang['setting_collections.user_css'] = 'User\'s CSS file';
 $_lang['setting_collections.user_css_desc'] = 'URL to user\'s defined CSS file which can contain custom styles.';
 $_lang['setting_mgr_tree_icon_collectioncontainer'] = 'Collections icon';
 $_lang['setting_mgr_tree_icon_collectioncontainer_desc'] = 'CSS class that will be used for Collections';
+$_lang['setting_collections.renderer_image_path'] = 'Renderer image path';
+$_lang['setting_collections.renderer_image_path_desc'] = 'Image path that will be used for Image renderer. Path will be appended to base_url.';
 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Collection';
