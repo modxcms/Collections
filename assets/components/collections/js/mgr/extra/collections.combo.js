@@ -132,6 +132,7 @@ Collections.combo.SingleTemplate = function(config) {
         ,url: Collections.config.connectorUrl
         ,baseParams:{
             action: 'mgr/extra/gettemplates'
+            ,addEmpty: config.addEmpty | 0
         }
     });
     Collections.combo.SingleTemplate.superclass.constructor.call(this,config);

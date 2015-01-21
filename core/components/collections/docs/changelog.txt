@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Fixed showing (empty) template in child's template select box
 - Fixed renderer image path
 - Fixed D&D reorder children when element or file tree is selected
 - Fixed back to collection/selection button for static resources/weblinks/symlinks

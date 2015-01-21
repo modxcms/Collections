@@ -589,6 +589,7 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,hiddenName: 'child_template'
                             ,allowBlank: true
                             ,editable: true
+                            ,addEmpty: true
                         }]
                     },{
                         columnWidth:.5

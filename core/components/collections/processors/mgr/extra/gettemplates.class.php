@@ -5,6 +5,19 @@ class CollectionsExtraTemplateGetListProcessor extends modObjectGetListProcessor
     public $languageTopics = array('template','category');
     public $defaultSortField = 'templatename';
 
+    public function beforeIteration(array $list) {
+        $addEmpty = $this->getProperty('addEmpty', false);
+
+        if ($addEmpty) {
+            $list[] = array(
+                'id' => 0,
+                'templatename' => $this->modx->lexicon('template_empty'),
+            );
+        }
+
+        return $list;
+    }
+
     public function prepareQueryBeforeCount(xPDOQuery $c) {
         $query = $this->getProperty('query');
         $template = (int) $this->getProperty('template');
