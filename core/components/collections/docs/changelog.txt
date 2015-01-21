@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+Collections 3.1.1
+===================
 - Fixed showing (empty) template in child's template select box
 - Fixed renderer image path
 - Fixed D&D reorder children when element or file tree is selected
