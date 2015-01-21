@@ -19,10 +19,6 @@ Collections.panel.Template = function(config) {
                 fn: this.success
                 ,scope: this
             }
-            ,'beforeSubmit': {
-                fn:this.beforeSubmit
-                ,scope:this
-            }
         }
     });
     Collections.panel.Template.superclass.constructor.call(this, config);
@@ -60,17 +56,6 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
         if (this.config.isUpdate == false) {
             MODx.loadPage(MODx.action['collections:index'], 'action=template/update&id='+ o.result.object.id);
         }
-    }
-
-    ,beforeSubmit: function(o) {
-        var d = {};
-
-        var templates = Ext.getCmp('collections-panel-template-field-templates');
-        if(templates) {
-            d.templates = templates.getValue();
-        }
-
-        Ext.apply(o.form.baseParams,d);
     }
 
     ,getItems: function(config) {
@@ -160,7 +145,8 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             xtype: 'collections-combo-template'
                             ,id: 'collections-panel-template-field-templates'
                             ,fieldLabel: _('collections.template.default_for_templates')
-                            ,name: 'fake_templates'
+                            ,name: 'templates'
+                            ,hiddenName: 'templates[]'
                             ,anchor: '100%'
                         }]
                     }]

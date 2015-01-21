@@ -87,7 +87,7 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
         }
 
         $templates = $this->getProperty('templates');
-        $templates = $this->modx->collections->explodeAndClean($templates);
+        $templates = array_filter($templates);
 
         $c = $this->modx->newQuery('CollectionResourceTemplate');
         $c->leftJoin('modTemplate', 'ResourceTemplate');
@@ -117,7 +117,7 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
         }
 
         $templates = $this->getProperty('templates');
-        $templates = $this->modx->collections->explodeAndClean($templates);
+        $templates = array_filter($templates);
 
         $this->object->setTemplates($templates);
 

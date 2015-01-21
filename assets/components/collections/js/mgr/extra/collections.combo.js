@@ -41,8 +41,8 @@ Collections.combo.Template = function(config, getStore) {
     }
 
     Ext.applyIf(config,{
-        name: 'fake_templates'
-        ,hiddenName: 'fake_templates'
+        name: 'templates'
+        ,hiddenName: 'templates[]'
         ,displayField: 'templatename'
         ,valueField: 'id'
         ,fields: ['templatename','id']

@@ -21,7 +21,7 @@ class CollectionsTemplateGetProcessor extends modObjectGetProcessor {
         $c->stmt->execute();
         $templates = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
-        $this->object->set('fake_templates', implode(',', $templates));
+        $this->object->set('templates[]', $templates);
 
         return true;
     }
