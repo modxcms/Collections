@@ -25,6 +25,8 @@ $_lang['setting_mgr_tree_icon_collectioncontainer'] = 'Collections icon';
 $_lang['setting_mgr_tree_icon_collectioncontainer_desc'] = 'CSS class that will be used for Collections';
 $_lang['setting_collections.renderer_image_path'] = 'Renderer image path';
 $_lang['setting_collections.renderer_image_path_desc'] = 'Image path that will be used for Image renderer. Path will be appended to base_url.';
+$_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Selections icon';
+$_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'CSS class that will be used for Selections';
 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Collection';
