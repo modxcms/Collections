@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Prevent error while not passing Resource templates in Collection view
+
 Collections 3.1.1
 ===================
 - Fixed showing (empty) template in child's template select box

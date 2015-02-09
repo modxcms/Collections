@@ -91,10 +91,16 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
 
         $c = $this->modx->newQuery('CollectionResourceTemplate');
         $c->leftJoin('modTemplate', 'ResourceTemplate');
-        $c->where(array(
-            'resource_template:IN' => $templates,
+
+        $where = array(
             'collection_template:!=' => $this->object->id
-        ));
+        );
+
+        if (!empty($templates)) {
+            $where['resource_template:IN'] = $templates;
+        }
+
+        $c->where($where);
         $c->select($this->modx->getSelectColumns('modTemplate', 'ResourceTemplate', '', array('templatename')));
 
         $c->prepare();
