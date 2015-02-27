@@ -185,6 +185,8 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         this.getStore().baseParams = {
             action: 'mgr/resource/getList'
             ,'parent': MODx.request.id
+            ,sort: Collections.template.sort.field
+            ,dir: Collections.template.sort.dir
         };
         Ext.getCmp('collections-child-search').reset();
         Ext.getCmp('collections-grid-filter-status').reset();

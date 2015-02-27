@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Clear filter use sort field & dir from view
 - Prevent error while not passing Resource templates in Collection view
 
 Collections 3.1.1
