@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Show TV's default value in grid
 - Clear filter use sort field & dir from view
 - Prevent error while not passing Resource templates in Collection view
 

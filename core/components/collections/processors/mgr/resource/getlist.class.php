@@ -68,7 +68,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                 $tv = $this->modx->getObject('modTemplateVar', array('name' => $tvName));
 
                 if ($tv) {
-                    $this->tvColumns[] = array('id' => $tv->id, 'name' => $tvName, 'column' => $column['name']);
+                    $this->tvColumns[] = array('id' => $tv->id, 'name' => $tvName, 'column' => $column['name'], 'default' => $tv->default_text);
                 }
             }
 
@@ -217,7 +217,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         foreach ($this->tvColumns as $column) {
             $c->select(array(
-                '`' . $column['column'] . '`' => '`TemplateVarResources_' . $column['column'] . '`.`value`'
+                '`' . $column['column'] . '`' => 'IF(`TemplateVarResources_' . $column['column'] . '`.`value` IS NULL OR`TemplateVarResources_' . $column['column'] . '`.`value` = \'\', "' . $column['default'] . '", `TemplateVarResources_' . $column['column'] . '`.`value`)'
             ));
         }
 
