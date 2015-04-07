@@ -210,7 +210,7 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
         if ($taggerInstalled) {
             foreach ($this->taggerColumns as $column) {
                 $c->select(array(
-                    '`' . $column . '`' => '(SELECT group_concat(t.tag SEPARATOR \', \') FROM `modx_tagger_tag_resources` tr LEFT JOIN `modx_tagger_tags` t ON t.id = tr.tag LEFT JOIN `modx_tagger_groups` tg ON tg.id = t.group WHERE tr.resource = modResource.id AND tg.alias = \'' . preg_replace('/tagger_/', '', $column, 1) . '\' group by t.group)'
+                    '`' . $column . '`' => '(SELECT group_concat(t.tag SEPARATOR \', \') FROM ' . $this->modx->getTableName('TaggerTagResource') . ' tr LEFT JOIN ' . $this->modx->getTableName('TaggerTag') . ' t ON t.id = tr.tag LEFT JOIN ' . $this->modx->getTableName('TaggerGroup') . ' tg ON tg.id = t.group WHERE tr.resource = modResource.id AND tg.alias = \'' . preg_replace('/tagger_/', '', $column, 1) . '\' group by t.group)'
                 ));
             }
         }
