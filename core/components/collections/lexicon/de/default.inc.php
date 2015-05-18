@@ -120,6 +120,7 @@ $_lang['collections.template.child_cacheable'] = 'Standard-\'Cache aktiv\'-Einst
 $_lang['collections.template.child_searchable'] = 'Standard-\'Durchsuchbar\'-Einstellung für Unterressourcen';
 $_lang['collections.template.child_richtext'] = 'Standard-\'Rich-Text-Editor verwenden\'-Einstellung für Unterressourcen';
 $_lang['collections.template.child_content_type'] = 'Standard-Content-Type für Unteressourcen';
+$_lang['collections.template.parent'] = 'Eltern-Ressourcen-id (optional, @SNIPPET kann verwendet werden)';
 
 $_lang['collections.template.column.none'] = 'Diese Ansicht enthält noch keine Spalten.';
 $_lang['collections.template.column.name'] = 'Name';

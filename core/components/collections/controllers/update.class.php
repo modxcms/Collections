@@ -133,6 +133,16 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             }
         }
 
+        $parent = !empty($template->parent) ? $template->parent : '';
+        if (substr($parent,0,8) == '@SNIPPET'){
+            $snippet = trim(substr($parent,8));
+            $properties = array(
+                'resource' => & $this->resource
+            );
+            $parent = $this->modx->runSnippet($snippet,$properties);
+            $parent = !empty($parent) ? $parent : $this->resource->get('id');
+        }
+
         $templateOptions = array(
             'fields' => array('actions', 'action_edit', 'preview_url', 'menu_actions'),
             'columns' => array(),
@@ -155,6 +165,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'context_menu' => $this->modx->collections->explodeAndClean($template->context_menu, ',', 1),
             'resourceDerivatives' => $derivates,
             'selection_create_sort' => $template->selection_create_sort,
+            'parent' => $parent ,
         );
 
         foreach ($columns as $column) {

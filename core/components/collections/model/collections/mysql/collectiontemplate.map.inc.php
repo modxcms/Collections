@@ -1,7 +1,4 @@
 <?php
-/**
- * @package collections
- */
 $xpdo_meta_map['CollectionTemplate']= array (
   'package' => 'collections',
   'version' => NULL,
@@ -37,6 +34,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'child_searchable' => NULL,
     'child_richtext' => NULL,
     'child_content_type' => 0,
+    'parent' => '',
   ),
   'fieldMeta' => 
   array (
@@ -259,6 +257,14 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'integer',
       'null' => false,
       'default' => 0,
+    ),
+    'parent' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '100',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
     ),
   ),
   'composites' => 

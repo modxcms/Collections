@@ -1,7 +1,4 @@
 <?php
-/**
- * @package collections
- */
 $xpdo_meta_map['CollectionSetting']= array (
   'package' => 'collections',
   'version' => NULL,
