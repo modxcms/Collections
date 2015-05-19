@@ -194,6 +194,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     }
 
     ,editChild: function(btn,e) {
+        var selection = '';
         if (Collections.template.parent != MODx.request.id){
            selection = '&selection=' + MODx.request.id;
         }        
