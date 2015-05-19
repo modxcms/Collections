@@ -140,8 +140,8 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
                 'resource' => & $this->resource
             );
             $parent = $this->modx->runSnippet($snippet,$properties);
-            $parent = !empty($parent) ? $parent : $this->resource->get('id');
         }
+        $parent = !empty($parent) ? $parent : $this->resource->get('id');
 
         $templateOptions = array(
             'fields' => array('actions', 'action_edit', 'preview_url', 'menu_actions'),
