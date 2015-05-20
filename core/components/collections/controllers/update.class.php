@@ -141,7 +141,15 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             );
             $parent = $this->modx->runSnippet($snippet,$properties);
         }
-        $parent = !empty($parent) ? $parent : $this->resource->get('id');
+        $parent_context = $this->resource->get('context_key');
+        if (!empty($parent)){
+            //we have a custom parent - try to get the context_key
+            if ($p_resource = $this->modx->getObject('modResource',$parent)){
+                $parent_context = $p_resource->get('context_key');
+            }
+        }else{
+            $parent = $this->resource->get('id');
+        }
 
         $templateOptions = array(
             'fields' => array('actions', 'action_edit', 'preview_url', 'menu_actions'),
@@ -165,7 +173,8 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'context_menu' => $this->modx->collections->explodeAndClean($template->context_menu, ',', 1),
             'resourceDerivatives' => $derivates,
             'selection_create_sort' => $template->selection_create_sort,
-            'parent' => $parent ,
+            'parent' => $parent,
+            'parent_context' => $parent_context,
         );
 
         foreach ($columns as $column) {

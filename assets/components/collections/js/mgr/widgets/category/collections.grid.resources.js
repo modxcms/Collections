@@ -212,7 +212,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
            selection = '&selection=' + MODx.request.id;
         }
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + Collections.template.parent + '&context_key=' + MODx.ctx + '&class_key=' + Collections.template.children.resource_type + template + selection);
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + Collections.template.parent + '&context_key=' + Collections.template.parent_context + '&class_key=' + Collections.template.children.resource_type + template + selection);
     }
 
     ,createDerivativeChild: function(btn, e) {
@@ -225,7 +225,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
            selection = '&selection=' + MODx.request.id;
         }        
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + Collections.template.parent + '&context_key=' + MODx.ctx + '&class_key=' + btn.derivative + template + selection);
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + Collections.template.parent + '&context_key=' + Collections.template.parent_context + '&class_key=' + btn.derivative + template + selection);
     }
 
     ,viewChild: function(btn,e) {
