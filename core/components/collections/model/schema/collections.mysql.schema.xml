@@ -46,6 +46,7 @@
         <field key="child_searchable" dbtype="int" precision="1" phptype="boolean" null="true" />
         <field key="child_richtext" dbtype="int" precision="1" phptype="boolean" null="true" />
         <field key="child_content_type" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
+        <field key="parent" dbtype="varchar" precision="100" phptype="string" null="false" default="" />        
 
         <aggregate alias="Setting" class="CollectionSetting" local="id" foreign="template" cardinality="one" owner="local" />
         <composite alias="Columns" class="CollectionTemplateColumn" local="id" foreign="template" cardinality="many" owner="local" />

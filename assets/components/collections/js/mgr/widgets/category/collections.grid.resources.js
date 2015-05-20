@@ -11,7 +11,7 @@ Collections.grid.ContainerCollections = function(config) {
         ,enableDragDrop: false
         ,baseParams: {
             action: 'mgr/resource/getlist'
-            ,parent: MODx.request.id
+            ,parent: Collections.template.parent
             ,sort: Collections.template.sort.field
             ,dir: Collections.template.sort.dir
         }
@@ -184,7 +184,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     ,clearFilter: function() {
         this.getStore().baseParams = {
             action: 'mgr/resource/getList'
-            ,'parent': MODx.request.id
+            ,'parent': Collections.template.parent
             ,sort: Collections.template.sort.field
             ,dir: Collections.template.sort.dir
         };
@@ -194,25 +194,38 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     }
 
     ,editChild: function(btn,e) {
-        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id);
+        var selection = '';
+        if (Collections.template.parent != MODx.request.id){
+           selection = '&selection=' + MODx.request.id;
+        }        
+        
+        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection);
     }
 
     ,createChild: function(btn,e) {
         var template = '';
+        var selection = '';
         if (Collections.template.children.template != null) {
             template = '&template=' + Collections.template.children.template;
         }
+        if (Collections.template.parent != MODx.request.id){
+           selection = '&selection=' + MODx.request.id;
+        }
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + MODx.request.id + '&context_key=' + MODx.ctx + '&class_key=' + Collections.template.children.resource_type + template);
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + Collections.template.parent + '&context_key=' + Collections.template.parent_context + '&class_key=' + Collections.template.children.resource_type + template + selection);
     }
 
     ,createDerivativeChild: function(btn, e) {
         var template = '';
+        var selection = '';
         if (Collections.template.children.template != null) {
             template = '&template=' + Collections.template.children.template;
         }
+        if (Collections.template.parent != MODx.request.id){
+           selection = '&selection=' + MODx.request.id;
+        }        
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + MODx.request.id + '&context_key=' + MODx.ctx + '&class_key=' + btn.derivative + template);
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + Collections.template.parent + '&context_key=' + Collections.template.parent_context + '&class_key=' + btn.derivative + template + selection);
     }
 
     ,viewChild: function(btn,e) {
@@ -559,7 +572,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                             ,idItem: records.pop().id
                             ,oldIndex: oldIndex
                             ,newIndex: newIndex
-                            ,parent: MODx.request.id
+                            ,parent: Collections.template.parent
                         }
                         ,listeners: {
                             'success': {

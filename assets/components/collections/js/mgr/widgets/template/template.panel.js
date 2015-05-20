@@ -772,6 +772,19 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,name: 'back_to_collection_label'
                             ,value: (config.record) ? config.record.back_to_collection_label : 'collections.children.back_to_collection_label'
                         }]
+                    },{
+                        columnWidth:.5
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.parent')
+                            ,name: 'parent'
+                            ,value: (config.record) ? config.record.parent : ''
+                        }]
                     }]
                 }]
             },{

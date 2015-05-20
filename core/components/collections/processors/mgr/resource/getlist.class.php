@@ -243,7 +243,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                 '('.$commentsQuery->toSQL().') AS '.$this->modx->escape('quip'),
             ));
         }
-
+        
         return $c;
     }
 
