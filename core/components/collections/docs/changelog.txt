@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Make TV columns searchable
 - Use modx->getTableName to get table names for Tagger tables
 - Show TV's default value in grid
 - Clear filter use sort field & dir from view

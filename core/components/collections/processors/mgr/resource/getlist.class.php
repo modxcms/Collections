@@ -161,6 +161,13 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                 'OR:CreatedByProfile.fullname:LIKE' => '%'.$query.'%',
                 'OR:CreatedBy.username:LIKE' => '%'.$query.'%',
             );
+            
+            // tv columns search rules
+            foreach ($this->tvColumns as $column) {
+                array_push($queryWhere, array(
+                    'OR:TemplateVarResources_' . $column['column'] . '.value:LIKE' => '%'.$query.'%',
+                ));
+            }
 
             if ($this->useTagger) {
                 $c->leftJoin('TaggerTagResource', 'TagResource', array('TagResource.resource = modResource.id'));
