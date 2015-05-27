@@ -269,3 +269,30 @@ Collections.combo.ContentType = function(config) {
 };
 Ext.extend(Collections.combo.ContentType,MODx.combo.ComboBox);
 Ext.reg('collections-combo-content-type',Collections.combo.ContentType);
+
+Collections.combo.ContentDispositionExtended = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        store: new Ext.data.SimpleStore({
+            fields: ['d','v']
+            ,data: [
+                [_('collections.global.use_default'),null]
+                ,[_('inline'),0]
+                ,[_('attachment'),1]
+            ]
+        })
+        ,name: 'child_content_disposition'
+        ,hiddenName: 'child_content_disposition'
+        ,displayField: 'd'
+        ,valueField: 'v'
+        ,mode: 'local'
+        ,triggerAction: 'all'
+        ,editable: false
+        ,pageSize: 20
+        ,selectOnFocus: false
+        ,preventRender: true
+    });
+    Collections.combo.ContentDispositionExtended.superclass.constructor.call(this,config);
+};
+Ext.extend(Collections.combo.ContentDispositionExtended,MODx.combo.ComboBox);
+Ext.reg('collections-combo-content-disposition-extended',Collections.combo.ContentDispositionExtended);

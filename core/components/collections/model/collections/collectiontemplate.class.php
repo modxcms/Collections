@@ -31,6 +31,7 @@
  * @property bool|null $child_richtext
  * @property int $child_content_type
  * @property string $parent
+ * @property bool|null $child_content_disposition
  *
  * @property CollectionSetting $Setting
  * @property array $Columns

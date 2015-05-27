@@ -38,6 +38,7 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         $this->handleComboBoolean('child_cacheable');
         $this->handleComboBoolean('child_searchable');
         $this->handleComboBoolean('child_richtext');
+        $this->handleNull('child_content_disposition');
 
         $childTemplate = $this->getProperty('child_template');
         if ($childTemplate == '') {
@@ -307,6 +308,19 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         return true;
     }
 
+    public function handleNull($property) {
+        $value = $this->getProperty($property);
+
+        if ($value == '') {
+            $this->setProperty($property, null);
+
+            return null;
+        }
+
+        $this->setProperty($property, $value);
+
+        return $value;
+    }
 
 }
 return 'CollectionsTemplateCreateProcessor';

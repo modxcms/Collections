@@ -38,6 +38,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'child_richtext' => NULL,
     'child_content_type' => 0,
     'parent' => '',
+    'child_content_disposition' => NULL,
   ),
   'fieldMeta' => 
   array (
@@ -268,6 +269,13 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => '',
+    ),
+    'child_content_disposition' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '1',
+      'phptype' => 'integer',
+      'null' => true,
     ),
   ),
   'composites' => 

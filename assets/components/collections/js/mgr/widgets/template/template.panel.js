@@ -767,6 +767,48 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,anchor: '100%'
                         }
                         ,items: [{
+                            xtype: 'collections-combo-content-disposition-extended'
+                            ,fieldLabel: _('collections.template.child_content_disposition')
+                            ,name: 'child_content_disposition'
+                            ,hiddenName: 'child_content_disposition'
+                            ,value: (config.record) ? config.record.child_content_disposition : null
+                        }]
+                    },{
+                        columnWidth:.5
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: []
+                    }]
+                }]
+            },{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
+                        columnWidth:.5
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
                             xtype: 'textfield'
                             ,fieldLabel: _('collections.template.back_to_collection')
                             ,name: 'back_to_collection_label'

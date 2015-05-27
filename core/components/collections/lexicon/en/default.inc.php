@@ -125,6 +125,7 @@ $_lang['collections.template.child_searchable'] = 'Default children\'s searchabl
 $_lang['collections.template.child_richtext'] = 'Default children\'s richtext';
 $_lang['collections.template.child_content_type'] = 'Default children\'s content type';
 $_lang['collections.template.parent'] = 'Parent-id (optional, @SNIPPET can be used)';
+$_lang['collections.template.child_content_disposition'] = 'Default children\'s content disposition';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';
