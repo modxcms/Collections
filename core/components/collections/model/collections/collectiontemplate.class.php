@@ -10,6 +10,7 @@
  * @property int $page_size
  * @property string $sort_field
  * @property string $sort_dir
+ * @property string $sort_type
  * @property int $child_template
  * @property string $child_resource_type
  * @property bool $resource_type_selection

@@ -17,6 +17,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'page_size' => 20,
     'sort_field' => 'id',
     'sort_dir' => 'asc',
+    'sort_type' => NULL,
     'child_template' => NULL,
     'child_resource_type' => 'modDocument',
     'resource_type_selection' => 1,
@@ -105,6 +106,13 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => 'asc',
+    ),
+    'sort_type' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '64',
+      'phptype' => 'string',
+      'null' => true,
     ),
     'child_template' => 
     array (

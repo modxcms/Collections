@@ -41,6 +41,7 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
         $this->handleComboBoolean('child_searchable');
         $this->handleComboBoolean('child_richtext');
         $this->handleNull('child_content_disposition');
+        $this->handleNull('sort_type');
 
         $childTemplate = $this->getProperty('child_template', '');
         if ($childTemplate == '') {

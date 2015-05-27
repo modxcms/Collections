@@ -263,22 +263,6 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,anchor: '100%'
                         }
                         ,items: [{
-                            xtype: 'numberfield'
-                            ,allowDecimals: false
-                            ,allowNegative: false
-                            ,fieldLabel: _('collections.template.page_size')
-                            ,name: 'page_size'
-                            ,allowBlank: false
-                            ,value: (config.record) ? config.record.page_size : 20
-                        }]
-                    },{
-                        columnWidth:.3
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
                             xtype: 'textfield'
                             ,fieldLabel: _('collections.template.sort_field')
                             ,name: 'sort_field'
@@ -286,7 +270,7 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,value: (config.record) ? config.record.sort_field : 'id'
                         }]
                     },{
-                        columnWidth:.4
+                        columnWidth:.3
                         ,border: false
                         ,defaults: {
                             msgTarget: 'under'
@@ -299,6 +283,21 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,hiddenName: 'sort_dir'
                             ,allowBlank: false
                             ,value: (config.record) ? config.record.sort_dir : 'asc'
+                        }]
+                    },{
+                        columnWidth:.4
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'collections-combo-sort-type'
+                            ,fieldLabel: _('collections.template.sort_type')
+                            ,name: 'sort_type'
+                            ,hiddenName: 'sort_type'
+                            ,allowBlank: false
+                            ,value: (config.record) ? config.record.sort_type : null
                         }]
                     }]
                 }]
@@ -328,6 +327,22 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,anchor: '100%'
                         }
                         ,items: [{
+                            xtype: 'numberfield'
+                            ,allowDecimals: false
+                            ,allowNegative: false
+                            ,fieldLabel: _('collections.template.page_size')
+                            ,name: 'page_size'
+                            ,allowBlank: false
+                            ,value: (config.record) ? config.record.page_size : 20
+                        }]
+                    },{
+                        columnWidth:.3
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
                             xtype: 'modx-combo-boolean'
                             ,fieldLabel: _('collections.template.bulk_actions')
                             ,name: 'bulk_actions'
@@ -335,7 +350,7 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,value: (config.record) ? config.record.bulk_actions : false
                         }]
                     },{
-                        columnWidth:.3
+                        columnWidth:.4
                         ,border: false
                         ,defaults: {
                             msgTarget: 'under'
@@ -347,20 +362,6 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,name: 'allow_dd'
                             ,hiddenName: 'allow_dd'
                             ,value: (config.record) ? config.record.allow_dd : true
-                        }]
-                    },{
-                        columnWidth:.4
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'collections-combo-content-place'
-                            ,fieldLabel: _('collections.template.content_place')
-                            ,name: 'content_place'
-                            ,hiddenName: 'content_place'
-                            ,value: (config.record) ? config.record.button_label : 'original'
                         }]
                     }]
                 }]
@@ -402,7 +403,13 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             msgTarget: 'under'
                             ,anchor: '100%'
                         }
-                        ,items: []
+                        ,items: [{
+                            xtype: 'collections-combo-content-place'
+                            ,fieldLabel: _('collections.template.content_place')
+                            ,name: 'content_place'
+                            ,hiddenName: 'content_place'
+                            ,value: (config.record) ? config.record.button_label : 'original'
+                        }]
                     },{
                         columnWidth:.4
                         ,border: false

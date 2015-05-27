@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Add sort type as a new Collection's view setting
 - Add content disposition as a new Collection's view setting 
 - Add parent as a new Collection's view setting
 - Make TV columns searchable

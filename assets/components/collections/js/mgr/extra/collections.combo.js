@@ -296,3 +296,31 @@ Collections.combo.ContentDispositionExtended = function(config) {
 };
 Ext.extend(Collections.combo.ContentDispositionExtended,MODx.combo.ComboBox);
 Ext.reg('collections-combo-content-disposition-extended',Collections.combo.ContentDispositionExtended);
+
+Collections.combo.SortType = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        store: new Ext.data.SimpleStore({
+            fields: ['d','v']
+            ,data: [
+                [_('collections.template.sort_type_string'), null]
+                ,[_('collections.template.sort_type_integer'), 'SIGNED INTEGER']
+                ,[_('collections.template.sort_type_decimal'), 'DECIMAL']
+                ,[_('collections.template.sort_type_datetime'), 'DATETIME']
+            ]
+        })
+        ,name: 'sort_type'
+        ,hiddenName: 'sort_type'
+        ,displayField: 'd'
+        ,valueField: 'v'
+        ,mode: 'local'
+        ,triggerAction: 'all'
+        ,editable: false
+        ,pageSize: 20
+        ,selectOnFocus: false
+        ,preventRender: true
+    });
+    Collections.combo.SortType.superclass.constructor.call(this,config);
+};
+Ext.extend(Collections.combo.SortType,MODx.combo.ComboBox);
+Ext.reg('collections-combo-sort-type',Collections.combo.SortType);
