@@ -30,6 +30,7 @@
  * @property bool|null $child_searchable
  * @property bool|null $child_richtext
  * @property int $child_content_type
+ * @property string $parent
  *
  * @property CollectionSetting $Setting
  * @property array $Columns
