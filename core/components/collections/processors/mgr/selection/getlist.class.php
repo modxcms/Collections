@@ -19,6 +19,7 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
 
     public $actions = array();
     public $buttons = array();
+    public $sortType = null;
 
     public function initialize() {
         $parent = $this->getProperty('parent',null);
@@ -31,6 +32,8 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
         $parentObject = $this->modx->getObject('modResource', $parent);
         $template = $this->modx->collections->getCollectionsView($parentObject);
 
+        $this->sortType = $template->sort_type;
+        
         $buttons = $this->modx->collections->explodeAndClean($template->buttons, ',', 1);
         foreach ($buttons as $button) {
             $button = $this->modx->collections->explodeAndClean($button, ':');
@@ -345,7 +348,12 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
         $data['total'] = $this->modx->getCount($this->classKey,$c);
         $c = $this->prepareQueryAfterCount($c);
 
-        $c->sortby('`' . $this->getProperty('sort') . '`',$this->getProperty('dir'));
+        if ($this->sortType === null) {
+            $c->sortby('`' . $this->getProperty('sort') . '`',$this->getProperty('dir'));
+        } else {
+            $c->sortby('CAST(`' . $this->getProperty('sort') . '` as ' . $this->sortType . ')',$this->getProperty('dir'));
+        }
+        
         if ($limit > 0) {
             $c->limit($limit,$start);
         }
