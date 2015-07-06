@@ -32,9 +32,26 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
         $this->setActions();
 
         $parentObject = $this->modx->getObject('modResource', $parent);
+        /** @var CollectionTemplate $template */
         $template = $this->modx->collections->getCollectionsView($parentObject);
 
-        $this->sortType = $template->sort_type;
+        $sort = $this->getProperty('sort');
+        $sort = explode(':', $sort);
+
+        if (isset($sort[1])) {
+            $this->sortType = $sort[1];
+            $this->setProperty('sort', $sort[0]);
+        } else {
+            $this->setProperty('sort', $sort[0]);
+
+            /** @var CollectionTemplateColumn[] $columns */
+            $columns = $template->getMany('Columns', array('name' => $sort[0]));
+            if (count($columns) == 1) {
+                foreach ($columns as $column) {
+                    $this->sortType = $column->sort_type;
+                }
+            }
+        }
 
         $this->sortBefore = $template->permanent_sort_before;
         $this->sortAfter = $template->permanent_sort_after;
@@ -357,7 +374,7 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
         
         $c = $this->permanentSort($c, $gridSort, $this->sortBefore);
         
-        if ($this->sortType === null) {
+        if (empty($this->sortType)) {
             $c->sortby('`' . $gridSort . '`',$this->getProperty('dir'));
         } else {
             $c->sortby('CAST(`' . $gridSort . '` as ' . $this->sortType . ')',$this->getProperty('dir'));

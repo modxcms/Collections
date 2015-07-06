@@ -5,6 +5,7 @@ Collections.window.TemplateColumn = function(config) {
         ,closeAction: 'close'
         ,isUpdate: false
         ,width: 600
+        ,autoHeight: true
         ,url: Collections.config.connectorUrl
         ,action: 'mgr/template/column/create'
         ,fields: this.getFields(config)
@@ -98,9 +99,29 @@ Ext.extend(Collections.window.TemplateColumn,MODx.Window, {
                     ,name: 'sortable'
                     ,anchor: '100%'
                     ,allowBlank: false
-
+                    ,listeners: {
+                        check: function(t, checked) {
+                            var els = this.find('name', 'sort_type');
+                            if (els.length == 1) {
+                                if (checked) {
+                                    els[0].show();
+                                } else {
+                                    els[0].hide();
+                                }
+                            }
+                        }
+                        ,scope: this
+                    }
                 }]
             }]
+        },{
+            xtype: 'collections-combo-sort-type'
+            ,fieldLabel: _('collections.template.column.sort_type')
+            ,name: 'sort_type'
+            ,hiddenName: 'sort_type'
+            ,hidden: config.record == undefined || !config.record.sortable
+            ,anchor: '100%'
+            ,hideMode:'offsets'
         }];
     },
     getFields: function(config) {

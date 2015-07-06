@@ -12,6 +12,7 @@
  * @property string $renderer
  * @property string $php_renderer
  * @property int $position
+ * @property string|null $sort_type
  *
  * @property CollectionTemplate $Template
  *

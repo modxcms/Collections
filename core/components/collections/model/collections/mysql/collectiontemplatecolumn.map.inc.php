@@ -19,6 +19,7 @@ $xpdo_meta_map['CollectionTemplateColumn']= array (
     'renderer' => '',
     'php_renderer' => '',
     'position' => 0,
+    'sort_type' => NULL,
   ),
   'fieldMeta' => 
   array (
@@ -103,6 +104,13 @@ $xpdo_meta_map['CollectionTemplateColumn']= array (
       'phptype' => 'integer',
       'null' => false,
       'default' => 0,
+    ),
+    'sort_type' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '64',
+      'phptype' => 'string',
+      'null' => true,
     ),
   ),
   'aggregates' => 

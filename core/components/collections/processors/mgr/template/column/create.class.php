@@ -86,12 +86,28 @@ class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor 
             $this->setProperty('width', 100);
         }
 
+        $this->handleNull('sort_type');
+
         return parent::beforeSet();
     }
 
     public function afterSave() {
 
         return parent::afterSave();
+    }
+
+    public function handleNull($property) {
+        $value = $this->getProperty($property);
+
+        if ($value == '') {
+            $this->setProperty($property, null);
+
+            return null;
+        }
+
+        $this->setProperty($property, $value);
+
+        return $value;
     }
 
 }

@@ -10,7 +10,7 @@ Collections.grid.TemplateColumn = function(config) {
             ,sort: 'position'
             ,dir: 'asc'
         }
-        ,fields: ['id', 'template', 'name', 'label', 'hidden', 'sortable', 'width', 'position', 'editor', 'renderer', 'php_renderer']
+        ,fields: ['id', 'template', 'name', 'label', 'hidden', 'sortable', 'width', 'position', 'editor', 'renderer', 'php_renderer', 'sort_type']
         ,paging: true
         ,ddGroup: 'collectionChildDDGroup'
         ,enableDragDrop: true

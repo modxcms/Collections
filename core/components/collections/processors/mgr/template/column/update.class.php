@@ -65,12 +65,28 @@ class CollectionsTemplateColumnUpdateProcessor extends modObjectUpdateProcessor 
             $this->addFieldError('name',$this->modx->lexicon('collections.err.column_name_cant_change'));
         }
 
+        $this->handleNull('sort_type');
+
         return parent::beforeSet();
     }
 
     public function afterSave() {
 
         return parent::afterSave();
+    }
+
+    public function handleNull($property) {
+        $value = $this->getProperty($property);
+
+        if ($value == '') {
+            $this->setProperty($property, null);
+
+            return null;
+        }
+
+        $this->setProperty($property, $value);
+
+        return $value;
     }
 
 }

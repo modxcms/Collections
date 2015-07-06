@@ -155,7 +155,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'fields' => array('actions', 'action_edit', 'preview_url', 'menu_actions'),
             'columns' => array(),
             'sort' => array(
-                'field' => $template->sort_field,
+                'field' => $template->sort_field . ':' . $template->sort_type,
                 'dir' => $template->sort_dir,
             ),
             'pageSize' => $template->page_size,

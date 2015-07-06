@@ -98,6 +98,9 @@ if ($object->xpdo) {
                 $manager = $modx->getManager();
                 $manager->addField('CollectionTemplate', 'permanent_sort_before');
                 $manager->addField('CollectionTemplate', 'permanent_sort_after');
+                $manager->addField('CollectionTemplate', 'sort_type');
+
+                $manager->addField('CollectionTemplateColumn', 'sort_type');
             }
 
             break;

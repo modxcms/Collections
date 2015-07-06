@@ -144,6 +144,7 @@ $_lang['collections.template.column.position'] = 'Position';
 $_lang['collections.template.column.editor'] = 'Editor';
 $_lang['collections.template.column.renderer'] = 'Renderer';
 $_lang['collections.template.column.php_renderer'] = 'Snippet Renderer';
+$_lang['collections.template.column.sort_type'] = 'Sort type';
 
 $_lang['collections.template.sort_type_string'] = 'String';
 $_lang['collections.template.sort_type_integer'] = 'Integer';
