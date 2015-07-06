@@ -22,6 +22,8 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public $actions = array();
     public $buttons = array();
     public $sortType = null;
+    public $sortBefore = '';
+    public $sortAfter = '';
 
     public function initialize() {
         $parent = $this->getProperty('parent',null);
@@ -32,9 +34,14 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         $this->setActions();
 
         $parentObject = $this->modx->getObject('modResource', $parent);
+        /** @var CollectionTemplate $template */
         $template = $this->modx->collections->getCollectionsView($parentObject);
 
         $this->sortType = $template->sort_type;
+        
+        $this->sortBefore = $template->permanent_sort_before;
+        $this->sortAfter = $template->permanent_sort_after;
+
         
         $buttons = $this->modx->collections->explodeAndClean($template->buttons, ',', 1);
         foreach ($buttons as $button) {
@@ -381,11 +388,17 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         $data['total'] = $this->modx->getCount($this->classKey,$c);
         $c = $this->prepareQueryAfterCount($c);
 
+        $gridSort = $this->getProperty('sort');
+        
+        $c = $this->permanentSort($c, $gridSort, $this->sortBefore);
+        
         if ($this->sortType === null) {
-            $c->sortby('`' . $this->getProperty('sort') . '`',$this->getProperty('dir'));
+            $c->sortby('`' . $gridSort . '`',$this->getProperty('dir'));
         } else {
-            $c->sortby('CAST(`' . $this->getProperty('sort') . '` as ' . $this->sortType . ')',$this->getProperty('dir'));
+            $c->sortby('CAST(`' . $gridSort . '` as ' . $this->sortType . ')',$this->getProperty('dir'));
         }
+
+        $c = $this->permanentSort($c, $gridSort, $this->sortAfter);
         
         if ($limit > 0) {
             $c->limit($limit,$start);
@@ -393,6 +406,33 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         $data['results'] = $this->modx->getCollection($this->classKey,$c);
         return $data;
+    }
+    
+    protected function permanentSort(xPDOQuery $c, $gridSort, $sortOptions) 
+    {
+        $sorts = explode(',', $sortOptions);
+        foreach ($sorts as $sort) {
+            $sort = explode('=', $sort);
+            if (isset($sort[1])) {
+                if (($sort[0] != '*') && (strtolower($sort[0]) != strtolower($gridSort))) continue;
+            }
+
+            $options = (isset($sort[1])) ? $sort[1] : $sort[0];
+            $options = explode(':', $options);
+            if (empty($options[0])) continue;
+
+            $options['field'] = $options[0];
+            $options['dir'] = empty($options[1]) ? $this->getProperty('dir') : $options[1];
+            $options['type'] = empty($options[2]) ? null : $options[2];
+            
+            if (empty($options['type'])) {
+                $c->sortby('`' . $options['field'] . '`', $options['dir']);
+            } else {
+                $c->sortby('CAST(`' . $options['field'] . '` as ' . $options['type'] . ')', $options['dir']);
+            }
+        }
+        
+        return $c;
     }
 
     public function iterate(array $data) {

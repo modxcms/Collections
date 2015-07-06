@@ -40,6 +40,8 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'child_content_type' => 0,
     'parent' => '',
     'child_content_disposition' => NULL,
+    'permanent_sort_before' => '',
+    'permanent_sort_after' => '',
   ),
   'fieldMeta' => 
   array (
@@ -284,6 +286,22 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'precision' => '1',
       'phptype' => 'integer',
       'null' => true,
+    ),
+    'permanent_sort_before' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
+    ),
+    'permanent_sort_after' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
     ),
   ),
   'composites' => 

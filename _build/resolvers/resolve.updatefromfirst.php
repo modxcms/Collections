@@ -93,6 +93,12 @@ if ($object->xpdo) {
                 $manager->addField('CollectionTemplate', 'child_richtext');
                 $manager->addField('CollectionTemplate', 'child_content_type');
             }
+            
+            if ($oldPackage && $oldPackage->compareVersion('3.2.0-pl', '>')) {
+                $manager = $modx->getManager();
+                $manager->addField('CollectionTemplate', 'permanent_sort_before');
+                $manager->addField('CollectionTemplate', 'permanent_sort_after');
+            }
 
             break;
     }

@@ -256,6 +256,38 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                         ,border: false
                     }
                     ,items: [{
+                        columnWidth: 1
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.permanent_sort_before')
+                            ,name: 'permanent_sort_before'
+                        }]
+                    }]
+                }]
+            },{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
                         columnWidth:.3
                         ,border: false
                         ,defaults: {
@@ -298,6 +330,38 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,hiddenName: 'sort_type'
                             ,allowBlank: false
                             ,value: (config.record) ? config.record.sort_type : null
+                        }]
+                    }]
+                }]
+            },{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
+                        columnWidth: 1
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.permanent_sort_after')
+                            ,name: 'permanent_sort_after'
                         }]
                     }]
                 }]

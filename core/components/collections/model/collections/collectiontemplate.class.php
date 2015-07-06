@@ -33,6 +33,8 @@
  * @property int $child_content_type
  * @property string $parent
  * @property bool|null $child_content_disposition
+ * @property string $permanent_sort_before
+ * @property string $permanent_sort_after
  *
  * @property CollectionSetting $Setting
  * @property array $Columns
