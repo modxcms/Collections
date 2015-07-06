@@ -164,3 +164,4 @@ $_lang['collections.err.template_remove_last'] = 'You can\'t remove the last vie
 $_lang['collections.err.template_remove_global'] = 'You can\'t remove default view. Please set different view as a default and repeat this action.';
 $_lang['collections.err.template_ae_name'] = 'Template with this name already exists.';
 $_lang['collections.err.column_dot_name'] = 'Column name can\'t contain a dot.';
+$_lang['collections.err.template_ns_label'] = 'Label is not specified.';

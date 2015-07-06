@@ -18,7 +18,6 @@ Ext.extend(Collections.window.TemplateColumn,MODx.Window, {
             ,fieldLabel: _('collections.template.column.label')
             ,name: 'label'
             ,anchor: '100%'
-            ,allowBlank: false
         },{
             xtype: 'textfield'
             ,fieldLabel: _('collections.template.column.name')
