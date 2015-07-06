@@ -227,7 +227,7 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
         foreach ($resourceArray as $key => $column) {
             if (!isset($this->columnRenderer[$key])) continue;
 
-            $resourceArray[$key] = $this->modx->runSnippet($this->columnRenderer[$key], array('value' => $column));
+            $resourceArray[$key] = $this->modx->runSnippet($this->columnRenderer[$key], array('value' => $column, 'row' => $resourceArray, 'input' => $column));
         }
 
         $resourceArray = $this->prepareSupportFields($resourceArray);
