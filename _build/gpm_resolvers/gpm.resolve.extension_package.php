@@ -2,7 +2,7 @@
 /**
  * Resolve creating db tables
  *
- * THIS RESOLVER IS AUTOMATICALY GENERATED, NO CHANGES WILL APPLY
+ * THIS RESOLVER IS AUTOMATICALLY GENERATED, NO CHANGES WILL APPLY
  *
  * @package collections
  * @subpackage build

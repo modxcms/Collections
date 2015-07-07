@@ -1,5 +1,11 @@
 Changelog for Collections.
 
+Collections 3.2.1
+===================
+- Fix update from previous versions
+
+Collections 3.2.0
+===================
 - Add sort type as a new Collection's template column setting
 - Add permanent sort
 - Auto set column label from TV caption or Tagger group name

@@ -102,6 +102,12 @@ if ($object->xpdo) {
 
                 $manager->addField('CollectionTemplateColumn', 'sort_type');
             }
+            
+            if ($oldPackage && $oldPackage->compareVersion('3.2.1-pl', '>')) {
+                $manager = $modx->getManager();
+                $manager->addField('CollectionTemplate', 'parent');
+                $manager->addField('CollectionTemplate', 'child_content_disposition');
+            }
 
             break;
     }
