@@ -453,14 +453,18 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             }
         }
     }
+    
+    ,parseSortField: function(sort){
+        return sort.split(':')[0];             
+    }
 
     ,getDragDropText: function(){
-        if (this.config.baseParams.sort != 'menuindex') {
-            if (this.store.sortInfo == undefined || this.store.sortInfo.field != 'menuindex') {
+        if (this.parseSortField(this.config.baseParams.sort) != 'menuindex') {
+            if (this.store.sortInfo == undefined || this.parseSortField(this.store.sortInfo.field) != 'menuindex') {
                 return _('collections.err.bad_sort_column', {column: 'menuindex'});
             }
         } else {
-            if (this.store.sortInfo != undefined && this.store.sortInfo.field != 'menuindex') {
+            if (this.store.sortInfo != undefined && this.parseSortField(this.store.sortInfo.field) != 'menuindex') {
                 return _('collections.err.bad_sort_column', {column: 'menuindex'});
             }
         }

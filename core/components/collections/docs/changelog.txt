@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Fix D&D sort when menuindex is set as default sort field
 - Rename String sort type
 
 Collections 3.2.1
