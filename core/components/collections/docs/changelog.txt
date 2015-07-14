@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Rename String sort type
+
 Collections 3.2.1
 ===================
 - Fix update from previous versions
