@@ -417,10 +417,28 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,handleButtons: function(e){
         var t = e.getTarget();
-        var elm = t.className.split(' ')[0];
-        if(elm == 'controlBtn') {
-            var action = t.className.split(' ')[1];
+        var elm;
+        var action = null;
+        if (t.dataset.action) {
+            action = t.dataset.action;
+        } else {
+            elm = t.className.split(' ')[0];
+            if(elm == 'controlBtn') {
+                action = t.className.split(' ')[1];
+                
+            }
+        }
+        
+        if(action) {
             var record = this.getSelectionModel().getSelected();
+            if (!record && t.dataset.id) {
+                record = {id: t.dataset.id};
+            }
+            
+            if (!record) {
+                return;
+            }
+            
             this.menu.record = record;
             switch (action) {
                 case 'delete':
@@ -448,7 +466,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                     this.removeChild();
                     break;
                 default:
-                    window.location = record.data.edit_action;
+                    if (record.data.edit_action) {
+                        window.location = record.data.edit_action;
+                    }
                     break;
             }
         }
