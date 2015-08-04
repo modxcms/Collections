@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Fix D&D sort for Collection's view columns
 - Added Collections.renderer.pagetitleWithIcons
 - Improved handler for inline action buttons allowing icons
 - Fix D&D sort when menuindex is set as default sort field

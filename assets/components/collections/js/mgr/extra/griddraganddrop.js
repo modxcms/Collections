@@ -5,6 +5,10 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
         ,sortCol: 'menuindex'
         ,gridDropTarget: this
         ,notifyDrop: function(dd, e, data){
+            if (!data.grid.parseSortField) {
+                data.grid.parseSortField = function (value) {return value;}
+            }
+            
             if (data.grid.parseSortField(data.grid.config.baseParams.sort) != this.sortCol) {
                 if (data.grid.store.sortInfo == undefined || data.grid.parseSortField(data.grid.store.sortInfo.field) != this.sortCol) {
                     return false;
@@ -58,6 +62,10 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
             this.grid.getView().dragZone.ddel.innerHTML = this.grid.getDragDropText();
             this.grid.getView().dragZone.proxy.update(this.grid.getView().dragZone.ddel);
 
+            if (!data.grid.parseSortField) {
+                data.grid.parseSortField = function (value) {return value;}
+            }
+            
             if (data.grid.parseSortField(data.grid.config.baseParams.sort) != this.sortCol) {
                 if (data.grid.store.sortInfo == undefined || data.grid.parseSortField(data.grid.store.sortInfo.field) != this.sortCol) {
                     return this.dropNotAllowed;
