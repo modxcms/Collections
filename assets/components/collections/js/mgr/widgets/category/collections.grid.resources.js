@@ -425,18 +425,21 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             elm = t.className.split(' ')[0];
             if(elm == 'controlBtn') {
                 action = t.className.split(' ')[1];
-                
             }
         }
         
         if(action) {
             var record = this.getSelectionModel().getSelected();
             if (!record && t.dataset.id) {
-                record = {id: t.dataset.id};
+                record = this.store.getById(t.dataset.id);
             }
-            
+
             if (!record) {
                 return;
+            }
+
+            if (record.data) {
+                record = record.data;
             }
             
             this.menu.record = record;
@@ -466,9 +469,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                     this.removeChild();
                     break;
                 default:
-                    if (record.data.edit_action) {
-                        window.location = record.data.edit_action;
-                    }
+                    this.editChild();
                     break;
             }
         }
