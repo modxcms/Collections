@@ -43,11 +43,7 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
      * @param \modResource $resource
      */
     protected function handleParent($resource) {
-        if ($resource->hasChildren() != 0) {
-            $resource->set('show_in_tree', 1);
-        } else {
-            $resource->set('show_in_tree', 0);
-        }
+        $resource->set('show_in_tree', 0);
     }
 
     /**
@@ -85,11 +81,6 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
 
             if ($originalGreatParent && ($originalGreatParent->class_key == 'CollectionContainer')) {
                 $resource->set('show_in_tree', 1);
-
-                if ($originalParent->hasChildren() == 0) {
-                    $originalParent->set('show_in_tree', 0);
-                    $originalParent->save();
-                }
             }
         }
     }
@@ -119,10 +110,6 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
             $child->set('show_in_tree', 0);
 
             if ($child->class_key == 'CollectionContainer') {
-                $child->set('show_in_tree', 1);
-            }
-
-            if ($child->hasChildren() > 0) {
                 $child->set('show_in_tree', 1);
             }
 

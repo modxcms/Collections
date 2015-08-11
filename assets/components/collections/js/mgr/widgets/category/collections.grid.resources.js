@@ -24,12 +24,97 @@ Collections.grid.ContainerCollections = function(config) {
         ,sm: this.sm
         ,emptyText: _('collections.children.none')
         ,columns: this.getColumns(config)
-        ,tbar: this.getTbar(config)
+        ,tbar: {
+            xtype: 'container'
+            ,layout: 'anchor'
+            ,defaults: 
+            {
+                anchor : '100%' 
+            }
+            ,items: [
+                new Ext.Toolbar({
+                    items : this.getTbar(config)
+                })
+            ]
+        }
     });
     Collections.grid.ContainerCollections.superclass.constructor.call(this,config);
     this.on('rowclick',MODx.fireResourceFormChange);
     this.on('click', this.handleButtons, this);
+    
+    this.currentFolder = null;
 
+    this.bc = new Ext.Toolbar({
+        id: 'c-bc'
+        ,hidden: true
+        ,crumbs: [{
+            id: 2
+            ,text: 'Collections'
+        }]
+        ,data : [{
+            id: 2
+            ,text: 'Collections'
+        }],
+        grid: this,
+        tpl: new Ext.XTemplate('<div class="crumb_wrapper collections_crumb_wrapper">' +
+            '<ul class="crumbs">' +
+            '<tpl for=".">' +
+                '<tpl if="xindex!==xcount">' +
+                    '<tpl if="xindex==1">' +
+                        '<li class="first"><button type="button" data-id="{id}" class="root">{text}</button></li>' +
+                    '</tpl>' +
+                    '<tpl if="xindex!==1">' +
+                        '<li><button class="text" data-id="{id}">{text}</button></li>' +
+                    '</tpl>' +
+                '</tpl>' +
+                '<tpl if="xindex==xcount">' +
+                    '<tpl if="xindex==1">' +
+                        '<li class="first"><span data-id="{id}" class="root">{text}</span></li>' +
+                    '</tpl>' +
+                    '<tpl if="xindex!==1">' +
+                        '<li><span class="text" data-id="{id}">{text}</span></li>' +
+                    '</tpl>' +
+                '</tpl>' +
+            '</tpl>' +
+            '</ul></div>', {
+            compiled: true
+        }),
+        listeners: {
+            render: {
+                fn: function(toolbar){
+                    toolbar.el.on('click', function (e) {
+                        if(e.target.nodeName.toLowerCase() != 'button') return;
+                        
+                        var newCrumbs = [];
+                        for (var i = 0; i < toolbar.crumbs.length; i++) {
+                            newCrumbs.push(toolbar.crumbs[i]);
+                            if (toolbar.crumbs[i]['id'] == e.target.dataset.id) {
+                                break;
+                            }
+                        }
+                        
+                        toolbar.crumbs = newCrumbs;
+                        toolbar.tpl.overwrite(toolbar.el, toolbar.crumbs);
+                        if (toolbar.crumbs.length == 1) {
+                            toolbar.hide();
+                        }
+                        
+                        toolbar.grid.currentFolder = e.target.dataset.id;
+                        
+                        toolbar.grid.store.removeAll();
+
+                        toolbar.grid.getStore().baseParams.parent = e.target.dataset.id;
+                        toolbar.grid.getBottomToolbar().changePage(1);
+
+                        toolbar.grid.body.slideIn('r', {stopFx:true, duration:.2});
+                    });
+                },
+                scope: this
+            }
+        }
+    });
+    this.getTopToolbar().add(this.bc);
+    
     if (Collections.template.allowDD) {
         this.on('render', this.registerGridDropTarget, this);
         this.on('beforedestroy', this.destroyScrollManager, this);
@@ -62,6 +147,25 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         }, this);
 
         return m;
+    }
+    
+    ,openChild: function(){
+        this.store.removeAll();
+        
+        this.getStore().baseParams.parent = this.menu.record.id;
+        this.getBottomToolbar().changePage(1);
+        
+        this.bc.crumbs.push({
+            id: this.menu.record.id,
+            text: this.menu.record.pagetitle
+        });
+
+        this.currentFolder = this.menu.record.id;
+        
+        this.bc.tpl.overwrite(this.bc.el, this.bc.crumbs);
+        this.bc.show();
+        
+        this.body.slideIn('r', {stopFx:true, duration:.2});       
     }
 
     ,getColumns: function(config) {
@@ -197,9 +301,14 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         var selection = '';
         if (Collections.template.parent != MODx.request.id){
            selection = '&selection=' + MODx.request.id;
-        }        
+        }
+
+        var collectionGet = '';
+        if (this.currentFolder) {
+            collectionGet = '&collection=' + Collections.template.parent
+        }
         
-        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection);
+        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection + collectionGet);
     }
 
     ,createChild: function(btn,e) {
@@ -212,7 +321,12 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
            selection = '&selection=' + MODx.request.id;
         }
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + Collections.template.parent + '&context_key=' + Collections.template.parent_context + '&class_key=' + Collections.template.children.resource_type + template + selection);
+        var collectionGet = '';
+        if (this.currentFolder) {
+            collectionGet = '&collection=' + Collections.template.parent
+        }
+        
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || Collections.template.parent) + collectionGet + '&context_key=' + Collections.template.parent_context + '&class_key=' + Collections.template.children.resource_type + template + selection);
     }
 
     ,createDerivativeChild: function(btn, e) {
@@ -223,9 +337,14 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         }
         if (Collections.template.parent != MODx.request.id){
            selection = '&selection=' + MODx.request.id;
-        }        
+        }
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + Collections.template.parent + '&context_key=' + Collections.template.parent_context + '&class_key=' + btn.derivative + template + selection);
+        var collectionGet = '';
+        if (this.currentFolder) {
+            collectionGet = '&collection=' + Collections.template.parent
+        }
+
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || Collections.template.parent) + collectionGet + '&context_key=' + Collections.template.parent_context + '&class_key=' + btn.derivative + template + selection);
     }
 
     ,viewChild: function(btn,e) {
@@ -417,10 +536,32 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,handleButtons: function(e){
         var t = e.getTarget();
-        var elm = t.className.split(' ')[0];
-        if(elm == 'controlBtn') {
-            var action = t.className.split(' ')[1];
+        var elm;
+        var action = null;
+        if (t.dataset.action) {
+            action = t.dataset.action;
+        } else {
+            elm = t.className.split(' ')[0];
+            if(elm == 'controlBtn') {
+                action = t.className.split(' ')[1];
+                
+            }
+        }
+        
+        if(action) {
             var record = this.getSelectionModel().getSelected();
+            if (!record && t.dataset.id) {
+                record = this.store.getById(t.dataset.id);
+            }
+            
+            if (!record) {
+                return;
+            }
+
+            if (record.data) {
+                record = record.data;
+            }
+            
             this.menu.record = record;
             switch (action) {
                 case 'delete':
@@ -447,20 +588,27 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 case 'remove':
                     this.removeChild();
                     break;
+                case 'open':
+                    this.openChild();
+                    break;
                 default:
-                    window.location = record.data.edit_action;
+                    this.editChild();
                     break;
             }
         }
     }
+    
+    ,parseSortField: function(sort){
+        return sort.split(':')[0];             
+    }
 
     ,getDragDropText: function(){
-        if (this.config.baseParams.sort != 'menuindex') {
-            if (this.store.sortInfo == undefined || this.store.sortInfo.field != 'menuindex') {
+        if (this.parseSortField(this.config.baseParams.sort) != 'menuindex') {
+            if (this.store.sortInfo == undefined || this.parseSortField(this.store.sortInfo.field) != 'menuindex') {
                 return _('collections.err.bad_sort_column', {column: 'menuindex'});
             }
         } else {
-            if (this.store.sortInfo != undefined && this.store.sortInfo.field != 'menuindex') {
+            if (this.store.sortInfo != undefined && this.parseSortField(this.store.sortInfo.field) != 'menuindex') {
                 return _('collections.err.bad_sort_column', {column: 'menuindex'});
             }
         }

@@ -1,5 +1,10 @@
 Changelog for Collections.
 
+Collections 3.3.0-dev
+===================
+- Show folders under collections
+- Show breadcrumbs when browsing folders under collections
+
 Collections 3.2.1
 ===================
 - Fix update from previous versions

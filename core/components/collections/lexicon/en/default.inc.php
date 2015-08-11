@@ -64,6 +64,7 @@ $_lang['collections.children.remove_action'] = 'Remove';
 $_lang['collections.children.remove'] = 'Remove child';
 $_lang['collections.children.remove_confirm'] = 'Are you sure, you want to remove this child?<br /><strong>This operation is permanent and can\'t be reverted.</strong>';
 $_lang['collections.children.back_to_collection_label'] = 'Back to Collection';
+$_lang['collections.children.open'] = 'Open';
 
 // Template
 $_lang['collections.template.page_title'] = 'Collection views';
@@ -110,9 +111,9 @@ $_lang['collections.template.view_for_selections'] = 'Selections';
 $_lang['collections.template.collections_settings'] = 'Collection\'s settings';
 $_lang['collections.template.link_label'] = 'New link\'s button label';
 $_lang['collections.template.context_menu'] = 'Context menu items';
-$_lang['collections.template.context_menu_desc'] = '<strong>Valid values:</strong><br />view<br />edit<br />duplicate<br />publish<br />unpublish<br />delete<br />undelete<br />remove<br />unlink<br />-';
+$_lang['collections.template.context_menu_desc'] = '<strong>Valid values:</strong><br />open<br />view<br />edit<br />duplicate<br />publish<br />unpublish<br />delete<br />undelete<br />remove<br />unlink<br />-';
 $_lang['collections.template.buttons'] = 'Buttons';
-$_lang['collections.template.buttons_desc'] = 'This setting will apply only with renderers that uses action buttons.<br />You can append value with <strong>:classname anotherclass</strong> to add a custom class to a button.<br /><strong>Valid values:</strong><br />view<br />edit<br />duplicate<br />publish<br />unpublish<br />delete<br />undelete<br />remove<br />unlink';
+$_lang['collections.template.buttons_desc'] = 'This setting will apply only with renderers that uses action buttons.<br />You can append value with <strong>:classname anotherclass</strong> to add a custom class to a button.<br /><strong>Valid values:</strong><br />open<br />view<br />edit<br />duplicate<br />publish<br />unpublish<br />delete<br />undelete<br />remove<br />unlink';
 $_lang['collections.template.allowed_resource_types'] = 'Allowed resource types';
 $_lang['collections.template.allowed_resource_types_desc'] = 'Specify allowed resource types in resource types selection.<br /><strong>Default resource types:</strong><br />modDocument<br />modStaticResource<br />modSymLink<br />modWebLink<br /><br /><strong>Custom Resource Types:</strong><br />CollectionContainer<br />SelectionContainer';
 $_lang['collections.template.back_to_collection'] = 'Back to Collection button label';

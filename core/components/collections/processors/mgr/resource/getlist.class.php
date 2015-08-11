@@ -24,6 +24,8 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public $sortType = null;
     public $sortBefore = '';
     public $sortAfter = '';
+    
+    public $iconMap = array();
 
     public function initialize() {
         $parent = $this->getProperty('parent',null);
@@ -121,6 +123,11 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         $this->useTagger = $this->modx->collections->getOption('taggerInstalled', null,  false);
 
+        $this->iconMap['weblink'] = $this->modx->getOption('mgr_tree_icon_weblink', null, 'tree-weblink');
+        $this->iconMap['symlink'] = $this->modx->getOption('mgr_tree_icon_symlink', null, 'tree-symlink');
+        $this->iconMap['staticresource'] = $this->modx->getOption('mgr_tree_icon_staticresource', null, 'tree-static-resource');
+        $this->iconMap['folder'] = $this->modx->getOption('mgr_tree_icon_folder', null, 'tree-folder');
+
         return parent::initialize();
     }
 
@@ -164,6 +171,11 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             'className' => 'delete',
             'text' => $this->modx->lexicon('delete'),
             'key' => 'delete',
+        );
+        $this->actions['open'] = array(
+            'className' => 'open',
+            'text' => 'Open',
+            'key' => 'open',
         );
     }
 
@@ -234,7 +246,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         $c->where(array(
             'class_key:!=' => 'CollectionContainer',
-            "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
+//            "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
         ));
 
         foreach ($this->tvColumns as $column) {
@@ -247,6 +259,9 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public function prepareQueryAfterCount(xPDOQuery $c) {
 
         $c->select($this->modx->getSelectColumns('modResource', 'modResource'));
+        $c->select(array(
+            'has_children' => "EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
+        ));
 
         foreach ($this->tvColumns as $column) {
             $c->select(array(
@@ -296,6 +311,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         $resourceArray = $this->prepareSupportFields($resourceArray);
         $resourceArray = $this->prepareActions($resourceArray);
         $resourceArray = $this->prepareMenuActions($resourceArray);
+        $resourceArray = $this->prepareIcons($resourceArray);
 
         return $resourceArray;
     }
@@ -306,6 +322,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         $resourceArray = $this->prepareSupportFields($resourceArray);
         $resourceArray = $this->prepareActions($resourceArray);
         $resourceArray = $this->prepareMenuActions($resourceArray);
+        $resourceArray = $this->prepareIcons($resourceArray);
 
         return $resourceArray;
     }
@@ -356,6 +373,11 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                             $resourceArray['actions'][] = $this->actions[$button];
                         }
                         break;
+                    case 'open':
+//                        if ($resourceArray['has_children'] == '1') {
+                            $resourceArray['actions'][] = $this->actions['open'];
+//                        }
+                        break;
                     default:
                         $resourceArray['actions'][] = $this->actions[$button];
                 }
@@ -369,6 +391,10 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public function prepareMenuActions($resourceArray) {
         $resourceArray['menu_actions'] = array();
 
+        if ($resourceArray['has_children'] == '1') {
+            $resourceArray['menu_actions']['open'] = $this->actions['open'];
+        }
+        
         $resourceArray['menu_actions']['view'] = $this->actions['view'];
         $resourceArray['menu_actions']['edit'] = $this->actions['edit'];
         $resourceArray['menu_actions']['duplicate'] = $this->actions['duplicate'];
@@ -503,6 +529,80 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         }
 
         return $this->outputArray($list,$data['total']);
+    }
+
+    /**
+     * @param $resourceArray
+     * @return array
+     */
+    public function prepareIcons($resourceArray)
+    {
+        // Check for an icon class on the resource template
+        $iconCls = array('icon');
+        if (!isset($this->iconMap['template'][$resourceArray['template']])) {
+            $template = $this->modx->getObject('modTemplate', $resourceArray['template']);
+            $tplIcon = '';
+            if ($template) {
+                if (!empty($template->icon)) {
+                    $tplIcon = $template->icon;
+
+                    if (!isset($this->iconMap['template'])) $this->iconMap['template'] = array();
+                    $this->iconMap['template'][$resourceArray['template']] = $template->icon;
+                }
+            }
+        } else {
+            $tplIcon = $this->iconMap['template'][$resourceArray['template']];
+        }
+
+        // Assign an icon class based on the class_key
+        $classKey = strtolower($resourceArray['class_key']);
+        if (substr($classKey, 0, 3) == 'mod') {
+            $classKey = substr($classKey, 3);
+        }
+
+        if (!isset($this->iconMap['template'][$resourceArray[$classKey]])) {
+            $classKeyIcon = $this->modx->getOption('mgr_tree_icon_' . $classKey, null, 'tree-resource', true);
+            $this->iconMap['classKey'][$resourceArray[$classKey]] = $classKeyIcon;
+        } else {
+            $classKeyIcon = $this->iconMap['template'][$resourceArray[$classKey]];
+        }
+
+        if (!empty($tplIcon)) {
+            $iconCls[] = $tplIcon;
+        } else {
+            $iconCls[] = $classKeyIcon;
+        }
+
+        switch ($classKey) {
+            case 'weblink':
+                $iconCls[] = $this->iconMap['weblink'];
+                break;
+
+            case 'symlink':
+                $iconCls[] = $this->iconMap['symlink'];
+                break;
+
+            case 'staticresource':
+                $iconCls[] = $this->iconMap['staticresource'];
+                break;
+        }
+
+        // Icons specific with the context and resource ID for super specific tweaks
+        $iconCls[] = 'icon-' . $resourceArray['context_key'] . '-' . $resourceArray['id'];
+        $iconCls[] = 'icon-parent-' . $resourceArray['context_key'] . '-' . $resourceArray['parent'];
+
+        // Modifiers to indicate resource _state_
+        if ($resourceArray['has_children'] == '1' || $resourceArray['isfolder']) {
+            if (empty($tplIcon) && $classKeyIcon == 'tree-resource') {
+                $iconCls[] = $this->iconMap['folder'];
+            }
+
+            $iconCls[] = 'parent-resource';
+        }
+
+        $resourceArray['icons'] = implode(' ', $iconCls);
+        
+        return $resourceArray;
     }
 }
 return 'CollectionsResourceGetListProcessor';

@@ -16,7 +16,7 @@ Ext.override(MODx.page[Collections_mode + Collections_type], {
             buttons.unshift({
                 text: _(Collections_labels.back_to_collection) ? _(Collections_labels.back_to_collection) : Collections_labels.back_to_collection
                 ,handler: function() {
-                    MODx.loadPage(MODx.action['resource/update'], 'id=' + config.record.parent);
+                    MODx.loadPage(MODx.action['resource/update'], 'id=' + (Collections_collection_get || MODx.request.collection || config.record.parent));
                 }
             });
         }

@@ -19,7 +19,7 @@ class CollectionsOnBeforeEmptyTrash extends CollectionsPlugin {
             $grandParent = $parent->Parent;
             if (!$grandParent) return;
 
-            if ($grandParent->class_key == 'CollectionContainer' && ($parent->hasChildren() == 0)) {
+            if ($grandParent->class_key == 'CollectionContainer') {
                 $parent->set('show_in_tree', 0);
                 $parent->save();
             }

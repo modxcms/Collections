@@ -24,12 +24,29 @@ class CollectionsOnDocFormPrerender extends CollectionsPlugin {
                 }
             }
         } else {
-            $inject = ($parent->class_key == 'CollectionContainer' && $resource->class_key != 'CollectionContainer' && $resource->hasChildren() == 0);
+            $inject = ($parent->class_key == 'CollectionContainer' && $resource->class_key != 'CollectionContainer');
         }
-
+        
         if (!$inject && isset($_GET['selection']) && intval($_GET['selection'] > 0)) {
             $selection = $this->modx->getCount('CollectionSelection', array('resource' => $resource->id));
             if ($selection > 0) $inject = true;
+        }
+        
+        if (!$inject && isset($_GET['collection']) && intval($_GET['collection'] > 0)) {
+            $inject = true;
+        }
+        
+        $collectionGet = null;
+        if (!$inject && $parent) {
+            $grandParent = $parent->Parent;
+            while ($grandParent) {
+                if ($grandParent->Parent->class_key == 'CollectionContainer') {
+                    $collectionGet = $grandParent->Parent->id;
+                    $inject = true;
+                    break;
+                }
+                $grandParent = $grandParent->Parent;
+            }
         }
 
         if ($inject) {
@@ -79,6 +96,7 @@ class CollectionsOnDocFormPrerender extends CollectionsPlugin {
             Collections_labels = ' . $this->modx->toJSON($templateOptions) . ';
             Collections_mode = "' . ($this->scriptProperties['mode'] == 'new' ? 'Create' : 'Update') . '";
             Collections_type = "' . $classKey . '";
+            Collections_collection_get = "' . $collectionGet . '";
             </script>');
 
             $jsUrl = $this->collections->getOption('jsUrl') . 'mgr/';

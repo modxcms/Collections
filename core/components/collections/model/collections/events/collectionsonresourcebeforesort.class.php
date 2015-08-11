@@ -23,9 +23,9 @@ class CollectionsOnResourceBeforeSort extends CollectionsPlugin {
 
             $this->handleParent($parent, $resource, $originalParent);
 
-            if ($originalParent) {
-                $this->handleOriginalParent($originalParent);
-            }
+//            if ($originalParent) {
+//                $this->handleOriginalParent($originalParent);
+//            }
 
             if ($resource->class_key == 'CollectionContainer') {
                 $resource->set('show_in_tree', 1);
@@ -44,25 +44,11 @@ class CollectionsOnResourceBeforeSort extends CollectionsPlugin {
     protected function handleParent($parent, $resource, $originalParent) {
         if ($parent) {
             if ($parent->class_key == 'CollectionContainer') {
-                $hasChildren = ($resource->hasChildren() != 0);
-
-                if ($hasChildren == false) {
-                    $resource->set('show_in_tree', 0);
-                } else {
-                    $resource->set('show_in_tree', 1);
-                }
+                $resource->set('show_in_tree', 0);
             } else {
-                /** @var \modResource $greatParent */
-                $greatParent = $parent->Parent;
-                if ($greatParent && ($greatParent->class_key == 'CollectionContainer')) {
-                    $parent->set('show_in_tree', 1);
-                    $parent->save();
-                }
-
                 if (($originalParent->class_key == 'CollectionContainer') && ($parent->class_key != 'CollectionContainer')) {
                     $resource->set('show_in_tree', 1);
                 }
-
             }
         } else {
             if ($originalParent && ($originalParent->class_key == 'CollectionContainer')) {

@@ -68,7 +68,7 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
 
         $buttons = $this->getProperty('buttons');
         if (empty($buttons)) {
-            $this->setProperty('buttons', 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink');
+            $this->setProperty('buttons', 'open,view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink');
         }
 
         $backToCollection = $this->getProperty('back_to_collection_label');
