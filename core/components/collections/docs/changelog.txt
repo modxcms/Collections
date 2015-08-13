@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+Collections 3.2.2
+===================
 - Fix D&D sort for Collection's view columns
 - Added Collections.renderer.pagetitleWithIcons
 - Improved handler for inline action buttons allowing icons
