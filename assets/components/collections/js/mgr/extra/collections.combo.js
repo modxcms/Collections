@@ -56,6 +56,7 @@ Collections.combo.Template = function(config, getStore) {
         ,baseParams: {
             action: 'mgr/extra/gettemplates'
             ,template: (MODx.request.id != undefined) ? MODx.request.id : 0
+            ,addEmpty: 1
         }
     });
     Ext.applyIf(config,{

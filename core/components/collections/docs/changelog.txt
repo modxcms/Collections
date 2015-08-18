@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Fix checking for template usage in views
+
 Collections 3.2.2
 ===================
 - Fix D&D sort for Collection's view columns
