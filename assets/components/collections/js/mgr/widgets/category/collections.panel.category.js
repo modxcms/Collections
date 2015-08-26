@@ -73,6 +73,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
                         title: _('resource_content')
                         ,layout: 'form'
                         ,bodyCssClass: 'main-wrapper'
+                        ,id: 'modx-resource-content'
                         ,autoHeight: true
                         ,hideMode: 'offsets'
                         ,items: Collections.panel.Category.superclass.getContentField.call(this,config)

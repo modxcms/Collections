@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Fix displaying ContentBlocks when content is in separate tab
 - Fix checking for template usage in views
 
 Collections 3.2.2
