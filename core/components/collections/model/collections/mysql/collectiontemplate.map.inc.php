@@ -42,6 +42,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'child_content_disposition' => NULL,
     'permanent_sort_before' => '',
     'permanent_sort_after' => '',
+    'selection_link_condition' => NULL,
   ),
   'fieldMeta' => 
   array (
@@ -302,6 +303,12 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => '',
+    ),
+    'selection_link_condition' => 
+    array (
+      'dbtype' => 'text',
+      'phptype' => 'string',
+      'null' => false,
     ),
   ),
   'composites' => 

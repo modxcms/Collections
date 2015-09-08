@@ -129,6 +129,8 @@ $_lang['collections.template.child_content_disposition'] = 'Default children\'s 
 $_lang['collections.template.sort_type'] = 'Sort type';
 $_lang['collections.template.permanent_sort_before'] = 'Permanent sort - Before';
 $_lang['collections.template.permanent_sort_after'] = 'Permanent sort - After';
+$_lang['collections.template.selection_link_condition'] = 'Condition for Link resource window';
+$_lang['collections.template.selection_link_condition_desc'] = 'xPDO condition in JSON.';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

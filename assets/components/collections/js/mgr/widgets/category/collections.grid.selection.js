@@ -160,6 +160,7 @@ Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollect
             xtype: 'collections-window-selection'
             ,title: _('selections.create')
             ,resourcesSort: Collections.template.selection_create_sort
+            ,selection: MODx.request.id
             ,record: {
                 collection: MODx.request.id
             }

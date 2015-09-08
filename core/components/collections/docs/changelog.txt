@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Add "Condition for Link resource window" as a setting for Sellection view
 - Fix displaying ContentBlocks when content is in separate tab
 - Fix checking for template usage in views
 
