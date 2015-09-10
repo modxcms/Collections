@@ -10,7 +10,7 @@ Collections.grid.Template = function(config) {
         ,save_action: 'mgr/template/updatefromgrid'
         ,autosave: true
         ,preventSaveRefresh: false
-        ,fields: ['id','name', 'description', 'global_template']
+        ,fields: ['id','name', 'description', 'global_template', 'default_for_templates']
         ,paging: true
         ,remoteSort: true
         ,emptyText: _('collections.template.none')
@@ -18,19 +18,29 @@ Collections.grid.Template = function(config) {
             header: _('collections.template.name')
             ,dataIndex: 'name'
             ,sortable: true
-            ,width: 100
+            ,width: 90
             ,editor: {xtype: 'textfield'}
         },{
             header: _('collections.template.description')
             ,dataIndex: 'description'
             ,sortable: true
-            ,width: 150
+            ,width: 100
             ,editor: {xtype: 'textfield'}
+        },{
+            header: 'Default for Templates'
+            ,dataIndex: 'default_for_templates'
+            ,sortable: false
+            ,width: 60
+            ,renderer: function(value, metaData, record, rowIndex, colIndex, store) {
+                metaData.attr = 'ext:qtip="' + value.join('<br />') + '"';
+                
+                return value;
+            }
         },{
             header: _('collections.template.global_template')
             ,dataIndex: 'global_template'
             ,sortable: true
-            ,width: 40
+            ,width: 30
             ,editor: {xtype: 'modx-combo-boolean', renderer: true}
         }]
         ,tbar: [{
