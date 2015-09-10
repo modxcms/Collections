@@ -68,7 +68,7 @@ $properties = $scriptProperties;
 unset($properties['selections']);
 
 $properties['resources'] = $linkedResources;
-$properties['parents'] = -1;
+$properties['parents'] = ($properties['getResourcesSnippet'] == 'pdoResources') ? 0 : -1;
 
 if ($sortBy == '') {
     $properties['sortby'] = 'FIELD(modResource.id, ' . $linkedResources . ' )';
