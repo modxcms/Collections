@@ -27,12 +27,18 @@ $_lang['setting_collections.renderer_image_path'] = 'Renderer image path';
 $_lang['setting_collections.renderer_image_path_desc'] = 'Image path that will be used for Image renderer. Path will be appended to base_url.';
 $_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Selections icon';
 $_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'CSS class that will be used for Selections';
+$_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection';
+$_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
+$_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
+$_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
+
 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Collection';
 $_lang['collections.system.text_create'] = 'Collection';
 $_lang['collections.system.text_create_here'] = 'Collection';
 $_lang['collections.system.new_container'] = 'New Collection';
+$_lang['collections.system.new_selection_container'] = 'New Selection';
 $_lang['collections.system.all'] = 'All';
 
 // Global lexicons
