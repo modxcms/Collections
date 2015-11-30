@@ -103,5 +103,17 @@ class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcesso
         return $data;
     }
 
+    /**
+     * Prepare the row for iteration
+     * @param xPDOObject $object
+     * @return array
+     */
+    public function prepareRow(xPDOObject $object) {
+        $ta = $object->toArray();
+
+        $ta['pagetitle'] .= ' (' . $ta['id'] . ')';
+        return $ta;
+    }
+
 }
 return 'CollectionsExtrasResourceGetListProcessor';

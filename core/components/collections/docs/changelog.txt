@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Display resource id in link resource window
 - Adjust colors in collections grid
 
 Collections 3.3.0
