@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Adjust colors in collections grid
+
 Collections 3.3.0
 ===================
 - Show assigned templates in Collection's view grid
