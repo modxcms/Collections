@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Prevent saving columns with snippet renderer from grid
 - Add new system settings to show create collection/selection button in tree tool bar
 - Display resource id in link resource window
 - Adjust colors in collections grid

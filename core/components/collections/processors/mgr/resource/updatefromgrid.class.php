@@ -20,6 +20,8 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
     }
 
     public function process() {
+        $this->unsetSnippetRendererColumns();
+        
         /* Run the beforeSet method before setting the fields, and allow stoppage */
         $canSave = $this->beforeSet();
         if ($canSave !== true) {
@@ -165,6 +167,19 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
                 $this->modx->removeCollection('TaggerTag', array('id:NOT IN' => $IDs, 'group' => $group->id));
             }
 
+        }
+    }
+
+    private function unsetSnippetRendererColumns()
+    {
+        /** @var CollectionTemplate $view */
+        $view = $this->modx->collections->getCollectionsView($this->object->Parent);
+        
+        /** @var CollectionTemplateColumn[] $columns */
+        $columns = $view->getMany('Columns', 'php_renderer != ""');
+        
+        foreach ($columns as $column) {
+            unset($this->properties[$column->name]);
         }
     }
 
