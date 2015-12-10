@@ -41,7 +41,7 @@ Collections.grid.Template = function(config) {
             header: _('collections.template.name')
             ,dataIndex: 'name'
             ,sortable: true
-            ,width: 90
+            ,width: 80
             ,editor: {xtype: 'textfield'}
         },{
             header: _('collections.template.description')
