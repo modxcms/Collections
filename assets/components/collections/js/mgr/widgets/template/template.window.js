@@ -45,6 +45,7 @@ Collections.window.TemplateImport = function(config) {
         ,action: 'mgr/template/import'
         ,fields: this.getFields(config)
         ,autoHeight: true
+        ,saveBtnText: _('collections.global.import')
     });
     Collections.window.TemplateImport.superclass.constructor.call(this,config);
 };

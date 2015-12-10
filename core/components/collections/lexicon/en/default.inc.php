@@ -46,6 +46,7 @@ $_lang['collections.global.search'] = 'Search';
 $_lang['collections.global.change_order'] = 'Change order of: [[+child]]';
 $_lang['collections.global.change_parent'] = 'Change parent of: [[+child]]';
 $_lang['collections.global.use_default'] = 'Use default';
+$_lang['collections.global.import'] = 'Import';
 
 // Children
 $_lang['collections.children'] = 'Children';
