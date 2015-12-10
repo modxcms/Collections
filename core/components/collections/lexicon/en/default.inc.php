@@ -138,6 +138,9 @@ $_lang['collections.template.permanent_sort_before'] = 'Permanent sort - Before'
 $_lang['collections.template.permanent_sort_after'] = 'Permanent sort - After';
 $_lang['collections.template.selection_link_condition'] = 'Condition for Link resource window';
 $_lang['collections.template.selection_link_condition_desc'] = 'xPDO condition in JSON.';
+$_lang['collections.template.export_more'] = 'Export views';
+$_lang['collections.template.export'] = 'Export view';
+$_lang['collections.template.import'] = 'Import views';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

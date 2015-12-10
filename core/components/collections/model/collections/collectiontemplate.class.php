@@ -38,7 +38,7 @@
  * @property string $selection_link_condition
  *
  * @property CollectionSetting $Setting
- * @property array $Columns
+ * @property CollectionTemplateColumn[] $Columns
  *
  * @package collections
  */

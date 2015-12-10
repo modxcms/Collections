@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Import / Export collection views
 - Add quick update for collection & selection children
 - Prevent saving columns with snippet renderer from grid
 - Add new system settings to show create collection/selection button in tree tool bar
