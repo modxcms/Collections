@@ -1,12 +1,14 @@
 var iconClass = {
-    "edit": "icon-edit",
+    "edit": "icon-pencil",
+    "quickupdate": "icon-edit",
     "delete": "icon-trash-o",
     "duplicate": "icon-files-o",
     "publish": "icon-thumbs-o-up",
     "unpublish": "icon-thumbs-down",
     "view": "icon-eye",
     "remove": "icon-ban",
-    "undelete": "icon-undo"
+    "undelete": "icon-undo",
+    "unlink": "icon-chain-broken"
 };
 
 var pagetitleWithButtons = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'

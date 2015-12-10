@@ -284,7 +284,7 @@ Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollect
 
         if(action) {
             var record = this.getSelectionModel().getSelected();
-            if (!record && t.dataset.id) {
+            if (t.dataset.id) {
                 record = {id: t.dataset.id};
             }
 
@@ -317,6 +317,9 @@ Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollect
                     break;
                 case 'unlink':
                     this.unlinkChild();
+                    break;
+                case 'quickupdate':
+                    this.quickupdateChild();
                     break;
                 default:
                     window.location = record.data.edit_action;

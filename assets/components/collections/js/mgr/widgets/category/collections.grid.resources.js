@@ -430,7 +430,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         
         if(action) {
             var record = this.getSelectionModel().getSelected();
-            if (!record && t.dataset.id) {
+            if (t.dataset.id) {
                 record = this.store.getById(t.dataset.id);
             }
 
@@ -467,6 +467,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                     break;
                 case 'remove':
                     this.removeChild();
+                    break;
+                case 'quickupdate':
+                    this.quickupdateChild();
                     break;
                 default:
                     this.editChild();
@@ -622,6 +625,37 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,destroyScrollManager: function() {
         Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
+    }
+
+    ,quickupdateChild: function(btn, e) {
+        MODx.Ajax.request({
+            url: MODx.config.connector_url
+            ,params: {
+                action: 'resource/get'
+                ,id: this.menu.record.id
+            }
+            ,listeners: {
+                'success': {fn:function(r) {
+                    var pr = r.object;
+
+                    var w = MODx.load({
+                        xtype: 'modx-window-quick-update-modResource'
+                        ,record: pr
+                        ,listeners: {
+                            'success':{fn:function(r) {
+                                this.refresh();
+                                var newTitle = '<span dir="ltr">' + r.f.findField('pagetitle').getValue() + ' (' + w.record.id + ')</span>';
+                                w.setTitle(w.title.replace(/<span.*\/span>/, newTitle));
+                            },scope:this}
+                            ,'hide':{fn:function() {this.destroy();}}
+                        }
+                    });
+                    w.title += ': <span dir="ltr">' + w.record.pagetitle + ' ('+ w.record.id + ')</span>';
+                    w.setValues(r.object);
+                    w.show();
+                },scope:this}
+            }
+        });
     }
 });
 Ext.reg('collections-grid-children',Collections.grid.ContainerCollections);
