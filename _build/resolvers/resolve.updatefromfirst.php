@@ -108,6 +108,11 @@ if ($object->xpdo) {
                 $manager->addField('CollectionTemplate', 'parent');
                 $manager->addField('CollectionTemplate', 'child_content_disposition');
             }
+            
+            if ($oldPackage && $oldPackage->compareVersion('3.3.0-pl', '>')) {
+                $manager = $modx->getManager();
+                $manager->addField('CollectionTemplate', 'selection_link_condition');
+            }
 
             break;
     }

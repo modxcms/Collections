@@ -27,6 +27,7 @@ Ext.extend(Collections.window.Selection,MODx.Window, {
             ,baseParams:{
                 action: 'mgr/extra/getresources'
                 ,sort: config.resourcesSort
+                ,selection: config.selection
             }
         },{
             xtype: 'hidden'

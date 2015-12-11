@@ -11,6 +11,10 @@ class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcesso
     public $defaultSortDirection = 'desc';
     public $checkListPermission = true;
     public $languageTopics = array('resource','collections:default', 'collections:selections');
+    /** @var CollectionSelection */
+    public $selection = null;
+    /** @var CollectionTemplate */
+    public $collectionTemplate = null;
 
     public function initialize() {
         $this->setDefaultProperties(array(
@@ -21,6 +25,15 @@ class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcesso
             'query' => '',
         ));
 
+        $selection = intval($this->getProperty('selection', 0));
+        if ($selection > 0) {
+            $selection = $this->modx->getObject('modResource', $selection);
+            if ($selection && ($selection->class_key == 'SelectionContainer')) {
+                $this->selection = $selection;
+                $this->collectionTemplate = $this->modx->collections->getCollectionsView($this->selection);
+            }
+        }
+        
         return parent::initialize();
     }
 
@@ -38,6 +51,13 @@ class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcesso
                     'pagetitle:LIKE' => '%'.$query.'%',
                     'OR:id:=' => $query
                 ));
+            }
+        }
+        
+        if ($this->collectionTemplate !== null) {
+            $where = $this->modx->fromJSON($this->collectionTemplate->selection_link_condition);
+            if (is_array($where)) {
+                $c->where($where);
             }
         }
 
@@ -81,6 +101,18 @@ class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcesso
 
         $data['results'] = $this->modx->getCollection($this->classKey,$c);
         return $data;
+    }
+
+    /**
+     * Prepare the row for iteration
+     * @param xPDOObject $object
+     * @return array
+     */
+    public function prepareRow(xPDOObject $object) {
+        $ta = $object->toArray();
+
+        $ta['pagetitle'] .= ' (' . $ta['id'] . ')';
+        return $ta;
     }
 
 }

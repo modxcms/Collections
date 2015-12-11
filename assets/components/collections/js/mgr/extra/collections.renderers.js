@@ -1,5 +1,6 @@
 var iconClass = {
-    "edit": "icon-edit",
+    "edit": "icon-pencil",
+    "quickupdate": "icon-edit",
     "delete": "icon-trash-o",
     "duplicate": "icon-files-o",
     "publish": "icon-thumbs-o-up",
@@ -7,7 +8,8 @@ var iconClass = {
     "view": "icon-eye",
     "open": "icon-folder-open-o",
     "remove": "icon-ban",
-    "undelete": "icon-undo"
+    "undelete": "icon-undo",
+    "unlink": "icon-chain-broken"
 };
 
 var pagetitleWithButtons = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
@@ -30,7 +32,7 @@ var pagetitle = new Ext.XTemplate('<tpl for="."><div class="collections-title-co
 });
 
 var pagetitleWithIcons = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
-    +'<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="javascript:void(0);" data-id="{id}" data-action="edit" title="Edit {pagetitle}">{pagetitle}</a></h3>'
+    +'<h3 class="main-column buttons"><a href="{action_edit}" title="Edit {pagetitle}">{pagetitle}</a></h3>'
     +'<tpl if="actions">'
     +'<ul class="actions">'
     +'<tpl for="actions">'

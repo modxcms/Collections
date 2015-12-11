@@ -1026,6 +1026,20 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,name: 'selection_create_sort'
                             ,value: (config.record) ? config.record.selection_create_sort : 'id:desc'
                         }]
+                    },{
+                        columnWidth:.5
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.selection_link_condition')
+                            ,description: _('collections.template.selection_link_condition_desc')
+                            ,name: 'selection_link_condition'
+                            ,value: (config.record) ? config.record.selection_link_condition : ''
+                        }]
                     }]
                 }]
             }]

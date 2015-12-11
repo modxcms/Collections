@@ -119,6 +119,11 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
             'text' => $this->modx->lexicon('edit'),
             'key' => 'edit',
         );
+        $this->actions['quickupdate'] = array(
+            'className' => 'quickupdate',
+            'text' => $this->modx->lexicon('quick_update_resource'),
+            'key' => 'quickupdate',
+        );
         $this->actions['unpublish'] = array(
             'className' => 'unpublish',
             'text' => $this->modx->lexicon('unpublish'),
@@ -306,6 +311,9 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
                             $resourceArray['actions'][] = $this->actions[$button];
                         }
                         break;
+                    case 'quickupdate':
+                        $resourceArray['actions'][] = $this->actions[$button];
+                        break;
                     case 'delete':
                         if (empty($resourceArray['deleted'])) {
                             $resourceArray['actions'][] = $this->actions[$button];
@@ -336,6 +344,7 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
 
         $resourceArray['menu_actions']['view'] = $this->actions['view'];
         $resourceArray['menu_actions']['edit'] = $this->actions['edit'];
+        $resourceArray['menu_actions']['quickupdate'] = $this->actions['quickupdate'];
 
         if (!empty($resourceArray['published'])) {
             $resourceArray['menu_actions']['unpublish'] = $this->actions['unpublish'];

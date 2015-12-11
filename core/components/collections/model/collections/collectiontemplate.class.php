@@ -35,9 +35,10 @@
  * @property bool|null $child_content_disposition
  * @property string $permanent_sort_before
  * @property string $permanent_sort_after
+ * @property string $selection_link_condition
  *
  * @property CollectionSetting $Setting
- * @property array $Columns
+ * @property CollectionTemplateColumn[] $Columns
  *
  * @package collections
  */

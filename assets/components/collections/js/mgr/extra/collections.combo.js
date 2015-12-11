@@ -56,6 +56,7 @@ Collections.combo.Template = function(config, getStore) {
         ,baseParams: {
             action: 'mgr/extra/gettemplates'
             ,template: (MODx.request.id != undefined) ? MODx.request.id : 0
+            ,addEmpty: 1
         }
     });
     Ext.applyIf(config,{
@@ -303,7 +304,7 @@ Collections.combo.SortType = function(config) {
         store: new Ext.data.SimpleStore({
             fields: ['d','v']
             ,data: [
-                [_('collections.template.sort_type_string'), null]
+                [_('collections.template.sort_type_default'), null]
                 ,[_('collections.template.sort_type_integer'), 'SIGNED INTEGER']
                 ,[_('collections.template.sort_type_decimal'), 'DECIMAL']
                 ,[_('collections.template.sort_type_datetime'), 'DATETIME']

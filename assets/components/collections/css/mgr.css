@@ -17,13 +17,13 @@
 }
 
 .collections-grid a {
-    color:#485319;
+    color:#556C88;
     line-height:1;
     text-decoration:none;
 }
 
 .collections-grid a:hover {
-    color:#7a8f23;
+    color:#738BA9;
     text-decoration:none;
 }
 
@@ -131,8 +131,18 @@
     content: "\f0c9";
 }
 
+.tree-collectioncontainer button:before {
+    content: "\f0c9";
+    font-family: FontAwesome;
+}
+
 .selectioncontainer:before {
     content: "\f005";
+}
+
+.tree-selectioncontainer button:before {
+    content: "\f005";
+    font-family: FontAwesome;
 }
 
 .icon-collectioncontainer .x-tree-node-icon {

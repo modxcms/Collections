@@ -89,7 +89,13 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
         }
 
         $templates = $this->getProperty('templates');
-        $templates = array_filter($templates);
+        $templates = array_filter($templates, function($var) {
+            if ($var == '') {
+                return false;
+            }
+
+            return true;
+        });
 
         $c = $this->modx->newQuery('CollectionResourceTemplate');
         $c->leftJoin('modTemplate', 'ResourceTemplate');
@@ -98,22 +104,22 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
             'collection_template:!=' => $this->object->id
         );
 
-        if (!empty($templates)) {
+        if (count($templates) > 0) {
             $where['resource_template:IN'] = $templates;
+        
+            $c->where($where);
+            $c->select($this->modx->getSelectColumns('modTemplate', 'ResourceTemplate', '', array('templatename')));
+    
+            $c->prepare();
+            $c->stmt->execute();
+            $existingTemplates = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+            $existingTemplatesCount = count($existingTemplates);
+            if ($existingTemplatesCount > 0) {
+                $type = ($existingTemplatesCount > 1) ? 'p' : 's';
+                return $this->modx->lexicon('collections.err.template_resource_template_aiu_' . $type, array('templates' => implode(',', $existingTemplates)));
+            }
         }
-
-        $c->where($where);
-        $c->select($this->modx->getSelectColumns('modTemplate', 'ResourceTemplate', '', array('templatename')));
-
-        $c->prepare();
-        $c->stmt->execute();
-        $existingTemplates = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-        $existingTemplatesCount = count($existingTemplates);
-        if ($existingTemplatesCount > 0) {
-            $type = ($existingTemplatesCount > 1) ? 'p' : 's';
-            return $this->modx->lexicon('collections.err.template_resource_template_aiu_' . $type, array('templates' => implode(',', $existingTemplates)));
-        }
-
+        
         return parent::beforeSet();
     }
 
@@ -125,7 +131,13 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
         }
 
         $templates = $this->getProperty('templates');
-        $templates = array_filter($templates);
+        $templates = array_filter($templates, function($var) { 
+            if ($var == '') {
+                return false;
+            }
+            
+            return true;
+        });
 
         $this->object->setTemplates($templates);
 

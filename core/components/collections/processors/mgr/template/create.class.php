@@ -89,7 +89,7 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         $templates = $this->getProperty('templates');
         $templates = $this->modx->collections->explodeAndClean($templates);
 
-        if (!empty($templates)) {
+        if (count($templates) > 0) {
             $validateTemplates = $this->validateTemplates($templates);
             if ($validateTemplates !== true) {
                 return $validateTemplates;
