@@ -129,6 +129,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
             'xtype': 'collections-grid-children'
             ,url: Collections.connectorUrl
             ,anchor: '100%'
+            ,resourcePanel: this
         });
 
         return items;

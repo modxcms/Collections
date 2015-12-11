@@ -13,7 +13,7 @@ var iconClass = {
 };
 
 var pagetitleWithButtons = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
-    +'<h3 class="main-column buttons"><a href="{action_edit}" title="Edit {pagetitle}">{pagetitle}</a></h3>'
+    +'<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="javascript:void(0);" data-id="{id}" data-action="edit" title="Edit {pagetitle}">{pagetitle}</a></h3>'
     +'<tpl if="actions">'
     +'<ul class="actions">'
     +'<tpl for="actions">'
@@ -26,13 +26,13 @@ var pagetitleWithButtons = new Ext.XTemplate('<tpl for="."><div class="collectio
 });
 
 var pagetitle = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
-    + '<h3 class="main-column"><a href="{action_edit}" title="Edit {pagetitle}">{pagetitle}</a></h3>'
+    + '<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="javascript:void(0);" data-id="{id}" data-action="edit" title="Edit {pagetitle}">{pagetitle}</a></h3>'
     + '</div></tpl>', {
     compiled: true
 });
 
 var pagetitleWithIcons = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
-    +'<h3 class="main-column buttons"><a href="{action_edit}" title="Edit {pagetitle}">{pagetitle}</a></h3>'
+    +'<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="javascript:void(0);" data-id="{id}" data-action="edit" title="Edit {pagetitle}">{pagetitle}</a></h3>'
     +'<tpl if="actions">'
     +'<ul class="actions">'
     +'<tpl for="actions">'

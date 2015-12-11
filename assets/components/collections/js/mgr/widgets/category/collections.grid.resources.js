@@ -42,78 +42,7 @@ Collections.grid.ContainerCollections = function(config) {
     this.on('rowclick',MODx.fireResourceFormChange);
     this.on('click', this.handleButtons, this);
     
-    this.currentFolder = null;
-
-    this.bc = new Ext.Toolbar({
-        id: 'c-bc'
-        ,hidden: true
-        ,crumbs: [{
-            id: 2
-            ,text: 'Collections'
-        }]
-        ,data : [{
-            id: 2
-            ,text: 'Collections'
-        }],
-        grid: this,
-        tpl: new Ext.XTemplate('<div class="crumb_wrapper collections_crumb_wrapper">' +
-            '<ul class="crumbs">' +
-            '<tpl for=".">' +
-                '<tpl if="xindex!==xcount">' +
-                    '<tpl if="xindex==1">' +
-                        '<li class="first"><button type="button" data-id="{id}" class="root">{text}</button></li>' +
-                    '</tpl>' +
-                    '<tpl if="xindex!==1">' +
-                        '<li><button class="text" data-id="{id}">{text}</button></li>' +
-                    '</tpl>' +
-                '</tpl>' +
-                '<tpl if="xindex==xcount">' +
-                    '<tpl if="xindex==1">' +
-                        '<li class="first"><span data-id="{id}" class="root">{text}</span></li>' +
-                    '</tpl>' +
-                    '<tpl if="xindex!==1">' +
-                        '<li><span class="text" data-id="{id}">{text}</span></li>' +
-                    '</tpl>' +
-                '</tpl>' +
-            '</tpl>' +
-            '</ul></div>', {
-            compiled: true
-        }),
-        listeners: {
-            render: {
-                fn: function(toolbar){
-                    toolbar.el.on('click', function (e) {
-                        if(e.target.nodeName.toLowerCase() != 'button') return;
-                        
-                        var newCrumbs = [];
-                        for (var i = 0; i < toolbar.crumbs.length; i++) {
-                            newCrumbs.push(toolbar.crumbs[i]);
-                            if (toolbar.crumbs[i]['id'] == e.target.dataset.id) {
-                                break;
-                            }
-                        }
-                        
-                        toolbar.crumbs = newCrumbs;
-                        toolbar.tpl.overwrite(toolbar.el, toolbar.crumbs);
-                        if (toolbar.crumbs.length == 1) {
-                            toolbar.hide();
-                        }
-                        
-                        toolbar.grid.currentFolder = e.target.dataset.id;
-                        
-                        toolbar.grid.store.removeAll();
-
-                        toolbar.grid.getStore().baseParams.parent = e.target.dataset.id;
-                        toolbar.grid.getBottomToolbar().changePage(1);
-
-                        toolbar.grid.body.slideIn('r', {stopFx:true, duration:.2});
-                    });
-                },
-                scope: this
-            }
-        }
-    });
-    this.getTopToolbar().add(this.bc);
+    this.initBreadCrumbs(config);
     
     if (Collections.template.allowDD) {
         this.on('render', this.registerGridDropTarget, this);
@@ -166,6 +95,8 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         this.bc.show();
         
         this.body.slideIn('r', {stopFx:true, duration:.2});       
+        
+        this.pushHistoryState(this.menu.record.id);
     }
 
     ,getColumns: function(config) {
@@ -308,7 +239,13 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             collectionGet = '&collection=' + Collections.template.parent
         }
         
-        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection + collectionGet);
+        var folderGet = '';
+        var query = Ext.urlDecode(location.search.replace('?', ''));
+        if (parseInt(query.folder) > 0) {
+            folderGet = '&folder=' + parseInt(query.folder); 
+        }
+        
+        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection + collectionGet + folderGet);
     }
 
     ,createChild: function(btn,e) {
@@ -325,8 +262,14 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         if (this.currentFolder) {
             collectionGet = '&collection=' + Collections.template.parent
         }
+
+        var folderGet = '';
+        var query = Ext.urlDecode(location.search.replace('?', ''));
+        if (parseInt(query.folder) > 0) {
+            folderGet = '&folder=' + parseInt(query.folder);
+        }
         
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || Collections.template.parent) + collectionGet + '&context_key=' + Collections.template.parent_context + '&class_key=' + Collections.template.children.resource_type + template + selection);
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || Collections.template.parent) + collectionGet + '&context_key=' + Collections.template.parent_context + '&class_key=' + Collections.template.children.resource_type + template + selection + folderGet);
     }
 
     ,createDerivativeChild: function(btn, e) {
@@ -344,7 +287,13 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             collectionGet = '&collection=' + Collections.template.parent
         }
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || Collections.template.parent) + collectionGet + '&context_key=' + Collections.template.parent_context + '&class_key=' + btn.derivative + template + selection);
+        var folderGet = '';
+        var query = Ext.urlDecode(location.search.replace('?', ''));
+        if (parseInt(query.folder) > 0) {
+            folderGet = '&folder=' + parseInt(query.folder);
+        }
+
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || Collections.template.parent) + collectionGet + '&context_key=' + Collections.template.parent_context + '&class_key=' + btn.derivative + template + selection + folderGet);
     }
 
     ,viewChild: function(btn,e) {
@@ -778,6 +727,223 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 },scope:this}
             }
         });
+    }
+    
+    ,_loadStore: function() {
+        if (this.config.grouping) {
+            this.store = new Ext.data.GroupingStore({
+                url: this.config.url
+                ,baseParams: this.config.baseParams || { action: this.config.action || 'getList'}
+                ,reader: new Ext.data.JsonReader({
+                    totalProperty: 'total'
+                    ,root: 'results'
+                    ,fields: this.config.fields
+                })
+                ,sortInfo:{
+                    field: this.config.sortBy || 'id'
+                    ,direction: this.config.sortDir || 'ASC'
+                }
+                ,remoteSort: this.config.remoteSort || false
+                ,groupField: this.config.groupBy || 'name'
+                ,storeId: this.config.storeId || Ext.id()
+                ,autoDestroy: true
+                ,listeners: {
+                    beforeload: {
+                        fn: this.loadBreadCrumbs,
+                        scope: this,
+                        single: true
+                    },
+                    load: function(){
+                        Ext.getCmp('modx-content').doLayout(); /* Fix layout bug with absolute positioning */
+                    }
+                }
+            });
+        } else {
+            this.store = new Ext.data.JsonStore({
+                url: this.config.url
+                ,baseParams: this.config.baseParams || { action: this.config.action || 'getList' }
+                ,fields: this.config.fields
+                ,root: 'results'
+                ,totalProperty: 'total'
+                ,remoteSort: this.config.remoteSort || false
+                ,storeId: this.config.storeId || Ext.id()
+                ,autoDestroy: true
+                ,listeners: {
+                    beforeload: {
+                        fn: this.loadBreadCrumbs,
+                        scope: this,
+                        single: true
+                    },
+                    load: function(){
+                        Ext.getCmp('modx-content').doLayout(); /* Fix layout bug with absolute positioning */
+                    }
+                }
+            });
+        }
+    }
+    
+    ,loadBreadCrumbs: function(store, options){
+        var folder = parseInt(MODx.request.folder);
+        
+        if (folder > 0) {
+            this.currentFolder = folder;
+            options.params.parent = folder;
+            store.baseParams.parent = folder;       
+        }
+    }
+    
+    ,pushHistoryState: function(id){
+        try {
+            var query = Ext.urlDecode(location.search.replace('?', ''));
+            var loc = location.href;
+    
+            if (query.folder) {
+                if (id) {
+                    loc = loc.replace('folder=' + query.folder, 'folder=' + id);
+                } else {
+                    loc = loc.replace('&folder=' + query.folder, '');
+                }
+            } else {
+                if (id) {
+                    loc += '&folder=' + id;
+                }
+            }
+    
+            window.history.pushState({}, '', loc);
+        } catch (err) {}
+    }
+    
+    ,initBreadCrumbs: function(config){
+        this.addEvents('breadCrumbsBeforeRender');
+        this.addEvents('breadCrumbsRender');
+
+        window.onpopstate = function(event) {
+            location.reload();
+        };
+
+        this.on('breadCrumbsRender', function(toolbar){
+            var folder = parseInt(MODx.request.folder);
+            var collection = parseInt(MODx.request.id);
+
+            if ((folder > 0) && (collection > 0)) {
+                MODx.Ajax.request({
+                    url: Collections.connectorUrl
+                    ,params: {
+                        action: 'mgr/extra/breadcrumbs'
+                        ,collection: collection
+                        ,folder: folder
+                    }
+                    ,listeners: {
+                        success: {
+                            fn: function(r) {
+                                Ext.each(r.results, function(item){
+                                    toolbar.crumbs.push({
+                                        id: item.id,
+                                        text: item.text
+                                    });
+                                });
+
+                                toolbar.tpl.overwrite(toolbar.el, toolbar.crumbs);
+                                toolbar.show();
+                            },scope: this
+                        },
+                        failure: {
+                            fn: function(){
+                                this.store.removeAll();
+                                this.currentFolder = Collections.template.parent;
+                                this.getStore().baseParams.parent = Collections.template.parent;
+                                this.getBottomToolbar().changePage(1);
+                            },
+                            scope: this
+                        }
+                    }
+                });
+            }
+        }, this);
+
+        this.currentFolder = null;
+
+        this.bc = new Ext.Toolbar({
+            hidden: true
+            ,crumbs: [{
+                id: Collections.template.parent
+                ,text: config.resourcePanel.record.pagetitle
+            }]
+            ,data : [{
+                id: Collections.template.parent
+                ,text: config.resourcePanel.record.pagetitle
+            }],
+            grid: this,
+            tpl: new Ext.XTemplate('<div class="crumb_wrapper collections_crumb_wrapper">' +
+                '<ul class="crumbs">' +
+                '<tpl for=".">' +
+                '<tpl if="xindex!==xcount">' +
+                '<tpl if="xindex==1">' +
+                '<li class="first"><button type="button" data-id="{id}" class="root">{text}</button></li>' +
+                '</tpl>' +
+                '<tpl if="xindex!==1">' +
+                '<li><button class="text" data-id="{id}">{text}</button></li>' +
+                '</tpl>' +
+                '</tpl>' +
+                '<tpl if="xindex==xcount">' +
+                '<tpl if="xindex==1">' +
+                '<li class="first"><span data-id="{id}" class="root">{text}</span></li>' +
+                '</tpl>' +
+                '<tpl if="xindex!==1">' +
+                '<li><span class="text" data-id="{id}">{text}</span></li>' +
+                '</tpl>' +
+                '</tpl>' +
+                '</tpl>' +
+                '</ul></div>', {
+                compiled: true
+            }),
+            listeners: {
+                render: {
+                    fn: function(toolbar){
+                        toolbar.el.on('click', function (e) {
+                            if(e.target.nodeName.toLowerCase() != 'button') return;
+
+                            var newCrumbs = [];
+                            for (var i = 0; i < toolbar.crumbs.length; i++) {
+                                newCrumbs.push(toolbar.crumbs[i]);
+                                if (toolbar.crumbs[i]['id'] == e.target.dataset.id) {
+                                    break;
+                                }
+                            }
+
+                            toolbar.crumbs = newCrumbs;
+                            toolbar.tpl.overwrite(toolbar.el, toolbar.crumbs);
+                            if (toolbar.crumbs.length == 1) {
+                                toolbar.hide();
+                                this.pushHistoryState();
+                            } else {
+                                this.pushHistoryState(e.target.dataset.id);
+                            }
+
+
+                            toolbar.grid.currentFolder = e.target.dataset.id;
+
+                            toolbar.grid.store.removeAll();
+
+                            toolbar.grid.getStore().baseParams.parent = e.target.dataset.id;
+                            toolbar.grid.getBottomToolbar().changePage(1);
+
+                            toolbar.grid.body.slideIn('r', {stopFx:true, duration:.2});
+                        }, this);
+
+                        this.fireEvent('breadCrumbsRender', toolbar);
+                    },
+                    scope: this
+                },
+                beforerender: {
+                    fn: function(toolbar){
+                        this.fireEvent('breadCrumbsBeforeRender', toolbar);
+                    },
+                    scope: this
+                }
+            }
+        });
+        this.getTopToolbar().add(this.bc);                 
     }
 });
 Ext.reg('collections-grid-children',Collections.grid.ContainerCollections);
