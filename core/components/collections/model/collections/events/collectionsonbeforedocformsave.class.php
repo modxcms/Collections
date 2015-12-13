@@ -31,7 +31,6 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
 
                     return;
                 }
-                $resource->set('hide_children_in_tree', 0);
                 $resource->save();
             }
 
