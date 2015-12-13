@@ -27,7 +27,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'view_for' => 0,
     'link_label' => 'selections.create',
     'context_menu' => 'view,edit,duplicate,publish,unpublish,-,delete,undelete,remove,-,unlink',
-    'buttons' => 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink',
+    'buttons' => 'open,view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink',
     'allowed_resource_types' => '',
     'back_to_collection_label' => 'collections.children.back_to_collection_label',
     'back_to_selection_label' => 'selections.back_to_selection_label',
@@ -42,7 +42,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'child_content_disposition' => NULL,
     'permanent_sort_before' => '',
     'permanent_sort_after' => '',
-    'selection_link_condition' => NULL,
+    'selection_link_condition' => '',
   ),
   'fieldMeta' => 
   array (
@@ -196,7 +196,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'precision' => '512',
       'phptype' => 'string',
       'null' => false,
-      'default' => 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink',
+      'default' => 'open,view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink',
     ),
     'allowed_resource_types' => 
     array (
@@ -309,6 +309,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'dbtype' => 'text',
       'phptype' => 'string',
       'null' => false,
+      'default' => '',
     ),
   ),
   'composites' => 
