@@ -112,6 +112,12 @@ if ($object->xpdo) {
             if ($oldPackage && $oldPackage->compareVersion('3.3.0-pl', '>')) {
                 $manager = $modx->getManager();
                 $manager->addField('CollectionTemplate', 'selection_link_condition');
+
+                /** @var modResource[] $collections */
+                $collections = $modx->getIterator('modResource', array('class_key' => 'CollectionContainer'));
+                foreach ($collections as $collection) {
+                    $modx->updateCollection('modResource', array('show_in_tree' => 0), array('parent' => $collection->id, 'class_key:!=' => 'CollectionContainer'));
+                }
             }
 
             break;
