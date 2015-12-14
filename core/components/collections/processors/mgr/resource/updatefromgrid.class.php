@@ -7,7 +7,9 @@
  */
 class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
     public $classKey = 'modResource';
-
+    public $beforeSaveEvent = 'OnBeforeDocFormSave';
+    public $afterSaveEvent = 'OnDocFormSave';
+    
     public function initialize() {
         $data = $this->getProperty('data');
         if (empty($data)) return $this->modx->lexicon('invalid_data');
