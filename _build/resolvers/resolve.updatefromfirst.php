@@ -1,4 +1,5 @@
 <?php
+set_time_limit(0);
 if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_UPGRADE:
@@ -109,14 +110,26 @@ if ($object->xpdo) {
                 $manager->addField('CollectionTemplate', 'child_content_disposition');
             }
             
-            if ($oldPackage && $oldPackage->compareVersion('3.3.0-pl', '>')) {
+            if ($oldPackage && $oldPackage->compareVersion('3.4.0-pl', '>')) {
                 $manager = $modx->getManager();
                 $manager->addField('CollectionTemplate', 'selection_link_condition');
+                $manager->alterField('CollectionTemplate', 'selection_link_condition');
 
                 /** @var modResource[] $collections */
                 $collections = $modx->getIterator('modResource', array('class_key' => 'CollectionContainer'));
                 foreach ($collections as $collection) {
                     $modx->updateCollection('modResource', array('show_in_tree' => 0), array('parent' => $collection->id, 'class_key:!=' => 'CollectionContainer'));
+                }
+                
+                /** @var CollectionTemplate[] $views */
+                $views = $modx->getIterator('CollectionTemplate');
+                foreach ($views as $view) {
+                    $buttons = $view->get('buttons');
+                    if (strpos($buttons, 'open') === false) {
+                        $buttons = 'open,' . $buttons;
+                        $view->set('buttons', $buttons);
+                        $view->save();
+                    }
                 }
             }
 

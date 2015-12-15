@@ -22,7 +22,11 @@ if ($object->xpdo) {
             }
 
             if ($modx instanceof modX) {
-                $modx->addExtensionPackage('collections', $modelPath);
+
+                $modx->addExtensionPackage('collections', $modelPath, array (
+  'tablePrefix' => 'modx_',
+));
+
             }
 
             break;
