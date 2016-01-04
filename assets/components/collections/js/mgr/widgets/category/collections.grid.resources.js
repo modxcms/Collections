@@ -50,7 +50,9 @@ Collections.grid.ContainerCollections = function(config) {
     }
 };
 Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
-    getMenu: function() {
+    currentFolder: null
+    
+    ,getMenu: function() {
         var m = [];
         if (!this.menu.record) return m;
 
@@ -860,8 +862,6 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 });
             }
         }, this);
-
-        this.currentFolder = null;
 
         this.bc = new Ext.Toolbar({
             hidden: true

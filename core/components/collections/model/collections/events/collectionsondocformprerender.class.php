@@ -37,11 +37,12 @@ class CollectionsOnDocFormPrerender extends CollectionsPlugin {
         }
         
         $collectionGet = null;
+        $collectionFolder = null;
         if (!$inject && $parent) {
             $grandParent = $parent->Parent;
             while ($grandParent) {
-                if ($grandParent->Parent->class_key == 'CollectionContainer') {
-                    $collectionGet = $grandParent->Parent->id;
+                if ($grandParent->class_key == 'CollectionContainer') {
+                    $collectionGet = $grandParent->id;
                     $inject = true;
                     break;
                 }
