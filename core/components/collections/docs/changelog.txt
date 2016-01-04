@@ -2,6 +2,7 @@ Changelog for Collections.
 
 Collections 3.4.0
 ===================
+- Add event names to update from grid processor
 - Show folders under collections
 - Show breadcrumbs when browsing folders under collections
 - Import / Export collection views
