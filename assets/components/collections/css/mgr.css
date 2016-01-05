@@ -101,6 +101,10 @@
     background:linear-gradient(center bottom,#fec95b 0%,#fee1a0 100%);
 }
 
+.actions.solo {
+    bottom: inherit;
+}
+
 .collections-import-intro {
     font-size: 11px;
     color: #777;

@@ -307,12 +307,11 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public function prepareRowWithRenderer(xPDOObject $object) {
         $resourceArray = parent::prepareRow($object);
 
-        foreach ($resourceArray as $key => $column) {
-            if (!isset($this->columnRenderer[$key])) continue;
-
-            $resourceArray[$key] = $this->modx->runSnippet($this->columnRenderer[$key], array('value' => $column, 'row' => $resourceArray, 'input' => $column));
+        foreach ($this->columnRenderer as $field => $snippet) {
+            $value = isset($resourceArray[$field]) ? $resourceArray[$field] : null;
+            $resourceArray[$field] = $this->modx->runSnippet($snippet, array('value' => $value, 'row' => $resourceArray, 'input' => $value));    
         }
-
+        
         $resourceArray = $this->prepareSupportFields($resourceArray);
         $resourceArray = $this->prepareActions($resourceArray);
         $resourceArray = $this->prepareMenuActions($resourceArray);
