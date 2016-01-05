@@ -23,12 +23,22 @@ $_lang['setting_collections.user_css'] = 'Användarens CSS-fil';
 $_lang['setting_collections.user_css_desc'] = 'URL till användarens definierade CSS-fil som kan innehålla anpassade stilmallar.';
 $_lang['setting_mgr_tree_icon_collectioncontainer'] = 'Collections ikonen';
 $_lang['setting_mgr_tree_icon_collectioncontainer_desc'] = 'CSS-klass som ska användas för Collections';
+$_lang['setting_collections.renderer_image_path'] = 'Renderer image path';
+$_lang['setting_collections.renderer_image_path_desc'] = 'Image path that will be used for Image renderer. Path will be appended to base_url.';
+$_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Selections icon';
+$_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'CSS class that will be used for Selections';
+$_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection';
+$_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
+$_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
+$_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
+
 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Samling';
 $_lang['collections.system.text_create'] = 'Samling';
 $_lang['collections.system.text_create_here'] = 'Samling';
 $_lang['collections.system.new_container'] = 'Ny samling';
+$_lang['collections.system.new_selection_container'] = 'New Selection';
 $_lang['collections.system.all'] = 'Alla';
 
 // Global lexicons
@@ -36,12 +46,14 @@ $_lang['collections.global.search'] = 'Sök';
 $_lang['collections.global.change_order'] = 'Ändra ordning för: [[+child]]';
 $_lang['collections.global.change_parent'] = 'Ändra förälder till: [[+child]]';
 $_lang['collections.global.use_default'] = 'Använd standard';
+$_lang['collections.global.import'] = 'Import';
 
 // Children
 $_lang['collections.children'] = 'Barn';
 $_lang['collections.children.create'] = 'Skapa barn';
 $_lang['collections.children.view'] = 'Visa barnet';
 $_lang['collections.children.edit'] = 'Uppdatera barn';
+$_lang['collections.children.quickupdate'] = 'Quick Update';
 $_lang['collections.children.publish'] = 'Publicera barn';
 $_lang['collections.children.unpublish'] = 'Avpublicera barn';
 $_lang['collections.children.duplicate'] = 'Duplicera barn';
@@ -120,6 +132,16 @@ $_lang['collections.template.child_cacheable'] = 'Standard cachebar för barn';
 $_lang['collections.template.child_searchable'] = 'Standard sökbar för barn';
 $_lang['collections.template.child_richtext'] = 'Standard riktext för barn';
 $_lang['collections.template.child_content_type'] = 'Standard innehållstyp för barn';
+$_lang['collections.template.parent'] = 'Parent-id (optional, @SNIPPET can be used)';
+$_lang['collections.template.child_content_disposition'] = 'Default children\'s content disposition';
+$_lang['collections.template.sort_type'] = 'Sort type';
+$_lang['collections.template.permanent_sort_before'] = 'Permanent sort - Before';
+$_lang['collections.template.permanent_sort_after'] = 'Permanent sort - After';
+$_lang['collections.template.selection_link_condition'] = 'Condition for Link resource window';
+$_lang['collections.template.selection_link_condition_desc'] = 'xPDO condition in JSON.';
+$_lang['collections.template.export_more'] = 'Export views';
+$_lang['collections.template.export'] = 'Export view';
+$_lang['collections.template.import'] = 'Import views';
 
 $_lang['collections.template.column.none'] = 'Denna vy har inga kolumner ännu.';
 $_lang['collections.template.column.name'] = 'Namn';
@@ -135,6 +157,12 @@ $_lang['collections.template.column.position'] = 'Plats';
 $_lang['collections.template.column.editor'] = 'Redigerare';
 $_lang['collections.template.column.renderer'] = 'Renderare';
 $_lang['collections.template.column.php_renderer'] = 'Snippet renderare';
+$_lang['collections.template.column.sort_type'] = 'Sort type';
+
+$_lang['collections.template.sort_type_default'] = 'Default';
+$_lang['collections.template.sort_type_integer'] = 'Integer';
+$_lang['collections.template.sort_type_decimal'] = 'Decimal';
+$_lang['collections.template.sort_type_datetime'] = 'DateTime';
 
 $_lang['collections.err.parent_ns'] = 'Förälder har inte angetts.';
 $_lang['collections.err.template_ns'] = 'Vy har inte angetts.';
@@ -152,3 +180,4 @@ $_lang['collections.err.template_remove_last'] = 'Du kan inte radera den sista v
 $_lang['collections.err.template_remove_global'] = 'Du kan inte radera den globala vyn. Vänligen ange en annan vy som global och upprepa åtgärden.';
 $_lang['collections.err.template_ae_name'] = 'Mall med detta namn finns redan.';
 $_lang['collections.err.column_dot_name'] = 'Kolumnnamn kan inte innehålla en punkt.';
+$_lang['collections.err.template_ns_label'] = 'Label is not specified.';

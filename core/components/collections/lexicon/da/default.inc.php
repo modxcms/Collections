@@ -23,12 +23,22 @@ $_lang['setting_collections.user_css'] = 'Brugerens CSS fil';
 $_lang['setting_collections.user_css_desc'] = 'URL til brugerens defineret CSS-fil, som kan indeholde brugerdefinerede stildefinitioner.';
 $_lang['setting_mgr_tree_icon_collectioncontainer'] = 'Collections ikon';
 $_lang['setting_mgr_tree_icon_collectioncontainer_desc'] = 'CSS-klasse der skal bruges til Collections';
+$_lang['setting_collections.renderer_image_path'] = 'Renderer image path';
+$_lang['setting_collections.renderer_image_path_desc'] = 'Image path that will be used for Image renderer. Path will be appended to base_url.';
+$_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Selections icon';
+$_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'CSS class that will be used for Selections';
+$_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection';
+$_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
+$_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
+$_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
+
 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Collection';
 $_lang['collections.system.text_create'] = 'Collection';
 $_lang['collections.system.text_create_here'] = 'Collection';
 $_lang['collections.system.new_container'] = 'Ny Collection';
+$_lang['collections.system.new_selection_container'] = 'New Selection';
 $_lang['collections.system.all'] = 'Alle';
 
 // Global lexicons
@@ -36,12 +46,14 @@ $_lang['collections.global.search'] = 'Søg';
 $_lang['collections.global.change_order'] = 'Ændre rækkefølgen af: [[+child]]';
 $_lang['collections.global.change_parent'] = 'Skift overordnet side for: [[+child]]';
 $_lang['collections.global.use_default'] = 'Brug standard';
+$_lang['collections.global.import'] = 'Import';
 
 // Children
 $_lang['collections.children'] = 'Underordnede';
 $_lang['collections.children.create'] = 'Opret underordnet';
 $_lang['collections.children.view'] = 'Vis underordnet';
 $_lang['collections.children.edit'] = 'Opdater underordnet';
+$_lang['collections.children.quickupdate'] = 'Quick Update';
 $_lang['collections.children.publish'] = 'Publiser underordnet';
 $_lang['collections.children.unpublish'] = 'Afpubliser underordnet';
 $_lang['collections.children.duplicate'] = 'Kopier underordnet';
@@ -120,6 +132,16 @@ $_lang['collections.template.child_cacheable'] = 'Standard underordnedes cachein
 $_lang['collections.template.child_searchable'] = 'Standard underordnedes søgbar-indstilling';
 $_lang['collections.template.child_richtext'] = 'Standard underordnedes RichText-indstilling';
 $_lang['collections.template.child_content_type'] = 'Underordnedes standard indholdstype';
+$_lang['collections.template.parent'] = 'Parent-id (optional, @SNIPPET can be used)';
+$_lang['collections.template.child_content_disposition'] = 'Default children\'s content disposition';
+$_lang['collections.template.sort_type'] = 'Sort type';
+$_lang['collections.template.permanent_sort_before'] = 'Permanent sort - Before';
+$_lang['collections.template.permanent_sort_after'] = 'Permanent sort - After';
+$_lang['collections.template.selection_link_condition'] = 'Condition for Link resource window';
+$_lang['collections.template.selection_link_condition_desc'] = 'xPDO condition in JSON.';
+$_lang['collections.template.export_more'] = 'Export views';
+$_lang['collections.template.export'] = 'Export view';
+$_lang['collections.template.import'] = 'Import views';
 
 $_lang['collections.template.column.none'] = 'Denne visning har ikke nogle kolonner endnu.';
 $_lang['collections.template.column.name'] = 'Navn';
@@ -135,6 +157,12 @@ $_lang['collections.template.column.position'] = 'Position';
 $_lang['collections.template.column.editor'] = 'Editor';
 $_lang['collections.template.column.renderer'] = 'Renderer';
 $_lang['collections.template.column.php_renderer'] = 'Snippet renderer';
+$_lang['collections.template.column.sort_type'] = 'Sort type';
+
+$_lang['collections.template.sort_type_default'] = 'Default';
+$_lang['collections.template.sort_type_integer'] = 'Integer';
+$_lang['collections.template.sort_type_decimal'] = 'Decimal';
+$_lang['collections.template.sort_type_datetime'] = 'DateTime';
 
 $_lang['collections.err.parent_ns'] = 'Overordnet er ikke angivet.';
 $_lang['collections.err.template_ns'] = 'Visning er ikke angivet.';
@@ -152,3 +180,4 @@ $_lang['collections.err.template_remove_last'] = 'Du kan ikke fjerne den sidste 
 $_lang['collections.err.template_remove_global'] = 'Du kan ikke fjerne den globale visning. Angiv venligst en anden visning som global og gentag denne handling.';
 $_lang['collections.err.template_ae_name'] = 'Der findes allerede en skabelon med dette navn.';
 $_lang['collections.err.column_dot_name'] = 'Kolonnenavnet må ikke indeholde punktum.';
+$_lang['collections.err.template_ns_label'] = 'Label is not specified.';

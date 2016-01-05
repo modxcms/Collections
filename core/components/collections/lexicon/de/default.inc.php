@@ -23,12 +23,22 @@ $_lang['setting_collections.user_css'] = 'Benutzerdefinierte CSS-Datei';
 $_lang['setting_collections.user_css_desc'] = 'URL einer benutzerdefinierten CSS Datei (z.B. für das Layout eigener Renderer).';
 $_lang['setting_mgr_tree_icon_collectioncontainer'] = 'Icon für Kollektionen';
 $_lang['setting_mgr_tree_icon_collectioncontainer_desc'] = 'CSS-Klasse, die für Kollektionen benutzt wird';
+$_lang['setting_collections.renderer_image_path'] = 'Renderer image path';
+$_lang['setting_collections.renderer_image_path_desc'] = 'Image path that will be used for Image renderer. Path will be appended to base_url.';
+$_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Selections icon';
+$_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'CSS class that will be used for Selections';
+$_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection';
+$_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
+$_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
+$_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
+
 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Kollektion';
 $_lang['collections.system.text_create'] = 'Kollektion';
 $_lang['collections.system.text_create_here'] = 'Kollektion';
 $_lang['collections.system.new_container'] = 'Neue Kollektion';
+$_lang['collections.system.new_selection_container'] = 'New Selection';
 $_lang['collections.system.all'] = 'Alle';
 
 // Global lexicons
@@ -36,12 +46,14 @@ $_lang['collections.global.search'] = 'Suchen';
 $_lang['collections.global.change_order'] = 'Reihenfolge ändern: [[+child]]';
 $_lang['collections.global.change_parent'] = 'Elternressource ändern: [[+child]]';
 $_lang['collections.global.use_default'] = 'Standard verwenden';
+$_lang['collections.global.import'] = 'Import';
 
 // Children
 $_lang['collections.children'] = 'Unterressourcen';
 $_lang['collections.children.create'] = 'Unterressource erstellen';
 $_lang['collections.children.view'] = 'Anzeigen';
 $_lang['collections.children.edit'] = 'Bearbeiten';
+$_lang['collections.children.quickupdate'] = 'Quick Update';
 $_lang['collections.children.publish'] = 'Veröffentlichen';
 $_lang['collections.children.unpublish'] = 'Zurückziehen';
 $_lang['collections.children.duplicate'] = 'Duplizieren';
@@ -120,7 +132,16 @@ $_lang['collections.template.child_cacheable'] = 'Standard-\'Cache aktiv\'-Einst
 $_lang['collections.template.child_searchable'] = 'Standard-\'Durchsuchbar\'-Einstellung für Unterressourcen';
 $_lang['collections.template.child_richtext'] = 'Standard-\'Rich-Text-Editor verwenden\'-Einstellung für Unterressourcen';
 $_lang['collections.template.child_content_type'] = 'Standard-Content-Type für Unteressourcen';
-$_lang['collections.template.parent'] = 'Eltern-Ressourcen-id (optional, @SNIPPET kann verwendet werden)';
+$_lang['collections.template.parent'] = 'Parent-id (optional, @SNIPPET can be used)';
+$_lang['collections.template.child_content_disposition'] = 'Default children\'s content disposition';
+$_lang['collections.template.sort_type'] = 'Sort type';
+$_lang['collections.template.permanent_sort_before'] = 'Permanent sort - Before';
+$_lang['collections.template.permanent_sort_after'] = 'Permanent sort - After';
+$_lang['collections.template.selection_link_condition'] = 'Condition for Link resource window';
+$_lang['collections.template.selection_link_condition_desc'] = 'xPDO condition in JSON.';
+$_lang['collections.template.export_more'] = 'Export views';
+$_lang['collections.template.export'] = 'Export view';
+$_lang['collections.template.import'] = 'Import views';
 
 $_lang['collections.template.column.none'] = 'Diese Ansicht enthält noch keine Spalten.';
 $_lang['collections.template.column.name'] = 'Name';
@@ -136,6 +157,12 @@ $_lang['collections.template.column.position'] = 'Position';
 $_lang['collections.template.column.editor'] = 'Editor';
 $_lang['collections.template.column.renderer'] = 'Renderer';
 $_lang['collections.template.column.php_renderer'] = 'Snippet Renderer';
+$_lang['collections.template.column.sort_type'] = 'Sort type';
+
+$_lang['collections.template.sort_type_default'] = 'Default';
+$_lang['collections.template.sort_type_integer'] = 'Integer';
+$_lang['collections.template.sort_type_decimal'] = 'Decimal';
+$_lang['collections.template.sort_type_datetime'] = 'DateTime';
 
 $_lang['collections.err.parent_ns'] = 'Keine Elternressource definiert.';
 $_lang['collections.err.template_ns'] = 'Ansicht wurde nicht angegeben.';
@@ -153,3 +180,4 @@ $_lang['collections.err.template_remove_last'] = 'Die letzte Ansicht kann nicht 
 $_lang['collections.err.template_remove_global'] = 'Eine Standardansicht kann nicht entfernt werden. Bitte wählen Sie eine andere Ansicht als Standardansicht aus und wiederholen Sie diese Aktion.';
 $_lang['collections.err.template_ae_name'] = 'Ein Template mit diesem Namen ist bereits vorhanden.';
 $_lang['collections.err.column_dot_name'] = 'Ein Spaltenname kann keinen Punkt enthalten.';
+$_lang['collections.err.template_ns_label'] = 'Label is not specified.';
