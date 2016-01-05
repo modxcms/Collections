@@ -181,3 +181,4 @@ $_lang['collections.err.template_remove_global'] = 'You can\'t remove default vi
 $_lang['collections.err.template_ae_name'] = 'Template with this name already exists.';
 $_lang['collections.err.column_dot_name'] = 'Column name can\'t contain a dot.';
 $_lang['collections.err.template_ns_label'] = 'Label is not specified.';
+$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t modify sorting by [[+column]] to use D&D sort.';

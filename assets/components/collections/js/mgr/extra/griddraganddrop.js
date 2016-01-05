@@ -9,6 +9,10 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
                 data.grid.parseSortField = function (value) {return value;}
             }
             
+            if (!data.grid.parsePermanentSort) {
+                data.grid.parsePermanentSort = function (value) {return false;}
+            }
+            
             if (data.grid.parseSortField(data.grid.config.baseParams.sort) != this.sortCol) {
                 if (data.grid.store.sortInfo == undefined || data.grid.parseSortField(data.grid.store.sortInfo.field) != this.sortCol) {
                     return false;
@@ -17,6 +21,10 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
                 if (data.grid.store.sortInfo != undefined && data.grid.parseSortField(data.grid.store.sortInfo.field) != this.sortCol) {
                     return false;
                 }
+            }
+
+            if (data.grid.parsePermanentSort(this.sortCol)) {
+                return false;
             }
 
             var search = Ext.getCmp('collections-child-search');
@@ -66,6 +74,10 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
                 data.grid.parseSortField = function (value) {return value;}
             }
             
+            if (!data.grid.parsePermanentSort) {
+                data.grid.parsePermanentSort = function (value) {return false;}
+            }
+            
             if (data.grid.parseSortField(data.grid.config.baseParams.sort) != this.sortCol) {
                 if (data.grid.store.sortInfo == undefined || data.grid.parseSortField(data.grid.store.sortInfo.field) != this.sortCol) {
                     return this.dropNotAllowed;
@@ -74,6 +86,10 @@ Ext.ux.dd.GridReorderDropTarget = function(grid, config) {
                 if (data.grid.store.sortInfo != undefined && data.grid.parseSortField(data.grid.store.sortInfo.field) != this.sortCol) {
                     return this.dropNotAllowed;
                 }
+            }
+
+            if (data.grid.parsePermanentSort(this.sortCol)) {
+                return false;
             }
 
             var search = Ext.getCmp('collections-child-search');

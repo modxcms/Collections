@@ -175,6 +175,10 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'selection_create_sort' => $template->selection_create_sort,
             'parent' => $parent,
             'parent_context' => $parent_context,
+            'permanent_sort' => array (
+                'before' => $template->permanent_sort_before,
+                'after' => $template->permanent_sort_after,
+            )
         );
 
         foreach ($columns as $column) {

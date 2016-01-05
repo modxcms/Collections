@@ -565,6 +565,10 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 return _('collections.err.bad_sort_column', {column: 'menuindex'});
             }
         }
+        
+        if (this.parsePermanentSort('menuindex')) {
+            return _('collections.err.permanent_sort', {column: 'menuindex'});
+        }
 
         var search = Ext.getCmp('collections-child-search');
         var filter = Ext.getCmp('collections-grid-filter-status');
@@ -573,6 +577,27 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         }
 
         return _('collections.global.change_order', {child: this.selModel.selections.items[0].data.pagetitle});
+    }
+
+    ,parsePermanentSort: function(column){
+        if (Collections.template.permanent_sort.before.indexOf('*') != -1) return true;
+        if (Collections.template.permanent_sort.after.indexOf('*') != -1) return true;
+        
+        var found = false;
+        
+        Ext.each(Collections.template.permanent_sort.before.split(',').concat(Collections.template.permanent_sort.after.split(',')).filter(function(e){return e}), function(item){
+            if (item.indexOf('=') == -1) {
+                found = true;
+                return false;
+            }                
+            
+            if (item.replace(/ /g, '').indexOf('menuindex=') != -1) {
+                found = true;
+                return false;
+            }
+        });      
+        
+        return found;
     }
 
     ,getDragDropTextOverTree: function(){

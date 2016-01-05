@@ -2,6 +2,7 @@ Changelog for Collections.
 
 Collections 3.4.0
 ===================
+- Prevent permanent sort breaking D&D sort
 - Add Collections.renderer.buttons renderer
 - Allow snippet renderer on non-existing column
 - Add event names to update from grid processor
