@@ -309,7 +309,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         foreach ($this->columnRenderer as $field => $snippet) {
             $value = isset($resourceArray[$field]) ? $resourceArray[$field] : null;
-            $resourceArray[$field] = $this->modx->runSnippet($snippet, array('value' => $value, 'row' => $resourceArray, 'input' => $value));    
+            $resourceArray[$field] = $this->modx->runSnippet($snippet, array('value' => $value, 'row' => $resourceArray, 'input' => $value, 'column' => $field));    
         }
         
         $resourceArray = $this->prepareSupportFields($resourceArray);
