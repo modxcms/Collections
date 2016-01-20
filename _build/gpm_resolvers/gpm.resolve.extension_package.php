@@ -24,7 +24,6 @@ if ($object->xpdo) {
             if ($modx instanceof modX) {
 
                 $modx->addExtensionPackage('collections', $modelPath, array (
-  'tablePrefix' => 'modx_',
 ));
 
             }

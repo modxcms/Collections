@@ -1,3 +1,0 @@
-<?php
-define('MODX_CORE_PATH', '/Users/theboxer/www/modx/modx/core/');
-define('MODX_CONFIG_KEY', 'config');

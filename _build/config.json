@@ -30,7 +30,6 @@
             "snippets": [{
                 "name": "getSelections"
             }]
-
         }
         ,"systemSettings": [{
             "key": "mgr_date_format"
