@@ -14,13 +14,11 @@ var iconClass = {
 
 var pagetitleWithButtons = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
     +'<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="javascript:void(0);" data-id="{id}" data-action="edit" title="Edit {pagetitle}">{pagetitle}</a></h3>'
-    +'<tpl if="actions">'
     +'<ul class="actions">'
     +'<tpl for="actions">'
     +'<li><a href="javascript:void(0);" class="controlBtn {className}">{text}</a></li>'
     +'</tpl>'
     +'</ul>'
-    +'</tpl>'
     +'</div></tpl>',{
     compiled: true
 });
@@ -39,7 +37,6 @@ var pagetitleLink = new Ext.XTemplate('<tpl for="."><div class="collections-titl
 
 var pagetitleWithIcons = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
     +'<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="javascript:void(0);" data-id="{id}" data-action="edit" title="Edit {pagetitle}">{pagetitle}</a></h3>'
-    +'<tpl if="actions">'
     +'<ul class="actions">'
     +'<tpl for="actions">'
     +'<li><a href="javascript:void(0);" class="controlBtn {className}" title="{text}">'
@@ -47,13 +44,11 @@ var pagetitleWithIcons = new Ext.XTemplate('<tpl for="."><div class="collections
     +'</a></li>'
     +'</tpl>'
     +'</ul>'
-    +'</tpl>'
     +'</div></tpl>',{
     compiled: true
 });
 
 var icons = new Ext.XTemplate('<tpl for=".">'
-    +'<tpl if="actions">'
     +'<ul class="actions solo">'
     +'<tpl for="actions">'
     +'<li><a href="javascript:void(0);" class="controlBtn {className}" title="{text}">'
@@ -61,7 +56,6 @@ var icons = new Ext.XTemplate('<tpl for=".">'
     +'</a></li>'
     +'</tpl>'
     +'</ul>'
-    +'</tpl>'
     +'</tpl>',{
     compiled: true
 });
