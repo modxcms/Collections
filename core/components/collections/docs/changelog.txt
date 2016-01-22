@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+Collections 3.4.1
+===================
 - Fix Safari endless reloading
 - Fix Selections when sorting by menuindex
 
