@@ -27,9 +27,9 @@ Collections.grid.ContainerCollections = function(config) {
         ,tbar: {
             xtype: 'container'
             ,layout: 'anchor'
-            ,defaults: 
+            ,defaults:
             {
-                anchor : '100%' 
+                anchor : '100%'
             }
             ,items: [
                 new Ext.Toolbar({
@@ -844,9 +844,10 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         this.addEvents('breadCrumbsBeforeRender');
         this.addEvents('breadCrumbsRender');
 
-        window.onpopstate = function(event) {
-            location.reload();
-        };
+        // Commented out until I'll find fix for Safari
+        //window.onpopstate = function(event) {
+        //    location.reload();
+        //};
 
         this.on('breadCrumbsRender', function(toolbar){
             var folder = parseInt(MODx.request.folder);

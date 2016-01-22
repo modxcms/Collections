@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Hotfix for endless loading in Safari
+
 Collections 3.4.0
 ===================
 - Pass column name to snippet renderer
