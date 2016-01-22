@@ -1,7 +1,7 @@
 Changelog for Collections.
 
+- Fix Safari endless reloading
 - Fix Selections when sorting by menuindex
-- Hotfix for endless loading in Safari
 
 Collections 3.4.0
 ===================

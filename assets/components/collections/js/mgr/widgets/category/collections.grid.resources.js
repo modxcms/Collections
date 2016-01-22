@@ -41,6 +41,8 @@ Collections.grid.ContainerCollections = function(config) {
     Collections.grid.ContainerCollections.superclass.constructor.call(this,config);
     this.on('rowclick',MODx.fireResourceFormChange);
     this.on('click', this.handleButtons, this);
+
+    window.history.replaceState({}, '', window.location.href);
     
     this.initBreadCrumbs(config);
     
@@ -844,11 +846,12 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         this.addEvents('breadCrumbsBeforeRender');
         this.addEvents('breadCrumbsRender');
 
-        // Commented out until I'll find fix for Safari
-        //window.onpopstate = function(event) {
-        //    location.reload();
-        //};
-
+        window.addEventListener('popstate', function(event) {
+            if (event.state) {
+                location.reload();
+            }
+        }, false);
+        
         this.on('breadCrumbsRender', function(toolbar){
             var folder = parseInt(MODx.request.folder);
             var collection = parseInt(MODx.request.id);
