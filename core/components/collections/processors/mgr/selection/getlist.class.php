@@ -380,12 +380,14 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
 
         $gridSort = $this->getProperty('sort');
         
+        $selectionGridSort = (strtolower($gridSort) == 'menuindex') ? 'CollectionSelection`.`menuindex' : $gridSort; 
+        
         $c = $this->permanentSort($c, $gridSort, $this->sortBefore);
         
         if (empty($this->sortType)) {
-            $c->sortby('`' . $gridSort . '`',$this->getProperty('dir'));
+            $c->sortby('`' . $selectionGridSort . '`',$this->getProperty('dir'));
         } else {
-            $c->sortby('CAST(`' . $gridSort . '` as ' . $this->sortType . ')',$this->getProperty('dir'));
+            $c->sortby('CAST(`' . $selectionGridSort . '` as ' . $this->sortType . ')',$this->getProperty('dir'));
         }
 
         $c = $this->permanentSort($c, $gridSort, $this->sortAfter);
@@ -411,7 +413,7 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor {
             $options = explode(':', $options);
             if (empty($options[0])) continue;
 
-            $options['field'] = $options[0];
+            $options['field'] = (strtolower($options[0]) == 'menuindex') ? 'CollectionSelection`.`menuindex' : $options[0];
             $options['dir'] = empty($options[1]) ? $this->getProperty('dir') : $options[1];
             $options['type'] = empty($options[2]) ? null : $options[2];
 
