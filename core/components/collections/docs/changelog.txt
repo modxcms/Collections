@@ -1,5 +1,8 @@
 Changelog for Collections.
 
+- Fix saving tv values from update from grid
+- Fix after save event fired on update from grid
+
 Collections 3.4.1
 ===================
 - Fix Safari endless reloading

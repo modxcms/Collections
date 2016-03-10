@@ -9,6 +9,7 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
     public $classKey = 'modResource';
     public $beforeSaveEvent = 'OnBeforeDocFormSave';
     public $afterSaveEvent = 'OnDocFormSave';
+    public $objectType = 'resource';
     
     public function initialize() {
         $data = $this->getProperty('data');
@@ -72,14 +73,14 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
 
         foreach ($fields as $key => $field) {
             if (strpos($key, 'tv_') !== false) {
-                $this->saveTV(str_replace('tv_', '', $key), $field);
+                $this->saveTV(preg_replace('/tv_/', '', $key, 1), $field);
                 continue;
             }
 
             $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null,  false);
             if ($taggerInstalled) {
                 if (strpos($key, 'tagger_') !== false) {
-                    $this->saveTagger(str_replace('tagger_', '', $key), $field);
+                    $this->saveTagger(preg_replace('/tagger_/', '', $key, 1), $field);
                     continue;
                 }
             }
