@@ -114,6 +114,7 @@
 
 .collections-grid .main-column {
     font-size: 16px;
+    overflow-x: hidden;
 }
 
 .collections-grid .main-column.buttons {
