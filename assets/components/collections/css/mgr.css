@@ -125,6 +125,7 @@
 }
 .collections-grid .collections-title-column ul {
     clear: both;
+    display: inline-table;
 }
 
 .ext-strict .x-form-field-trigger-wrap .x-form-text, .ext-strict .x-small-editor .x-form-field-trigger-wrap .x-form-text {
