@@ -33,36 +33,46 @@
         }
         ,"systemSettings": [{
             "key": "mgr_date_format"
+            ,"area": "manager"
             ,"value": "M d"
         },{
             "key": "mgr_time_format"
+            ,"area": "manager"
             ,"value": "g:i a"
         },{
             "key": "mgr_datetime_format"
+            ,"area": "manager"
             ,"value": "M d, g:i a"
         },{
             "key": "user_js"
+            ,"area": "manager"
             ,"value": ""
         },{
             "key": "user_css"
+            ,"area": "manager"
             ,"value": ""
         },{
             "key": "mgr_tree_icon_collectioncontainer"
+            ,"area": "manager"
             ,"value": "collectioncontainer"
             ,"namespace": ""
         },{
             "key": "mgr_tree_icon_selectioncontainer"
+            ,"area": "manager"
             ,"value": "selectioncontainer"
             ,"namespace": ""
         },{
             "key": "renderer_image_path"
+            ,"area": "manager"
             ,"value": ""
         },{
             "key": "tree_tbar_collection"
+            ,"area": "manager"
             ,"type": "combo-boolean"
             ,"value": 0
         },{
             "key": "tree_tbar_selection"
+            ,"area": "manager"
             ,"type": "combo-boolean"
             ,"value": 0
         }]
