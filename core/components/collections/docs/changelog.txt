@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Add overflow ellipse to the main-column
 - Add area to system settings
 
 Collections 3.4.2
