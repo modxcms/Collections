@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Use lexicons for the Open button
 - Add overflow ellipse to the main-column
 - Add area to system settings
 

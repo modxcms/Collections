@@ -179,7 +179,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         );
         $this->actions['open'] = array(
             'className' => 'open',
-            'text' => 'Open',
+            'text' => $this->modx->lexicon('open'),
             'key' => 'open',
         );
     }
