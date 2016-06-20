@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Add area to system settings
+
 Collections 3.4.2
 ===================
 - Fix saving tv values from update from grid
