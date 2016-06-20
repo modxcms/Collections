@@ -15,6 +15,7 @@
  * &sortdir                 string  optional    Direction of sorting by linked resource's menuindex. Default: ASC
  * &selections              string  optional    Comma separated list of Selection IDs for which should be retrieved linked resources. Default: empty string
  * &getResourcesSnippet     string  optional    Name of getResources snippet. Default: getResources
+ * &excludeResources        string  optional    Comma separated list of Resources to exclude, even though they are in the Selection
  *
  * USAGE:
  *
@@ -62,6 +63,14 @@ $linkedResourcesQuery->prepare();
 $linkedResourcesQuery->stmt->execute();
 
 $linkedResources = $linkedResourcesQuery->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+
+$excludedResources = $modx->getOption('excludeResources', $scriptProperties, '');
+$excludedResources = $modx->collections->explodeAndClean($excludedResources);
+
+if (!empty($excludedResources)) {
+    $linkedResources = array_diff($linkedResources, $excludedResources);
+}
+
 $linkedResources = implode(',', $linkedResources);
 
 $properties = $scriptProperties;
