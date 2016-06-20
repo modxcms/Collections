@@ -34,7 +34,12 @@ class CollectionContainer extends modResource {
 
 class CollectionContainerCreateProcessor extends modResourceCreateProcessor {
     public function afterSave() {
-        $collectionsTemplate = (int) $this->getProperty('collections_template');
+        $collectionsTemplate = $this->getProperty('collections_template');
+        if ($collectionsTemplate === null) {
+            return parent::afterSave();
+        }
+
+        $collectionsTemplate = (int)$collectionsTemplate;
 
         $config = $this->modx->getObject('CollectionSetting', array('collection' => $this->object->id));
 
@@ -53,7 +58,12 @@ class CollectionContainerCreateProcessor extends modResourceCreateProcessor {
 
 class CollectionContainerUpdateProcessor extends modResourceUpdateProcessor {
     public function afterSave() {
-        $collectionsTemplate = (int) $this->getProperty('collections_template');
+        $collectionsTemplate = $this->getProperty('collections_template');
+        if ($collectionsTemplate === null) {
+            return parent::afterSave();    
+        }
+
+        $collectionsTemplate = (int)$collectionsTemplate;
 
         $config = $this->modx->getObject('CollectionSetting', array('collection' => $this->object->id));
 

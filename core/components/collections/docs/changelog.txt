@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Prevent Collection's view reset after quick resource update
 - Use lexicons for the Open button
 - Add overflow ellipse to the main-column
 - Add area to system settings
