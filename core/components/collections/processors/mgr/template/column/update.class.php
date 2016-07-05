@@ -65,6 +65,48 @@ class CollectionsTemplateColumnUpdateProcessor extends modObjectUpdateProcessor 
             $this->addFieldError('name',$this->modx->lexicon('collections.err.column_name_cant_change'));
         }
 
+        $position = $this->getProperty('position', '');
+        if ($position === '') {
+            $c = $this->modx->newQuery('CollectionTemplateColumn');
+            $c->where(array(
+                'template' => $template,
+                'id:!=' => $this->object->id 
+            ));
+            $c->limit(1);
+            $c->sortby('position', 'DESC');
+
+            $last = 0;
+
+            $columns = $this->modx->getIterator('CollectionTemplateColumn', $c);
+            foreach ($columns as $column) {
+                $last = $column->position + 1;
+                break;
+            }
+
+            $this->setProperty('position', $last);
+        } else {
+            $c = $this->modx->newQuery('CollectionTemplateColumn');
+            $c->where(array(
+                'template' => $template,
+                'position:>=' => $position,
+                'id:!=' => $this->object->id
+            ));
+            $c->sortby('position', 'ASC');
+
+            /** @var CollectionTemplateColumn[] $columns */
+            $columns = $this->modx->getIterator('CollectionTemplateColumn', $c);
+            $tmpPosition = $position;
+            foreach ($columns as $column) {
+                if ($tmpPosition == $column->position) {
+                    $tmpPosition = $column->position + 1;
+                    $column->set('position', $tmpPosition);
+                    $column->save();
+                } else {
+                    break;
+                }
+            }
+        }
+
         $this->handleNull('sort_type');
 
         return parent::beforeSet();

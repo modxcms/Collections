@@ -61,8 +61,8 @@ class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor 
             }
         }
 
-        $position = $this->getProperty('position');
-        if (empty($position)) {
+        $position = $this->getProperty('position', '');
+        if ($position === '') {
             $c = $this->modx->newQuery('CollectionTemplateColumn');
             $c->where(array(
                 'template' => $template
@@ -79,6 +79,26 @@ class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor 
             }
 
             $this->setProperty('position', $last);
+        } else {
+            $c = $this->modx->newQuery('CollectionTemplateColumn');
+            $c->where(array(
+                'template' => $template,
+                'position:>=' => $position
+            ));
+            $c->sortby('position', 'ASC');
+            
+            /** @var CollectionTemplateColumn[] $columns */
+            $columns = $this->modx->getIterator('CollectionTemplateColumn', $c);
+            $tmpPosition = $position;
+            foreach ($columns as $column) {
+                if ($tmpPosition == $column->position) {
+                    $tmpPosition = $column->position + 1;
+                    $column->set('position', $tmpPosition);
+                    $column->save();
+                } else {
+                    break;
+                }
+            }
         }
 
         $width = (int) $this->getProperty('width');
