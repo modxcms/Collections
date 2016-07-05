@@ -1,4 +1,4 @@
-Collections.grid.ContainerSelection = function(config) {
+collections.grid.ContainerSelection = function(config) {
     config = config || {};
     this.sm = new Ext.grid.CheckboxSelectionModel();
     Ext.applyIf(config,{
@@ -8,30 +8,30 @@ Collections.grid.ContainerSelection = function(config) {
         ,baseParams: {
             action: 'mgr/selection/getlist'
             ,parent: MODx.request.id
-            ,sort: Collections.template.sort.field
-            ,dir: Collections.template.sort.dir
+            ,sort: collections.template.sort.field
+            ,dir: collections.template.sort.dir
         }
         ,saveParams: {
             collection: MODx.request.id
         }
     });
-    Collections.grid.ContainerSelection.superclass.constructor.call(this,config);
+    collections.grid.ContainerSelection.superclass.constructor.call(this,config);
     this.on('rowclick',MODx.fireResourceFormChange);
     this.on('click', this.handleButtons, this);
 
-    if (Collections.template.allowDD) {
+    if (collections.template.allowDD) {
         this.on('render', this.registerGridDropTarget, this);
         this.on('beforedestroy', this.destroyScrollManager, this);
     }
 };
-Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollections,{
+Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollections,{
 
     getMenu: function() {
         var m = [];
         if (!this.menu.record) return m;
 
         var addDelimiter = false;
-        Ext.each(Collections.template.context_menu, function(key) {
+        Ext.each(collections.template.context_menu, function(key) {
             if (key == '-') {
                 addDelimiter = true;
                 return true;
@@ -58,12 +58,12 @@ Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollect
         var items = [];
 
         items.push({
-            text: (_(Collections.template.link_label) == undefined) ? Collections.template.link_label : _(Collections.template.link_label)
+            text: (_(collections.template.link_label) == undefined) ? collections.template.link_label : _(collections.template.link_label)
             ,handler: this.createSelection
             ,scope: this
         });
 
-        if (Collections.template.bulkActions) {
+        if (collections.template.bulkActions) {
             items.push({
                 text: _('bulk_actions')
                 ,xtype: 'splitbutton'
@@ -147,8 +147,8 @@ Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollect
         this.getStore().baseParams = {
             action: 'mgr/selection/getList'
             ,'parent': MODx.request.id
-            ,sort: Collections.template.sort.field
-            ,dir: Collections.template.sort.dir
+            ,sort: collections.template.sort.field
+            ,dir: collections.template.sort.dir
         };
         Ext.getCmp('collections-child-search').reset();
         Ext.getCmp('collections-grid-filter-status').reset();
@@ -159,7 +159,7 @@ Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollect
         var createSelection = MODx.load({
             xtype: 'collections-window-selection'
             ,title: _('selections.create')
-            ,resourcesSort: Collections.template.selection_create_sort
+            ,resourcesSort: collections.template.selection_create_sort
             ,selection: MODx.request.id
             ,record: {
                 collection: MODx.request.id
@@ -377,7 +377,7 @@ Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollect
 
                 ,'afterrowmove': function(objThis, oldIndex, newIndex, records) {
                     MODx.Ajax.request({
-                        url: Collections.connectorUrl
+                        url: collections.connectorUrl
                         ,params: {
                             action: 'mgr/selection/ddreorder'
                             ,idItem: records.pop().id
@@ -414,4 +414,4 @@ Ext.extend(Collections.grid.ContainerSelection,Collections.grid.ContainerCollect
                      
     }
 });
-Ext.reg('collections-grid-selection',Collections.grid.ContainerSelection);
+Ext.reg('collections-grid-selection',collections.grid.ContainerSelection);

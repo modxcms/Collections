@@ -1,8 +1,4 @@
-Ext.onReady(function() {
-    MODx.load({ xtype: 'collections-page-template'});
-});
-
-Collections.page.Template = function(config) {
+collections.page.Template = function(config) {
     config = config || {};
 
     config.isUpdate = (MODx.request.id) ? true : false;
@@ -27,7 +23,7 @@ Collections.page.Template = function(config) {
             ,isUpdate: config.isUpdate
         }]
     });
-    Collections.page.Template.superclass.constructor.call(this,config);
+    collections.page.Template.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.page.Template,MODx.Component);
-Ext.reg('collections-page-template',Collections.page.Template);
+Ext.extend(collections.page.Template,MODx.Component);
+Ext.reg('collections-page-template',collections.page.Template);

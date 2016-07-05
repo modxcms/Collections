@@ -1,24 +1,24 @@
-Collections.grid.ContainerCollections = function(config) {
+collections.grid.ContainerCollections = function(config) {
     config = config || {};
     this.sm = new Ext.grid.CheckboxSelectionModel();
     Ext.applyIf(config,{
         id: 'collections-grid-container-collections'
         ,title: _('collections.collections')
-        ,url: Collections.connectorUrl
+        ,url: collections.connectorUrl
         ,autosave: true
         ,save_action: 'mgr/resource/updatefromgrid'
         ,ddGroup: 'collectionChildDDGroup'
         ,enableDragDrop: false
         ,baseParams: {
             action: 'mgr/resource/getlist'
-            ,parent: Collections.template.parent
-            ,sort: Collections.template.sort.field
-            ,dir: Collections.template.sort.dir
+            ,parent: collections.template.parent
+            ,sort: collections.template.sort.field
+            ,dir: collections.template.sort.dir
         }
-        ,fields: Collections.template.fields
+        ,fields: collections.template.fields
         ,paging: true
         ,remoteSort: true
-        ,pageSize: Collections.template.pageSize
+        ,pageSize: collections.template.pageSize
         ,cls: 'collections-grid'
         ,bodyCssClass: 'grid-with-buttons'
         ,sm: this.sm
@@ -38,7 +38,7 @@ Collections.grid.ContainerCollections = function(config) {
             ]
         }
     });
-    Collections.grid.ContainerCollections.superclass.constructor.call(this,config);
+    collections.grid.ContainerCollections.superclass.constructor.call(this,config);
     this.on('rowclick',MODx.fireResourceFormChange);
     this.on('click', this.handleButtons, this);
 
@@ -46,12 +46,12 @@ Collections.grid.ContainerCollections = function(config) {
     
     this.initBreadCrumbs(config);
     
-    if (Collections.template.allowDD) {
+    if (collections.template.allowDD) {
         this.on('render', this.registerGridDropTarget, this);
         this.on('beforedestroy', this.destroyScrollManager, this);
     }
 };
-Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
+Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
     currentFolder: null
     
     ,getMenu: function() {
@@ -59,7 +59,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         if (!this.menu.record) return m;
 
         var addDelimiter = false;
-        Ext.each(Collections.template.context_menu, function(key) {
+        Ext.each(collections.template.context_menu, function(key) {
             if (key == '-') {
                 addDelimiter = true;
                 return true;
@@ -104,9 +104,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     }
 
     ,getColumns: function(config) {
-        var columns = Collections.template.columns;
+        var columns = collections.template.columns;
 
-        if (Collections.template.bulkActions) {
+        if (collections.template.bulkActions) {
             columns.unshift(this.sm);
         }
 
@@ -116,10 +116,10 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     ,getTbar: function(config) {
         var items = [];
 
-        if (Collections.template.resource_type_selection && Collections.template.resourceDerivatives.length > 0) {
+        if (collections.template.resource_type_selection && collections.template.resourceDerivatives.length > 0) {
             var resourceDerivatives = [];
 
-            Ext.each(Collections.template.resourceDerivatives, function(item){
+            Ext.each(collections.template.resourceDerivatives, function(item){
                 resourceDerivatives.push({
                     text: item.name
                     ,derivative: item.id
@@ -129,7 +129,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             }, this);
 
             items.push({
-                text: (_(Collections.template.button_label) == undefined) ? Collections.template.button_label : _(Collections.template.button_label)
+                text: (_(collections.template.button_label) == undefined) ? collections.template.button_label : _(collections.template.button_label)
                 ,handler: this.createChild
                 ,xtype: 'splitbutton'
                 ,scope: this
@@ -137,14 +137,14 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             });
         } else {
             items.push({
-                text: (_(Collections.template.button_label) == undefined) ? Collections.template.button_label : _(Collections.template.button_label)
+                text: (_(collections.template.button_label) == undefined) ? collections.template.button_label : _(collections.template.button_label)
                 ,handler: this.createChild
                 ,scope: this
             });
         }
 
 
-        if (Collections.template.bulkActions) {
+        if (collections.template.bulkActions) {
             items.push({
                 text: _('bulk_actions')
                 ,xtype: 'splitbutton'
@@ -223,9 +223,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     ,clearFilter: function() {
         this.getStore().baseParams = {
             action: 'mgr/resource/getList'
-            ,'parent': Collections.template.parent
-            ,sort: Collections.template.sort.field
-            ,dir: Collections.template.sort.dir
+            ,'parent': collections.template.parent
+            ,sort: collections.template.sort.field
+            ,dir: collections.template.sort.dir
         };
         Ext.getCmp('collections-child-search').reset();
         Ext.getCmp('collections-grid-filter-status').reset();
@@ -234,13 +234,13 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,editChild: function(btn,e) {
         var selection = '';
-        if (Collections.template.parent != MODx.request.id){
+        if (collections.template.parent != MODx.request.id){
            selection = '&selection=' + MODx.request.id;
         }
 
         var collectionGet = '';
         if (this.currentFolder) {
-            collectionGet = '&collection=' + Collections.template.parent
+            collectionGet = '&collection=' + collections.template.parent
         }
         
         var folderGet = '';
@@ -255,16 +255,16 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     ,createChild: function(btn,e) {
         var template = '';
         var selection = '';
-        if (Collections.template.children.template != null) {
-            template = '&template=' + Collections.template.children.template;
+        if (collections.template.children.template != null) {
+            template = '&template=' + collections.template.children.template;
         }
-        if (Collections.template.parent != MODx.request.id){
+        if (collections.template.parent != MODx.request.id){
            selection = '&selection=' + MODx.request.id;
         }
 
         var collectionGet = '';
         if (this.currentFolder) {
-            collectionGet = '&collection=' + Collections.template.parent
+            collectionGet = '&collection=' + collections.template.parent
         }
 
         var folderGet = '';
@@ -273,22 +273,22 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             folderGet = '&folder=' + parseInt(query.folder);
         }
         
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || Collections.template.parent) + collectionGet + '&context_key=' + Collections.template.parent_context + '&class_key=' + Collections.template.children.resource_type + template + selection + folderGet);
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || collections.template.parent) + collectionGet + '&context_key=' + collections.template.parent_context + '&class_key=' + collections.template.children.resource_type + template + selection + folderGet);
     }
 
     ,createDerivativeChild: function(btn, e) {
         var template = '';
         var selection = '';
-        if (Collections.template.children.template != null) {
-            template = '&template=' + Collections.template.children.template;
+        if (collections.template.children.template != null) {
+            template = '&template=' + collections.template.children.template;
         }
-        if (Collections.template.parent != MODx.request.id){
+        if (collections.template.parent != MODx.request.id){
            selection = '&selection=' + MODx.request.id;
         }
 
         var collectionGet = '';
         if (this.currentFolder) {
-            collectionGet = '&collection=' + Collections.template.parent
+            collectionGet = '&collection=' + collections.template.parent
         }
 
         var folderGet = '';
@@ -297,7 +297,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             folderGet = '&folder=' + parseInt(query.folder);
         }
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || Collections.template.parent) + collectionGet + '&context_key=' + Collections.template.parent_context + '&class_key=' + btn.derivative + template + selection + folderGet);
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || collections.template.parent) + collectionGet + '&context_key=' + collections.template.parent_context + '&class_key=' + btn.derivative + template + selection + folderGet);
     }
 
     ,viewChild: function(btn,e) {
@@ -582,12 +582,12 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     }
 
     ,parsePermanentSort: function(column){
-        if (Collections.template.permanent_sort.before.indexOf('*') != -1) return true;
-        if (Collections.template.permanent_sort.after.indexOf('*') != -1) return true;
+        if (collections.template.permanent_sort.before.indexOf('*') != -1) return true;
+        if (collections.template.permanent_sort.after.indexOf('*') != -1) return true;
         
         var found = false;
         
-        Ext.each(Collections.template.permanent_sort.before.split(',').concat(Collections.template.permanent_sort.after.split(',')).filter(function(e){return e}), function(item){
+        Ext.each(collections.template.permanent_sort.before.split(',').concat(collections.template.permanent_sort.after.split(',')).filter(function(e){return e}), function(item){
             if (item.indexOf('=') == -1) {
                 found = true;
                 return false;
@@ -653,7 +653,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
                 t.dropZone.onNodeDrop = function (nodeData, source, e) {
                     MODx.Ajax.request({
-                        url: Collections.connectorUrl
+                        url: collections.connectorUrl
                         ,params: {
                             action: 'mgr/resource/changeparent'
                             ,id: source.dragData.selections[0].id
@@ -694,13 +694,13 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
                 ,'afterrowmove': function(objThis, oldIndex, newIndex, records) {
                     MODx.Ajax.request({
-                        url: Collections.connectorUrl
+                        url: collections.connectorUrl
                         ,params: {
                             action: 'mgr/resource/ddreorder'
                             ,idItem: records.pop().id
                             ,oldIndex: oldIndex
                             ,newIndex: newIndex
-                            ,parent: Collections.template.parent
+                            ,parent: collections.template.parent
                         }
                         ,listeners: {
                             'success': {
@@ -858,7 +858,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
             if ((folder > 0) && (collection > 0)) {
                 MODx.Ajax.request({
-                    url: Collections.connectorUrl
+                    url: collections.connectorUrl
                     ,params: {
                         action: 'mgr/extra/breadcrumbs'
                         ,collection: collection
@@ -881,8 +881,8 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                         failure: {
                             fn: function(){
                                 this.store.removeAll();
-                                this.currentFolder = Collections.template.parent;
-                                this.getStore().baseParams.parent = Collections.template.parent;
+                                this.currentFolder = collections.template.parent;
+                                this.getStore().baseParams.parent = collections.template.parent;
                                 this.getBottomToolbar().changePage(1);
                             },
                             scope: this
@@ -895,11 +895,11 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         this.bc = new Ext.Toolbar({
             hidden: true
             ,crumbs: [{
-                id: Collections.template.parent
+                id: collections.template.parent
                 ,text: config.resourcePanel.record.pagetitle
             }]
             ,data : [{
-                id: Collections.template.parent
+                id: collections.template.parent
                 ,text: config.resourcePanel.record.pagetitle
             }],
             grid: this,
@@ -975,4 +975,4 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         this.getTopToolbar().add(this.bc);                 
     }
 });
-Ext.reg('collections-grid-children',Collections.grid.ContainerCollections);
+Ext.reg('collections-grid-children',collections.grid.ContainerCollections);

@@ -9,6 +9,24 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
     /** @var modResource $resource */
     public $resource;
 
+    /** @var Collections $collections */
+    public $collections;
+
+    public function initialize()
+    {
+        $corePath = $this->modx->getOption('collections.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/collections/');
+        $this->collections = $this->modx->getService(
+            'collections',
+            'Collections',
+            $corePath . 'model/collections/',
+            array(
+                'core_path' => $corePath
+            )
+        );
+
+        parent::initialize();
+    }
+    
     public function getLanguageTopics() {
         return array('resource','collections:default', 'collections:templates', 'collections:custom', 'collections:selections');
     }
@@ -58,14 +76,14 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         $this->addHtml('
         <script type="text/javascript">
         // <![CDATA[
-        Collections.assetsUrl = "'.$collectionsAssetsUrl.'";
-        Collections.connectorUrl = "'.$connectorUrl.'";
-        Collections.config = '.$this->modx->toJSON($this->modx->collections->config).';
-        Collections.config.connector_url = "'.$this->modx->collections->config['connectorUrl'].'";
+        collections.assetsUrl = "'.$collectionsAssetsUrl.'";
+        collections.connectorUrl = "'.$connectorUrl.'";
+        collections.config = '.$this->modx->toJSON($this->collections->config).';
+        collections.config.connector_url = "'.$this->collections->config['connectorUrl'].'";
         MODx.config.publish_document = "'.$this->canPublish.'";
         MODx.onDocFormRender = "'.$this->onDocFormRender.'";
         MODx.ctx = "'.$this->resource->get('context_key').'";
-        Collections.template = ' . $collectionsTemplate . ';
+        collections.template = ' . $collectionsTemplate . ';
         Ext.onReady(function() {
             MODx.load({
                 xtype: "collections-page-category-update"
@@ -91,8 +109,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
     }
 
     public function getCollectionsTemplate() {
-        /** @var CollectionTemplate $template */
-        $template = $this->modx->collections->getCollectionsView($this->resource);
+        $template = $this->collections->getCollectionsView($this->resource);
 
         $c = $this->modx->newQuery('CollectionTemplateColumn');
         $c->sortby('position', 'ASC');
@@ -110,7 +127,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
                 'skip' => 'modXMLRPCResource',
                 'class' => 'modResource',
             ), array(
-                'processors_path' => $this->modx->collections->getOption('processorsPath'),
+                'processors_path' => $this->collections->getOption('processorsPath'),
             ));
 
             $response = $this->modx->fromJSON($response->response);
@@ -121,7 +138,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
                         $derivates[] = $type;
                     }
                 } else {
-                    $allowedTypes = $this->modx->collections->explodeAndClean($template->allowed_resource_types);
+                    $allowedTypes = $this->collections->explodeAndClean($template->allowed_resource_types);
 
                     foreach ($allowedTypes as $type) {
                         if (isset($response['results'][$type])) {
@@ -170,7 +187,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'button_label' => $template->button_label,
             'link_label' => $template->link_label,
             'content_place' => $template->content_place,
-            'context_menu' => $this->modx->collections->explodeAndClean($template->context_menu, ',', 1),
+            'context_menu' => $this->collections->explodeAndClean($template->context_menu, ',', 1),
             'resourceDerivatives' => $derivates,
             'selection_create_sort' => $template->selection_create_sort,
             'parent' => $parent,

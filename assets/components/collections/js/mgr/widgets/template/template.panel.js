@@ -1,10 +1,10 @@
-Collections.panel.Template = function(config) {
+collections.panel.Template = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         border: false
         ,id: 'collections-panel-template'
         ,cls: 'container'
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,baseParams: {
             action: 'mgr/template/create'
         }
@@ -21,10 +21,10 @@ Collections.panel.Template = function(config) {
             }
         }
     });
-    Collections.panel.Template.superclass.constructor.call(this, config);
+    collections.panel.Template.superclass.constructor.call(this, config);
 };
 
-Ext.extend(Collections.panel.Template, MODx.FormPanel,{
+Ext.extend(collections.panel.Template, MODx.FormPanel,{
     setup: function() {
         if (this.config.isUpdate) {
             MODx.Ajax.request({
@@ -1046,4 +1046,4 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
         }];
     }
 });
-Ext.reg('collections-panel-template',Collections.panel.Template);
+Ext.reg('collections-panel-template',collections.panel.Template);

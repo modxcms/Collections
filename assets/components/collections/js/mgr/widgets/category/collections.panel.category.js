@@ -1,10 +1,10 @@
-Collections.panel.Category = function(config) {
+collections.panel.Category = function(config) {
     config = config || {};
     // Hotfix, try to find better solution
     MODx.config.confirm_navigation = 0;
-    Collections.panel.Category.superclass.constructor.call(this,config);
+    collections.panel.Category.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
+Ext.extend(collections.panel.Category,MODx.panel.Resource,{
     getPageHeader: function(config) {
         config = config || {record:{}};
         return {
@@ -18,14 +18,14 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
     }
 
     ,getContentField: function(config) {
-        if (Collections.template.content_place == 'none') return false;
-        if (Collections.template.content_place == 'in-tab') return false;
+        if (collections.template.content_place == 'none') return false;
+        if (collections.template.content_place == 'in-tab') return false;
 
-        return Collections.panel.Category.superclass.getContentField.call(this,config);
+        return collections.panel.Category.superclass.getContentField.call(this,config);
     }
 
     ,getFields: function(config) {
-        var fields = Collections.panel.Category.superclass.getFields.call(this,config);
+        var fields = collections.panel.Category.superclass.getFields.call(this,config);
 
         var tabs = fields.filter(function (row) {
             if(row.id == 'modx-resource-tabs') {
@@ -39,7 +39,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
         if (tabs != false && tabs[0]) {
         	if (config.mode == 'update') {
 
-                if (Collections.template.content_place == 'original-except-children') {
+                if (collections.template.content_place == 'original-except-children') {
                     tabs[0].listeners = {
                         tabchange: function(t, tab) {
                             if (tab.id == 'collections-category-resources') {
@@ -52,7 +52,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
                 }
 
 	            tabs[0].items.unshift({
-	                title: (_(Collections.template.tab_label) == undefined) ? Collections.template.tab_label : _(Collections.template.tab_label)
+	                title: (_(collections.template.tab_label) == undefined) ? collections.template.tab_label : _(collections.template.tab_label)
 	                ,id: 'collections-category-resources'
 	                ,cls: 'modx-resource-tab'
 	                ,layout: 'form'
@@ -68,7 +68,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
 	                ,items: this.getCollectionsChildrenTab(config)
 	            });
 
-                if (Collections.template.content_place == 'in-tab') {
+                if (collections.template.content_place == 'in-tab') {
                     tabs[0].items.splice(2,0,{
                         title: _('resource_content')
                         ,layout: 'form'
@@ -76,7 +76,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
                         ,id: 'modx-resource-content'
                         ,autoHeight: true
                         ,hideMode: 'offsets'
-                        ,items: Collections.panel.Category.superclass.getContentField.call(this,config)
+                        ,items: collections.panel.Category.superclass.getContentField.call(this,config)
                     });
                 }
 	        }
@@ -94,7 +94,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
             ,items: [{
                 title: _('resource')
                 ,deferredRender: false
-                ,items: Collections.panel.Category.superclass.getSettingFields.call(this,config)
+                ,items: collections.panel.Category.superclass.getSettingFields.call(this,config)
             },{
                 title: _('collections')
                 ,deferredRender: false
@@ -104,7 +104,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
                     ,name: 'collections_template'
                     ,hiddenName: 'collections_template'
                     ,anchor: '100%'
-                    ,url: Collections.connectorUrl
+                    ,url: collections.connectorUrl
                     ,baseParams: {
                         action: 'mgr/template/getlist'
                         ,addEmpty: 1
@@ -116,7 +116,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
 
     ,getCollectionsChildrenTab: function(config) {
         var items = [];
-        if (Collections.template.selection) {
+        if (collections.template.selection) {
             items.push({
                 html: '<p>Attention! Those are linked Resources. If you change anything, it will appear in the original Resource as well.</p>'
                 ,border: false
@@ -127,7 +127,7 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
 
         items.push({
             'xtype': 'collections-grid-children'
-            ,url: Collections.connectorUrl
+            ,url: collections.connectorUrl
             ,anchor: '100%'
             ,resourcePanel: this
         });
@@ -136,4 +136,4 @@ Ext.extend(Collections.panel.Category,MODx.panel.Resource,{
     }
 
 });
-Ext.reg('collections-panel-category',Collections.panel.Category);
+Ext.reg('collections-panel-category',collections.panel.Category);

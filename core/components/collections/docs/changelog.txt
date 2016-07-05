@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Add AjaxManager compatibility
 - Adjust position of other columns when creating/updating column with position specified
 - Add excludeResources option to getSelections snippet
 - Prevent Collection's view reset after quick resource update

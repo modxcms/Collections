@@ -60,32 +60,32 @@ var icons = new Ext.XTemplate('<tpl for=".">'
     compiled: true
 });
 
-Collections.renderer.buttons = function(value, metaData, record, rowIndex, colIndex, store) {
+collections.renderer.buttons = function(value, metaData, record, rowIndex, colIndex, store) {
     return icons.apply(record.data);
 };
 
-Collections.renderer.qtip = function(value, metaData, record, rowIndex, colIndex, store) {
+collections.renderer.qtip = function(value, metaData, record, rowIndex, colIndex, store) {
     metaData.attr = 'ext:qtip="' + value + '"';
     return value;
 };
 
-Collections.renderer.pagetitleWithButtons = function(value, metaData, record, rowIndex, colIndex, store) {
+collections.renderer.pagetitleWithButtons = function(value, metaData, record, rowIndex, colIndex, store) {
     return pagetitleWithButtons.apply(record.data);
 };
 
-Collections.renderer.pagetitleWithIcons = function(value, metaData, record, rowIndex, colIndex, store) {
+collections.renderer.pagetitleWithIcons = function(value, metaData, record, rowIndex, colIndex, store) {
     return pagetitleWithIcons.apply(record.data);
 };
 
-Collections.renderer.pagetitle = function(value, metaData, record, rowIndex, colIndex, store) {
+collections.renderer.pagetitle = function(value, metaData, record, rowIndex, colIndex, store) {
     return pagetitle.apply(record.data);
 };
 
-Collections.renderer.pagetitleLink = function(value, metaData, record, rowIndex, colIndex, store) {
+collections.renderer.pagetitleLink = function(value, metaData, record, rowIndex, colIndex, store) {
     return pagetitleLink.apply(record.data);
 };
 
-Collections.renderer.datetimeTwoLines = function(value, metaData, record, rowIndex, colIndex, store) {
+collections.renderer.datetimeTwoLines = function(value, metaData, record, rowIndex, colIndex, store) {
     if (value == 0) return '';
 
     var d = Date.parseDate(value, 'Y-m-d H:i:s');
@@ -96,7 +96,7 @@ Collections.renderer.datetimeTwoLines = function(value, metaData, record, rowInd
     return '<div class="collections-grid-date">' + date + '<span class="collections-grid-time">' + time + '</span></div>';
 };
 
-Collections.renderer.datetime = function(value, metaData, record, rowIndex, colIndex, store) {
+collections.renderer.datetime = function(value, metaData, record, rowIndex, colIndex, store) {
     if (value == 0) return '';
 
     var d = Date.parseDate(value, 'Y-m-d H:i:s');
@@ -104,15 +104,30 @@ Collections.renderer.datetime = function(value, metaData, record, rowIndex, colI
     return Ext.util.Format.date(d,MODx.config['collections.mgr_datetime_format']);
 };
 
-Collections.renderer.timestampToDatetime = function(value, metaData, record, rowIndex, colIndex, store) {
+collections.renderer.timestampToDatetime = function(value, metaData, record, rowIndex, colIndex, store) {
     if (value == 0 || value == null) return '';
 
     return Ext.util.Format.date(new Date(parseInt(value)),MODx.config['collections.mgr_datetime_format']);
 };
 
-Collections.renderer.image = function(value, metaData, record, rowIndex, colIndex, store) {
+collections.renderer.image = function(value, metaData, record, rowIndex, colIndex, store) {
     if (value != '' && value != null) {
         var imgPath = MODx.config['collections.renderer_image_path'];
         return '<img src="' + MODx.config.base_url + imgPath + value + '" width="64">';
     }
+};
+
+
+// Backwards compatibility
+Collections.renderer = {
+    buttons: collections.renderer.buttons,
+    qtip: collections.renderer.qtip,
+    pagetitleWithButtons: collections.renderer.pagetitleWithButtons,
+    pagetitleWithIcons: collections.renderer.pagetitleWithIcons,
+    pagetitle: collections.renderer.pagetitle,
+    pagetitleLink: collections.renderer.pagetitleLink,
+    datetimeTwoLines: collections.renderer.datetimeTwoLines,
+    datetime: collections.renderer.datetime,
+    timestampToDatetime: collections.renderer.timestampToDatetime,
+    image: collections.renderer.image
 };

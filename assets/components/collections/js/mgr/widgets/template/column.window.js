@@ -1,4 +1,4 @@
-Collections.window.TemplateColumn = function(config) {
+collections.window.TemplateColumn = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         title: _('collections.template.column.add')
@@ -6,13 +6,13 @@ Collections.window.TemplateColumn = function(config) {
         ,isUpdate: false
         ,width: 600
         ,autoHeight: true
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,action: 'mgr/template/column/create'
         ,fields: this.getFields(config)
     });
-    Collections.window.TemplateColumn.superclass.constructor.call(this,config);
+    collections.window.TemplateColumn.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.window.TemplateColumn,MODx.Window, {
+Ext.extend(collections.window.TemplateColumn,MODx.Window, {
     getLeftColumnFields: function (config) {
         return [{
             xtype: 'textfield'
@@ -166,4 +166,4 @@ Ext.extend(Collections.window.TemplateColumn,MODx.Window, {
         }];
     }
 });
-Ext.reg('collections-window-template-column',Collections.window.TemplateColumn);
+Ext.reg('collections-window-template-column',collections.window.TemplateColumn);

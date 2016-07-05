@@ -7,16 +7,19 @@ require_once dirname(dirname(dirname(__FILE__))) . '/index.class.php';
  * @package collections
  * @subpackage controller
  */
-class CollectionsTemplateExportManagerController extends CollectionsBaseManagerController {
-    public function getLanguageTopics() {
+class CollectionsTemplateExportManagerController extends CollectionsBaseManagerController
+{
+    public function getLanguageTopics()
+    {
         return array('collections:default');
     }
 
-    public function process(array $scriptProperties = array()) {
+    public function process(array $scriptProperties = array())
+    {
         $templateIDs = $_GET['ids'];
         $templateIDs = $this->collections->explodeAndClean($templateIDs);
-        
-        if(empty($templateIDs)){
+
+        if (empty($templateIDs)) {
             die($this->modx->lexicon('collections.err.template_ns'));
         }
 
@@ -25,7 +28,7 @@ class CollectionsTemplateExportManagerController extends CollectionsBaseManagerC
 
         $fileContent = array();
         $fileName = '';
-        
+
         foreach ($templates as $template) {
             $export = $template->toArray();
             unset($export['id'], $export['global_template']);
@@ -36,20 +39,20 @@ class CollectionsTemplateExportManagerController extends CollectionsBaseManagerC
                 unset($exportColumn['id'], $exportColumn['template']);
                 $export['columns'][] = $exportColumn;
             }
-            
+
             $fileContent[] = $export;
-            
+
             if (empty($fileName)) {
                 $fileName = 'collection_view_' . strtolower($template->name);
             } else {
                 $fileName = 'collection_views';
             }
         }
-        
+
         if (empty($fileContent)) {
             die($this->modx->lexicon('collections.err.template_ns'));
         }
-        
+
         session_write_close();
         ob_clean();
 
@@ -68,7 +71,7 @@ class CollectionsTemplateExportManagerController extends CollectionsBaseManagerC
         echo json_encode($fileContent, JSON_PRETTY_PRINT);
 
         die();
-        
+
     }
 
 }

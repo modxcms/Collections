@@ -7,13 +7,15 @@ require_once dirname(dirname(__FILE__)) . '/create.class.php';
  * @package collections
  * @subpackage controller
  */
-class SelectionContainerCreateManagerController extends CollectionContainerCreateManagerController {
+class SelectionContainerCreateManagerController extends CollectionContainerCreateManagerController
+{
     /**
      * Return the pagetitle
      *
      * @return string
      */
-    public function getPageTitle() {
+    public function getPageTitle()
+    {
         return $this->modx->lexicon('selections.system.new_container');
     }
 }

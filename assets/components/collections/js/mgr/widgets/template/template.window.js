@@ -1,16 +1,16 @@
-Collections.window.TemplateDuplicate = function(config) {
+collections.window.TemplateDuplicate = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         title: _('collections.template.duplicate')
         ,closeAction: 'close'
         ,isUpdate: false
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,action: 'mgr/template/duplicate'
         ,fields: this.getFields(config)
     });
-    Collections.window.TemplateDuplicate.superclass.constructor.call(this,config);
+    collections.window.TemplateDuplicate.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.window.TemplateDuplicate,MODx.Window, {
+Ext.extend(collections.window.TemplateDuplicate,MODx.Window, {
     getFields: function(config) {
         return [{
             xtype: 'textfield'
@@ -32,24 +32,24 @@ Ext.extend(Collections.window.TemplateDuplicate,MODx.Window, {
         }];
     }
 });
-Ext.reg('collections-window-template-duplicate',Collections.window.TemplateDuplicate);
+Ext.reg('collections-window-template-duplicate',collections.window.TemplateDuplicate);
 
-Collections.window.TemplateImport = function(config) {
+collections.window.TemplateImport = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         title: _('collections.template.import')
         ,closeAction: 'close'
         ,isUpdate: false
         ,fileUpload: true
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,action: 'mgr/template/import'
         ,fields: this.getFields(config)
         ,autoHeight: true
         ,saveBtnText: _('collections.global.import')
     });
-    Collections.window.TemplateImport.superclass.constructor.call(this,config);
+    collections.window.TemplateImport.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.window.TemplateImport,MODx.Window, {
+Ext.extend(collections.window.TemplateImport,MODx.Window, {
     getFields: function(config) {
         return [{
             xtype: 'fileuploadfield'
@@ -116,4 +116,4 @@ Ext.extend(Collections.window.TemplateImport,MODx.Window, {
         }];
     }
 });
-Ext.reg('collections-window-template-import', Collections.window.TemplateImport);
+Ext.reg('collections-window-template-import', collections.window.TemplateImport);

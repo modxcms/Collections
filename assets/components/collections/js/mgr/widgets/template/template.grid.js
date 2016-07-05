@@ -1,4 +1,4 @@
-Collections.grid.Template = function(config) {
+collections.grid.Template = function(config) {
     config = config || {};
 
     this.sm = new Ext.grid.CheckboxSelectionModel({
@@ -19,7 +19,7 @@ Collections.grid.Template = function(config) {
     
     Ext.applyIf(config,{
         title: _('collections.collections')
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,baseParams: {
             action: 'mgr/template/getList'
             ,'template': 1
@@ -76,11 +76,11 @@ Collections.grid.Template = function(config) {
             ,scope: this
         }]
     });
-    Collections.grid.Template.superclass.constructor.call(this,config);
+    collections.grid.Template.superclass.constructor.call(this,config);
 
     this.getView().on('refresh', this.refreshSelection, this);
 };
-Ext.extend(Collections.grid.Template,MODx.grid.Grid,{
+Ext.extend(collections.grid.Template,MODx.grid.Grid,{
 
     selectedRecords: []
 
@@ -204,4 +204,4 @@ Ext.extend(Collections.grid.Template,MODx.grid.Grid,{
     }
 
 });
-Ext.reg('collections-grid-template',Collections.grid.Template);
+Ext.reg('collections-grid-template',collections.grid.Template);
