@@ -1,7 +1,10 @@
 <?php
-class CollectionsOnDocFormPrerender extends CollectionsPlugin {
 
-    public function run() {
+class CollectionsOnDocFormPrerender extends CollectionsPlugin
+{
+
+    public function run()
+    {
         $inject = false;
 
         /** @var modResource $resource */
@@ -19,23 +22,23 @@ class CollectionsOnDocFormPrerender extends CollectionsPlugin {
                 $parent = intval($_GET['parent']);
 
                 $parent = $this->modx->getObject('modResource', $parent);
-                if ($parent){
+                if ($parent) {
                     $inject = ($parent->class_key == 'CollectionContainer');
                 }
             }
         } else {
             $inject = ($parent->class_key == 'CollectionContainer' && $resource->class_key != 'CollectionContainer');
         }
-        
+
         if (!$inject && isset($_GET['selection']) && intval($_GET['selection'] > 0)) {
             $selection = $this->modx->getCount('CollectionSelection', array('resource' => $resource->id));
             if ($selection > 0) $inject = true;
         }
-        
+
         if (!$inject && isset($_GET['collection']) && intval($_GET['collection'] > 0)) {
             $inject = true;
         }
-        
+
         $collectionGet = null;
         $collectionFolder = null;
         if (!$inject && $parent) {

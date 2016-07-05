@@ -1,20 +1,24 @@
 <?php
+
 /**
  * Duplicate a Template
  *
  * @package collections
  * @subpackage processors.template
  */
-class CollectionsTemplateDuplicateProcessor extends modProcessor {
+class CollectionsTemplateDuplicateProcessor extends modProcessor
+{
     /** @var CollectionTemplate $oldTemplate */
     public $oldTemplate;
     public $classKey = 'CollectionTemplate';
 
-    public function getLanguageTopics() {
+    public function getLanguageTopics()
+    {
         return array('collections:default');
     }
 
-    public function initialize() {
+    public function initialize()
+    {
         $id = $this->getProperty('id', false);
         if (empty($id)) return $this->modx->lexicon('collections.err.template_ns');
 
@@ -24,7 +28,8 @@ class CollectionsTemplateDuplicateProcessor extends modProcessor {
         return true;
     }
 
-    public function process() {
+    public function process()
+    {
         $canDuplicate = $this->beforeDuplicate();
         if ($canDuplicate !== true) {
             return $this->failure($canDuplicate);
@@ -60,16 +65,17 @@ class CollectionsTemplateDuplicateProcessor extends modProcessor {
 
         $newTemplate->save();
 
-        return $this->success('', array ('id' => $newTemplate->get('id')));
+        return $this->success('', array('id' => $newTemplate->get('id')));
     }
 
-    public function beforeDuplicate() {
+    public function beforeDuplicate()
+    {
         $name = $this->getProperty('name', '');
 
         if (empty($name)) {
             $this->addFieldError('name', $this->modx->lexicon('collections.err.template_ns_name'));
         } else {
-            if ($this->modx->getCount($this->classKey, array ('name' => $name)) > 0) {
+            if ($this->modx->getCount($this->classKey, array('name' => $name)) > 0) {
                 $this->addFieldError('name', $this->modx->lexicon('collections.err.template_ae_name'));
             }
         }
@@ -78,4 +84,5 @@ class CollectionsTemplateDuplicateProcessor extends modProcessor {
     }
 
 }
+
 return 'CollectionsTemplateDuplicateProcessor';

@@ -1,25 +1,28 @@
 <?php
+
 /**
  * Update a Template
  *
  * @package collections
  * @subpackage processors.template
  */
-class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
+class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor
+{
     public $classKey = 'CollectionTemplate';
     public $languageTopics = array('collections:default');
     public $objectType = 'collections.template';
     /** @var CollectionTemplate $object */
     public $object;
 
-    public function beforeSet() {
+    public function beforeSet()
+    {
         $name = $this->getProperty('name');
 
         if (empty($name)) {
-            $this->addFieldError('name',$this->modx->lexicon('collections.err.template_ns_name'));
+            $this->addFieldError('name', $this->modx->lexicon('collections.err.template_ns_name'));
         } else {
             if ($this->modx->getCount($this->classKey, array('name' => $name, 'id:!=' => $this->object->id)) > 0) {
-                $this->addFieldError('name',$this->modx->lexicon('collections.err.template_ae_name'));
+                $this->addFieldError('name', $this->modx->lexicon('collections.err.template_ae_name'));
             }
         }
 
@@ -89,7 +92,7 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
         }
 
         $templates = $this->getProperty('templates');
-        $templates = array_filter($templates, function($var) {
+        $templates = array_filter($templates, function ($var) {
             if ($var == '') {
                 return false;
             }
@@ -106,10 +109,10 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
 
         if (count($templates) > 0) {
             $where['resource_template:IN'] = $templates;
-        
+
             $c->where($where);
             $c->select($this->modx->getSelectColumns('modTemplate', 'ResourceTemplate', '', array('templatename')));
-    
+
             $c->prepare();
             $c->stmt->execute();
             $existingTemplates = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
@@ -119,32 +122,12 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
                 return $this->modx->lexicon('collections.err.template_resource_template_aiu_' . $type, array('templates' => implode(',', $existingTemplates)));
             }
         }
-        
+
         return parent::beforeSet();
     }
 
-    public function afterSave() {
-        $global = $this->getProperty('global_template');
-
-        if ($global == true) {
-            $this->modx->updateCollection('CollectionTemplate', array('global_template' => false), array('id:!=' => $this->object->id));
-        }
-
-        $templates = $this->getProperty('templates');
-        $templates = array_filter($templates, function($var) { 
-            if ($var == '') {
-                return false;
-            }
-            
-            return true;
-        });
-
-        $this->object->setTemplates($templates);
-
-        return parent::afterSave();
-    }
-
-    public function handleComboBoolean($property) {
+    public function handleComboBoolean($property)
+    {
         $boolean = $this->getProperty($property);
 
         if ($boolean == 'true') {
@@ -163,8 +146,9 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
 
         return null;
     }
-    
-    public function handleNull($property) {
+
+    public function handleNull($property)
+    {
         $value = $this->getProperty($property);
 
         if ($value == '') {
@@ -178,5 +162,28 @@ class CollectionsTemplateUpdateProcessor extends modObjectUpdateProcessor {
         return $value;
     }
 
+    public function afterSave()
+    {
+        $global = $this->getProperty('global_template');
+
+        if ($global == true) {
+            $this->modx->updateCollection('CollectionTemplate', array('global_template' => false), array('id:!=' => $this->object->id));
+        }
+
+        $templates = $this->getProperty('templates');
+        $templates = array_filter($templates, function ($var) {
+            if ($var == '') {
+                return false;
+            }
+
+            return true;
+        });
+
+        $this->object->setTemplates($templates);
+
+        return parent::afterSave();
+    }
+
 }
+
 return 'CollectionsTemplateUpdateProcessor';

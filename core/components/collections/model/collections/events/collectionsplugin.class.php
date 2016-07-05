@@ -1,5 +1,7 @@
 <?php
-abstract class CollectionsPlugin {
+
+abstract class CollectionsPlugin
+{
 
     /** @var \modX $modx */
     protected $modx;
@@ -10,7 +12,8 @@ abstract class CollectionsPlugin {
     /** @var array $scriptProperties */
     protected $scriptProperties;
 
-    public function __construct($modx, &$scriptProperties) {
+    public function __construct($modx, &$scriptProperties)
+    {
         $this->scriptProperties =& $scriptProperties;
         $this->modx = $modx;
         $this->collections = $this->modx->collections;

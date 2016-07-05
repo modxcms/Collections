@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Remove a resource.
  *
@@ -7,7 +8,8 @@
  * @package modx
  * @subpackage processors.resource
  */
-class CollectionsResourceRemoveProcessor extends modProcessor {
+class CollectionsResourceRemoveProcessor extends modProcessor
+{
     /** @var modResource $resource */
     public $resource;
     /** @var modUser $lockedUser */
@@ -17,23 +19,28 @@ class CollectionsResourceRemoveProcessor extends modProcessor {
     /** @var int $deletedTime */
     public $deletedTime = 0;
 
-    public function checkPermissions() {
+    public function checkPermissions()
+    {
         return $this->modx->hasPermission('delete_document');
     }
-    public function getLanguageTopics() {
+
+    public function getLanguageTopics()
+    {
         return array('resource');
     }
+
     /**
      * Get the Resource and check for proper permissions
      *
      * {@inheritDoc}
      * @return boolean|string
      */
-    public function initialize() {
-        $id = $this->getProperty('id',false);
+    public function initialize()
+    {
+        $id = $this->getProperty('id', false);
         if (empty($id)) return $this->modx->lexicon('resource_err_ns');
         $this->resource = $this->modx->getObject('modResource', $id);
-        if (empty($this->resource)) return $this->modx->lexicon('resource_err_nfs',array('id' => $id));
+        if (empty($this->resource)) return $this->modx->lexicon('resource_err_nfs', array('id' => $id));
 
         /* validate resource can be deleted */
         if (!$this->resource->checkPolicy(array('save' => true, 'delete' => true))) {
@@ -47,14 +54,15 @@ class CollectionsResourceRemoveProcessor extends modProcessor {
      * {@inheritDoc}
      * @return mixed
      */
-    public function process() {
+    public function process()
+    {
 
         if (!$this->resource->checkPolicy('delete')) return $this->failure($this->modx->lexicon('resource_err_delete'));
 
         $resources = array($this->resource);
         $ids = array($this->resource->id);
 
-        $this->modx->invokeEvent('OnBeforeEmptyTrash',array(
+        $this->modx->invokeEvent('OnBeforeEmptyTrash', array(
             'ids' => &$ids,
             'resources' => &$resources,
         ));
@@ -80,7 +88,7 @@ class CollectionsResourceRemoveProcessor extends modProcessor {
             return $this->failure($this->modx->lexicon('resource_err_delete'));
         }
 
-        $this->modx->invokeEvent('OnEmptyTrash',array(
+        $this->modx->invokeEvent('OnEmptyTrash', array(
             'num_deleted' => 1,
             'resources' => &$resources,
             'ids' => &$ids,
@@ -96,29 +104,8 @@ class CollectionsResourceRemoveProcessor extends modProcessor {
         return $this->success();
     }
 
-    /**
-     * Clear the site cache
-     * @return void
-     */
-    public function clearCache() {
-        $this->modx->cacheManager->refresh(array(
-            'db' => array(),
-            'auto_publish' => array('contexts' => array($this->resource->get('context_key'))),
-            'context_settings' => array('contexts' => array($this->resource->get('context_key'))),
-            'resource' => array('contexts' => array($this->resource->get('context_key'))),
-        ));
-    }
-
-    /**
-     * Log the manager action
-     *
-     * @return void
-     */
-    public function logManagerAction() {
-        $this->modx->logManagerAction('remove_resource',$this->resource->get('class_key'),$this->resource->get('id'));
-    }
-
-    public function handleChildren() {
+    public function handleChildren()
+    {
         /** @var modResource[] $children */
         $children = $this->resource->Children;
 
@@ -127,5 +114,30 @@ class CollectionsResourceRemoveProcessor extends modProcessor {
             $child->save();
         }
     }
+
+    /**
+     * Log the manager action
+     *
+     * @return void
+     */
+    public function logManagerAction()
+    {
+        $this->modx->logManagerAction('remove_resource', $this->resource->get('class_key'), $this->resource->get('id'));
+    }
+
+    /**
+     * Clear the site cache
+     * @return void
+     */
+    public function clearCache()
+    {
+        $this->modx->cacheManager->refresh(array(
+            'db' => array(),
+            'auto_publish' => array('contexts' => array($this->resource->get('context_key'))),
+            'context_settings' => array('contexts' => array($this->resource->get('context_key'))),
+            'resource' => array('contexts' => array($this->resource->get('context_key'))),
+        ));
+    }
 }
+
 return 'CollectionsResourceRemoveProcessor';

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Deletes a resource.
  *
@@ -7,7 +8,8 @@
  * @package modx
  * @subpackage processors.resource
  */
-class CollectionsResourceDeleteProcessor extends modProcessor {
+class CollectionsResourceDeleteProcessor extends modProcessor
+{
     /** @var modResource $resource */
     public $resource;
     /** @var modUser $lockedUser */
@@ -17,23 +19,28 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
     /** @var int $deletedTime */
     public $deletedTime = 0;
 
-    public function checkPermissions() {
+    public function checkPermissions()
+    {
         return $this->modx->hasPermission('delete_document');
     }
-    public function getLanguageTopics() {
+
+    public function getLanguageTopics()
+    {
         return array('resource');
     }
+
     /**
      * Get the Resource and check for proper permissions
      *
      * {@inheritDoc}
      * @return boolean|string
      */
-    public function initialize() {
-        $id = $this->getProperty('id',false);
+    public function initialize()
+    {
+        $id = $this->getProperty('id', false);
         if (empty($id)) return $this->modx->lexicon('resource_err_ns');
         $this->resource = $this->modx->getObject('modResource', $id);
-        if (empty($this->resource)) return $this->modx->lexicon('resource_err_nfs',array('id' => $id));
+        if (empty($this->resource)) return $this->modx->lexicon('resource_err_nfs', array('id' => $id));
 
         /* validate resource can be deleted */
         if (!$this->resource->checkPolicy(array('save' => true, 'delete' => true))) {
@@ -47,7 +54,8 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
      * {@inheritDoc}
      * @return mixed
      */
-    public function process() {
+    public function process()
+    {
         if ($this->modx->getOption('site_start') == $this->resource->get('id')) {
             return $this->failure($this->modx->lexicon('resource_err_delete_sitestart'));
         }
@@ -68,9 +76,9 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
         $this->deleteChildren();
 
         /* delete the document. */
-        $this->resource->set('deleted',true);
-        $this->resource->set('deletedby',$this->modx->user->get('id'));
-        $this->resource->set('deletedon',$this->deletedTime);
+        $this->resource->set('deleted', true);
+        $this->resource->set('deletedby', $this->modx->user->get('id'));
+        $this->resource->set('deletedon', $this->deletedTime);
         if ($this->resource->save() == false) {
             $this->resource->removeLock();
             return $this->failure($this->modx->lexicon('resource_err_delete'));
@@ -91,7 +99,7 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
 
         $deletedCount = $this->modx->getCount('modResource', array('deleted' => 1));
 
-        $outputArray = $this->resource->get(array (
+        $outputArray = $this->resource->get(array(
             'id',
             'deleted',
             'deletedby',
@@ -108,7 +116,8 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
      *
      * @return boolean
      */
-    public function addLock() {
+    public function addLock()
+    {
         $locked = $this->resource->addLock();
         if ($locked !== true) {
             $this->lockedUser = $this->modx->getObject('modUser', $locked);
@@ -123,12 +132,13 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
      * Get the IDs of all the children of the Resource
      * @return array
      */
-    public function getChildrenIds() {
+    public function getChildrenIds()
+    {
         $this->children = array();
         $this->getChildren($this->resource);
 
         /* prepare children ids for invokeEvents */
-        $childrenIds = array ();
+        $childrenIds = array();
         /** @var modResource $child */
         foreach ($this->children as $child) {
             $childrenIds[] = $child->get('id');
@@ -143,7 +153,8 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
      * @param modResource $parent
      * @return void
      */
-    protected function getChildren(modResource $parent) {
+    protected function getChildren(modResource $parent)
+    {
         $childResources = $parent->getMany('Children');
         if (count($childResources) > 0) {
             /** @var modResource $child */
@@ -168,8 +179,9 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
      * @param array $childrenIds
      * @return void
      */
-    public function fireBeforeDelete(array $childrenIds = array()) {
-        $this->modx->invokeEvent('OnBeforeDocFormDelete', array (
+    public function fireBeforeDelete(array $childrenIds = array())
+    {
+        $this->modx->invokeEvent('OnBeforeDocFormDelete', array(
             'id' => $this->resource->get('id'),
             'resource' => &$this->resource,
             'children' => $childrenIds,
@@ -180,7 +192,8 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
      * Delete all children of this resource
      * @return array
      */
-    public function deleteChildren() {
+    public function deleteChildren()
+    {
         if (count($this->children) > 0) {
             /** @var modResource $child */
             foreach ($this->children as $child) {
@@ -189,12 +202,12 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
                     /** @var modUser $user */
                     $user = $this->modx->getObject('modUser', $locked);
                     if ($user) {
-                        $this->modx->log(modX::LOG_LEVEL_ERROR,$this->modx->lexicon('resource_locked_by', array('id' => $child->get('id'), 'user' => $user->get('username'))));
+                        $this->modx->log(modX::LOG_LEVEL_ERROR, $this->modx->lexicon('resource_locked_by', array('id' => $child->get('id'), 'user' => $user->get('username'))));
                     }
                 }
-                $child->set('deleted',true);
-                $child->set('deletedby',$this->modx->user->get('id'));
-                $child->set('deletedon',$this->deletedTime);
+                $child->set('deleted', true);
+                $child->set('deletedby', $this->modx->user->get('id'));
+                $child->set('deletedon', $this->deletedTime);
                 if ($child->save() == false) {
                     $child->removeLock();
                     $this->resource->removeLock();
@@ -209,29 +222,17 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
      * @param array $childrenIds
      * @return void
      */
-    public function fireAfterDelete(array $childrenIds = array()) {
-        $this->modx->invokeEvent('OnDocFormDelete', array (
+    public function fireAfterDelete(array $childrenIds = array())
+    {
+        $this->modx->invokeEvent('OnDocFormDelete', array(
             'id' => $this->resource->get('id'),
             'children' => $childrenIds,
             'resource' => &$this->resource,
         ));
-        $this->modx->invokeEvent('OnResourceDelete',array(
+        $this->modx->invokeEvent('OnResourceDelete', array(
             'id' => $this->resource->get('id'),
             'children' => &$childrenIds,
             'resource' => &$this->resource,
-        ));
-    }
-
-    /**
-     * Clear the site cache
-     * @return void
-     */
-    public function clearCache() {
-        $this->modx->cacheManager->refresh(array(
-            'db' => array(),
-            'auto_publish' => array('contexts' => array($this->resource->get('context_key'))),
-            'context_settings' => array('contexts' => array($this->resource->get('context_key'))),
-            'resource' => array('contexts' => array($this->resource->get('context_key'))),
         ));
     }
 
@@ -240,8 +241,24 @@ class CollectionsResourceDeleteProcessor extends modProcessor {
      *
      * @return void
      */
-    public function logManagerAction() {
-        $this->modx->logManagerAction('delete_resource',$this->resource->get('class_key'),$this->resource->get('id'));
+    public function logManagerAction()
+    {
+        $this->modx->logManagerAction('delete_resource', $this->resource->get('class_key'), $this->resource->get('id'));
+    }
+
+    /**
+     * Clear the site cache
+     * @return void
+     */
+    public function clearCache()
+    {
+        $this->modx->cacheManager->refresh(array(
+            'db' => array(),
+            'auto_publish' => array('contexts' => array($this->resource->get('context_key'))),
+            'context_settings' => array('contexts' => array($this->resource->get('context_key'))),
+            'resource' => array('contexts' => array($this->resource->get('context_key'))),
+        ));
     }
 }
+
 return 'CollectionsResourceDeleteProcessor';

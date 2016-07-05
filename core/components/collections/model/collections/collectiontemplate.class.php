@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @property int $id
@@ -42,8 +43,10 @@
  *
  * @package collections
  */
-class CollectionTemplate extends xPDOSimpleObject {
-    public function setTemplates($templates) {
+class CollectionTemplate extends xPDOSimpleObject
+{
+    public function setTemplates($templates)
+    {
         $this->xpdo->removeCollection('CollectionResourceTemplate', array('collection_template' => $this->id));
 
         if (!empty($templates)) {
@@ -59,4 +62,3 @@ class CollectionTemplate extends xPDOSimpleObject {
     }
 
 }
-?>

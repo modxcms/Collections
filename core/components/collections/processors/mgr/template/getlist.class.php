@@ -1,18 +1,21 @@
 <?php
+
 /**
  * Get list Templates
  *
  * @package collections
  * @subpackage processors
  */
-class CollectionsTemplateGetListProcessor extends modObjectGetListProcessor {
+class CollectionsTemplateGetListProcessor extends modObjectGetListProcessor
+{
     public $classKey = 'CollectionTemplate';
     public $languageTopics = array('collections:default', 'template');
     public $defaultSortField = 'name';
     public $defaultSortDirection = 'ASC';
     public $objectType = 'collections.template';
 
-    public function beforeIteration(array $list) {
+    public function beforeIteration(array $list)
+    {
         $addEmpty = $this->getProperty('addEmpty', false);
 
         if ($addEmpty) {
@@ -24,9 +27,10 @@ class CollectionsTemplateGetListProcessor extends modObjectGetListProcessor {
         return $list;
     }
 
-    public function prepareRow(xPDOObject $object) {
+    public function prepareRow(xPDOObject $object)
+    {
         $template = $object->toArray();
-        
+
         $c = $this->modx->newQuery('CollectionResourceTemplate');
         $c->leftJoin('modTemplate', 'ResourceTemplate');
         $c->where(array(
@@ -37,10 +41,11 @@ class CollectionsTemplateGetListProcessor extends modObjectGetListProcessor {
         ));
         $c->prepare();
         $c->stmt->execute();
-        
+
         $template['default_for_templates'] = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-        
+
         return $template;
     }
 }
+
 return 'CollectionsTemplateGetListProcessor';

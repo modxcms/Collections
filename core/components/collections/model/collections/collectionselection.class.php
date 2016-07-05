@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @property int $collection
  * @property int $resource
@@ -10,5 +11,6 @@
  *
  * @package collections
  */
-class CollectionSelection extends xPDOObject {}
-?>
+class CollectionSelection extends xPDOObject
+{
+}

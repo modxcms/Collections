@@ -1,10 +1,12 @@
 <?php
+
 /**
  * The base class for Collections.
  *
  * @package collections
  */
-class Collections {
+class Collections
+{
     /** @var \modX $modx */
     public $modx;
     public $namespace = 'collections';
@@ -13,13 +15,14 @@ class Collections {
     /** @var array $chunks */
     public $chunks = array();
 
-    function __construct(modX &$modx,array $config = array()) {
+    function __construct(modX &$modx, array $config = array())
+    {
         $this->modx =& $modx;
         $this->namespace = $this->getOption('namespace', $config, 'collections');
 
         $corePath = $this->getOption('core_path', $config, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/collections/');
         $assetsUrl = $this->getOption('assets_url', $config, $this->modx->getOption('assets_url', null, MODX_ASSETS_URL) . 'components/collections/');
-        $connectorUrl = $assetsUrl.'connector.php';
+        $connectorUrl = $assetsUrl . 'connector.php';
 
         $taggerCorePath = $modx->getOption('tagger.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/tagger/');
 
@@ -58,25 +61,25 @@ class Collections {
             'core_path' => $corePath,
 
             'assetsUrl' => $assetsUrl,
-            'cssUrl' => $assetsUrl.'css/',
-            'jsUrl' => $assetsUrl.'js/',
-            'imagesUrl' => $assetsUrl.'images/',
+            'cssUrl' => $assetsUrl . 'css/',
+            'jsUrl' => $assetsUrl . 'js/',
+            'imagesUrl' => $assetsUrl . 'images/',
 
             'connectorUrl' => $connectorUrl,
 
             'corePath' => $corePath,
-            'modelPath' => $corePath.'model/',
-            'chunksPath' => $corePath.'elements/chunks/',
+            'modelPath' => $corePath . 'model/',
+            'chunksPath' => $corePath . 'elements/chunks/',
             'chunkSuffix' => '.chunk.tpl',
-            'snippetsPath' => $corePath.'elements/snippets/',
-            'processorsPath' => $corePath.'processors/',
-            'templatesPath' => $corePath.'templates/',
+            'snippetsPath' => $corePath . 'elements/snippets/',
+            'processorsPath' => $corePath . 'processors/',
+            'templatesPath' => $corePath . 'templates/',
 
             'taggerInstalled' => $tagger instanceof Tagger,
             'quipInstalled' => $quip instanceof Quip,
-        ),$config);
+        ), $config);
 
-        $this->modx->addPackage('collections',$this->config['modelPath']);
+        $this->modx->addPackage('collections', $this->config['modelPath']);
         $this->modx->lexicon->load('collections:default');
         $this->modx->lexicon->load('collections:selections');
     }
@@ -90,7 +93,8 @@ class Collections {
      * namespaced system setting; by default this value is null.
      * @return mixed The option value or the default value specified.
      */
-    public function getOption($key, $options = array(), $default = null) {
+    public function getOption($key, $options = array(), $default = null)
+    {
         $option = $default;
         if (!empty($key) && is_string($key)) {
             if ($options != null && array_key_exists($key, $options)) {
@@ -104,7 +108,8 @@ class Collections {
         return $option;
     }
 
-    public function explodeAndClean($array, $delimiter = ',', $keepDuplicates = 0) {
+    public function explodeAndClean($array, $delimiter = ',', $keepDuplicates = 0)
+    {
         $array = explode($delimiter, $array);     // Explode fields to array
         $array = array_map('trim', $array);       // Trim array's values
 
@@ -121,7 +126,8 @@ class Collections {
      * @param modResource $collection
      * @return CollectionTemplate
      */
-    public function getCollectionsView($collection) {
+    public function getCollectionsView($collection)
+    {
         $template = null;
 
         /** @var CollectionSetting $collectionSetting */

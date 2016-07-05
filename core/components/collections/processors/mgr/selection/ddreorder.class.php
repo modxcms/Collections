@@ -1,16 +1,19 @@
 <?php
+
 /**
  * Reorder items after drag and drop in grid
  *
  * @package collections
  * @subpackage processors
  */
-class CollectionsSelectionReorderResourceUpdateProcessor extends modObjectProcessor {
+class CollectionsSelectionReorderResourceUpdateProcessor extends modObjectProcessor
+{
     public $classKey = 'CollectionSelection';
     public $languageTopics = array('collections:default');
     public $objectType = 'collections.selection';
 
-    public function process(){
+    public function process()
+    {
         $idItem = $this->getProperty('idItem');
         $oldIndex = $this->getProperty('oldIndex');
         $newIndex = $this->getProperty('newIndex');
@@ -32,13 +35,13 @@ class CollectionsSelectionReorderResourceUpdateProcessor extends modObjectProces
 
         $itemsCollection = $this->modx->getCollection($this->classKey, $items);
 
-        if(min($oldIndex, $newIndex) == $newIndex){
+        if (min($oldIndex, $newIndex) == $newIndex) {
             foreach ($itemsCollection as $item) {
                 $itemObject = $this->modx->getObject($this->classKey, array('resource' => $item->get('resource'), 'collection' => $parent));
                 $itemObject->set('menuindex', $itemObject->get('menuindex') + 1);
                 $itemObject->save();
             }
-        }else{
+        } else {
             foreach ($itemsCollection as $item) {
                 $itemObject = $this->modx->getObject($this->classKey, array('resource' => $item->get('resource'), 'collection' => $parent));
                 $itemObject->set('menuindex', $itemObject->get('menuindex') - 1);
@@ -55,4 +58,5 @@ class CollectionsSelectionReorderResourceUpdateProcessor extends modObjectProces
     }
 
 }
+
 return 'CollectionsSelectionReorderResourceUpdateProcessor';

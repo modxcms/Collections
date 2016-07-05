@@ -1,17 +1,20 @@
 <?php
+
 /**
  * Update menu index from a row update
  *
  * @package collections
  * @subpackage processors.resource
  */
-class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
+class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor
+{
     public $classKey = 'modResource';
     public $beforeSaveEvent = 'OnBeforeDocFormSave';
     public $afterSaveEvent = 'OnDocFormSave';
     public $objectType = 'resource';
-    
-    public function initialize() {
+
+    public function initialize()
+    {
         $data = $this->getProperty('data');
         if (empty($data)) return $this->modx->lexicon('invalid_data');
         $data = $this->modx->fromJSON($data);
@@ -22,9 +25,10 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
         return parent::initialize();
     }
 
-    public function process() {
+    public function process()
+    {
         $this->unsetSnippetRendererColumns();
-        
+
         /* Run the beforeSet method before setting the fields, and allow stoppage */
         $canSave = $this->beforeSet();
         if ($canSave !== true) {
@@ -45,7 +49,7 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
             $validator = $this->object->getValidator();
             if ($validator->hasMessages()) {
                 foreach ($validator->getMessages() as $message) {
-                    $this->addFieldError($message['field'],$this->modx->lexicon($message['message']));
+                    $this->addFieldError($message['field'], $this->modx->lexicon($message['message']));
                 }
             }
         }
@@ -57,7 +61,7 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
         }
 
         if ($this->saveObject() == false) {
-            return $this->failure($this->modx->lexicon($this->objectType.'_err_save'));
+            return $this->failure($this->modx->lexicon($this->objectType . '_err_save'));
         }
 
         $this->saveSpecialColumns();
@@ -68,7 +72,21 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
         return $this->cleanup();
     }
 
-    public function saveSpecialColumns(){
+    private function unsetSnippetRendererColumns()
+    {
+        /** @var CollectionTemplate $view */
+        $view = $this->modx->collections->getCollectionsView($this->object->Parent);
+
+        /** @var CollectionTemplateColumn[] $columns */
+        $columns = $view->getMany('Columns', 'php_renderer != ""');
+
+        foreach ($columns as $column) {
+            unset($this->properties[$column->name]);
+        }
+    }
+
+    public function saveSpecialColumns()
+    {
         $fields = $this->getProperties();
 
         foreach ($fields as $key => $field) {
@@ -77,7 +95,7 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
                 continue;
             }
 
-            $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null,  false);
+            $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null, false);
             if ($taggerInstalled) {
                 if (strpos($key, 'tagger_') !== false) {
                     $this->saveTagger(preg_replace('/tagger_/', '', $key, 1), $field);
@@ -87,11 +105,13 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
         }
     }
 
-    public function saveTV($key, $value) {
+    public function saveTV($key, $value)
+    {
         $this->object->setTVValue($key, $value);
     }
 
-    public function saveTagger($group, $tags) {
+    public function saveTagger($group, $tags)
+    {
         $group = $this->modx->getObject('TaggerGroup', array('alias' => $group));
         if (!$group) {
             return;
@@ -173,18 +193,6 @@ class CollectionsUpdateFromGridProcessor extends modObjectUpdateProcessor {
         }
     }
 
-    private function unsetSnippetRendererColumns()
-    {
-        /** @var CollectionTemplate $view */
-        $view = $this->modx->collections->getCollectionsView($this->object->Parent);
-        
-        /** @var CollectionTemplateColumn[] $columns */
-        $columns = $view->getMany('Columns', 'php_renderer != ""');
-        
-        foreach ($columns as $column) {
-            unset($this->properties[$column->name]);
-        }
-    }
-
 }
+
 return 'CollectionsUpdateFromGridProcessor';

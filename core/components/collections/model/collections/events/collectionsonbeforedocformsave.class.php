@@ -1,8 +1,10 @@
 <?php
 
-class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
+class CollectionsOnBeforeDocFormSave extends CollectionsPlugin
+{
 
-    public function run() {
+    public function run()
+    {
         /** @var \modResource $resource */
         $resource = $this->scriptProperties['resource'];
 
@@ -41,8 +43,20 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
     /**
      * @param \modResource $resource
      */
-    protected function handleParent($resource) {
+    protected function handleParent($resource)
+    {
         $resource->set('show_in_tree', 0);
+    }
+
+    protected function revealChildrenInTree($resource)
+    {
+        /** @var \modResource[] $children */
+        $children = $resource->Children;
+
+        foreach ($children as $child) {
+            $child->set('show_in_tree', 1);
+            $child->save();
+        }
     }
 
     /**
@@ -50,7 +64,8 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
      * @param \modResource $parent
      * @param \modResource $resource
      */
-    protected function handleOriginal($original, $parent, $resource) {
+    protected function handleOriginal($original, $parent, $resource)
+    {
         /** @var \modResource $originalParent */
         $originalParent = $original->Parent;
 
@@ -69,7 +84,8 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
      * @param \modResource $resource
      * @param \modResource $originalParent
      */
-    protected function handleOriginalParent($parent, $resource, $originalParent) {
+    protected function handleOriginalParent($parent, $resource, $originalParent)
+    {
         if ($originalParent->class_key == 'CollectionContainer') {
             if ($parent->class_key != 'CollectionContainer') {
                 $resource->set('show_in_tree', 1);
@@ -88,7 +104,8 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
      * @param \modResource $original
      * @param \modResource $resource
      */
-    protected function switchResourceType($original, $resource) {
+    protected function switchResourceType($original, $resource)
+    {
         if (($original->class_key != 'CollectionContainer') && ($resource->class_key == 'CollectionContainer')) {
             $this->switchToCollections($resource);
         }
@@ -101,7 +118,8 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
     /**
      * @param \modResource $resource
      */
-    protected function switchToCollections($resource) {
+    protected function switchToCollections($resource)
+    {
         /** @var \modResource[] $children */
         $children = $resource->Children;
 
@@ -112,16 +130,6 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
                 $child->set('show_in_tree', 1);
             }
 
-            $child->save();
-        }
-    }
-
-    protected function revealChildrenInTree($resource) {
-        /** @var \modResource[] $children */
-        $children = $resource->Children;
-
-        foreach ($children as $child) {
-            $child->set('show_in_tree', 1);
             $child->save();
         }
     }

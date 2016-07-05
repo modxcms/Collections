@@ -1,16 +1,18 @@
 <?php
+
 /**
  * Get list of Children
  *
  * @package collections
  * @subpackage processors.resource
  */
-class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
+class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
+{
     public $classKey = 'modResource';
     public $defaultSortField = 'createdon';
     public $defaultSortDirection = 'DESC';
     public $checkListPermission = true;
-    public $languageTopics = array('resource','collections:default');
+    public $languageTopics = array('resource', 'collections:default');
 
     public $tvColumns = array();
     public $taggerColumns = array();
@@ -24,11 +26,12 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
     public $sortType = null;
     public $sortBefore = '';
     public $sortAfter = '';
-    
+
     public $iconMap = array();
 
-    public function initialize() {
-        $parent = $this->getProperty('parent',null);
+    public function initialize()
+    {
+        $parent = $this->getProperty('parent', null);
         if (empty($parent)) {
             return false;
         }
@@ -41,26 +44,26 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         $sort = $this->getProperty('sort');
         $sort = explode(':', $sort);
-        
+
         if (isset($sort[1])) {
             $this->sortType = $sort[1];
             $this->setProperty('sort', $sort[0]);
         } else {
             $this->setProperty('sort', $sort[0]);
-            
+
             /** @var CollectionTemplateColumn[] $columns */
             $columns = $template->getMany('Columns', array('name' => $sort[0]));
             if (count($columns) == 1) {
                 foreach ($columns as $column) {
-                    $this->sortType = $column->sort_type;    
+                    $this->sortType = $column->sort_type;
                 }
             }
         }
-        
+
         $this->sortBefore = $template->permanent_sort_before;
         $this->sortAfter = $template->permanent_sort_after;
 
-        
+
         $buttons = $this->modx->collections->explodeAndClean($template->buttons, ',', 1);
         foreach ($buttons as $button) {
             $button = $this->modx->collections->explodeAndClean($button, ':');
@@ -116,12 +119,12 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
             }
         }
 
-        $quipInstalled = $this->modx->collections->getOption('quipInstalled', null,  false);
+        $quipInstalled = $this->modx->collections->getOption('quipInstalled', null, false);
         if (!$quipInstalled) {
             $this->useQuip = false;
         }
 
-        $this->useTagger = $this->modx->collections->getOption('taggerInstalled', null,  false);
+        $this->useTagger = $this->modx->collections->getOption('taggerInstalled', null, false);
 
         $this->iconMap['weblink'] = $this->modx->getOption('mgr_tree_icon_weblink', null, 'tree-weblink');
         $this->iconMap['symlink'] = $this->modx->getOption('mgr_tree_icon_symlink', null, 'tree-symlink');
@@ -131,7 +134,8 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         return parent::initialize();
     }
 
-    public function setActions() {
+    public function setActions()
+    {
         $this->actions['view'] = array(
             'className' => 'view',
             'text' => $this->modx->lexicon('view'),
@@ -184,31 +188,85 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         );
     }
 
-    public function prepareQueryBeforeCount(xPDOQuery $c) {
-        $parent = $this->getProperty('parent',null);
+    public function process()
+    {
+        $beforeQuery = $this->beforeQuery();
+        if ($beforeQuery !== true) {
+            return $this->failure($beforeQuery);
+        }
+        $data = $this->getData();
+
+        if (count($this->columnRenderer) > 0) {
+            $list = $this->iterateWithRenderer($data);
+        } else {
+            $list = $this->iterate($data);
+        }
+
+        return $this->outputArray($list, $data['total']);
+    }
+
+    /**
+     * Get the data of the query
+     * @return array
+     */
+    public function getData()
+    {
+        $data = array();
+        $limit = intval($this->getProperty('limit'));
+        $start = intval($this->getProperty('start'));
+
+        /* query for chunks */
+        $c = $this->modx->newQuery($this->classKey);
+        $c = $this->prepareQueryBeforeCount($c);
+        $data['total'] = $this->modx->getCount($this->classKey, $c);
+        $c = $this->prepareQueryAfterCount($c);
+
+        $gridSort = $this->getProperty('sort');
+
+        $c = $this->permanentSort($c, $gridSort, $this->sortBefore);
+
+        if (empty($this->sortType)) {
+            $c->sortby('`' . $gridSort . '`', $this->getProperty('dir'));
+        } else {
+            $c->sortby('CAST(`' . $gridSort . '` as ' . $this->sortType . ')', $this->getProperty('dir'));
+        }
+
+        $c = $this->permanentSort($c, $gridSort, $this->sortAfter);
+
+        if ($limit > 0) {
+            $c->limit($limit, $start);
+        }
+
+        $data['results'] = $this->modx->getCollection($this->classKey, $c);
+        return $data;
+    }
+
+    public function prepareQueryBeforeCount(xPDOQuery $c)
+    {
+        $parent = $this->getProperty('parent', null);
 
         $c->where(array(
             'parent' => $parent,
         ));
 
-        $query = $this->getProperty('query',null);
+        $query = $this->getProperty('query', null);
         if (!empty($query)) {
             $c->leftJoin('modUserProfile', 'CreatedByProfile', array('CreatedByProfile.internalKey = modResource.createdby'));
             $c->leftJoin('modUser', 'CreatedBy');
 
             $queryWhere = array(
-                'pagetitle:LIKE' => '%'.$query.'%',
-                'OR:description:LIKE' => '%'.$query.'%',
-                'OR:alias:LIKE' => '%'.$query.'%',
-                'OR:introtext:LIKE' => '%'.$query.'%',
-                'OR:CreatedByProfile.fullname:LIKE' => '%'.$query.'%',
-                'OR:CreatedBy.username:LIKE' => '%'.$query.'%',
+                'pagetitle:LIKE' => '%' . $query . '%',
+                'OR:description:LIKE' => '%' . $query . '%',
+                'OR:alias:LIKE' => '%' . $query . '%',
+                'OR:introtext:LIKE' => '%' . $query . '%',
+                'OR:CreatedByProfile.fullname:LIKE' => '%' . $query . '%',
+                'OR:CreatedBy.username:LIKE' => '%' . $query . '%',
             );
-            
+
             // tv columns search rules
             foreach ($this->tvColumns as $column) {
                 array_push($queryWhere, array(
-                    'OR:TemplateVarResources_' . $column['column'] . '.value:LIKE' => '%'.$query.'%',
+                    'OR:TemplateVarResources_' . $column['column'] . '.value:LIKE' => '%' . $query . '%',
                 ));
             }
 
@@ -217,13 +275,13 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                 $c->leftJoin('TaggerTag', 'Tag', array('Tag.id = TagResource.tag'));
 
                 array_push($queryWhere, array(
-                    'OR:Tag.tag:LIKE' => '%'.$query.'%',
+                    'OR:Tag.tag:LIKE' => '%' . $query . '%',
                 ));
             }
 
             $c->where($queryWhere);
         }
-        $filter = $this->getProperty('filter','');
+        $filter = $this->getProperty('filter', '');
         switch ($filter) {
             case 'published':
                 $c->where(array(
@@ -261,7 +319,8 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         return $c;
     }
 
-    public function prepareQueryAfterCount(xPDOQuery $c) {
+    public function prepareQueryAfterCount(xPDOQuery $c)
+    {
 
         $c->select($this->modx->getSelectColumns('modResource', 'modResource'));
         $c->select(array(
@@ -284,44 +343,81 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
 
         if ($this->useQuip) {
             $commentsQuery = $this->modx->newQuery('quipComment');
-            $commentsQuery->innerJoin('quipThread','Thread');
+            $commentsQuery->innerJoin('quipThread', 'Thread');
             $commentsQuery->where(array(
                 'Thread.resource = modResource.id',
             ));
             $commentsQuery->select(array(
-                'COUNT('.$this->modx->getSelectColumns('quipComment','quipComment','',array('id')).')',
+                'COUNT(' . $this->modx->getSelectColumns('quipComment', 'quipComment', '', array('id')) . ')',
             ));
             $commentsQuery->prepare();
             $c->select(array(
-                '('.$commentsQuery->toSQL().') AS '.$this->modx->escape('quip'),
+                '(' . $commentsQuery->toSQL() . ') AS ' . $this->modx->escape('quip'),
             ));
         }
-        
+
         return $c;
+    }
+
+    protected function permanentSort(xPDOQuery $c, $gridSort, $sortOptions)
+    {
+        $sorts = explode(',', $sortOptions);
+        foreach ($sorts as $sort) {
+            $sort = explode('=', $sort);
+            if (isset($sort[1])) {
+                if (($sort[0] != '*') && (strtolower($sort[0]) != strtolower($gridSort))) continue;
+            }
+
+            $options = (isset($sort[1])) ? $sort[1] : $sort[0];
+            $options = explode(':', $options);
+            if (empty($options[0])) continue;
+
+            $options['field'] = $options[0];
+            $options['dir'] = empty($options[1]) ? $this->getProperty('dir') : $options[1];
+            $options['type'] = empty($options[2]) ? null : $options[2];
+
+            if (empty($options['type'])) {
+                $c->sortby('`' . $options['field'] . '`', $options['dir']);
+            } else {
+                $c->sortby('CAST(`' . $options['field'] . '` as ' . $options['type'] . ')', $options['dir']);
+            }
+        }
+
+        return $c;
+    }
+
+    public function iterateWithRenderer(array $data)
+    {
+        $list = array();
+        $list = $this->beforeIteration($list);
+        $this->currentIndex = 0;
+        /** @var xPDOObject|modAccessibleObject $object */
+        foreach ($data['results'] as $object) {
+            if ($this->checkListPermission && $object instanceof modAccessibleObject && !$object->checkPolicy('list')) continue;
+
+            $objectArray = $this->prepareRowWithRenderer($object);
+
+            if (!empty($objectArray) && is_array($objectArray)) {
+                $list[] = $objectArray;
+                $this->currentIndex++;
+            }
+        }
+        $list = $this->afterIteration($list);
+        return $list;
     }
 
     /**
      * @param xPDOObject $object
      * @return array
      */
-    public function prepareRowWithRenderer(xPDOObject $object) {
+    public function prepareRowWithRenderer(xPDOObject $object)
+    {
         $resourceArray = parent::prepareRow($object);
 
         foreach ($this->columnRenderer as $field => $snippet) {
             $value = isset($resourceArray[$field]) ? $resourceArray[$field] : null;
-            $resourceArray[$field] = $this->modx->runSnippet($snippet, array('value' => $value, 'row' => $resourceArray, 'input' => $value, 'column' => $field));    
+            $resourceArray[$field] = $this->modx->runSnippet($snippet, array('value' => $value, 'row' => $resourceArray, 'input' => $value, 'column' => $field));
         }
-        
-        $resourceArray = $this->prepareSupportFields($resourceArray);
-        $resourceArray = $this->prepareActions($resourceArray);
-        $resourceArray = $this->prepareMenuActions($resourceArray);
-        $resourceArray = $this->prepareIcons($resourceArray);
-
-        return $resourceArray;
-    }
-
-    public function prepareRow(xPDOObject $object) {
-        $resourceArray = parent::prepareRow($object);
 
         $resourceArray = $this->prepareSupportFields($resourceArray);
         $resourceArray = $this->prepareActions($resourceArray);
@@ -331,22 +427,24 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         return $resourceArray;
     }
 
-    public function prepareSupportFields($resourceArray) {
+    public function prepareSupportFields($resourceArray)
+    {
         $version = $this->modx->getVersionData();
 
         if ($version['major_version'] < 3) {
-            $resourceArray['action_edit'] = '?a=30&id='.$resourceArray['id'];
+            $resourceArray['action_edit'] = '?a=30&id=' . $resourceArray['id'];
         } else {
-            $resourceArray['action_edit'] = '?a=resource/update&action=post/update&id='.$resourceArray['id'];
+            $resourceArray['action_edit'] = '?a=resource/update&action=post/update&id=' . $resourceArray['id'];
         }
 
         $this->modx->getContext($resourceArray['context_key']);
-        $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'],$resourceArray['context_key']);
+        $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'], $resourceArray['context_key']);
 
         return $resourceArray;
     }
 
-    public function prepareActions($resourceArray) {
+    public function prepareActions($resourceArray)
+    {
         $resourceArray['actions'] = array();
 
         foreach ($this->buttons as $button) {
@@ -382,7 +480,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
                         break;
                     case 'open':
 //                        if ($resourceArray['has_children'] == '1') {
-                            $resourceArray['actions'][] = $this->actions['open'];
+                        $resourceArray['actions'][] = $this->actions['open'];
 //                        }
                         break;
                     default:
@@ -395,13 +493,14 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         return $resourceArray;
     }
 
-    public function prepareMenuActions($resourceArray) {
+    public function prepareMenuActions($resourceArray)
+    {
         $resourceArray['menu_actions'] = array();
 
         if ($resourceArray['has_children'] == '1') {
             $resourceArray['menu_actions']['open'] = $this->actions['open'];
         }
-        
+
         $resourceArray['menu_actions']['view'] = $this->actions['view'];
         $resourceArray['menu_actions']['edit'] = $this->actions['edit'];
         $resourceArray['menu_actions']['duplicate'] = $this->actions['duplicate'];
@@ -421,122 +520,6 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         }
 
         return $resourceArray;
-    }
-
-    /**
-     * Get the data of the query
-     * @return array
-     */
-    public function getData() {
-        $data = array();
-        $limit = intval($this->getProperty('limit'));
-        $start = intval($this->getProperty('start'));
-
-        /* query for chunks */
-        $c = $this->modx->newQuery($this->classKey);
-        $c = $this->prepareQueryBeforeCount($c);
-        $data['total'] = $this->modx->getCount($this->classKey,$c);
-        $c = $this->prepareQueryAfterCount($c);
-
-        $gridSort = $this->getProperty('sort');
-        
-        $c = $this->permanentSort($c, $gridSort, $this->sortBefore);
-        
-        if (empty($this->sortType)) {
-            $c->sortby('`' . $gridSort . '`',$this->getProperty('dir'));
-        } else {
-            $c->sortby('CAST(`' . $gridSort . '` as ' . $this->sortType . ')',$this->getProperty('dir'));
-        }
-
-        $c = $this->permanentSort($c, $gridSort, $this->sortAfter);
-        
-        if ($limit > 0) {
-            $c->limit($limit,$start);
-        }
-
-        $data['results'] = $this->modx->getCollection($this->classKey,$c);
-        return $data;
-    }
-    
-    protected function permanentSort(xPDOQuery $c, $gridSort, $sortOptions) 
-    {
-        $sorts = explode(',', $sortOptions);
-        foreach ($sorts as $sort) {
-            $sort = explode('=', $sort);
-            if (isset($sort[1])) {
-                if (($sort[0] != '*') && (strtolower($sort[0]) != strtolower($gridSort))) continue;
-            }
-
-            $options = (isset($sort[1])) ? $sort[1] : $sort[0];
-            $options = explode(':', $options);
-            if (empty($options[0])) continue;
-
-            $options['field'] = $options[0];
-            $options['dir'] = empty($options[1]) ? $this->getProperty('dir') : $options[1];
-            $options['type'] = empty($options[2]) ? null : $options[2];
-            
-            if (empty($options['type'])) {
-                $c->sortby('`' . $options['field'] . '`', $options['dir']);
-            } else {
-                $c->sortby('CAST(`' . $options['field'] . '` as ' . $options['type'] . ')', $options['dir']);
-            }
-        }
-        
-        return $c;
-    }
-
-    public function iterate(array $data) {
-        $list = array();
-        $list = $this->beforeIteration($list);
-        $this->currentIndex = 0;
-        /** @var xPDOObject|modAccessibleObject $object */
-        foreach ($data['results'] as $object) {
-            if ($this->checkListPermission && $object instanceof modAccessibleObject && !$object->checkPolicy('list')) continue;
-
-            $objectArray = $this->prepareRow($object);
-
-            if (!empty($objectArray) && is_array($objectArray)) {
-                $list[] = $objectArray;
-                $this->currentIndex++;
-            }
-        }
-        $list = $this->afterIteration($list);
-        return $list;
-    }
-
-    public function iterateWithRenderer(array $data) {
-        $list = array();
-        $list = $this->beforeIteration($list);
-        $this->currentIndex = 0;
-        /** @var xPDOObject|modAccessibleObject $object */
-        foreach ($data['results'] as $object) {
-            if ($this->checkListPermission && $object instanceof modAccessibleObject && !$object->checkPolicy('list')) continue;
-
-            $objectArray = $this->prepareRowWithRenderer($object);
-
-            if (!empty($objectArray) && is_array($objectArray)) {
-                $list[] = $objectArray;
-                $this->currentIndex++;
-            }
-        }
-        $list = $this->afterIteration($list);
-        return $list;
-    }
-
-    public function process() {
-        $beforeQuery = $this->beforeQuery();
-        if ($beforeQuery !== true) {
-            return $this->failure($beforeQuery);
-        }
-        $data = $this->getData();
-
-        if (count($this->columnRenderer) > 0) {
-            $list = $this->iterateWithRenderer($data);
-        } else {
-            $list = $this->iterate($data);
-        }
-
-        return $this->outputArray($list,$data['total']);
     }
 
     /**
@@ -609,8 +592,41 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor {
         }
 
         $resourceArray['icons'] = implode(' ', $iconCls);
-        
+
+        return $resourceArray;
+    }
+
+    public function iterate(array $data)
+    {
+        $list = array();
+        $list = $this->beforeIteration($list);
+        $this->currentIndex = 0;
+        /** @var xPDOObject|modAccessibleObject $object */
+        foreach ($data['results'] as $object) {
+            if ($this->checkListPermission && $object instanceof modAccessibleObject && !$object->checkPolicy('list')) continue;
+
+            $objectArray = $this->prepareRow($object);
+
+            if (!empty($objectArray) && is_array($objectArray)) {
+                $list[] = $objectArray;
+                $this->currentIndex++;
+            }
+        }
+        $list = $this->afterIteration($list);
+        return $list;
+    }
+
+    public function prepareRow(xPDOObject $object)
+    {
+        $resourceArray = parent::prepareRow($object);
+
+        $resourceArray = $this->prepareSupportFields($resourceArray);
+        $resourceArray = $this->prepareActions($resourceArray);
+        $resourceArray = $this->prepareMenuActions($resourceArray);
+        $resourceArray = $this->prepareIcons($resourceArray);
+
         return $resourceArray;
     }
 }
+
 return 'CollectionsResourceGetListProcessor';

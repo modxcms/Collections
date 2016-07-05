@@ -1,7 +1,10 @@
 <?php
-class CollectionsOnBeforeEmptyTrash extends CollectionsPlugin {
 
-    public function run() {
+class CollectionsOnBeforeEmptyTrash extends CollectionsPlugin
+{
+
+    public function run()
+    {
         $ids = $this->scriptProperties['ids'];
 
         foreach ($ids as $id) {

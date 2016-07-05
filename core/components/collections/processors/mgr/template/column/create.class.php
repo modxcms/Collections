@@ -1,33 +1,36 @@
 <?php
+
 /**
  * Create a Template column
  *
  * @package collections
  * @subpackage processors.template.column
  */
-class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor {
+class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor
+{
     public $classKey = 'CollectionTemplateColumn';
     public $languageTopics = array('collections:default');
     public $objectType = 'collections.template.column';
     /** @var CollectionTemplate $object */
     public $object;
 
-    public function beforeSet() {
-        $template = (int) $this->getProperty('template');
+    public function beforeSet()
+    {
+        $template = (int)$this->getProperty('template');
 
         if ($template <= 0) return false;
 
         $name = $this->getProperty('name');
 
         if (empty($name)) {
-            $this->addFieldError('name',$this->modx->lexicon('collections.err.column_ns_name'));
+            $this->addFieldError('name', $this->modx->lexicon('collections.err.column_ns_name'));
         } else {
             if (strpos($name, '.') !== false) {
-                $this->addFieldError('name',$this->modx->lexicon('collections.err.column_dot_name'));
+                $this->addFieldError('name', $this->modx->lexicon('collections.err.column_dot_name'));
             }
 
             if ($this->doesAlreadyExist(array('name' => $name, 'template' => $template))) {
-                $this->addFieldError('name',$this->modx->lexicon('collections.err.column_ae_name'));
+                $this->addFieldError('name', $this->modx->lexicon('collections.err.column_ae_name'));
             }
         }
 
@@ -45,7 +48,7 @@ class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor 
                 }
             }
 
-            $useTagger = $this->modx->collections->getOption('taggerInstalled', null,  false);
+            $useTagger = $this->modx->collections->getOption('taggerInstalled', null, false);
             if ($useTagger && (strpos($name, 'tagger_') !== false)) {
                 $groupName = preg_replace('/tagger_/', '', $name, 1);
                 /** @var TaggerGroup $taggerGroup */
@@ -57,7 +60,7 @@ class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor 
             }
 
             if (!$autoLabel) {
-                $this->addFieldError('label',$this->modx->lexicon('collections.err.template_ns_label'));
+                $this->addFieldError('label', $this->modx->lexicon('collections.err.template_ns_label'));
             }
         }
 
@@ -86,7 +89,7 @@ class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor 
                 'position:>=' => $position
             ));
             $c->sortby('position', 'ASC');
-            
+
             /** @var CollectionTemplateColumn[] $columns */
             $columns = $this->modx->getIterator('CollectionTemplateColumn', $c);
             $tmpPosition = $position;
@@ -101,7 +104,7 @@ class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor 
             }
         }
 
-        $width = (int) $this->getProperty('width');
+        $width = (int)$this->getProperty('width');
         if ($width <= 0) {
             $this->setProperty('width', 100);
         }
@@ -111,12 +114,8 @@ class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor 
         return parent::beforeSet();
     }
 
-    public function afterSave() {
-
-        return parent::afterSave();
-    }
-
-    public function handleNull($property) {
+    public function handleNull($property)
+    {
         $value = $this->getProperty($property);
 
         if ($value == '') {
@@ -130,5 +129,12 @@ class CollectionsTemplateColumnCreateProcessor extends modObjectCreateProcessor 
         return $value;
     }
 
+    public function afterSave()
+    {
+
+        return parent::afterSave();
+    }
+
 }
+
 return 'CollectionsTemplateColumnCreateProcessor';

@@ -1,7 +1,10 @@
 <?php
-class CollectionsOnResourceBeforeSort extends CollectionsPlugin {
 
-    public function run() {
+class CollectionsOnResourceBeforeSort extends CollectionsPlugin
+{
+
+    public function run()
+    {
         /** @var \modResource[] $nodes */
         $nodes =& $this->scriptProperties['nodes'];
 
@@ -41,7 +44,8 @@ class CollectionsOnResourceBeforeSort extends CollectionsPlugin {
      * @param \modResource $resource
      * @param \modResource $originalParent
      */
-    protected function handleParent($parent, $resource, $originalParent) {
+    protected function handleParent($parent, $resource, $originalParent)
+    {
         if ($parent) {
             if ($parent->class_key == 'CollectionContainer') {
                 $resource->set('show_in_tree', 0);
@@ -60,7 +64,8 @@ class CollectionsOnResourceBeforeSort extends CollectionsPlugin {
     /**
      * @param \modResource $originalParent
      */
-    protected function handleOriginalParent($originalParent) {
+    protected function handleOriginalParent($originalParent)
+    {
         $originalGreatParent = $originalParent->Parent;
 
         if ($originalGreatParent && ($originalGreatParent->class_key == 'CollectionContainer') && ($originalParent->hasChildren() == 0)) {

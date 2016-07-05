@@ -1,16 +1,19 @@
 <?php
+
 /**
  * Reorder items after drag and drop in grid
  *
  * @package collections
  * @subpackage processors
  */
-class CollectionsReorderTemplateColumnUpdateProcessor extends modObjectProcessor {
+class CollectionsReorderTemplateColumnUpdateProcessor extends modObjectProcessor
+{
     public $classKey = 'CollectionTemplateColumn';
     public $languageTopics = array('collections:default');
     public $objectType = 'collections.template.column';
 
-    public function process(){
+    public function process()
+    {
         $idItem = $this->getProperty('idItem');
         $oldIndex = $this->getProperty('oldIndex');
         $newIndex = $this->getProperty('newIndex');
@@ -32,13 +35,13 @@ class CollectionsReorderTemplateColumnUpdateProcessor extends modObjectProcessor
 
         $itemsColumn = $this->modx->getCollection($this->classKey, $items);
 
-        if(min($oldIndex, $newIndex) == $newIndex){
+        if (min($oldIndex, $newIndex) == $newIndex) {
             foreach ($itemsColumn as $item) {
                 $itemObject = $this->modx->getObject($this->classKey, $item->get('id'));
                 $itemObject->set('position', $itemObject->get('position') + 1);
                 $itemObject->save();
             }
-        }else{
+        } else {
             foreach ($itemsColumn as $item) {
                 $itemObject = $this->modx->getObject($this->classKey, $item->get('id'));
                 $itemObject->set('position', $itemObject->get('position') - 1);
@@ -55,4 +58,5 @@ class CollectionsReorderTemplateColumnUpdateProcessor extends modObjectProcessor
     }
 
 }
+
 return 'CollectionsReorderTemplateColumnUpdateProcessor';

@@ -1,17 +1,20 @@
 <?php
+
 /**
  * Change parent after dropping to the Resource tree
  *
  * @package collections
  * @subpackage processors.resource
  */
-class CollectionsChangeParentProcessor extends modObjectUpdateProcessor {
+class CollectionsChangeParentProcessor extends modObjectUpdateProcessor
+{
     public $classKey = 'modResource';
 
     /** @var modResource $object */
     public $object;
 
-    public function beforeSet() {
+    public function beforeSet()
+    {
         $parent = $this->getProperty('parent', '');
 
         if ($parent == '') {
@@ -32,7 +35,8 @@ class CollectionsChangeParentProcessor extends modObjectUpdateProcessor {
         return parent::beforeSet();
     }
 
-    public function beforeSave() {
+    public function beforeSave()
+    {
         /** @var modResource $parent */
         $parent = $this->modx->getObject('modResource', $this->object->parent);
         if ($parent && ($parent->class_key == 'CollectionContainer')) {
@@ -45,4 +49,5 @@ class CollectionsChangeParentProcessor extends modObjectUpdateProcessor {
     }
 
 }
+
 return 'CollectionsChangeParentProcessor';

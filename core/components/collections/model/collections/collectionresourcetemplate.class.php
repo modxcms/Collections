@@ -1,4 +1,5 @@
 <?php
+
 /**
  * @property int $collection_template
  * @property int $resource_template
@@ -8,5 +9,6 @@
  *
  * @package collections
  */
-class CollectionResourceTemplate extends xPDOObject {}
-?>
+class CollectionResourceTemplate extends xPDOObject
+{
+}

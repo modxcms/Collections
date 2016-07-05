@@ -1,24 +1,29 @@
 <?php
-require_once MODX_CORE_PATH.'model/modx/modprocessor.class.php';
-require_once MODX_CORE_PATH.'model/modx/processors/resource/create.class.php';
-require_once MODX_CORE_PATH.'model/modx/processors/resource/update.class.php';
+require_once MODX_CORE_PATH . 'model/modx/modprocessor.class.php';
+require_once MODX_CORE_PATH . 'model/modx/processors/resource/create.class.php';
+require_once MODX_CORE_PATH . 'model/modx/processors/resource/update.class.php';
 
 /**
  * @package collections
  */
-class CollectionContainer extends modResource {
+class CollectionContainer extends modResource
+{
     public $showInContextMenu = true;
     public $allowDrop = 1;
-    function __construct(xPDO & $xpdo) {
-        parent :: __construct($xpdo);
-        $this->set('class_key','CollectionContainer');
+
+    function __construct(xPDO & $xpdo)
+    {
+        parent:: __construct($xpdo);
+        $this->set('class_key', 'CollectionContainer');
     }
 
-    public static function getControllerPath(xPDO &$modx) {
-        return $modx->getOption('collections.core_path',null,$modx->getOption('core_path').'components/collections/').'controllers/';
+    public static function getControllerPath(xPDO &$modx)
+    {
+        return $modx->getOption('collections.core_path', null, $modx->getOption('core_path') . 'components/collections/') . 'controllers/';
     }
 
-    public function getContextMenuText() {
+    public function getContextMenuText()
+    {
         $this->xpdo->lexicon->load('collections:default');
         return array(
             'text_create' => $this->xpdo->lexicon('collections.system.text_create'),
@@ -26,14 +31,17 @@ class CollectionContainer extends modResource {
         );
     }
 
-    public function getResourceTypeName() {
+    public function getResourceTypeName()
+    {
         $this->xpdo->lexicon->load('collections:default');
         return $this->xpdo->lexicon('collections.system.type_name');
     }
 }
 
-class CollectionContainerCreateProcessor extends modResourceCreateProcessor {
-    public function afterSave() {
+class CollectionContainerCreateProcessor extends modResourceCreateProcessor
+{
+    public function afterSave()
+    {
         $collectionsTemplate = $this->getProperty('collections_template');
         if ($collectionsTemplate === null) {
             return parent::afterSave();
@@ -56,11 +64,13 @@ class CollectionContainerCreateProcessor extends modResourceCreateProcessor {
     }
 }
 
-class CollectionContainerUpdateProcessor extends modResourceUpdateProcessor {
-    public function afterSave() {
+class CollectionContainerUpdateProcessor extends modResourceUpdateProcessor
+{
+    public function afterSave()
+    {
         $collectionsTemplate = $this->getProperty('collections_template');
         if ($collectionsTemplate === null) {
-            return parent::afterSave();    
+            return parent::afterSave();
         }
 
         $collectionsTemplate = (int)$collectionsTemplate;

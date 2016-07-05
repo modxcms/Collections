@@ -1,9 +1,12 @@
 <?php
-class CollectionsOnManagerPageBeforeRender extends CollectionsPlugin {
 
-    public function run(){
+class CollectionsOnManagerPageBeforeRender extends CollectionsPlugin
+{
+
+    public function run()
+    {
         $this->scriptProperties['controller']->addLexiconTopic('collections:default');
-        
+
         $this->scriptProperties['controller']->addHtml("
             <script>
             var collectionsToolbarLoaded = false;
@@ -43,7 +46,7 @@ class CollectionsOnManagerPageBeforeRender extends CollectionsPlugin {
             });
             </script>
         ");
-        
+
         return true;
     }
 }
