@@ -69,7 +69,8 @@ if (!empty($excludeToPlaceholder)) {
     foreach($linkedResources as $res) {
         $excludeResources[] = '-' . $res;
     }
-    $modx->setPlaceholder($excludeToPlaceholder, implode(',', $excludeResoures));
+    $excludeResources = implode(',', $excludeResources);
+    $modx->setPlaceholder($excludeToPlaceholder, $excludeResources);
 }
 
 $linkedResources = implode(',', $linkedResources);
