@@ -116,6 +116,10 @@ collections.renderer.image = function(value, metaData, record, rowIndex, colInde
         return '<img src="' + MODx.config.base_url + imgPath + value + '" width="64">';
     }
 };
+collections.renderer.boolean = function(value, metaData, record, rowIndex, colIndex, store) {
+    var iconclass = (value) ? 'icon-check' : 'icon-times';
+    return '<div style="text-align:center;"><i class="icon ' + iconclass + '"></i></div>';
+};
 
 
 // Backwards compatibility
@@ -129,5 +133,6 @@ Collections.renderer = {
     datetimeTwoLines: collections.renderer.datetimeTwoLines,
     datetime: collections.renderer.datetime,
     timestampToDatetime: collections.renderer.timestampToDatetime,
-    image: collections.renderer.image
+    image: collections.renderer.image,
+    boolean: collections.renderer.boolean
 };
