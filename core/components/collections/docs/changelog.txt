@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+Collections 3.5.0
+===================
 - Add collections.renderer.boolean renderer
 - Add AjaxManager compatibility
 - Adjust position of other columns when creating/updating column with position specified
