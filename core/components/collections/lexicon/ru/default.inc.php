@@ -181,4 +181,4 @@ $_lang['collections.err.template_remove_global'] = 'Нельзя удалить 
 $_lang['collections.err.template_ae_name'] = 'Шаблон с таким именем уже существует.';
 $_lang['collections.err.column_dot_name'] = 'Имя столбца не может содержать точку.';
 $_lang['collections.err.template_ns_label'] = 'Label is not specified.';
-$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</stron> sort field condition to use drag & drop sorting.';
+$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</strong> sort field condition to use drag & drop sorting.';
