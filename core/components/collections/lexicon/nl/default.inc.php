@@ -181,4 +181,4 @@ $_lang['collections.err.template_remove_global'] = 'Het is niet mogelijk de stan
 $_lang['collections.err.template_ae_name'] = 'Er bestaat al een template met deze naam.';
 $_lang['collections.err.column_dot_name'] = 'Kolomnaam mag geen punt bevatten.';
 $_lang['collections.err.template_ns_label'] = 'Label is not specified.';
-$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</stron> sort field condition to use drag & drop sorting.';
+$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</strong> sort field condition to use drag & drop sorting.';

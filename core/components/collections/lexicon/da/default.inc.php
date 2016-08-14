@@ -181,4 +181,4 @@ $_lang['collections.err.template_remove_global'] = 'Du kan ikke fjerne den globa
 $_lang['collections.err.template_ae_name'] = 'Der findes allerede en skabelon med dette navn.';
 $_lang['collections.err.column_dot_name'] = 'Kolonnenavnet må ikke indeholde punktum.';
 $_lang['collections.err.template_ns_label'] = 'Label is not specified.';
-$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</stron> sort field condition to use drag & drop sorting.';
+$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</strong> sort field condition to use drag & drop sorting.';

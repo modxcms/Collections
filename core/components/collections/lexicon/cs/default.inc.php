@@ -181,4 +181,4 @@ $_lang['collections.err.template_remove_global'] = 'Výchozí zobrazení nelze o
 $_lang['collections.err.template_ae_name'] = 'Šablona s tímto názvem již existuje.';
 $_lang['collections.err.column_dot_name'] = 'Název sloupce nemůže obsahovat tečku.';
 $_lang['collections.err.template_ns_label'] = 'Není zadáno Označení.';
-$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</stron> sort field condition to use drag & drop sorting.';
+$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</strong> sort field condition to use drag & drop sorting.';
