@@ -3,7 +3,7 @@
     ,"lowCaseName": "collections"
     ,"description": "Hides resources under this container in tree. Adding grid int o the update resource panel."
     ,"author": "John Peca"
-    ,"version": "3.5.0"
+    ,"version": "3.5.1"
     ,"package":{
         "actions": [{
             "id": 1
@@ -84,7 +84,7 @@
     ,"build": {
         "resolver": {
             "before": ["resolve.switchback.php"]
-            ,"after": ["resolve.updatefromfirst.php", "resolve.defaulttemplate.php", "resolve.fixselections.php", "resolve.fixsystemsettings.php"]
+            ,"after": ["resolve.synctables.php", "resolve.updatefromfirst.php", "resolve.defaulttemplate.php", "resolve.fixselections.php", "resolve.fixsystemsettings.php"]
         }
     }
 }

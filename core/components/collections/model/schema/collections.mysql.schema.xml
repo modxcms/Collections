@@ -51,7 +51,7 @@
         <field key="child_content_disposition" dbtype="int" precision="1" phptype="integer" null="true" />
         <field key="permanent_sort_before" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="permanent_sort_after" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
-        <field key="selection_link_condition" dbtype="text" phptype="string" />
+        <field key="selection_link_condition" dbtype="text" phptype="string" default="" />
 
         <aggregate alias="Setting" class="CollectionSetting" local="id" foreign="template" cardinality="one" owner="local" />
         <composite alias="Columns" class="CollectionTemplateColumn" local="id" foreign="template" cardinality="many" owner="local" />
