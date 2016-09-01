@@ -693,6 +693,13 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 }
 
                 ,'afterrowmove': function(objThis, oldIndex, newIndex, records) {
+                    var parent = collections.template.parent;
+                    
+                    var query = Ext.urlDecode(location.search.replace('?', ''));
+                    if (parseInt(query.folder) > 0) {
+                        parent = parseInt(query.folder);
+                    }
+                    
                     MODx.Ajax.request({
                         url: collections.connectorUrl
                         ,params: {
@@ -700,7 +707,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                             ,idItem: records.pop().id
                             ,oldIndex: oldIndex
                             ,newIndex: newIndex
-                            ,parent: collections.template.parent
+                            ,parent: parent 
                         }
                         ,listeners: {
                             'success': {
