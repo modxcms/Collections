@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Fix D&D sort for Resources in depth > 1
+
 Collections 3.5.0
 ===================
 - Add collections.renderer.boolean renderer
