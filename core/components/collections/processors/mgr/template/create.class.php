@@ -41,6 +41,10 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor
         $this->handleComboBoolean('child_cacheable');
         $this->handleComboBoolean('child_searchable');
         $this->handleComboBoolean('child_richtext');
+        $this->handleComboBoolean('search_query_exclude_tvs');
+        $this->handleComboBoolean('search_query_exclude_tagger');
+        $this->handleComboBoolean('search_query_title_only');
+        
         $this->handleNull('child_content_disposition');
         $this->handleNull('sort_type');
 
