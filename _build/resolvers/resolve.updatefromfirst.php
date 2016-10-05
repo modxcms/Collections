@@ -94,7 +94,7 @@ if ($object->xpdo) {
                 $manager->addField('CollectionTemplate', 'child_richtext');
                 $manager->addField('CollectionTemplate', 'child_content_type');
             }
-            
+
             if ($oldPackage && $oldPackage->compareVersion('3.2.0-pl', '>')) {
                 $manager = $modx->getManager();
                 $manager->addField('CollectionTemplate', 'permanent_sort_before');
@@ -103,13 +103,13 @@ if ($object->xpdo) {
 
                 $manager->addField('CollectionTemplateColumn', 'sort_type');
             }
-            
+
             if ($oldPackage && $oldPackage->compareVersion('3.2.1-pl', '>')) {
                 $manager = $modx->getManager();
                 $manager->addField('CollectionTemplate', 'parent');
                 $manager->addField('CollectionTemplate', 'child_content_disposition');
             }
-            
+
             if ($oldPackage && $oldPackage->compareVersion('3.4.0-pl', '>')) {
                 $manager = $modx->getManager();
                 $manager->addField('CollectionTemplate', 'selection_link_condition');
@@ -120,7 +120,7 @@ if ($object->xpdo) {
                 foreach ($collections as $collection) {
                     $modx->updateCollection('modResource', array('show_in_tree' => 0), array('parent' => $collection->id, 'class_key:!=' => 'CollectionContainer'));
                 }
-                
+
                 /** @var CollectionTemplate[] $views */
                 $views = $modx->getIterator('CollectionTemplate');
                 foreach ($views as $view) {
@@ -131,6 +131,13 @@ if ($object->xpdo) {
                         $view->save();
                     }
                 }
+            }
+
+            if ($oldPackage && $oldPackage->compareVersion('3.5.0-pl', '>')) {
+                $manager = $modx->getManager();
+                $manager->addField('CollectionTemplate', 'search_query_exclude_tvs');
+                $manager->addField('CollectionTemplate', 'search_query_exclude_tagger');
+                $manager->addField('CollectionTemplate', 'search_query_title_only');
             }
 
             break;

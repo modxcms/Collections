@@ -142,6 +142,9 @@ $_lang['collections.template.selection_link_condition_desc'] = 'JSON kodierter x
 $_lang['collections.template.export_more'] = 'Ansichten exportieren';
 $_lang['collections.template.export'] = 'Ansicht exportieren';
 $_lang['collections.template.import'] = 'Ansichten importieren';
+$_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
+$_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
+$_lang['collections.template.search_query_title_only'] = 'Search - Title only';
 
 $_lang['collections.template.column.none'] = 'Diese Ansicht enthält noch keine Spalten.';
 $_lang['collections.template.column.name'] = 'Name';

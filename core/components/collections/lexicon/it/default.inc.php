@@ -144,6 +144,9 @@ $_lang['collections.template.selection_link_condition_desc'] = 'JSON encoded xPD
 $_lang['collections.template.export_more'] = 'Export views';
 $_lang['collections.template.export'] = 'Export view';
 $_lang['collections.template.import'] = 'Import views';
+$_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
+$_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
+$_lang['collections.template.search_query_title_only'] = 'Search - Title only';
 
 $_lang['collections.template.column.none'] = 'Questa vista non ha ancora alcuna colonna.';
 $_lang['collections.template.column.name'] = 'Nome';

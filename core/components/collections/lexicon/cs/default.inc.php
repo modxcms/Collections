@@ -142,6 +142,9 @@ $_lang['collections.template.selection_link_condition_desc'] = 'xPDO podmínka v
 $_lang['collections.template.export_more'] = 'Exportovat označené zobrazení';
 $_lang['collections.template.export'] = 'Exportovat zobrazení';
 $_lang['collections.template.import'] = 'Importovat zobrazení';
+$_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
+$_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
+$_lang['collections.template.search_query_title_only'] = 'Search - Title only';
 
 $_lang['collections.template.column.none'] = 'Toto zobrazení nemá definované sloupce.';
 $_lang['collections.template.column.name'] = 'Název';

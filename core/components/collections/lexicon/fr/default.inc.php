@@ -142,6 +142,9 @@ $_lang['collections.template.selection_link_condition_desc'] = 'xPDO condition e
 $_lang['collections.template.export_more'] = 'Vues de l\'exportation';
 $_lang['collections.template.export'] = 'Vues de l\'exportation';
 $_lang['collections.template.import'] = 'Importer des vues';
+$_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
+$_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
+$_lang['collections.template.search_query_title_only'] = 'Search - Title only';
 
 $_lang['collections.template.column.none'] = 'Cette vue n\'a pas encore de colonne.';
 $_lang['collections.template.column.name'] = 'Nom';

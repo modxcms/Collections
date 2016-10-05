@@ -26,7 +26,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
 
         parent::initialize();
     }
-    
+
     public function getLanguageTopics() {
         return array('resource','collections:default', 'collections:templates', 'collections:custom', 'collections:selections');
     }
@@ -195,7 +195,10 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'permanent_sort' => array (
                 'before' => $template->permanent_sort_before,
                 'after' => $template->permanent_sort_after,
-            )
+            ),
+            'search_query_exclude_tvs' => $template->search_query_exclude_tvs,
+            'search_query_exclude_tagger' => $template->search_query_exclude_tagger,
+            'search_query_title_only' => $template->search_query_title_only,
         );
 
         foreach ($columns as $column) {

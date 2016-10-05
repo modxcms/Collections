@@ -43,6 +43,9 @@ $xpdo_meta_map['CollectionTemplate'] = array(
             'permanent_sort_before' => '',
             'permanent_sort_after' => '',
             'selection_link_condition' => NULL,
+            'search_query_exclude_tvs' => NULL,
+            'search_query_exclude_tagger' => NULL,
+            'search_query_title_only' => NULL,
         ),
     'fieldMeta' =>
         array(
@@ -308,6 +311,27 @@ $xpdo_meta_map['CollectionTemplate'] = array(
                 array(
                     'dbtype' => 'text',
                     'phptype' => 'string',
+                ),
+            'search_query_exclude_tvs' =>
+                array(
+                    'dbtype' => 'int',
+                    'precision' => '1',
+                    'phptype' => 'boolean',
+                    'null' => true,
+                ),
+            'search_query_exclude_tagger' =>
+                array(
+                    'dbtype' => 'int',
+                    'precision' => '1',
+                    'phptype' => 'boolean',
+                    'null' => true,
+                ),
+            'search_query_title_only' =>
+                array(
+                    'dbtype' => 'int',
+                    'precision' => '1',
+                    'phptype' => 'boolean',
+                    'null' => true,
                 ),
         ),
     'composites' =>
