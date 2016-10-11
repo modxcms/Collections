@@ -47,11 +47,14 @@
         <field key="child_searchable" dbtype="int" precision="1" phptype="boolean" null="true" />
         <field key="child_richtext" dbtype="int" precision="1" phptype="boolean" null="true" />
         <field key="child_content_type" dbtype="int" precision="10" phptype="integer" null="false" default="0" />
-        <field key="parent" dbtype="varchar" precision="100" phptype="string" null="false" default="" />        
+        <field key="parent" dbtype="varchar" precision="100" phptype="string" null="false" default="" />
         <field key="child_content_disposition" dbtype="int" precision="1" phptype="integer" null="true" />
         <field key="permanent_sort_before" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="permanent_sort_after" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="selection_link_condition" dbtype="text" phptype="string" default="" />
+        <field key="search_query_exclude_tvs" dbtype="int" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="search_query_exclude_tagger" dbtype="int" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="search_query_title_only" dbtype="int" precision="1" phptype="boolean" null="false" default="0" />
 
         <aggregate alias="Setting" class="CollectionSetting" local="id" foreign="template" cardinality="one" owner="local" />
         <composite alias="Columns" class="CollectionTemplateColumn" local="id" foreign="template" cardinality="many" owner="local" />
@@ -70,7 +73,7 @@
         <field key="php_renderer" dbtype="varchar" precision="255" phptype="string" null="false" default="" />
         <field key="position" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="false" default="0" />
         <field key="sort_type" dbtype="varchar" precision="64" phptype="string" null="true" />
-        
+
         <aggregate alias="Template" class="CollectionTemplate" local="template" foreign="id" cardinality="one" owner="foreign" />
     </object>
 

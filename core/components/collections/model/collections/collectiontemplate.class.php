@@ -37,6 +37,9 @@
  * @property string $permanent_sort_before
  * @property string $permanent_sort_after
  * @property string $selection_link_condition
+ * @property bool|null $search_query_exclude_tvs
+ * @property bool|null $search_query_exclude_tagger
+ * @property bool|null $search_query_title_only
  *
  * @property CollectionSetting $Setting
  * @property CollectionTemplateColumn[] $Columns

@@ -24,6 +24,9 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor
     public $sortType = null;
     public $sortBefore = '';
     public $sortAfter = '';
+    public $searchQueryExcludeTvs = false;
+    public $searchQueryExcludeTagger = false;
+    public $searchQueryTitleOnly = false;
 
     public function initialize()
     {
@@ -58,6 +61,10 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor
 
         $this->sortBefore = $template->permanent_sort_before;
         $this->sortAfter = $template->permanent_sort_after;
+
+        $this->searchQueryExcludeTvs = $template->search_query_exclude_tvs;
+        $this->searchQueryExcludeTagger = $template->search_query_exclude_tagger;
+        $this->searchQueryTitleOnly = $template->search_query_title_only;
 
         $buttons = $this->modx->collections->explodeAndClean($template->buttons, ',', 1);
         foreach ($buttons as $button) {
@@ -230,23 +237,30 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor
             $c->leftJoin('modUserProfile', 'CreatedByProfile', array('CreatedByProfile.internalKey = modResource.createdby'));
             $c->leftJoin('modUser', 'CreatedBy');
 
-            $queryWhere = array(
-                'pagetitle:LIKE' => '%' . $query . '%',
-                'OR:description:LIKE' => '%' . $query . '%',
-                'OR:alias:LIKE' => '%' . $query . '%',
-                'OR:introtext:LIKE' => '%' . $query . '%',
-                'OR:CreatedByProfile.fullname:LIKE' => '%' . $query . '%',
-                'OR:CreatedBy.username:LIKE' => '%' . $query . '%',
-            );
+            if ($this->searchQueryTitleOnly) {
+                $queryWhere = array(
+                    'pagetitle:LIKE' => '%' . $query . '%',
+                );
+            } else {
+                $queryWhere = array(
+                    'pagetitle:LIKE' => '%' . $query . '%',
+                    'OR:description:LIKE' => '%' . $query . '%',
+                    'OR:alias:LIKE' => '%' . $query . '%',
+                    'OR:introtext:LIKE' => '%' . $query . '%',
+                    'OR:CreatedByProfile.fullname:LIKE' => '%' . $query . '%',
+                    'OR:CreatedBy.username:LIKE' => '%' . $query . '%',
+                );
+            }
+            if ($this->searchQueryExcludeTagger == false) {
+                $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null, false);
+                if ($taggerInstalled) {
+                    $c->leftJoin('TaggerTagResource', 'TagResource', array('TagResource.resource = modResource.id'));
+                    $c->leftJoin('TaggerTag', 'Tag', array('Tag.id = TagResource.tag'));
 
-            $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null, false);
-            if ($taggerInstalled) {
-                $c->leftJoin('TaggerTagResource', 'TagResource', array('TagResource.resource = modResource.id'));
-                $c->leftJoin('TaggerTag', 'Tag', array('Tag.id = TagResource.tag'));
-
-                array_push($queryWhere, array(
-                    'OR:Tag.tag:LIKE' => '%' . $query . '%',
-                ));
+                    array_push($queryWhere, array(
+                        'OR:Tag.tag:LIKE' => '%' . $query . '%',
+                    ));
+                }
             }
 
             $c->where($queryWhere);
