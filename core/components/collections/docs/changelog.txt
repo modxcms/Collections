@@ -1,5 +1,9 @@
 Changelog for Collections.
 
+Collections 3.6.0
+===================
+- Add sync tables resolver
+- Added 3 options to speed up large child lists (+10K resources)
 - Fix D&D sort for Resources in depth > 1
 
 Collections 3.5.0
