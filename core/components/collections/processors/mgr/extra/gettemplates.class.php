@@ -1,11 +1,13 @@
 <?php
 
-class CollectionsExtraTemplateGetListProcessor extends modObjectGetListProcessor {
+class CollectionsExtraTemplateGetListProcessor extends modObjectGetListProcessor
+{
     public $classKey = 'modTemplate';
-    public $languageTopics = array('template','category');
+    public $languageTopics = array('template', 'category');
     public $defaultSortField = 'templatename';
 
-    public function beforeIteration(array $list) {
+    public function beforeIteration(array $list)
+    {
         $addEmpty = $this->getProperty('addEmpty', false);
 
         if ($addEmpty) {
@@ -18,9 +20,10 @@ class CollectionsExtraTemplateGetListProcessor extends modObjectGetListProcessor
         return $list;
     }
 
-    public function prepareQueryBeforeCount(xPDOQuery $c) {
+    public function prepareQueryBeforeCount(xPDOQuery $c)
+    {
         $query = $this->getProperty('query');
-        $template = (int) $this->getProperty('template');
+        $template = (int)$this->getProperty('template');
 
         $where = array();
 
@@ -45,4 +48,5 @@ class CollectionsExtraTemplateGetListProcessor extends modObjectGetListProcessor
     }
 
 }
+
 return 'CollectionsExtraTemplateGetListProcessor';

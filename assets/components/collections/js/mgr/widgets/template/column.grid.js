@@ -1,7 +1,7 @@
-Collections.grid.TemplateColumn = function(config) {
+collections.grid.TemplateColumn = function(config) {
     config = config || {};
     Ext.applyIf(config,{
-        url: Collections.config.connectorUrl
+        url: collections.config.connectorUrl
         ,autosave: true
         ,save_action: 'mgr/template/column/updatefromgrid'
         ,baseParams: {
@@ -23,12 +23,12 @@ Collections.grid.TemplateColumn = function(config) {
             ,scope: this
         }]
     });
-    Collections.grid.TemplateColumn.superclass.constructor.call(this,config);
+    collections.grid.TemplateColumn.superclass.constructor.call(this,config);
 
     this.on('render', this.registerGridDropTarget, this);
     this.on('beforedestroy', this.destroyScrollManager, this);
 };
-Ext.extend(Collections.grid.TemplateColumn,MODx.grid.Grid,{
+Ext.extend(collections.grid.TemplateColumn,MODx.grid.Grid,{
     getMenu: function() {
         var m = [];
 
@@ -147,7 +147,7 @@ Ext.extend(Collections.grid.TemplateColumn,MODx.grid.Grid,{
             ,sortable: true
             ,editor: {xtype: 'textfield'}
             ,width: 100
-            ,renderer: Collections.renderer.qtip
+            ,renderer: collections.renderer.qtip
         },{
             header: _('collections.template.column.position')
             ,dataIndex: 'position'
@@ -168,7 +168,7 @@ Ext.extend(Collections.grid.TemplateColumn,MODx.grid.Grid,{
 
                 ,'afterrowmove': function(objThis, oldIndex, newIndex, records) {
                     MODx.Ajax.request({
-                        url: Collections.config.connectorUrl
+                        url: collections.config.connectorUrl
                         ,params: {
                             action: 'mgr/template/column/ddreorder'
                             ,idItem: records.pop().id
@@ -212,4 +212,4 @@ Ext.extend(Collections.grid.TemplateColumn,MODx.grid.Grid,{
     }
 
 });
-Ext.reg('collections-grid-template-column',Collections.grid.TemplateColumn);
+Ext.reg('collections-grid-template-column',collections.grid.TemplateColumn);

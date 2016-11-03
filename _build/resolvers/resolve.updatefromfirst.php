@@ -1,4 +1,5 @@
 <?php
+set_time_limit(0);
 if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_UPGRADE:
@@ -56,62 +57,23 @@ if ($object->xpdo) {
                 $time->save();
             }
 
-            if ($oldPackage && $oldPackage->compareVersion('2.1.0-pl', '>')) {
-                $manager = $modx->getManager();
-                $manager->addField('CollectionTemplate', 'child_template');
-                $manager->addField('CollectionTemplate', 'child_resource_type');
-                $manager->addField('CollectionTemplate', 'resource_type_selection');
-            }
-
-            if ($oldPackage && $oldPackage->compareVersion('2.2.0-pl', '>')) {
-                $manager = $modx->getManager();
-                $manager->addField('CollectionTemplate', 'tab_label');
-                $manager->addField('CollectionTemplate', 'button_label');
-                $manager->addField('CollectionTemplate', 'content_place');
-            }
-
-            if ($oldPackage && $oldPackage->compareVersion('3.0.0-pl', '>')) {
-                $manager = $modx->getManager();
-                $manager->addField('CollectionTemplate', 'view_for');
-                $manager->addField('CollectionTemplate', 'link_label');
-                $manager->addField('CollectionTemplate', 'context_menu');
-                $manager->addField('CollectionTemplate', 'buttons');
-                $manager->addField('CollectionTemplate', 'allowed_resource_types');
-
-                $manager->addField('CollectionTemplateColumn', 'php_renderer');
-            }
-
-            if ($oldPackage && $oldPackage->compareVersion('3.1.0-pl', '>')) {
-                $manager = $modx->getManager();
-                $manager->addField('CollectionTemplate', 'back_to_collection_label');
-                $manager->addField('CollectionTemplate', 'back_to_selection_label');
-                $manager->addField('CollectionTemplate', 'selection_create_sort');
-                $manager->addField('CollectionTemplate', 'child_hide_from_menu');
-                $manager->addField('CollectionTemplate', 'child_published');
-                $manager->addField('CollectionTemplate', 'child_cacheable');
-                $manager->addField('CollectionTemplate', 'child_searchable');
-                $manager->addField('CollectionTemplate', 'child_richtext');
-                $manager->addField('CollectionTemplate', 'child_content_type');
-            }
-            
-            if ($oldPackage && $oldPackage->compareVersion('3.2.0-pl', '>')) {
-                $manager = $modx->getManager();
-                $manager->addField('CollectionTemplate', 'permanent_sort_before');
-                $manager->addField('CollectionTemplate', 'permanent_sort_after');
-                $manager->addField('CollectionTemplate', 'sort_type');
-
-                $manager->addField('CollectionTemplateColumn', 'sort_type');
-            }
-            
-            if ($oldPackage && $oldPackage->compareVersion('3.2.1-pl', '>')) {
-                $manager = $modx->getManager();
-                $manager->addField('CollectionTemplate', 'parent');
-                $manager->addField('CollectionTemplate', 'child_content_disposition');
-            }
-            
-            if ($oldPackage && $oldPackage->compareVersion('3.3.0-pl', '>')) {
-                $manager = $modx->getManager();
-                $manager->addField('CollectionTemplate', 'selection_link_condition');
+            if ($oldPackage && $oldPackage->compareVersion('3.4.0-pl', '>')) {
+                /** @var modResource[] $collections */
+                $collections = $modx->getIterator('modResource', array('class_key' => 'CollectionContainer'));
+                foreach ($collections as $collection) {
+                    $modx->updateCollection('modResource', array('show_in_tree' => 0), array('parent' => $collection->id, 'class_key:!=' => 'CollectionContainer'));
+                }
+                
+                /** @var CollectionTemplate[] $views */
+                $views = $modx->getIterator('CollectionTemplate');
+                foreach ($views as $view) {
+                    $buttons = $view->get('buttons');
+                    if (strpos($buttons, 'open') === false) {
+                        $buttons = 'open,' . $buttons;
+                        $view->set('buttons', $buttons);
+                        $view->save();
+                    }
+                }
             }
 
             break;

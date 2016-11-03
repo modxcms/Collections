@@ -5,10 +5,12 @@
  * @package collections
  * @subpackage processors.template.column
  */
-require_once (dirname(__FILE__).'/update.class.php');
+require_once(dirname(__FILE__) . '/update.class.php');
 
-class CollectionsTemplateColumnUpdateFromGridProcessor extends CollectionsTemplateColumnUpdateProcessor {
-    public function initialize() {
+class CollectionsTemplateColumnUpdateFromGridProcessor extends CollectionsTemplateColumnUpdateProcessor
+{
+    public function initialize()
+    {
         $data = $this->getProperty('data');
         if (empty($data)) return $this->modx->lexicon('invalid_data');
         $data = $this->modx->fromJSON($data);
@@ -20,4 +22,5 @@ class CollectionsTemplateColumnUpdateFromGridProcessor extends CollectionsTempla
     }
 
 }
+
 return 'CollectionsTemplateColumnUpdateFromGridProcessor';

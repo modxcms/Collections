@@ -7,4 +7,6 @@ require_once dirname(dirname(__FILE__)) . '/data.class.php';
  * @package collections
  * @subpackage controllers
  */
-class SelectionContainerDataManagerController extends CollectionContainerDataManagerController {}
+class SelectionContainerDataManagerController extends CollectionContainerDataManagerController
+{
+}

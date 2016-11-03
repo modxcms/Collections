@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Gets a list of derivative classes for a class
  *
@@ -9,27 +10,33 @@
  * @package modx
  * @subpackage processors.system.derivatives
  */
-class CollectionsDerivativesGetListProcessor extends modProcessor {
-    public function checkPermissions() {
+class CollectionsDerivativesGetListProcessor extends modProcessor
+{
+    public function checkPermissions()
+    {
         return $this->modx->hasPermission('class_map');
     }
-    public function initialize() {
+
+    public function initialize()
+    {
         $this->setDefaultProperties(array(
             'class' => '',
             'skip' => 'modXMLRPCResource',
         ));
         return true;
     }
-    public function process() {
+
+    public function process()
+    {
         $class = $this->getProperty('class');
         if (empty($class)) $this->failure($this->modx->lexicon('class_err_ns'));
 
-        $skip = explode(',',$this->getProperty('skip'));
+        $skip = explode(',', $this->getProperty('skip'));
         $descendants = $this->modx->getDescendants($class);
 
         $list = array();
         foreach ($descendants as $descendant) {
-            if (in_array($descendant,$skip)) continue;
+            if (in_array($descendant, $skip)) continue;
 
             /** @var xPDOObject|modResource $obj */
             $obj = $this->modx->newObject($descendant);
@@ -51,4 +58,5 @@ class CollectionsDerivativesGetListProcessor extends modProcessor {
         return $this->outputArray($list);
     }
 }
+
 return 'CollectionsDerivativesGetListProcessor';

@@ -27,7 +27,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'view_for' => 0,
     'link_label' => 'selections.create',
     'context_menu' => 'view,edit,duplicate,publish,unpublish,-,delete,undelete,remove,-,unlink',
-    'buttons' => 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink',
+    'buttons' => 'open,view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink',
     'allowed_resource_types' => '',
     'back_to_collection_label' => 'collections.children.back_to_collection_label',
     'back_to_selection_label' => 'selections.back_to_selection_label',
@@ -42,7 +42,10 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'child_content_disposition' => NULL,
     'permanent_sort_before' => '',
     'permanent_sort_after' => '',
-    'selection_link_condition' => NULL,
+    'selection_link_condition' => '',
+    'search_query_exclude_tvs' => 0,
+    'search_query_exclude_tagger' => 0,
+    'search_query_title_only' => 0,
   ),
   'fieldMeta' => 
   array (
@@ -196,7 +199,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'precision' => '512',
       'phptype' => 'string',
       'null' => false,
-      'default' => 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink',
+      'default' => 'open,view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink',
     ),
     'allowed_resource_types' => 
     array (
@@ -308,7 +311,31 @@ $xpdo_meta_map['CollectionTemplate']= array (
     array (
       'dbtype' => 'text',
       'phptype' => 'string',
+      'default' => '',
+    ),
+    'search_query_exclude_tvs' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '1',
+      'phptype' => 'boolean',
       'null' => false,
+      'default' => 0,
+    ),
+    'search_query_exclude_tagger' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '1',
+      'phptype' => 'boolean',
+      'null' => false,
+      'default' => 0,
+    ),
+    'search_query_title_only' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '1',
+      'phptype' => 'boolean',
+      'null' => false,
+      'default' => 0,
     ),
   ),
   'composites' => 

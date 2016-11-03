@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @property int $id
@@ -36,14 +37,19 @@
  * @property string $permanent_sort_before
  * @property string $permanent_sort_after
  * @property string $selection_link_condition
+ * @property bool|null $search_query_exclude_tvs
+ * @property bool|null $search_query_exclude_tagger
+ * @property bool|null $search_query_title_only
  *
  * @property CollectionSetting $Setting
- * @property array $Columns
+ * @property CollectionTemplateColumn[] $Columns
  *
  * @package collections
  */
-class CollectionTemplate extends xPDOSimpleObject {
-    public function setTemplates($templates) {
+class CollectionTemplate extends xPDOSimpleObject
+{
+    public function setTemplates($templates)
+    {
         $this->xpdo->removeCollection('CollectionResourceTemplate', array('collection_template' => $this->id));
 
         if (!empty($templates)) {
@@ -59,4 +65,3 @@ class CollectionTemplate extends xPDOSimpleObject {
     }
 
 }
-?>

@@ -1,16 +1,19 @@
 <?php
+
 /**
  * Remove a Template.
  *
  * @package collections
  * @subpackage processors
  */
-class CollectionTemplateRemoveProcessor extends modObjectRemoveProcessor {
+class CollectionTemplateRemoveProcessor extends modObjectRemoveProcessor
+{
     public $classKey = 'CollectionTemplate';
     public $languageTopics = array('collections:default');
     public $objectType = 'collections.template';
 
-    public function beforeRemove() {
+    public function beforeRemove()
+    {
 
         $templatesCount = $this->modx->getCount($this->classKey);
         if ($templatesCount == 1) {
@@ -24,4 +27,5 @@ class CollectionTemplateRemoveProcessor extends modObjectRemoveProcessor {
         return parent::beforeRemove();
     }
 }
+
 return 'CollectionTemplateRemoveProcessor';

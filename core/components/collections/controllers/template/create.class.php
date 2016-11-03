@@ -28,6 +28,14 @@ class CollectionsTemplateCreateManagerController extends CollectionsBaseManagerC
 
         $this->addLastJavascript($this->collections->getOption('jsUrl').'mgr/widgets/template/template.panel.js');
         $this->addLastJavascript($this->collections->getOption('jsUrl').'mgr/sections/template/template.js');
+
+        $this->addHtml('
+        <script type="text/javascript">
+            Ext.onReady(function() {
+                MODx.load({ xtype: "collections-page-template"});
+            });
+        </script>
+        ');
     }
 
     public function getTemplateFile() { return $this->collections->getOption('templatesPath').'template/template.tpl'; }

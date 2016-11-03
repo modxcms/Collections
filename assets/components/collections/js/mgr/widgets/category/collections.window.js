@@ -1,21 +1,21 @@
-Collections.window.Selection = function(config) {
+collections.window.Selection = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         title: _('collections.selection.create')
         ,closeAction: 'close'
         ,isUpdate: false
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,action: 'mgr/selection/create'
         ,fields: this.getFields(config)
     });
-    Collections.window.Selection.superclass.constructor.call(this,config);
+    collections.window.Selection.superclass.constructor.call(this,config);
 
     this.on('show',function() {
         var fld = this.fp.getForm().items.itemAt(0);
         fld.focus(false,200);
     },this);
 };
-Ext.extend(Collections.window.Selection,MODx.Window, {
+Ext.extend(collections.window.Selection,MODx.Window, {
 
     getFields: function(config) {
         return [{
@@ -35,4 +35,4 @@ Ext.extend(Collections.window.Selection,MODx.Window, {
         }];
     }
 });
-Ext.reg('collections-window-selection',Collections.window.Selection);
+Ext.reg('collections-window-selection',collections.window.Selection);

@@ -1,4 +1,5 @@
 <?php
+
 /**
  * Undeletes a resource.
  *
@@ -8,48 +9,54 @@
  * @package modx
  * @subpackage processors.resource
  */
-class CollectionsResourceUnDeleteProcessor extends modProcessor {
+class CollectionsResourceUnDeleteProcessor extends modProcessor
+{
     /** @var modResource $resource */
     public $resource;
     /** @var modUser $user */
     public $lockedUser;
 
-    public function checkPermissions() {
+    public function checkPermissions()
+    {
         return $this->modx->hasPermission('undelete_document');
     }
-    public function getLanguageTopics() {
+
+    public function getLanguageTopics()
+    {
         return array('resource');
     }
 
-    public function initialize() {
-        $id = $this->getProperty('id',false);
+    public function initialize()
+    {
+        $id = $this->getProperty('id', false);
         if (empty($id)) return $this->modx->lexicon('resource_err_ns');
-        $this->resource = $this->modx->getObject('modResource',$id);
-        if (empty($this->resource)) return $this->modx->lexicon('resource_err_nfs',array('id' => $id));
+        $this->resource = $this->modx->getObject('modResource', $id);
+        if (empty($this->resource)) return $this->modx->lexicon('resource_err_nfs', array('id' => $id));
 
         /* check permissions on the resource */
-        if (!$this->resource->checkPolicy(array('save'=>1, 'undelete'=>1))) {
+        if (!$this->resource->checkPolicy(array('save' => 1, 'undelete' => 1))) {
             return $this->modx->lexicon('permission_denied');
         }
         return true;
     }
 
-    public function process() {
+    public function process()
+    {
         if (!$this->addLock()) {
             return $this->failure($this->modx->lexicon('resource_locked_by', array('id' => $this->resource->get('id'), 'user' => $this->lockedUser->get('username'))));
         }
 
         /* 'undelete' the resource. */
-        $this->resource->set('deleted',false);
-        $this->resource->set('deletedby',0);
-        $this->resource->set('deletedon',0);
+        $this->resource->set('deleted', false);
+        $this->resource->set('deletedby', 0);
+        $this->resource->set('deletedon', 0);
 
         if ($this->resource->save() == false) {
             $this->resource->removeLock();
             return $this->failure($this->modx->lexicon('resource_err_undelete'));
         }
 
-        $this->unDeleteChildren($this->resource->get('id'),$this->resource->get('deletedon'));
+        $this->unDeleteChildren($this->resource->get('id'), $this->resource->get('deletedon'));
 
         $this->fireAfterUnDeleteEvent();
 
@@ -61,7 +68,7 @@ class CollectionsResourceUnDeleteProcessor extends modProcessor {
         if ($skipClearCache == false) {
             $this->clearCache();
         }
-        
+
         $this->removeLock();
 
         $deletedCount = $this->modx->getCount('modResource', array('deleted' => 1));
@@ -77,7 +84,8 @@ class CollectionsResourceUnDeleteProcessor extends modProcessor {
      * Add a lock to the Resource while undeleting it
      * @return boolean
      */
-    public function addLock() {
+    public function addLock()
+    {
         $locked = $this->resource->addLock();
         if ($locked !== true) {
             $user = $this->modx->getObject('modUser', $locked);
@@ -89,27 +97,20 @@ class CollectionsResourceUnDeleteProcessor extends modProcessor {
     }
 
     /**
-     * Remove the lock from the Resource
-     * @return boolean
-     */
-    public function removeLock() {
-        return $this->resource->removeLock();
-    }
-
-    /**
      * UnDelete all the children Resources recursively
      * @param int $parent
      * @return boolean
      */
-    public function unDeleteChildren($parent) {
+    public function unDeleteChildren($parent)
+    {
         $success = false;
 
-        $kids = $this->modx->getCollection('modResource',array(
+        $kids = $this->modx->getCollection('modResource', array(
             'parent' => $parent,
             'deleted' => true,
         ));
 
-        if(count($kids) > 0) {
+        if (count($kids) > 0) {
             /* the resource has children resources, we'll need to undelete those too */
             /** @var modResource $kid */
             foreach ($kids as $kid) {
@@ -120,9 +121,9 @@ class CollectionsResourceUnDeleteProcessor extends modProcessor {
                         continue;
                     }
                 }
-                $kid->set('deleted',0);
-                $kid->set('deletedby',0);
-                $kid->set('deletedon',0);
+                $kid->set('deleted', 0);
+                $kid->set('deletedby', 0);
+                $kid->set('deletedon', 0);
                 $success = $kid->save();
                 if ($success) {
                     $success = $this->unDeleteChildren($kid->get('id'));
@@ -136,8 +137,9 @@ class CollectionsResourceUnDeleteProcessor extends modProcessor {
      * Fire the UnDelete event
      * @return void
      */
-    public function fireAfterUnDeleteEvent() {
-        $this->modx->invokeEvent('OnResourceUndelete',array(
+    public function fireAfterUnDeleteEvent()
+    {
+        $this->modx->invokeEvent('OnResourceUndelete', array(
             'id' => $this->resource->get('id'),
             'resource' => &$this->resource,
         ));
@@ -147,15 +149,17 @@ class CollectionsResourceUnDeleteProcessor extends modProcessor {
      * Log the manager action
      * @return void
      */
-    public function logManagerAction() {
-        $this->modx->logManagerAction('undelete_resource','modResource',$this->resource->get('id'));
+    public function logManagerAction()
+    {
+        $this->modx->logManagerAction('undelete_resource', 'modResource', $this->resource->get('id'));
     }
 
     /**
      * Clear the site cache
      * @return void
      */
-    public function clearCache() {
+    public function clearCache()
+    {
         $this->modx->cacheManager->refresh(array(
             'db' => array(),
             'auto_publish' => array('contexts' => array($this->resource->get('context_key'))),
@@ -163,5 +167,15 @@ class CollectionsResourceUnDeleteProcessor extends modProcessor {
             'resource' => array('contexts' => array($this->resource->get('context_key'))),
         ));
     }
+
+    /**
+     * Remove the lock from the Resource
+     * @return boolean
+     */
+    public function removeLock()
+    {
+        return $this->resource->removeLock();
+    }
 }
+
 return 'CollectionsResourceUnDeleteProcessor';

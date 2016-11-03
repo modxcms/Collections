@@ -14,7 +14,9 @@ if ($object->xpdo) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
             $modelPath = $modx->getOption('collections.core_path', null, $modx->getOption('core_path') . 'components/collections/') . 'model/';
-            $modx->addPackage('collections', $modelPath);
+            
+            $modx->addPackage('collections', $modelPath, null);
+
 
             $manager = $modx->getManager();
 

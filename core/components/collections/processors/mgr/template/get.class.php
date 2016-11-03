@@ -1,19 +1,22 @@
 <?php
+
 /**
  * Get Template
  *
  * @package collections
  * @subpackage processors
  */
-class CollectionsTemplateGetProcessor extends modObjectGetProcessor {
+class CollectionsTemplateGetProcessor extends modObjectGetProcessor
+{
     public $classKey = 'CollectionTemplate';
     public $languageTopics = array('collections:default');
     public $objectType = 'collections.template';
 
-    public function beforeOutput() {
+    public function beforeOutput()
+    {
         $c = $this->modx->newQuery('CollectionResourceTemplate');
         $c->where(array(
-           'collection_template' => $this->object->id
+            'collection_template' => $this->object->id
         ));
         $c->select($this->modx->getSelectColumns('CollectionResourceTemplate', 'CollectionResourceTemplate', '', array('resource_template')));
 
@@ -27,4 +30,5 @@ class CollectionsTemplateGetProcessor extends modObjectGetProcessor {
     }
 
 }
+
 return 'CollectionsTemplateGetProcessor';

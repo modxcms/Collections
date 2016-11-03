@@ -1,7 +1,10 @@
 <?php
-class CollectionsOnBeforeEmptyTrash extends CollectionsPlugin {
 
-    public function run() {
+class CollectionsOnBeforeEmptyTrash extends CollectionsPlugin
+{
+
+    public function run()
+    {
         $ids = $this->scriptProperties['ids'];
 
         foreach ($ids as $id) {
@@ -19,7 +22,7 @@ class CollectionsOnBeforeEmptyTrash extends CollectionsPlugin {
             $grandParent = $parent->Parent;
             if (!$grandParent) return;
 
-            if ($grandParent->class_key == 'CollectionContainer' && ($parent->hasChildren() == 0)) {
+            if (($grandParent->class_key == 'CollectionContainer') && ($parent->class_key != 'CollectionContainer')) {
                 $parent->set('show_in_tree', 0);
                 $parent->save();
             }

@@ -6,4 +6,4 @@ Ext.extend(Collections,Ext.Component,{
     page:{},window:{},grid:{},tree:{},panel:{},combo:{},config: {},renderer: {}
 });
 Ext.reg('collections',Collections);
-Collections = new Collections();
+collections = new Collections();

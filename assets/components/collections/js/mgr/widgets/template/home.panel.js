@@ -1,4 +1,4 @@
-Collections.panel.TemplateHome = function(config) {
+collections.panel.TemplateHome = function(config) {
     config = config || {};
     Ext.apply(config,{
         border: false
@@ -28,7 +28,7 @@ Collections.panel.TemplateHome = function(config) {
             }]
         }]
     });
-    Collections.panel.TemplateHome.superclass.constructor.call(this,config);
+    collections.panel.TemplateHome.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.panel.TemplateHome,MODx.Panel);
-Ext.reg('collections-panel-template-home',Collections.panel.TemplateHome);
+Ext.extend(collections.panel.TemplateHome,MODx.Panel);
+Ext.reg('collections-panel-template-home',collections.panel.TemplateHome);

@@ -1,4 +1,4 @@
-Collections.combo.FilterStatus = function(config) {
+collections.combo.FilterStatus = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         store: [
@@ -16,12 +16,12 @@ Collections.combo.FilterStatus = function(config) {
         ,forceSelection: true
         ,enableKeyEvents: true
     });
-    Collections.combo.FilterStatus.superclass.constructor.call(this,config);
+    collections.combo.FilterStatus.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.combo.FilterStatus,MODx.combo.ComboBox);
-Ext.reg('collections-combo-filter-status',Collections.combo.FilterStatus);
+Ext.extend(collections.combo.FilterStatus,MODx.combo.ComboBox);
+Ext.reg('collections-combo-filter-status',collections.combo.FilterStatus);
 
-Collections.combo.Template = function(config, getStore) {
+collections.combo.Template = function(config, getStore) {
     config = config || {};
 
     if (!config.clearBtnCls) {
@@ -52,7 +52,7 @@ Collections.combo.Template = function(config, getStore) {
         ,editable: true
         ,forceSelection: false
         ,pageSize: 20
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,baseParams: {
             action: 'mgr/extra/gettemplates'
             ,template: (MODx.request.id != undefined) ? MODx.request.id : 0
@@ -75,14 +75,14 @@ Collections.combo.Template = function(config, getStore) {
         config.store.load();
         return config.store;
     }
-    Collections.combo.Template.superclass.constructor.call(this,config);
+    collections.combo.Template.superclass.constructor.call(this,config);
     this.config = config;
     return this;
 };
-Ext.extend(Collections.combo.Template,Ext.ux.form.SuperBoxSelect);
-Ext.reg('collections-combo-template',Collections.combo.Template);
+Ext.extend(collections.combo.Template,Ext.ux.form.SuperBoxSelect);
+Ext.reg('collections-combo-template',collections.combo.Template);
 
-Collections.combo.SortDir = function(config) {
+collections.combo.SortDir = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         store: [
@@ -97,12 +97,12 @@ Collections.combo.SortDir = function(config) {
         ,forceSelection: true
         ,enableKeyEvents: true
     });
-    Collections.combo.SortDir.superclass.constructor.call(this,config);
+    collections.combo.SortDir.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.combo.SortDir,MODx.combo.ComboBox);
-Ext.reg('collections-combo-sort-dir',Collections.combo.SortDir);
+Ext.extend(collections.combo.SortDir,MODx.combo.ComboBox);
+Ext.reg('collections-combo-sort-dir',collections.combo.SortDir);
 
-Collections.combo.CollectionsTemplate = function(config) {
+collections.combo.CollectionsTemplate = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         name: 'collections_template'
@@ -111,17 +111,17 @@ Collections.combo.CollectionsTemplate = function(config) {
         ,valueField: 'id'
         ,fields: ['name','id']
         ,pageSize: 20
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,baseParams:{
             action: 'mgr/template/getlist'
         }
     });
-    Collections.combo.CollectionsTemplate.superclass.constructor.call(this,config);
+    collections.combo.CollectionsTemplate.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.combo.CollectionsTemplate,MODx.combo.ComboBox);
-Ext.reg('collections-combo-collections-template',Collections.combo.CollectionsTemplate);
+Ext.extend(collections.combo.CollectionsTemplate,MODx.combo.ComboBox);
+Ext.reg('collections-combo-collections-template',collections.combo.CollectionsTemplate);
 
-Collections.combo.SingleTemplate = function(config) {
+collections.combo.SingleTemplate = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         name: 'resource_template'
@@ -130,18 +130,18 @@ Collections.combo.SingleTemplate = function(config) {
         ,valueField: 'id'
         ,fields: ['templatename','id']
         ,pageSize: 20
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,baseParams:{
             action: 'mgr/extra/gettemplates'
             ,addEmpty: config.addEmpty | 0
         }
     });
-    Collections.combo.SingleTemplate.superclass.constructor.call(this,config);
+    collections.combo.SingleTemplate.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.combo.SingleTemplate,MODx.combo.ComboBox);
-Ext.reg('collections-combo-single-template',Collections.combo.SingleTemplate);
+Ext.extend(collections.combo.SingleTemplate,MODx.combo.ComboBox);
+Ext.reg('collections-combo-single-template',collections.combo.SingleTemplate);
 
-Collections.combo.ContentPlace = function(config) {
+collections.combo.ContentPlace = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         store: new Ext.data.SimpleStore({
@@ -164,12 +164,12 @@ Collections.combo.ContentPlace = function(config) {
         ,forceSelection: true
         ,enableKeyEvents: true
     });
-    Collections.combo.ContentPlace.superclass.constructor.call(this,config);
+    collections.combo.ContentPlace.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.combo.ContentPlace,MODx.combo.ComboBox);
-Ext.reg('collections-combo-content-place',Collections.combo.ContentPlace);
+Ext.extend(collections.combo.ContentPlace,MODx.combo.ComboBox);
+Ext.reg('collections-combo-content-place',collections.combo.ContentPlace);
 
-Collections.combo.Resource = function(config) {
+collections.combo.Resource = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         name: 'resource'
@@ -184,18 +184,18 @@ Collections.combo.Resource = function(config) {
         ,typeAhead: false
         ,forceSelection: true
         ,selectOnFocus: false
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,baseParams:{
             action: 'mgr/extra/getresources'
         }
     });
-    Collections.combo.Resource.superclass.constructor.call(this,config);
+    collections.combo.Resource.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.combo.Resource,MODx.combo.ComboBox);
-Ext.reg('collections-combo-resource',Collections.combo.Resource);
+Ext.extend(collections.combo.Resource,MODx.combo.ComboBox);
+Ext.reg('collections-combo-resource',collections.combo.Resource);
 
 
-Collections.combo.ViewFor = function(config) {
+collections.combo.ViewFor = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         store: new Ext.data.SimpleStore({
@@ -217,12 +217,12 @@ Collections.combo.ViewFor = function(config) {
         ,forceSelection: true
         ,enableKeyEvents: true
     });
-    Collections.combo.ViewFor.superclass.constructor.call(this,config);
+    collections.combo.ViewFor.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.combo.ViewFor,MODx.combo.ComboBox);
-Ext.reg('collections-combo-view-for',Collections.combo.ViewFor);
+Ext.extend(collections.combo.ViewFor,MODx.combo.ComboBox);
+Ext.reg('collections-combo-view-for',collections.combo.ViewFor);
 
-Collections.combo.ExtendedBoolean = function(config) {
+collections.combo.ExtendedBoolean = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         store: new Ext.data.SimpleStore({
@@ -243,12 +243,12 @@ Collections.combo.ExtendedBoolean = function(config) {
         ,forceSelection: true
         ,enableKeyEvents: true
     });
-    Collections.combo.ExtendedBoolean.superclass.constructor.call(this,config);
+    collections.combo.ExtendedBoolean.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.combo.ExtendedBoolean,MODx.combo.ComboBox);
-Ext.reg('collections-combo-extended-boolean',Collections.combo.ExtendedBoolean);
+Ext.extend(collections.combo.ExtendedBoolean,MODx.combo.ComboBox);
+Ext.reg('collections-combo-extended-boolean',collections.combo.ExtendedBoolean);
 
-Collections.combo.ContentType = function(config) {
+collections.combo.ContentType = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         name: 'content_type'
@@ -261,17 +261,17 @@ Collections.combo.ContentType = function(config) {
         ,editable: false
         ,allowBlank: true
         ,pageSize: 20
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,baseParams: {
             action: 'mgr/extra/getcontenttypes'
         }
     });
-    Collections.combo.ContentType.superclass.constructor.call(this,config);
+    collections.combo.ContentType.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.combo.ContentType,MODx.combo.ComboBox);
-Ext.reg('collections-combo-content-type',Collections.combo.ContentType);
+Ext.extend(collections.combo.ContentType,MODx.combo.ComboBox);
+Ext.reg('collections-combo-content-type',collections.combo.ContentType);
 
-Collections.combo.ContentDispositionExtended = function(config) {
+collections.combo.ContentDispositionExtended = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         store: new Ext.data.SimpleStore({
@@ -293,12 +293,12 @@ Collections.combo.ContentDispositionExtended = function(config) {
         ,selectOnFocus: false
         ,preventRender: true
     });
-    Collections.combo.ContentDispositionExtended.superclass.constructor.call(this,config);
+    collections.combo.ContentDispositionExtended.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.combo.ContentDispositionExtended,MODx.combo.ComboBox);
-Ext.reg('collections-combo-content-disposition-extended',Collections.combo.ContentDispositionExtended);
+Ext.extend(collections.combo.ContentDispositionExtended,MODx.combo.ComboBox);
+Ext.reg('collections-combo-content-disposition-extended',collections.combo.ContentDispositionExtended);
 
-Collections.combo.SortType = function(config) {
+collections.combo.SortType = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         store: new Ext.data.SimpleStore({
@@ -321,7 +321,7 @@ Collections.combo.SortType = function(config) {
         ,selectOnFocus: false
         ,preventRender: true
     });
-    Collections.combo.SortType.superclass.constructor.call(this,config);
+    collections.combo.SortType.superclass.constructor.call(this,config);
 };
-Ext.extend(Collections.combo.SortType,MODx.combo.ComboBox);
-Ext.reg('collections-combo-sort-type',Collections.combo.SortType);
+Ext.extend(collections.combo.SortType,MODx.combo.ComboBox);
+Ext.reg('collections-combo-sort-type',collections.combo.SortType);

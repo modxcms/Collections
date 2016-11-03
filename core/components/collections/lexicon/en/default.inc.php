@@ -27,12 +27,18 @@ $_lang['setting_collections.renderer_image_path'] = 'Renderer image path';
 $_lang['setting_collections.renderer_image_path_desc'] = 'Image path that will be used for Image renderer. Path will be appended to base_url.';
 $_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Selections icon';
 $_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'CSS class that will be used for Selections';
+$_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection';
+$_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
+$_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
+$_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
+
 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Collection';
 $_lang['collections.system.text_create'] = 'Collection';
 $_lang['collections.system.text_create_here'] = 'Collection';
 $_lang['collections.system.new_container'] = 'New Collection';
+$_lang['collections.system.new_selection_container'] = 'New Selection';
 $_lang['collections.system.all'] = 'All';
 
 // Global lexicons
@@ -40,12 +46,14 @@ $_lang['collections.global.search'] = 'Search';
 $_lang['collections.global.change_order'] = 'Change order of: [[+child]]';
 $_lang['collections.global.change_parent'] = 'Change parent of: [[+child]]';
 $_lang['collections.global.use_default'] = 'Use default';
+$_lang['collections.global.import'] = 'Import';
 
 // Children
 $_lang['collections.children'] = 'Children';
 $_lang['collections.children.create'] = 'Create child';
 $_lang['collections.children.view'] = 'View child';
 $_lang['collections.children.edit'] = 'Update child';
+$_lang['collections.children.quickupdate'] = 'Quick Update';
 $_lang['collections.children.publish'] = 'Publish child';
 $_lang['collections.children.unpublish'] = 'Unpublish child';
 $_lang['collections.children.duplicate'] = 'Duplicate child';
@@ -110,9 +118,9 @@ $_lang['collections.template.view_for_selections'] = 'Selections';
 $_lang['collections.template.collections_settings'] = 'Collection\'s settings';
 $_lang['collections.template.link_label'] = 'New link\'s button label';
 $_lang['collections.template.context_menu'] = 'Context menu items';
-$_lang['collections.template.context_menu_desc'] = '<strong>Valid values:</strong><br />view<br />edit<br />duplicate<br />publish<br />unpublish<br />delete<br />undelete<br />remove<br />unlink<br />-';
+$_lang['collections.template.context_menu_desc'] = '<strong>Valid values:</strong><br />open<br />view<br />edit<br />quickupdate<br />duplicate<br />publish<br />unpublish<br />delete<br />undelete<br />remove<br />unlink<br />-';
 $_lang['collections.template.buttons'] = 'Buttons';
-$_lang['collections.template.buttons_desc'] = 'This setting will apply only with renderers that uses action buttons.<br />You can append value with <strong>:classname anotherclass</strong> to add a custom class to a button.<br /><strong>Valid values:</strong><br />view<br />edit<br />duplicate<br />publish<br />unpublish<br />delete<br />undelete<br />remove<br />unlink';
+$_lang['collections.template.buttons_desc'] = 'This setting will apply only with renderers that uses action buttons.<br />You can append value with <strong>:classname anotherclass</strong> to add a custom class to a button.<br /><strong>Valid values:</strong><br />open<br />view<br />edit<br />quickupdate<br />duplicate<br />publish<br />unpublish<br />delete<br />undelete<br />remove<br />unlink';
 $_lang['collections.template.allowed_resource_types'] = 'Allowed resource types';
 $_lang['collections.template.allowed_resource_types_desc'] = 'Specify allowed resource types in resource types selection.<br /><strong>Default resource types:</strong><br />modDocument<br />modStaticResource<br />modSymLink<br />modWebLink<br /><br /><strong>Custom Resource Types:</strong><br />CollectionContainer<br />SelectionContainer';
 $_lang['collections.template.back_to_collection'] = 'Back to Collection button label';
@@ -129,8 +137,14 @@ $_lang['collections.template.child_content_disposition'] = 'Default children\'s 
 $_lang['collections.template.sort_type'] = 'Sort type';
 $_lang['collections.template.permanent_sort_before'] = 'Permanent sort - Before';
 $_lang['collections.template.permanent_sort_after'] = 'Permanent sort - After';
-$_lang['collections.template.selection_link_condition'] = 'Condition for Link resource window';
-$_lang['collections.template.selection_link_condition_desc'] = 'xPDO condition in JSON.';
+$_lang['collections.template.selection_link_condition'] = 'WHERE condition for Link resource window';
+$_lang['collections.template.selection_link_condition_desc'] = 'JSON encoded xPDO WHERE condition';
+$_lang['collections.template.export_more'] = 'Export views';
+$_lang['collections.template.export'] = 'Export view';
+$_lang['collections.template.import'] = 'Import views';
+$_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
+$_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
+$_lang['collections.template.search_query_title_only'] = 'Search - Title only';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';
@@ -170,3 +184,4 @@ $_lang['collections.err.template_remove_global'] = 'You can\'t remove default vi
 $_lang['collections.err.template_ae_name'] = 'Template with this name already exists.';
 $_lang['collections.err.column_dot_name'] = 'Column name can\'t contain a dot.';
 $_lang['collections.err.template_ns_label'] = 'Label is not specified.';
+$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</strong> sort field condition to use drag & drop sorting.';

@@ -1,10 +1,10 @@
-Collections.panel.Template = function(config) {
+collections.panel.Template = function(config) {
     config = config || {};
     Ext.applyIf(config,{
         border: false
         ,id: 'collections-panel-template'
         ,cls: 'container'
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,baseParams: {
             action: 'mgr/template/create'
         }
@@ -21,10 +21,10 @@ Collections.panel.Template = function(config) {
             }
         }
     });
-    Collections.panel.Template.superclass.constructor.call(this, config);
+    collections.panel.Template.superclass.constructor.call(this, config);
 };
 
-Ext.extend(Collections.panel.Template, MODx.FormPanel,{
+Ext.extend(collections.panel.Template, MODx.FormPanel,{
     setup: function() {
         if (this.config.isUpdate) {
             MODx.Ajax.request({
@@ -482,6 +482,68 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
                             ,anchor: '100%'
                         }
                         ,items: []
+                    }]
+                }]
+            },{
+                defaults: {
+                    msgTarget: 'side'
+                    ,autoHeight: true
+                }
+                ,cls: 'form-with-labels'
+                ,border: false
+                ,items: [{
+                    layout: 'column'
+                    ,border: false
+                    ,height: 100
+                    ,defaults: {
+                        layout: 'form'
+                        ,labelAlign: 'top'
+                        ,labelSeparator: ''
+                        ,anchor: '100%'
+                        ,border: false
+                    }
+                    ,items: [{
+                        columnWidth:.3
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'modx-combo-boolean'
+                            ,fieldLabel: _('collections.template.search_query_title_only')
+                            ,name: 'search_query_title_only'
+                            ,hiddenName: 'search_query_title_only'
+                            ,value: (config.record) ? config.record.search_query_title_only : false
+                        }]
+                    },{
+                        columnWidth:.3
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'modx-combo-boolean'
+                            ,fieldLabel: _('collections.template.search_query_exclude_tvs')
+                            ,name: 'search_query_exclude_tvs'
+                            ,hiddenName: 'search_query_exclude_tvs'
+                            ,value: (config.record) ? config.record.search_query_exclude_tvs : false
+                        }]
+                    },{
+                        columnWidth:.4
+                        ,border: false
+                        ,defaults: {
+                            msgTarget: 'under'
+                            ,anchor: '100%'
+                        }
+                        ,items: [{
+                            xtype: 'modx-combo-boolean'
+                            ,fieldLabel: _('collections.template.search_query_exclude_tagger')
+                            ,name: 'search_query_exclude_tagger'
+                            ,hiddenName: 'search_query_exclude_tagger'
+                            ,value: (config.record) ? config.record.search_query_exclude_tagger : false
+                        }]
                     }]
                 }]
             },{
@@ -1046,4 +1108,4 @@ Ext.extend(Collections.panel.Template, MODx.FormPanel,{
         }];
     }
 });
-Ext.reg('collections-panel-template',Collections.panel.Template);
+Ext.reg('collections-panel-template',collections.panel.Template);

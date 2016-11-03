@@ -23,12 +23,22 @@ $_lang['setting_collections.user_css'] = 'Uživatelský CSS soubor';
 $_lang['setting_collections.user_css_desc'] = 'URL k uživatelskému CSS souboru obsahujícímu vlastní styly.';
 $_lang['setting_mgr_tree_icon_collectioncontainer'] = 'Ikona kolekcí';
 $_lang['setting_mgr_tree_icon_collectioncontainer_desc'] = 'CSS třída, která se použije pro kolekce';
+$_lang['setting_collections.renderer_image_path'] = 'Renderer image path';
+$_lang['setting_collections.renderer_image_path_desc'] = 'Image path that will be used for Image renderer. Path will be appended to base_url.';
+$_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Selections icon';
+$_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'CSS class that will be used for Selections';
+$_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection';
+$_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
+$_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
+$_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
+
 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Kolekce';
 $_lang['collections.system.text_create'] = 'Kolekci';
 $_lang['collections.system.text_create_here'] = 'Kolekci';
 $_lang['collections.system.new_container'] = 'Nová kolekce';
+$_lang['collections.system.new_selection_container'] = 'Nový výběr';
 $_lang['collections.system.all'] = 'Vše';
 
 // Global lexicons
@@ -36,12 +46,14 @@ $_lang['collections.global.search'] = 'Hledat';
 $_lang['collections.global.change_order'] = 'Změna pořadí pro: [[+child]]';
 $_lang['collections.global.change_parent'] = 'Změna složky pro: [[+child]]';
 $_lang['collections.global.use_default'] = 'Použít výchozí';
+$_lang['collections.global.import'] = 'Importovat';
 
 // Children
 $_lang['collections.children'] = 'Záznamy';
 $_lang['collections.children.create'] = 'Vytvořit záznam';
 $_lang['collections.children.view'] = 'Zobrazit záznam';
 $_lang['collections.children.edit'] = 'Upravit záznam';
+$_lang['collections.children.quickupdate'] = 'Quick Update';
 $_lang['collections.children.publish'] = 'Publikovat záznam';
 $_lang['collections.children.unpublish'] = 'Ukončit publikování záznamu';
 $_lang['collections.children.duplicate'] = 'Zkopírovat záznam';
@@ -120,6 +132,16 @@ $_lang['collections.template.child_cacheable'] = 'Ve výchozím stavu ukládat z
 $_lang['collections.template.child_searchable'] = 'Ve výchozím stavu označit záznam jako vyhledatelný';
 $_lang['collections.template.child_richtext'] = 'Ve výchozím stavu použít pro záznamy WYSIWYG';
 $_lang['collections.template.child_content_type'] = 'Výchozí typ obsahu záznamů';
+$_lang['collections.template.parent'] = 'Parent-id (optional, @SNIPPET can be used)';
+$_lang['collections.template.child_content_disposition'] = 'Default children\'s content disposition';
+$_lang['collections.template.sort_type'] = 'Typ řazení';
+$_lang['collections.template.permanent_sort_before'] = 'Permanent sort - Before';
+$_lang['collections.template.permanent_sort_after'] = 'Permanent sort - After';
+$_lang['collections.template.selection_link_condition'] = 'WHERE condition for Link resource window';
+$_lang['collections.template.selection_link_condition_desc'] = 'xPDO podmínka v JSON formátu.';
+$_lang['collections.template.export_more'] = 'Exportovat označené zobrazení';
+$_lang['collections.template.export'] = 'Exportovat zobrazení';
+$_lang['collections.template.import'] = 'Importovat zobrazení';
 
 $_lang['collections.template.column.none'] = 'Toto zobrazení nemá definované sloupce.';
 $_lang['collections.template.column.name'] = 'Název';
@@ -135,6 +157,12 @@ $_lang['collections.template.column.position'] = 'Pozice';
 $_lang['collections.template.column.editor'] = 'Editor';
 $_lang['collections.template.column.renderer'] = 'Renderer';
 $_lang['collections.template.column.php_renderer'] = 'Snippet renderer';
+$_lang['collections.template.column.sort_type'] = 'Typ řazení';
+
+$_lang['collections.template.sort_type_default'] = 'Výchozí';
+$_lang['collections.template.sort_type_integer'] = 'Celé číslo';
+$_lang['collections.template.sort_type_decimal'] = 'Desetinné číslo';
+$_lang['collections.template.sort_type_datetime'] = 'Datum a Čas';
 
 $_lang['collections.err.parent_ns'] = 'Rodič není specifikován.';
 $_lang['collections.err.template_ns'] = 'Zobrazení není specifikováno.';
@@ -152,3 +180,5 @@ $_lang['collections.err.template_remove_last'] = 'Nelze odebrat poslední zobraz
 $_lang['collections.err.template_remove_global'] = 'Výchozí zobrazení nelze odstranit. Prosím nastavte nejprve jiné zobrazení jako výchozí a tuto akci zopakujte.';
 $_lang['collections.err.template_ae_name'] = 'Šablona s tímto názvem již existuje.';
 $_lang['collections.err.column_dot_name'] = 'Název sloupce nemůže obsahovat tečku.';
+$_lang['collections.err.template_ns_label'] = 'Není zadáno Označení.';
+$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</strong> sort field condition to use drag & drop sorting.';

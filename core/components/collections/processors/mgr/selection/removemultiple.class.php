@@ -1,16 +1,18 @@
 <?php
+
 /**
  * Delete multiple children
  *
  * @package collections
  * @subpackage processors.resource
  */
-
-class CollectionSelectionRemoveMultipleProcessor extends modObjectProcessor {
+class CollectionSelectionRemoveMultipleProcessor extends modObjectProcessor
+{
     public $classKey = 'CollectionSelection';
-    public $languageTopics = array('resource','collections:default');
+    public $languageTopics = array('resource', 'collections:default');
 
-    public function process() {
+    public function process()
+    {
         $collection = $this->getProperty('collection');
         $resources = $this->getProperty('resources', '');
 
@@ -25,4 +27,5 @@ class CollectionSelectionRemoveMultipleProcessor extends modObjectProcessor {
         return $this->success();
     }
 }
+
 return 'CollectionSelectionRemoveMultipleProcessor';

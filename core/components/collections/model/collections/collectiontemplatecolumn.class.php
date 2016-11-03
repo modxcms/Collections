@@ -1,4 +1,5 @@
 <?php
+
 /**
  *
  * @property int $id
@@ -18,5 +19,6 @@
  *
  * @package collections
  */
-class CollectionTemplateColumn extends xPDOSimpleObject {}
-?>
+class CollectionTemplateColumn extends xPDOSimpleObject
+{
+}

@@ -28,6 +28,14 @@ class CollectionsTemplateManagerController extends CollectionsBaseManagerControl
         $this->addLastJavascript($this->collections->getOption('jsUrl').'mgr/widgets/template/template.grid.js');
         $this->addLastJavascript($this->collections->getOption('jsUrl').'mgr/widgets/template/home.panel.js');
         $this->addLastJavascript($this->collections->getOption('jsUrl').'mgr/sections/template/home.js');
+
+        $this->addHtml('
+        <script type="text/javascript">
+            Ext.onReady(function() {
+                MODx.load({ xtype: "collections-page-template-home"});
+            });
+        </script>
+        ');
     }
 
     public function getTemplateFile() { return $this->collections->getOption('templatesPath').'template/home.tpl'; }

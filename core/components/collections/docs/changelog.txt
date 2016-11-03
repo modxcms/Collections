@@ -1,5 +1,48 @@
 Changelog for Collections.
 
+Collections 3.6.0
+===================
+- Add sync tables resolver
+- Added 3 options to speed up large child lists (+10K resources)
+- Fix D&D sort for Resources in depth > 1
+
+Collections 3.5.0
+===================
+- Add collections.renderer.boolean renderer
+- Add AjaxManager compatibility
+- Adjust position of other columns when creating/updating column with position specified
+- Add excludeResources option to getSelections snippet
+- Prevent Collection's view reset after quick resource update
+- Use lexicons for the Open button
+- Add overflow ellipse to the main-column
+- Add area to system settings
+
+Collections 3.4.2
+===================
+- Fix saving tv values from update from grid
+- Fix after save event fired on update from grid
+
+Collections 3.4.1
+===================
+- Fix Safari endless reloading
+- Fix Selections when sorting by menuindex
+
+Collections 3.4.0
+===================
+- Pass column name to snippet renderer
+- Prevent permanent sort breaking D&D sort
+- Add Collections.renderer.buttons renderer
+- Allow snippet renderer on non-existing column
+- Add event names to update from grid processor
+- Show folders under collections
+- Show breadcrumbs when browsing folders under collections
+- Import / Export collection views
+- Add quick update for collection & selection children
+- Prevent saving columns with snippet renderer from grid
+- Add new system settings to show create collection/selection button in tree tool bar
+- Display resource id in link resource window
+- Adjust colors in collections grid
+
 Collections 3.3.0
 ===================
 - Show assigned templates in Collection's view grid

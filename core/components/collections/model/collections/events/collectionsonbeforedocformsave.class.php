@@ -1,8 +1,10 @@
 <?php
 
-class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
+class CollectionsOnBeforeDocFormSave extends CollectionsPlugin
+{
 
-    public function run() {
+    public function run()
+    {
         /** @var \modResource $resource */
         $resource = $this->scriptProperties['resource'];
 
@@ -31,7 +33,6 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
 
                     return;
                 }
-                $resource->set('hide_children_in_tree', 0);
                 $resource->save();
             }
 
@@ -42,11 +43,19 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
     /**
      * @param \modResource $resource
      */
-    protected function handleParent($resource) {
-        if ($resource->hasChildren() != 0) {
-            $resource->set('show_in_tree', 1);
-        } else {
-            $resource->set('show_in_tree', 0);
+    protected function handleParent($resource)
+    {
+        $resource->set('show_in_tree', 0);
+    }
+
+    protected function revealChildrenInTree($resource)
+    {
+        /** @var \modResource[] $children */
+        $children = $resource->Children;
+
+        foreach ($children as $child) {
+            $child->set('show_in_tree', 1);
+            $child->save();
         }
     }
 
@@ -55,7 +64,8 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
      * @param \modResource $parent
      * @param \modResource $resource
      */
-    protected function handleOriginal($original, $parent, $resource) {
+    protected function handleOriginal($original, $parent, $resource)
+    {
         /** @var \modResource $originalParent */
         $originalParent = $original->Parent;
 
@@ -74,7 +84,8 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
      * @param \modResource $resource
      * @param \modResource $originalParent
      */
-    protected function handleOriginalParent($parent, $resource, $originalParent) {
+    protected function handleOriginalParent($parent, $resource, $originalParent)
+    {
         if ($originalParent->class_key == 'CollectionContainer') {
             if ($parent->class_key != 'CollectionContainer') {
                 $resource->set('show_in_tree', 1);
@@ -85,11 +96,6 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
 
             if ($originalGreatParent && ($originalGreatParent->class_key == 'CollectionContainer')) {
                 $resource->set('show_in_tree', 1);
-
-                if ($originalParent->hasChildren() == 0) {
-                    $originalParent->set('show_in_tree', 0);
-                    $originalParent->save();
-                }
             }
         }
     }
@@ -98,7 +104,8 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
      * @param \modResource $original
      * @param \modResource $resource
      */
-    protected function switchResourceType($original, $resource) {
+    protected function switchResourceType($original, $resource)
+    {
         if (($original->class_key != 'CollectionContainer') && ($resource->class_key == 'CollectionContainer')) {
             $this->switchToCollections($resource);
         }
@@ -111,7 +118,8 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
     /**
      * @param \modResource $resource
      */
-    protected function switchToCollections($resource) {
+    protected function switchToCollections($resource)
+    {
         /** @var \modResource[] $children */
         $children = $resource->Children;
 
@@ -122,20 +130,6 @@ class CollectionsOnBeforeDocFormSave extends CollectionsPlugin {
                 $child->set('show_in_tree', 1);
             }
 
-            if ($child->hasChildren() > 0) {
-                $child->set('show_in_tree', 1);
-            }
-
-            $child->save();
-        }
-    }
-
-    protected function revealChildrenInTree($resource) {
-        /** @var \modResource[] $children */
-        $children = $resource->Children;
-
-        foreach ($children as $child) {
-            $child->set('show_in_tree', 1);
             $child->save();
         }
     }

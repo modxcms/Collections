@@ -101,6 +101,10 @@
     background:linear-gradient(center bottom,#fec95b 0%,#fee1a0 100%);
 }
 
+.actions.solo {
+    bottom: inherit;
+}
+
 .collections-import-intro {
     font-size: 11px;
     color: #777;
@@ -110,6 +114,7 @@
 
 .collections-grid .main-column {
     font-size: 16px;
+    overflow-x: hidden;
 }
 
 .collections-grid .main-column.buttons {
@@ -117,10 +122,14 @@
 }
 
 .collections-grid .main-column a {
-    float: left;
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .collections-grid .collections-title-column ul {
     clear: both;
+    display: inline-table;
 }
 
 .ext-strict .x-form-field-trigger-wrap .x-form-text, .ext-strict .x-small-editor .x-form-field-trigger-wrap .x-form-text {
@@ -131,8 +140,18 @@
     content: "\f0c9";
 }
 
+.tree-collectioncontainer button:before {
+    content: "\f0c9";
+    font-family: FontAwesome;
+}
+
 .selectioncontainer:before {
     content: "\f005";
+}
+
+.tree-selectioncontainer button:before {
+    content: "\f005";
+    font-family: FontAwesome;
 }
 
 .icon-collectioncontainer .x-tree-node-icon {
@@ -149,4 +168,20 @@
 
 .collections-setting-vtab {
     padding: 0px;
+}
+
+.collections_crumb_wrapper {
+    margin-top: 0px;
+}
+
+.crumb_wrapper.collections_crumb_wrapper .crumbs li button, .crumb_wrapper.collections_crumb_wrapper .crumbs li span {
+    padding: 11px 13px 12px 15px;
+    border-radius: 0;
+}
+
+.collections-children-icon {
+    display: block;
+    float: left;
+    margin-right: 5px;
+    padding-top: 1px;
 }

@@ -1,8 +1,25 @@
-Collections.grid.Template = function(config) {
+collections.grid.Template = function(config) {
     config = config || {};
+
+    this.sm = new Ext.grid.CheckboxSelectionModel({
+        listeners: {
+            rowselect: {
+                fn: function (sm, rowIndex, record) {
+                    this.rememberRow(record);
+                }, scope: this
+            },
+            rowdeselect: {
+                fn: function (sm, rowIndex, record) {
+                    this.forgotRow(record);
+                }
+                ,scope: this
+            }
+        }
+    });
+    
     Ext.applyIf(config,{
         title: _('collections.collections')
-        ,url: Collections.config.connectorUrl
+        ,url: collections.config.connectorUrl
         ,baseParams: {
             action: 'mgr/template/getList'
             ,'template': 1
@@ -14,11 +31,17 @@ Collections.grid.Template = function(config) {
         ,paging: true
         ,remoteSort: true
         ,emptyText: _('collections.template.none')
-        ,columns: [{
+        ,sm: this.sm
+        ,columns: [this.sm,{
+            header: _('id')
+            ,dataIndex: 'id'
+            ,sortable: true
+            ,hidden: true
+        },{
             header: _('collections.template.name')
             ,dataIndex: 'name'
             ,sortable: true
-            ,width: 90
+            ,width: 80
             ,editor: {xtype: 'textfield'}
         },{
             header: _('collections.template.description')
@@ -47,12 +70,44 @@ Collections.grid.Template = function(config) {
             text: _('collections.template.add')
             ,handler: this.createTemplate
             ,scope: this
+        },{
+            text: _('collections.template.import')
+            ,handler: this.importTemplate
+            ,scope: this
         }]
     });
-    Collections.grid.Template.superclass.constructor.call(this,config);
+    collections.grid.Template.superclass.constructor.call(this,config);
+
+    this.getView().on('refresh', this.refreshSelection, this);
 };
-Ext.extend(Collections.grid.Template,MODx.grid.Grid,{
-    getMenu: function() {
+Ext.extend(collections.grid.Template,MODx.grid.Grid,{
+
+    selectedRecords: []
+
+    ,rememberRow: function(record) {
+        if(this.selectedRecords.indexOf(record.id) == -1){
+            this.selectedRecords.push(record.id);
+        }
+    }
+    
+    ,forgotRow: function(record){
+        this.selectedRecords.remove(record.id);
+    }
+    
+    ,refreshSelection: function() {
+        var rowsToSelect = [];
+        Ext.each(this.selectedRecords, function(item){
+            rowsToSelect.push(this.store.indexOfId(item));
+        },this);
+    
+        this.getSelectionModel().selectRows(rowsToSelect);
+    }
+    
+    ,getSelectedAsList: function(){
+        return this.selectedRecords.join();
+    }
+
+    ,getMenu: function() {
         var m = [];
 
         m.push({
@@ -68,6 +123,13 @@ Ext.extend(Collections.grid.Template,MODx.grid.Grid,{
         m.push('-');
 
         m.push({
+            text: (this.selectedRecords.length > 1) ? _('collections.template.export_more') : _('collections.template.export')
+            ,handler: this.exportTemplate
+        });
+        
+        m.push('-');
+
+        m.push({
             text: _('collections.template.remove')
             ,handler: this.removeTemplate
         });
@@ -80,6 +142,10 @@ Ext.extend(Collections.grid.Template,MODx.grid.Grid,{
 
     ,createTemplate: function() {
         MODx.loadPage(MODx.action['collections:index'], 'action=template/create');
+    }
+    
+    ,exportTemplate: function(){
+        MODx.loadPage(MODx.action['collections:index'], 'action=template/export&ids=' + this.getSelectedAsList());                     
     }
 
     ,removeTemplate: function(btn,e) {
@@ -123,6 +189,19 @@ Ext.extend(Collections.grid.Template,MODx.grid.Grid,{
 
         return true;
     }
+    
+    ,importTemplate: function(btn, e) {
+        var importWindow = MODx.load({
+            xtype: 'collections-window-template-import'
+            ,listeners: {
+                'success': {fn:function() { this.refresh(); },scope:this}
+            }
+        });
+
+        importWindow.show(e.target);
+
+        return true; 
+    }
 
 });
-Ext.reg('collections-grid-template',Collections.grid.Template);
+Ext.reg('collections-grid-template',collections.grid.Template);

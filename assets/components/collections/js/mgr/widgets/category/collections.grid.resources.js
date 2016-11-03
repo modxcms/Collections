@@ -1,47 +1,65 @@
-Collections.grid.ContainerCollections = function(config) {
+collections.grid.ContainerCollections = function(config) {
     config = config || {};
     this.sm = new Ext.grid.CheckboxSelectionModel();
     Ext.applyIf(config,{
         id: 'collections-grid-container-collections'
         ,title: _('collections.collections')
-        ,url: Collections.connectorUrl
+        ,url: collections.connectorUrl
         ,autosave: true
         ,save_action: 'mgr/resource/updatefromgrid'
         ,ddGroup: 'collectionChildDDGroup'
         ,enableDragDrop: false
         ,baseParams: {
             action: 'mgr/resource/getlist'
-            ,parent: Collections.template.parent
-            ,sort: Collections.template.sort.field
-            ,dir: Collections.template.sort.dir
+            ,parent: collections.template.parent
+            ,sort: collections.template.sort.field
+            ,dir: collections.template.sort.dir
         }
-        ,fields: Collections.template.fields
+        ,fields: collections.template.fields
         ,paging: true
         ,remoteSort: true
-        ,pageSize: Collections.template.pageSize
+        ,pageSize: collections.template.pageSize
         ,cls: 'collections-grid'
         ,bodyCssClass: 'grid-with-buttons'
         ,sm: this.sm
         ,emptyText: _('collections.children.none')
         ,columns: this.getColumns(config)
-        ,tbar: this.getTbar(config)
+        ,tbar: {
+            xtype: 'container'
+            ,layout: 'anchor'
+            ,defaults:
+            {
+                anchor : '100%'
+            }
+            ,items: [
+                new Ext.Toolbar({
+                    items : this.getTbar(config)
+                })
+            ]
+        }
     });
-    Collections.grid.ContainerCollections.superclass.constructor.call(this,config);
+    collections.grid.ContainerCollections.superclass.constructor.call(this,config);
     this.on('rowclick',MODx.fireResourceFormChange);
     this.on('click', this.handleButtons, this);
 
-    if (Collections.template.allowDD) {
+    window.history.replaceState({}, '', window.location.href);
+    
+    this.initBreadCrumbs(config);
+    
+    if (collections.template.allowDD) {
         this.on('render', this.registerGridDropTarget, this);
         this.on('beforedestroy', this.destroyScrollManager, this);
     }
 };
-Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
-    getMenu: function() {
+Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
+    currentFolder: null
+    
+    ,getMenu: function() {
         var m = [];
         if (!this.menu.record) return m;
 
         var addDelimiter = false;
-        Ext.each(Collections.template.context_menu, function(key) {
+        Ext.each(collections.template.context_menu, function(key) {
             if (key == '-') {
                 addDelimiter = true;
                 return true;
@@ -63,11 +81,32 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
         return m;
     }
+    
+    ,openChild: function(){
+        this.store.removeAll();
+        
+        this.getStore().baseParams.parent = this.menu.record.id;
+        this.getBottomToolbar().changePage(1);
+        
+        this.bc.crumbs.push({
+            id: this.menu.record.id,
+            text: this.menu.record.pagetitle
+        });
+
+        this.currentFolder = this.menu.record.id;
+        
+        this.bc.tpl.overwrite(this.bc.el, this.bc.crumbs);
+        this.bc.show();
+        
+        this.body.slideIn('r', {stopFx:true, duration:.2});       
+        
+        this.pushHistoryState(this.menu.record.id);
+    }
 
     ,getColumns: function(config) {
-        var columns = Collections.template.columns;
+        var columns = collections.template.columns;
 
-        if (Collections.template.bulkActions) {
+        if (collections.template.bulkActions) {
             columns.unshift(this.sm);
         }
 
@@ -77,10 +116,10 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     ,getTbar: function(config) {
         var items = [];
 
-        if (Collections.template.resource_type_selection && Collections.template.resourceDerivatives.length > 0) {
+        if (collections.template.resource_type_selection && collections.template.resourceDerivatives.length > 0) {
             var resourceDerivatives = [];
 
-            Ext.each(Collections.template.resourceDerivatives, function(item){
+            Ext.each(collections.template.resourceDerivatives, function(item){
                 resourceDerivatives.push({
                     text: item.name
                     ,derivative: item.id
@@ -90,7 +129,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             }, this);
 
             items.push({
-                text: (_(Collections.template.button_label) == undefined) ? Collections.template.button_label : _(Collections.template.button_label)
+                text: (_(collections.template.button_label) == undefined) ? collections.template.button_label : _(collections.template.button_label)
                 ,handler: this.createChild
                 ,xtype: 'splitbutton'
                 ,scope: this
@@ -98,14 +137,14 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
             });
         } else {
             items.push({
-                text: (_(Collections.template.button_label) == undefined) ? Collections.template.button_label : _(Collections.template.button_label)
+                text: (_(collections.template.button_label) == undefined) ? collections.template.button_label : _(collections.template.button_label)
                 ,handler: this.createChild
                 ,scope: this
             });
         }
 
 
-        if (Collections.template.bulkActions) {
+        if (collections.template.bulkActions) {
             items.push({
                 text: _('bulk_actions')
                 ,xtype: 'splitbutton'
@@ -184,9 +223,9 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     ,clearFilter: function() {
         this.getStore().baseParams = {
             action: 'mgr/resource/getList'
-            ,'parent': Collections.template.parent
-            ,sort: Collections.template.sort.field
-            ,dir: Collections.template.sort.dir
+            ,'parent': collections.template.parent
+            ,sort: collections.template.sort.field
+            ,dir: collections.template.sort.dir
         };
         Ext.getCmp('collections-child-search').reset();
         Ext.getCmp('collections-grid-filter-status').reset();
@@ -195,37 +234,70 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,editChild: function(btn,e) {
         var selection = '';
-        if (Collections.template.parent != MODx.request.id){
+        if (collections.template.parent != MODx.request.id){
            selection = '&selection=' + MODx.request.id;
-        }        
+        }
+
+        var collectionGet = '';
+        if (this.currentFolder) {
+            collectionGet = '&collection=' + collections.template.parent
+        }
         
-        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection);
+        var folderGet = '';
+        var query = Ext.urlDecode(location.search.replace('?', ''));
+        if (parseInt(query.folder) > 0) {
+            folderGet = '&folder=' + parseInt(query.folder); 
+        }
+        
+        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection + collectionGet + folderGet);
     }
 
     ,createChild: function(btn,e) {
         var template = '';
         var selection = '';
-        if (Collections.template.children.template != null) {
-            template = '&template=' + Collections.template.children.template;
+        if (collections.template.children.template != null) {
+            template = '&template=' + collections.template.children.template;
         }
-        if (Collections.template.parent != MODx.request.id){
+        if (collections.template.parent != MODx.request.id){
            selection = '&selection=' + MODx.request.id;
         }
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + Collections.template.parent + '&context_key=' + Collections.template.parent_context + '&class_key=' + Collections.template.children.resource_type + template + selection);
+        var collectionGet = '';
+        if (this.currentFolder) {
+            collectionGet = '&collection=' + collections.template.parent
+        }
+
+        var folderGet = '';
+        var query = Ext.urlDecode(location.search.replace('?', ''));
+        if (parseInt(query.folder) > 0) {
+            folderGet = '&folder=' + parseInt(query.folder);
+        }
+        
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || collections.template.parent) + collectionGet + '&context_key=' + collections.template.parent_context + '&class_key=' + collections.template.children.resource_type + template + selection + folderGet);
     }
 
     ,createDerivativeChild: function(btn, e) {
         var template = '';
         var selection = '';
-        if (Collections.template.children.template != null) {
-            template = '&template=' + Collections.template.children.template;
+        if (collections.template.children.template != null) {
+            template = '&template=' + collections.template.children.template;
         }
-        if (Collections.template.parent != MODx.request.id){
+        if (collections.template.parent != MODx.request.id){
            selection = '&selection=' + MODx.request.id;
-        }        
+        }
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + Collections.template.parent + '&context_key=' + Collections.template.parent_context + '&class_key=' + btn.derivative + template + selection);
+        var collectionGet = '';
+        if (this.currentFolder) {
+            collectionGet = '&collection=' + collections.template.parent
+        }
+
+        var folderGet = '';
+        var query = Ext.urlDecode(location.search.replace('?', ''));
+        if (parseInt(query.folder) > 0) {
+            folderGet = '&folder=' + parseInt(query.folder);
+        }
+
+        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || collections.template.parent) + collectionGet + '&context_key=' + collections.template.parent_context + '&class_key=' + btn.derivative + template + selection + folderGet);
     }
 
     ,viewChild: function(btn,e) {
@@ -430,7 +502,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         
         if(action) {
             var record = this.getSelectionModel().getSelected();
-            if (!record && t.dataset.id) {
+            if (t.dataset.id) {
                 record = this.store.getById(t.dataset.id);
             }
 
@@ -468,6 +540,12 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 case 'remove':
                     this.removeChild();
                     break;
+                case 'quickupdate':
+                    this.quickupdateChild();
+                    break;
+                case 'open':
+                    this.openChild();
+                    break;
                 default:
                     this.editChild();
                     break;
@@ -489,6 +567,10 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 return _('collections.err.bad_sort_column', {column: 'menuindex'});
             }
         }
+        
+        if (this.parsePermanentSort('menuindex')) {
+            return _('collections.err.permanent_sort', {column: 'menuindex'});
+        }
 
         var search = Ext.getCmp('collections-child-search');
         var filter = Ext.getCmp('collections-grid-filter-status');
@@ -497,6 +579,27 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
         }
 
         return _('collections.global.change_order', {child: this.selModel.selections.items[0].data.pagetitle});
+    }
+
+    ,parsePermanentSort: function(column){
+        if (collections.template.permanent_sort.before.indexOf('*') != -1) return true;
+        if (collections.template.permanent_sort.after.indexOf('*') != -1) return true;
+        
+        var found = false;
+        
+        Ext.each(collections.template.permanent_sort.before.split(',').concat(collections.template.permanent_sort.after.split(',')).filter(function(e){return e}), function(item){
+            if (item.indexOf('=') == -1) {
+                found = true;
+                return false;
+            }                
+            
+            if (item.replace(/ /g, '').indexOf('menuindex=') != -1) {
+                found = true;
+                return false;
+            }
+        });      
+        
+        return found;
     }
 
     ,getDragDropTextOverTree: function(){
@@ -550,7 +653,7 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
 
                 t.dropZone.onNodeDrop = function (nodeData, source, e) {
                     MODx.Ajax.request({
-                        url: Collections.connectorUrl
+                        url: collections.connectorUrl
                         ,params: {
                             action: 'mgr/resource/changeparent'
                             ,id: source.dragData.selections[0].id
@@ -590,14 +693,21 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
                 }
 
                 ,'afterrowmove': function(objThis, oldIndex, newIndex, records) {
+                    var parent = collections.template.parent;
+                    
+                    var query = Ext.urlDecode(location.search.replace('?', ''));
+                    if (parseInt(query.folder) > 0) {
+                        parent = parseInt(query.folder);
+                    }
+                    
                     MODx.Ajax.request({
-                        url: Collections.connectorUrl
+                        url: collections.connectorUrl
                         ,params: {
                             action: 'mgr/resource/ddreorder'
                             ,idItem: records.pop().id
                             ,oldIndex: oldIndex
                             ,newIndex: newIndex
-                            ,parent: Collections.template.parent
+                            ,parent: parent 
                         }
                         ,listeners: {
                             'success': {
@@ -623,5 +733,253 @@ Ext.extend(Collections.grid.ContainerCollections,MODx.grid.Grid,{
     ,destroyScrollManager: function() {
         Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
     }
+
+    ,quickupdateChild: function(btn, e) {
+        MODx.Ajax.request({
+            url: MODx.config.connector_url
+            ,params: {
+                action: 'resource/get'
+                ,id: this.menu.record.id
+            }
+            ,listeners: {
+                'success': {fn:function(r) {
+                    var pr = r.object;
+
+                    var w = MODx.load({
+                        xtype: 'modx-window-quick-update-modResource'
+                        ,record: pr
+                        ,listeners: {
+                            'success':{fn:function(r) {
+                                this.refresh();
+                                var newTitle = '<span dir="ltr">' + r.f.findField('pagetitle').getValue() + ' (' + w.record.id + ')</span>';
+                                w.setTitle(w.title.replace(/<span.*\/span>/, newTitle));
+                            },scope:this}
+                            ,'hide':{fn:function() {this.destroy();}}
+                        }
+                    });
+                    w.title += ': <span dir="ltr">' + w.record.pagetitle + ' ('+ w.record.id + ')</span>';
+                    w.setValues(r.object);
+                    w.show();
+                },scope:this}
+            }
+        });
+    }
+    
+    ,_loadStore: function() {
+        if (this.config.grouping) {
+            this.store = new Ext.data.GroupingStore({
+                url: this.config.url
+                ,baseParams: this.config.baseParams || { action: this.config.action || 'getList'}
+                ,reader: new Ext.data.JsonReader({
+                    totalProperty: 'total'
+                    ,root: 'results'
+                    ,fields: this.config.fields
+                })
+                ,sortInfo:{
+                    field: this.config.sortBy || 'id'
+                    ,direction: this.config.sortDir || 'ASC'
+                }
+                ,remoteSort: this.config.remoteSort || false
+                ,groupField: this.config.groupBy || 'name'
+                ,storeId: this.config.storeId || Ext.id()
+                ,autoDestroy: true
+                ,listeners: {
+                    beforeload: {
+                        fn: this.loadBreadCrumbs,
+                        scope: this,
+                        single: true
+                    },
+                    load: function(){
+                        Ext.getCmp('modx-content').doLayout(); /* Fix layout bug with absolute positioning */
+                    }
+                }
+            });
+        } else {
+            this.store = new Ext.data.JsonStore({
+                url: this.config.url
+                ,baseParams: this.config.baseParams || { action: this.config.action || 'getList' }
+                ,fields: this.config.fields
+                ,root: 'results'
+                ,totalProperty: 'total'
+                ,remoteSort: this.config.remoteSort || false
+                ,storeId: this.config.storeId || Ext.id()
+                ,autoDestroy: true
+                ,listeners: {
+                    beforeload: {
+                        fn: this.loadBreadCrumbs,
+                        scope: this,
+                        single: true
+                    },
+                    load: function(){
+                        Ext.getCmp('modx-content').doLayout(); /* Fix layout bug with absolute positioning */
+                    }
+                }
+            });
+        }
+    }
+    
+    ,loadBreadCrumbs: function(store, options){
+        var folder = parseInt(MODx.request.folder);
+        
+        if (folder > 0) {
+            this.currentFolder = folder;
+            options.params.parent = folder;
+            store.baseParams.parent = folder;       
+        }
+    }
+    
+    ,pushHistoryState: function(id){
+        try {
+            var query = Ext.urlDecode(location.search.replace('?', ''));
+            var loc = location.href;
+    
+            if (query.folder) {
+                if (id) {
+                    loc = loc.replace('folder=' + query.folder, 'folder=' + id);
+                } else {
+                    loc = loc.replace('&folder=' + query.folder, '');
+                }
+            } else {
+                if (id) {
+                    loc += '&folder=' + id;
+                }
+            }
+    
+            window.history.pushState({}, '', loc);
+        } catch (err) {}
+    }
+    
+    ,initBreadCrumbs: function(config){
+        this.addEvents('breadCrumbsBeforeRender');
+        this.addEvents('breadCrumbsRender');
+
+        window.addEventListener('popstate', function(event) {
+            if (event.state) {
+                location.reload();
+            }
+        }, false);
+        
+        this.on('breadCrumbsRender', function(toolbar){
+            var folder = parseInt(MODx.request.folder);
+            var collection = parseInt(MODx.request.id);
+
+            if ((folder > 0) && (collection > 0)) {
+                MODx.Ajax.request({
+                    url: collections.connectorUrl
+                    ,params: {
+                        action: 'mgr/extra/breadcrumbs'
+                        ,collection: collection
+                        ,folder: folder
+                    }
+                    ,listeners: {
+                        success: {
+                            fn: function(r) {
+                                Ext.each(r.results, function(item){
+                                    toolbar.crumbs.push({
+                                        id: item.id,
+                                        text: item.text
+                                    });
+                                });
+
+                                toolbar.tpl.overwrite(toolbar.el, toolbar.crumbs);
+                                toolbar.show();
+                            },scope: this
+                        },
+                        failure: {
+                            fn: function(){
+                                this.store.removeAll();
+                                this.currentFolder = collections.template.parent;
+                                this.getStore().baseParams.parent = collections.template.parent;
+                                this.getBottomToolbar().changePage(1);
+                            },
+                            scope: this
+                        }
+                    }
+                });
+            }
+        }, this);
+
+        this.bc = new Ext.Toolbar({
+            hidden: true
+            ,crumbs: [{
+                id: collections.template.parent
+                ,text: config.resourcePanel.record.pagetitle
+            }]
+            ,data : [{
+                id: collections.template.parent
+                ,text: config.resourcePanel.record.pagetitle
+            }],
+            grid: this,
+            tpl: new Ext.XTemplate('<div class="crumb_wrapper collections_crumb_wrapper">' +
+                '<ul class="crumbs">' +
+                '<tpl for=".">' +
+                '<tpl if="xindex!==xcount">' +
+                '<tpl if="xindex==1">' +
+                '<li class="first"><button type="button" data-id="{id}" class="root">{text}</button></li>' +
+                '</tpl>' +
+                '<tpl if="xindex!==1">' +
+                '<li><button class="text" data-id="{id}">{text}</button></li>' +
+                '</tpl>' +
+                '</tpl>' +
+                '<tpl if="xindex==xcount">' +
+                '<tpl if="xindex==1">' +
+                '<li class="first"><span data-id="{id}" class="root">{text}</span></li>' +
+                '</tpl>' +
+                '<tpl if="xindex!==1">' +
+                '<li><span class="text" data-id="{id}">{text}</span></li>' +
+                '</tpl>' +
+                '</tpl>' +
+                '</tpl>' +
+                '</ul></div>', {
+                compiled: true
+            }),
+            listeners: {
+                render: {
+                    fn: function(toolbar){
+                        toolbar.el.on('click', function (e) {
+                            if(e.target.nodeName.toLowerCase() != 'button') return;
+
+                            var newCrumbs = [];
+                            for (var i = 0; i < toolbar.crumbs.length; i++) {
+                                newCrumbs.push(toolbar.crumbs[i]);
+                                if (toolbar.crumbs[i]['id'] == e.target.dataset.id) {
+                                    break;
+                                }
+                            }
+
+                            toolbar.crumbs = newCrumbs;
+                            toolbar.tpl.overwrite(toolbar.el, toolbar.crumbs);
+                            if (toolbar.crumbs.length == 1) {
+                                toolbar.hide();
+                                this.pushHistoryState();
+                            } else {
+                                this.pushHistoryState(e.target.dataset.id);
+                            }
+
+
+                            toolbar.grid.currentFolder = e.target.dataset.id;
+
+                            toolbar.grid.store.removeAll();
+
+                            toolbar.grid.getStore().baseParams.parent = e.target.dataset.id;
+                            toolbar.grid.getBottomToolbar().changePage(1);
+
+                            toolbar.grid.body.slideIn('r', {stopFx:true, duration:.2});
+                        }, this);
+
+                        this.fireEvent('breadCrumbsRender', toolbar);
+                    },
+                    scope: this
+                },
+                beforerender: {
+                    fn: function(toolbar){
+                        this.fireEvent('breadCrumbsBeforeRender', toolbar);
+                    },
+                    scope: this
+                }
+            }
+        });
+        this.getTopToolbar().add(this.bc);                 
+    }
 });
-Ext.reg('collections-grid-children',Collections.grid.ContainerCollections);
+Ext.reg('collections-grid-children',collections.grid.ContainerCollections);

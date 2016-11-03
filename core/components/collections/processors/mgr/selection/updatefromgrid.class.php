@@ -1,14 +1,20 @@
 <?php
+
 /**
  * Update menu index from a row update
  *
  * @package collections
  * @subpackage processors.resource
  */
-class CollectionsSelectionUpdateFromGridProcessor extends modObjectUpdateProcessor {
+class CollectionsSelectionUpdateFromGridProcessor extends modObjectUpdateProcessor
+{
     public $classKey = 'modResource';
+    public $beforeSaveEvent = 'OnBeforeDocFormSave';
+    public $afterSaveEvent = 'OnDocFormSave';
+    public $objectType = 'resource';
 
-    public function initialize() {
+    public function initialize()
+    {
         $data = $this->getProperty('data');
         if (empty($data)) return $this->modx->lexicon('invalid_data');
         $data = $this->modx->fromJSON($data);
@@ -19,7 +25,8 @@ class CollectionsSelectionUpdateFromGridProcessor extends modObjectUpdateProcess
         return parent::initialize();
     }
 
-    public function process() {
+    public function process()
+    {
         /* Run the beforeSet method before setting the fields, and allow stoppage */
         $canSave = $this->beforeSet();
         if ($canSave !== true) {
@@ -49,7 +56,7 @@ class CollectionsSelectionUpdateFromGridProcessor extends modObjectUpdateProcess
             $validator = $this->object->getValidator();
             if ($validator->hasMessages()) {
                 foreach ($validator->getMessages() as $message) {
-                    $this->addFieldError($message['field'],$this->modx->lexicon($message['message']));
+                    $this->addFieldError($message['field'], $this->modx->lexicon($message['message']));
                 }
             }
         }
@@ -61,7 +68,7 @@ class CollectionsSelectionUpdateFromGridProcessor extends modObjectUpdateProcess
         }
 
         if ($this->saveObject() == false) {
-            return $this->failure($this->modx->lexicon($this->objectType.'_err_save'));
+            return $this->failure($this->modx->lexicon($this->objectType . '_err_save'));
         }
 
         $this->saveSpecialColumns();
@@ -72,30 +79,33 @@ class CollectionsSelectionUpdateFromGridProcessor extends modObjectUpdateProcess
         return $this->cleanup();
     }
 
-    public function saveSpecialColumns(){
+    public function saveSpecialColumns()
+    {
         $fields = $this->getProperties();
 
         foreach ($fields as $key => $field) {
             if (strpos($key, 'tv_') !== false) {
-                $this->saveTV(str_replace('tv_', '', $key), $field);
+                $this->saveTV(preg_replace('/tv_/', '', $key, 1), $field);
                 continue;
             }
 
-            $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null,  false);
+            $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null, false);
             if ($taggerInstalled) {
                 if (strpos($key, 'tagger_') !== false) {
-                    $this->saveTagger(str_replace('tagger_', '', $key), $field);
+                    $this->saveTagger(preg_replace('/tagger_/', '', $key, 1), $field);
                     continue;
                 }
             }
         }
     }
 
-    public function saveTV($key, $value) {
+    public function saveTV($key, $value)
+    {
         $this->object->setTVValue($key, $value);
     }
 
-    public function saveTagger($group, $tags) {
+    public function saveTagger($group, $tags)
+    {
         $group = $this->modx->getObject('TaggerGroup', array('alias' => $group));
         if (!$group) {
             return;
@@ -178,4 +188,5 @@ class CollectionsSelectionUpdateFromGridProcessor extends modObjectUpdateProcess
     }
 
 }
+
 return 'CollectionsSelectionUpdateFromGridProcessor';

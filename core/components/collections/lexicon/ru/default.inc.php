@@ -23,12 +23,22 @@ $_lang['setting_collections.user_css'] = 'Пользовательский CSS-�
 $_lang['setting_collections.user_css_desc'] = 'URL-адрес пользовательского CSS-файла, который может содержать собственные стили.';
 $_lang['setting_mgr_tree_icon_collectioncontainer'] = 'Значок коллекции';
 $_lang['setting_mgr_tree_icon_collectioncontainer_desc'] = 'Класс CSS, который будет использоваться для коллекции';
+$_lang['setting_collections.renderer_image_path'] = 'Путь к изображению визуализации';
+$_lang['setting_collections.renderer_image_path_desc'] = 'Image path that will be used for Image renderer. Path will be appended to base_url.';
+$_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Выберите иконку';
+$_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'CSS class that will be used for Selections';
+$_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection';
+$_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
+$_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
+$_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
+
 
 // System lexicons
 $_lang['collections.system.type_name'] = 'Коллекция';
 $_lang['collections.system.text_create'] = 'Добавить коллекцию';
 $_lang['collections.system.text_create_here'] = 'Создать коллекцию здесь';
 $_lang['collections.system.new_container'] = 'Новая коллекция';
+$_lang['collections.system.new_selection_container'] = 'New Selection';
 $_lang['collections.system.all'] = 'Все';
 
 // Global lexicons
@@ -36,12 +46,14 @@ $_lang['collections.global.search'] = 'Поиск';
 $_lang['collections.global.change_order'] = 'Изменить сортировку: [[+child]]';
 $_lang['collections.global.change_parent'] = 'Изменение родителя для: [[+child]]';
 $_lang['collections.global.use_default'] = 'Использовать по умолчанию';
+$_lang['collections.global.import'] = 'Импорт';
 
 // Children
 $_lang['collections.children'] = 'Дочерние ресурсы';
 $_lang['collections.children.create'] = 'Создать дочерний ресурс';
 $_lang['collections.children.view'] = 'Просмотреть дочерний ресурс';
 $_lang['collections.children.edit'] = 'Изменить дочерний ресурс';
+$_lang['collections.children.quickupdate'] = 'Быстрое обновление';
 $_lang['collections.children.publish'] = 'Опубликовать дочерний ресурс';
 $_lang['collections.children.unpublish'] = 'Отменить публикацию дочернего ресурса';
 $_lang['collections.children.duplicate'] = 'Копировать дочерний ресурс';
@@ -120,6 +132,16 @@ $_lang['collections.template.child_cacheable'] = 'Значение Кеширу�
 $_lang['collections.template.child_searchable'] = 'Значение Доступен для поиска по умолчанию для дочерних ресурсов';
 $_lang['collections.template.child_richtext'] = 'Значение Использовать HTML-редактор  по умолчанию для дочерних ресурсов';
 $_lang['collections.template.child_content_type'] = 'Тип контента дочерних ресурсов по умолчанию';
+$_lang['collections.template.parent'] = 'Parent-id (optional, @SNIPPET can be used)';
+$_lang['collections.template.child_content_disposition'] = 'Default children\'s content disposition';
+$_lang['collections.template.sort_type'] = 'Сортировать по типу';
+$_lang['collections.template.permanent_sort_before'] = 'Permanent sort - Before';
+$_lang['collections.template.permanent_sort_after'] = 'Permanent sort - After';
+$_lang['collections.template.selection_link_condition'] = 'WHERE condition for Link resource window';
+$_lang['collections.template.selection_link_condition_desc'] = 'JSON encoded xPDO WHERE condition';
+$_lang['collections.template.export_more'] = 'Export views';
+$_lang['collections.template.export'] = 'Экспорт';
+$_lang['collections.template.import'] = 'Import views';
 
 $_lang['collections.template.column.none'] = 'Этот вид еще не имеет столбцов.';
 $_lang['collections.template.column.name'] = 'Название';
@@ -135,6 +157,12 @@ $_lang['collections.template.column.position'] = 'Положение';
 $_lang['collections.template.column.editor'] = 'Редактор';
 $_lang['collections.template.column.renderer'] = 'Рендерер';
 $_lang['collections.template.column.php_renderer'] = 'Сниппет-рендерер';
+$_lang['collections.template.column.sort_type'] = 'Тип сортировки';
+
+$_lang['collections.template.sort_type_default'] = 'По умолчанию';
+$_lang['collections.template.sort_type_integer'] = 'Integer';
+$_lang['collections.template.sort_type_decimal'] = 'Десятичное';
+$_lang['collections.template.sort_type_datetime'] = 'Дата и время';
 
 $_lang['collections.err.parent_ns'] = 'Родитель не указан.';
 $_lang['collections.err.template_ns'] = 'Вид не указан.';
@@ -152,3 +180,5 @@ $_lang['collections.err.template_remove_last'] = 'Нельзя удалить п
 $_lang['collections.err.template_remove_global'] = 'Нельзя удалить вид по умолчанию. Пожалуйста, установите другой вид по умолчанию и повторите это действие.';
 $_lang['collections.err.template_ae_name'] = 'Шаблон с таким именем уже существует.';
 $_lang['collections.err.column_dot_name'] = 'Имя столбца не может содержать точку.';
+$_lang['collections.err.template_ns_label'] = 'Label is not specified.';
+$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</strong> sort field condition to use drag & drop sorting.';

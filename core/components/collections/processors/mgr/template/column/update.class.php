@@ -1,33 +1,36 @@
 <?php
+
 /**
  * Update a Template column
  *
  * @package collections
  * @subpackage processors.template.column
  */
-class CollectionsTemplateColumnUpdateProcessor extends modObjectUpdateProcessor {
+class CollectionsTemplateColumnUpdateProcessor extends modObjectUpdateProcessor
+{
     public $classKey = 'CollectionTemplateColumn';
     public $languageTopics = array('collections:default');
     public $objectType = 'collections.template.column';
     /** @var CollectionTemplate $object */
     public $object;
 
-    public function beforeSet() {
-        $template = (int) $this->getProperty('template');
+    public function beforeSet()
+    {
+        $template = (int)$this->getProperty('template');
 
         if ($template <= 0) return false;
 
         $name = $this->getProperty('name');
 
         if (empty($name)) {
-            $this->addFieldError('name',$this->modx->lexicon('collections.err.column_ns_name'));
+            $this->addFieldError('name', $this->modx->lexicon('collections.err.column_ns_name'));
         } else {
             if (strpos($name, '.') !== false) {
-                $this->addFieldError('name',$this->modx->lexicon('collections.err.column_dot_name'));
+                $this->addFieldError('name', $this->modx->lexicon('collections.err.column_dot_name'));
             }
 
             if ($this->modx->getCount($this->classKey, array('name' => $name, 'template' => $template, 'id:!=' => $this->object->id)) > 0) {
-                $this->addFieldError('name',$this->modx->lexicon('collections.err.column_ae_name'));
+                $this->addFieldError('name', $this->modx->lexicon('collections.err.column_ae_name'));
             }
         }
 
@@ -45,7 +48,7 @@ class CollectionsTemplateColumnUpdateProcessor extends modObjectUpdateProcessor 
                 }
             }
 
-            $useTagger = $this->modx->collections->getOption('taggerInstalled', null,  false);
+            $useTagger = $this->modx->collections->getOption('taggerInstalled', null, false);
             if ($useTagger && (strpos($name, 'tagger_') !== false)) {
                 $groupName = preg_replace('/tagger_/', '', $name, 1);
                 /** @var TaggerGroup $taggerGroup */
@@ -57,12 +60,54 @@ class CollectionsTemplateColumnUpdateProcessor extends modObjectUpdateProcessor 
             }
 
             if (!$autoLabel) {
-                $this->addFieldError('label',$this->modx->lexicon('collections.err.template_ns_label'));
+                $this->addFieldError('label', $this->modx->lexicon('collections.err.template_ns_label'));
             }
         }
 
         if ($this->object->name == 'id' && $name != 'id') {
-            $this->addFieldError('name',$this->modx->lexicon('collections.err.column_name_cant_change'));
+            $this->addFieldError('name', $this->modx->lexicon('collections.err.column_name_cant_change'));
+        }
+
+        $position = $this->getProperty('position', '');
+        if ($position === '') {
+            $c = $this->modx->newQuery('CollectionTemplateColumn');
+            $c->where(array(
+                'template' => $template,
+                'id:!=' => $this->object->id
+            ));
+            $c->limit(1);
+            $c->sortby('position', 'DESC');
+
+            $last = 0;
+
+            $columns = $this->modx->getIterator('CollectionTemplateColumn', $c);
+            foreach ($columns as $column) {
+                $last = $column->position + 1;
+                break;
+            }
+
+            $this->setProperty('position', $last);
+        } else {
+            $c = $this->modx->newQuery('CollectionTemplateColumn');
+            $c->where(array(
+                'template' => $template,
+                'position:>=' => $position,
+                'id:!=' => $this->object->id
+            ));
+            $c->sortby('position', 'ASC');
+
+            /** @var CollectionTemplateColumn[] $columns */
+            $columns = $this->modx->getIterator('CollectionTemplateColumn', $c);
+            $tmpPosition = $position;
+            foreach ($columns as $column) {
+                if ($tmpPosition == $column->position) {
+                    $tmpPosition = $column->position + 1;
+                    $column->set('position', $tmpPosition);
+                    $column->save();
+                } else {
+                    break;
+                }
+            }
         }
 
         $this->handleNull('sort_type');
@@ -70,12 +115,8 @@ class CollectionsTemplateColumnUpdateProcessor extends modObjectUpdateProcessor 
         return parent::beforeSet();
     }
 
-    public function afterSave() {
-
-        return parent::afterSave();
-    }
-
-    public function handleNull($property) {
+    public function handleNull($property)
+    {
         $value = $this->getProperty($property);
 
         if ($value == '') {
@@ -89,5 +130,12 @@ class CollectionsTemplateColumnUpdateProcessor extends modObjectUpdateProcessor 
         return $value;
     }
 
+    public function afterSave()
+    {
+
+        return parent::afterSave();
+    }
+
 }
+
 return 'CollectionsTemplateColumnUpdateProcessor';

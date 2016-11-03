@@ -1,24 +1,27 @@
 <?php
+
 /**
  * Create a Template
  *
  * @package collections
  * @subpackage processors.template
  */
-class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
+class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor
+{
     public $classKey = 'CollectionTemplate';
     public $languageTopics = array('collections:default');
     public $objectType = 'collections.template';
     /** @var CollectionTemplate $object */
     public $object;
 
-    public function beforeSet() {
+    public function beforeSet()
+    {
         $name = $this->getProperty('name');
         if (empty($name)) {
-            $this->addFieldError('name',$this->modx->lexicon('collections.err.template_ns_name'));
+            $this->addFieldError('name', $this->modx->lexicon('collections.err.template_ns_name'));
         } else {
             if ($this->doesAlreadyExist(array('name' => $name))) {
-                $this->addFieldError('name',$this->modx->lexicon('collections.err.template_ae_name'));
+                $this->addFieldError('name', $this->modx->lexicon('collections.err.template_ae_name'));
             }
         }
 
@@ -38,6 +41,10 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         $this->handleComboBoolean('child_cacheable');
         $this->handleComboBoolean('child_searchable');
         $this->handleComboBoolean('child_richtext');
+        $this->handleComboBoolean('search_query_exclude_tvs');
+        $this->handleComboBoolean('search_query_exclude_tagger');
+        $this->handleComboBoolean('search_query_title_only');
+        
         $this->handleNull('child_content_disposition');
         $this->handleNull('sort_type');
 
@@ -68,7 +75,7 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
 
         $buttons = $this->getProperty('buttons');
         if (empty($buttons)) {
-            $this->setProperty('buttons', 'view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink');
+            $this->setProperty('buttons', 'open,view,edit,duplicate,publish:orange,unpublish,delete,undelete,remove,unlink');
         }
 
         $backToCollection = $this->getProperty('back_to_collection_label');
@@ -108,43 +115,14 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         return parent::beforeSet();
     }
 
-    public function afterSave() {
-        $global = $this->getProperty('global_template');
-
-        if ($global == true) {
-            $this->modx->updateCollection('CollectionTemplate', array('global_template' => false), array('id:!=' => $this->object->id));
-        }
-
-        $templates = $this->getProperty('templates');
-        $templates = $this->modx->collections->explodeAndClean($templates);
-
-        $this->object->setTemplates($templates);
-
-        $this->addIdColumn();
-
-        return parent::afterSave();
-    }
-
-    /**
-     * Adds an ID column to the view
-     */
-    public function addIdColumn() {
-        $column = $this->modx->newObject('CollectionTemplateColumn');
-        $column->set('name', 'id');
-        $column->set('label', 'id');
-        $column->set('hidden', true);
-        $column->set('width', 40);
-        $column->set('template', $this->object->id);
-        $column->save();
-    }
-
     /**
      * Transforms string true/false value to boolean
      *
      * @param string $property
      * @return bool|null
      */
-    public function handleComboBoolean($property) {
+    public function handleComboBoolean($property)
+    {
         $boolean = $this->getProperty($property);
 
         if ($boolean == 'true') {
@@ -164,6 +142,49 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         return null;
     }
 
+    public function handleNull($property)
+    {
+        $value = $this->getProperty($property);
+
+        if ($value == '') {
+            $this->setProperty($property, null);
+
+            return null;
+        }
+
+        $this->setProperty($property, $value);
+
+        return $value;
+    }
+
+    /**
+     * Validates if given templates are not used in other View
+     *
+     * @param int[] $templates
+     * @return bool|string
+     */
+    public function validateTemplates($templates)
+    {
+        $c = $this->modx->newQuery('CollectionResourceTemplate');
+        $c->leftJoin('modTemplate', 'ResourceTemplate');
+        $c->where(array(
+            'resource_template:IN' => $templates,
+        ));
+        $c->select($this->modx->getSelectColumns('modTemplate', 'ResourceTemplate', '', array('templatename')));
+
+        $c->prepare();
+        $c->stmt->execute();
+        $existingTemplates = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
+        $existingTemplatesCount = count($existingTemplates);
+
+        if ($existingTemplatesCount > 0) {
+            $type = ($existingTemplatesCount > 1) ? 'p' : 's';
+            return $this->modx->lexicon('collections.err.template_resource_template_aiu_' . $type, array('templates' => implode(', ', $existingTemplates)));
+        }
+
+        return true;
+    }
+
     /**
      * Handles switch to Selection when Global view is set
      * or when there are templates specified
@@ -172,7 +193,8 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
      * @param int[] $templates
      * @return bool|string
      */
-    public function handleSelectionSwitch($global, $templates) {
+    public function handleSelectionSwitch($global, $templates)
+    {
         if (($global == false) && empty($templates)) return true;
 
         if ($global == true) {
@@ -199,7 +221,8 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
      *
      * @return bool|string
      */
-    public function handleSelectionSwitchForGlobalView() {
+    public function handleSelectionSwitchForGlobalView()
+    {
         //@TODO: Look for CollectionSetting if there is not an override for View
         //@TODO: Look for CollectionSetting if there is not an override for Selection
         $templatesQuery = $this->modx->newQuery('CollectionResourceTemplate');
@@ -234,6 +257,28 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
     }
 
     /**
+     * Check if any of given Resources has children
+     *
+     * @param modResource[] $resources
+     * @return bool|string
+     */
+    public function checkResourcesForChildren(array $resources)
+    {
+        $withChildren = array();
+
+        foreach ($resources as $resource) {
+            if ($resource->hasChildren()) $withChildren[] = '- ' . $resource->pagetitle . ' (' . $resource->id . ')';
+        }
+
+        if (!empty($withChildren)) {
+            $type = (count($withChildren) > 1) ? 's' : '';
+            return $this->modx->lexicon('collection.err.selection_resource' . $type . '_children', array('resources' => implode('<br />', $withChildren)));
+        }
+
+        return true;
+    }
+
+    /**
      * When templates are assigned to View,
      * will check if there are any Collections using those templates
      * and having children
@@ -241,7 +286,8 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
      * @param int[] $templates
      * @return bool|string
      */
-    public function handleSelectionSwitchForTemplates($templates) {
+    public function handleSelectionSwitchForTemplates($templates)
+    {
         //@TODO: Look for CollectionSetting if there is not an override for View
         //@TODO: Look for CollectionSetting if there is not an override for Selection
         $resourcesQuery = $this->modx->newQuery('modResource');
@@ -261,67 +307,38 @@ class CollectionsTemplateCreateProcessor extends modObjectCreateProcessor {
         return $this->checkResourcesForChildren($resources);
     }
 
-    /**
-     * Check if any of given Resources has children
-     *
-     * @param modResource[] $resources
-     * @return bool|string
-     */
-    public function checkResourcesForChildren(array $resources) {
-        $withChildren = array();
+    public function afterSave()
+    {
+        $global = $this->getProperty('global_template');
 
-        foreach ($resources as $resource) {
-            if ($resource->hasChildren()) $withChildren[] = '- ' . $resource->pagetitle . ' (' . $resource->id . ')';
+        if ($global == true) {
+            $this->modx->updateCollection('CollectionTemplate', array('global_template' => false), array('id:!=' => $this->object->id));
         }
 
-        if (!empty($withChildren)) {
-            $type = (count($withChildren) > 1) ? 's' : '';
-            return $this->modx->lexicon('collection.err.selection_resource' . $type . '_children', array('resources' => implode('<br />', $withChildren)));
-        }
+        $templates = $this->getProperty('templates');
+        $templates = $this->modx->collections->explodeAndClean($templates);
 
-        return true;
+        $this->object->setTemplates($templates);
+
+        $this->addIdColumn();
+
+        return parent::afterSave();
     }
 
     /**
-     * Validates if given templates are not used in other View
-     *
-     * @param int[] $templates
-     * @return bool|string
+     * Adds an ID column to the view
      */
-    public function validateTemplates($templates) {
-        $c = $this->modx->newQuery('CollectionResourceTemplate');
-        $c->leftJoin('modTemplate', 'ResourceTemplate');
-        $c->where(array(
-            'resource_template:IN' => $templates,
-        ));
-        $c->select($this->modx->getSelectColumns('modTemplate', 'ResourceTemplate', '', array('templatename')));
-
-        $c->prepare();
-        $c->stmt->execute();
-        $existingTemplates = $c->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
-        $existingTemplatesCount = count($existingTemplates);
-
-        if ($existingTemplatesCount > 0) {
-            $type = ($existingTemplatesCount > 1) ? 'p' : 's';
-            return $this->modx->lexicon('collections.err.template_resource_template_aiu_' . $type, array('templates' => implode(', ', $existingTemplates)));
-        }
-
-        return true;
-    }
-
-    public function handleNull($property) {
-        $value = $this->getProperty($property);
-
-        if ($value == '') {
-            $this->setProperty($property, null);
-
-            return null;
-        }
-
-        $this->setProperty($property, $value);
-
-        return $value;
+    public function addIdColumn()
+    {
+        $column = $this->modx->newObject('CollectionTemplateColumn');
+        $column->set('name', 'id');
+        $column->set('label', 'id');
+        $column->set('hidden', true);
+        $column->set('width', 40);
+        $column->set('template', $this->object->id);
+        $column->save();
     }
 
 }
+
 return 'CollectionsTemplateCreateProcessor';
