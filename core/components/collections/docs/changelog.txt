@@ -1,5 +1,7 @@
 Changelog for Collections.
 
+- Remove 'overflow: hidden' to title on main column view to correct visual bug [#219]
+
 Collections 3.6.0
 ===================
 - Add sync tables resolver

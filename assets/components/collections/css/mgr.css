@@ -114,7 +114,6 @@
 
 .collections-grid .main-column {
     font-size: 16px;
-    overflow-x: hidden;
 }
 
 .collections-grid .main-column.buttons {
@@ -124,7 +123,6 @@
 .collections-grid .main-column a {
     display: block;
     white-space: nowrap;
-    overflow: hidden;
     text-overflow: ellipsis;
 }
 .collections-grid .collections-title-column ul {
