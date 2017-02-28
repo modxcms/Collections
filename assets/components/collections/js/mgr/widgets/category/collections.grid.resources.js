@@ -221,9 +221,10 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
     }
 
     ,clearFilter: function() {
-        this.getStore().baseParams = {
+        var store = this.getStore();
+        store.baseParams = {
             action: 'mgr/resource/getList'
-            ,'parent': collections.template.parent
+            ,parent: store.baseParams.parent
             ,sort: collections.template.sort.field
             ,dir: collections.template.sort.dir
         };
