@@ -176,6 +176,10 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
         MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + '&selection=' + MODx.request.id);
     }
 
+    ,getEditChildUrl: function(data) {
+        return collections.getPageUrl(MODx.request.a, 'id=' + data.id + '&selection=' + MODx.request.id);
+    }
+
     ,deleteChild: function(btn,e) {
         MODx.msg.confirm({
             title: _('selections.delete')

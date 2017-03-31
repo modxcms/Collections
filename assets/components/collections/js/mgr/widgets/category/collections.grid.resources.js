@@ -109,6 +109,26 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         if (collections.template.bulkActions) {
             columns.unshift(this.sm);
         }
+        
+        var wrapRenderer = function(renderer) {
+            if (typeof renderer === 'string') {
+                renderer = eval(renderer);
+            }
+            
+            var newRenderer = function(value, metaData, record, rowIndex, colIndex, store) {
+                record.data.self = this;
+                return renderer(value, metaData, record, rowIndex, colIndex, store);
+            };
+            return newRenderer.bind(this);
+        };
+        wrapRenderer = wrapRenderer.bind(this);
+        
+        for (var i = 0; i < columns.length; i++) {
+            if (columns[i].renderer) {
+                columns[i].renderer = wrapRenderer(columns[i].renderer);
+            }
+            columns[i].scope = self;   
+        }
 
         return columns;
     }
@@ -233,6 +253,9 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         this.getBottomToolbar().changePage(1);
     }
 
+    /**
+     * @deprecated use getEditChildUrl instead
+     */
     ,editChild: function(btn,e) {
         var selection = '';
         if (collections.template.parent != MODx.request.id){
@@ -251,6 +274,30 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         }
         
         MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection + collectionGet + folderGet);
+    }
+    
+    ,getViewChildUrl: function(data) {
+        return data.preview_url;                  
+    }
+    
+    ,getEditChildUrl: function(data) {
+        var selection = '';
+        if (collections.template.parent != MODx.request.id){
+           selection = '&selection=' + MODx.request.id;
+        }
+
+        var collectionGet = '';
+        if (this.currentFolder) {
+            collectionGet = '&collection=' + collections.template.parent
+        }
+        
+        var folderGet = '';
+        var query = Ext.urlDecode(location.search.replace('?', ''));
+        if (parseInt(query.folder) > 0) {
+            folderGet = '&folder=' + parseInt(query.folder); 
+        }
+        
+        return collections.getPageUrl(MODx.request.a, 'id=' + data.id + selection + collectionGet + folderGet);
     }
 
     ,createChild: function(btn,e) {

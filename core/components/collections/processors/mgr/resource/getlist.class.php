@@ -146,11 +146,13 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
             'className' => 'view',
             'text' => $this->modx->lexicon('view'),
             'key' => 'view',
+            'urlFunction' => 'getViewChildUrl'
         );
         $this->actions['edit'] = array(
             'className' => 'edit',
             'text' => $this->modx->lexicon('edit'),
             'key' => 'edit',
+            'urlFunction' => 'getEditChildUrl'
         );
         $this->actions['quickupdate'] = array(
             'className' => 'quickupdate',

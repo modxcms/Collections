@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Handle edit and view child as classic link, allowing to cmd/ctrl click to open in new tab
 - Fix clear filter clearing current folder
 - Remove 'overflow: hidden' to title on main column view to correct visual bug [#219]
 
