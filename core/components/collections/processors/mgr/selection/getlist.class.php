@@ -28,12 +28,32 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor
     public $searchQueryExcludeTagger = false;
     public $searchQueryTitleOnly = false;
 
+    public $permissions = array(
+        'publish_document' => false,
+        'unpublish_document' => false,
+        'delete_document' => false,
+        'undelete_document' => false,
+        'view_document' => false,
+        'edit_document' => false,
+        'purge_deleted' => false,
+    );
+
     public function initialize()
     {
         $parent = $this->getProperty('parent', null);
         if (empty($parent)) {
             return false;
         }
+
+        $this->permissions = array(
+            'publish_document' => $this->modx->hasPermission('publish_document'),
+            'unpublish_document' => $this->modx->hasPermission('unpublish_document'),
+            'delete_document' => $this->modx->hasPermission('delete_document'),
+            'undelete_document' => $this->modx->hasPermission('undelete_document'),
+            'view_document' => $this->modx->hasPermission('view_document'),
+            'edit_document' => $this->modx->hasPermission('edit_document'),
+            'purge_deleted' => $this->modx->hasPermission('purge_deleted'),
+        );
 
         $this->setActions();
 
@@ -412,30 +432,42 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor
             if (isset($this->actions[$button])) {
                 switch ($button) {
                     case 'publish':
-                        if (empty($resourceArray['published'])) {
+                        if ($this->permissions['publish_document'] && empty($resourceArray['published'])) {
                             $resourceArray['actions'][] = $this->actions[$button];
                         }
                         break;
                     case 'unpublish':
-                        if (!empty($resourceArray['published'])) {
+                        if ($this->permissions['unpublish_document'] && !empty($resourceArray['published'])) {
                             $resourceArray['actions'][] = $this->actions[$button];
                         }
                         break;
                     case 'quickupdate':
-                        $resourceArray['actions'][] = $this->actions[$button];
+                        if ($this->permissions['edit_document']) {
+                            $resourceArray['actions'][] = $this->actions[$button];
+                        }
                         break;
                     case 'delete':
-                        if (empty($resourceArray['deleted'])) {
+                        if ($this->permissions['delete_document'] && empty($resourceArray['deleted'])) {
                             $resourceArray['actions'][] = $this->actions[$button];
                         }
                         break;
                     case 'undelete':
-                        if (!empty($resourceArray['deleted'])) {
+                        if ($this->permissions['undelete_document'] && !empty($resourceArray['deleted'])) {
                             $resourceArray['actions'][] = $this->actions[$button];
                         }
                         break;
                     case 'remove':
-                        if (!empty($resourceArray['deleted'])) {
+                        if ($this->permissions['purge_deleted'] && !empty($resourceArray['deleted'])) {
+                            $resourceArray['actions'][] = $this->actions[$button];
+                        }
+                        break;
+                    case 'edit':
+                        if ($this->permissions['edit_document']) {
+                            $resourceArray['actions'][] = $this->actions[$button];
+                        }
+                        break;
+                    case 'view':
+                        if ($this->permissions['view_document']) {
                             $resourceArray['actions'][] = $this->actions[$button];
                         }
                         break;
@@ -453,21 +485,37 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor
     {
         $resourceArray['menu_actions'] = array();
 
-        $resourceArray['menu_actions']['view'] = $this->actions['view'];
-        $resourceArray['menu_actions']['edit'] = $this->actions['edit'];
-        $resourceArray['menu_actions']['quickupdate'] = $this->actions['quickupdate'];
+        if ($this->permissions['view_document']) {
+            $resourceArray['menu_actions']['view'] = $this->actions['view'];
+        }
+
+        if ($this->permissions['edit_document']) {
+            $resourceArray['menu_actions']['edit'] = $this->actions['edit'];
+            $resourceArray['menu_actions']['quickupdate'] = $this->actions['quickupdate'];
+        }
 
         if (!empty($resourceArray['published'])) {
-            $resourceArray['menu_actions']['unpublish'] = $this->actions['unpublish'];
+            if ($this->permissions['unpublish_document']) {
+                $resourceArray['menu_actions']['unpublish'] = $this->actions['unpublish'];
+            }
         } else {
-            $resourceArray['menu_actions']['publish'] = $this->actions['publish'];
+            if ($this->permissions['publish_document']) {
+                $resourceArray['menu_actions']['publish'] = $this->actions['publish'];
+            }
         }
 
         if (!empty($resourceArray['deleted'])) {
-            $resourceArray['menu_actions']['undelete'] = $this->actions['undelete'];
-            $resourceArray['menu_actions']['remove'] = $this->actions['remove'];
+            if ($this->permissions['undelete_document']) {
+                $resourceArray['menu_actions']['undelete'] = $this->actions['undelete'];
+            }
+
+            if ($this->permissions['purge_deleted']) {
+                $resourceArray['menu_actions']['remove'] = $this->actions['remove'];
+            }
         } else {
-            $resourceArray['menu_actions']['delete'] = $this->actions['delete'];
+            if ($this->permissions['delete_document']) {
+                $resourceArray['menu_actions']['delete'] = $this->actions['delete'];
+            }
         }
 
         $resourceArray['menu_actions']['unlink'] = $this->actions['unlink'];
