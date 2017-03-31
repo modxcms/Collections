@@ -271,6 +271,16 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor
                     'OR:CreatedBy.username:LIKE' => '%' . $query . '%',
                 );
             }
+            
+            if ($this->searchQueryExcludeTvs == false) {
+                // tv columns search rules
+                foreach ($this->tvColumns as $column) {
+                    array_push($queryWhere, array(
+                        'OR:TemplateVarResources_' . $column['column'] . '.value:LIKE' => '%' . $query . '%',
+                    ));
+                }
+            }
+            
             if ($this->searchQueryExcludeTagger == false) {
                 $taggerInstalled = $this->modx->collections->getOption('taggerInstalled', null, false);
                 if ($taggerInstalled) {

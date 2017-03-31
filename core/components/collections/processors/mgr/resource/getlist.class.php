@@ -296,6 +296,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
                     'OR:CreatedBy.username:LIKE' => '%' . $query . '%',
                 );
             }
+            
             if ($this->searchQueryExcludeTvs == false) {
                 // tv columns search rules
                 foreach ($this->tvColumns as $column) {
@@ -304,6 +305,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
                     ));
                 }
             }
+            
             if ($this->searchQueryExcludeTagger == false) {
                 if ($this->useTagger) {
                     $c->leftJoin('TaggerTagResource', 'TagResource', array('TagResource.resource = modResource.id'));
