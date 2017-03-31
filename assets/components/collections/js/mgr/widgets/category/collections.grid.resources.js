@@ -373,12 +373,12 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         var w = MODx.load({
             xtype: 'modx-window-resource-duplicate'
             ,resource: this.menu.record.id
-            ,hasChildren: false
+            ,hasChildren: this.menu.record.has_children == 1
             ,listeners: {
                 'success': {fn:function() {this.refresh();},scope:this}
             }
         });
-        w.config.hasChildren = false;
+        w.config.hasChildren = this.menu.record.has_children == 1;
         w.setValues(r);
         w.show();
         return false;

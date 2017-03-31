@@ -169,7 +169,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         }
 
         $templateOptions = array(
-            'fields' => array('actions', 'action_edit', 'preview_url', 'menu_actions', 'icons'),
+            'fields' => array('actions', 'action_edit', 'preview_url', 'menu_actions', 'icons', 'has_children'),
             'columns' => array(),
             'sort' => array(
                 'field' => $template->sort_field . ':' . $template->sort_type,
