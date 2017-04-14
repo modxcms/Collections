@@ -1,5 +1,6 @@
 Changelog for Collections.
 
+- Don't makeURL for deleted resources & hide view button
 - Allow duplicating children
 - Fix TV search in selections
 - Check permissions before rendering specific action button / context menu action

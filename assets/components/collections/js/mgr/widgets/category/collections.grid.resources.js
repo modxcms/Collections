@@ -277,6 +277,10 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
     }
     
     ,getViewChildUrl: function(data) {
+        if (data.preview_url == '') {
+            return '#';
+        }
+        
         return data.preview_url;                  
     }
     

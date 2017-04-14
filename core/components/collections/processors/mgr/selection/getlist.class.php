@@ -429,7 +429,12 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor
         }
 
         $this->modx->getContext($resourceArray['context_key']);
-        $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'], $resourceArray['context_key']);
+        
+        if (!$resourceArray['deleted']) {
+            $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'], $resourceArray['context_key']);
+        } else {
+            $resourceArray['preview_url'] = '';
+        }
 
         return $resourceArray;
     }
@@ -477,7 +482,7 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor
                         }
                         break;
                     case 'view':
-                        if ($this->permissions['view_document']) {
+                        if ($this->permissions['view_document'] && !$resourceArray['deleted']) {
                             $resourceArray['actions'][] = $this->actions[$button];
                         }
                         break;
@@ -495,7 +500,7 @@ class CollectionsSelectionGetListProcessor extends modObjectGetListProcessor
     {
         $resourceArray['menu_actions'] = array();
 
-        if ($this->permissions['view_document']) {
+        if ($this->permissions['view_document'] && !$resourceArray['deleted']) {
             $resourceArray['menu_actions']['view'] = $this->actions['view'];
         }
 
