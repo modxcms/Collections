@@ -1,4 +1,4 @@
-Collections [!Crowdin](https://d322cqt584bo4o.cloudfront.net/collections/localized.png)](https://crowdin.com/project/collections)
+Collections ![Crowdin](https://d322cqt584bo4o.cloudfront.net/collections/localized.png)(https://crowdin.com/project/collections)
 ===========
 
 Collections is a MODX Revolution Extra that adds a custom `CollectionContainer` resource class with the following behaviour:
