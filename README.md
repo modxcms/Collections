@@ -1,7 +1,7 @@
 Collections ![Crowdin](https://d322cqt584bo4o.cloudfront.net/collections/localized.png)(https://crowdin.com/project/collections)
 ===========
 
-![https://d322cqt584bo4o.cloudfront.net/collections/localized.png]
+![Crowdin](https://d322cqt584bo4o.cloudfront.net/collections/localized.png)
 
 Collections is a MODX Revolution Extra that adds a custom `CollectionContainer` resource class with the following behaviour:
 
@@ -25,4 +25,4 @@ As of version 2.x, Collections supports customizable views. Views are configured
 There are specific settings for Collections Resources vs Selections.
 
 ### Resources
-The official documentation for Collections can be found here: [http://rtfm.modx.com/extras/revo/collections] (http://rtfm.modx.com/extras/revo/collections)
+The official documentation for Collections can be found here: [http://rtfm.modx.com/extras/revo/collections](http://rtfm.modx.com/extras/revo/collections)
