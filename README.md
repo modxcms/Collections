@@ -1,6 +1,8 @@
 Collections ![Crowdin](https://d322cqt584bo4o.cloudfront.net/collections/localized.png)(https://crowdin.com/project/collections)
 ===========
 
+[![https://d322cqt584bo4o.cloudfront.net/collections/localized.png]](https://crowdin.com/project/collections)
+
 Collections is a MODX Revolution Extra that adds a custom `CollectionContainer` resource class with the following behaviour:
 
 1. Any direct child resource will be hidden from the Resource Tree in the Manager, and listed in a grid view (similar to Articles) under a dedicated "Children" tab, for which the label can be customized.
