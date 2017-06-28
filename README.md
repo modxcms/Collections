@@ -23,4 +23,4 @@ As of version 2.x, Collections supports customizable views. Views are configured
 There are specific settings for Collections Resources vs Selections.
 
 ### Resources
-The official documentation for Collections can be found here: [http://rtfm.modx.com/extras/revo/collections](http://rtfm.modx.com/extras/revo/collections)
+The official documentation for Collections can be found here: [https://docs.modx.com/extras/revo/collections](https://docs.modx.com/extras/revo/collections)
