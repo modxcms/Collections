@@ -271,10 +271,10 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
 
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
-        $parent = $this->getProperty('parent', null);
+        $parent = explode(',', $this->getProperty('parent', null));
 
         $c->where(array(
-            'parent' => $parent,
+            'parent:IN' => $parent,
         ));
 
         $query = $this->getProperty('query', null);
