@@ -64,6 +64,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
         $parentObject = $this->modx->getObject('modResource', $parent);
         /** @var CollectionTemplate $template */
         $template = $this->modx->collections->getCollectionsView($parentObject);
+        $this->child_selection = $template->child_selection;
 
         $sort = $this->getProperty('sort');
         $sort = explode(':', $sort);
@@ -270,12 +271,17 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
     }
 
     public function prepareQueryBeforeCount(xPDOQuery $c)
-    {
-        $parent = $this->getProperty('parent', null);
+    {    
+        $parent = explode(',', $this->getProperty('parent', null));
 
         $c->where(array(
-            'parent' => $parent,
+            'parent:IN' => $parent,
         ));
+        
+        $child_selection = json_decode($this->child_selection, true);
+        if (!empty($child_selection)){
+            $c->where($child_selection);
+        }
 
         $query = $this->getProperty('query', null);
         if (!empty($query)) {
