@@ -133,6 +133,7 @@ $_lang['collections.template.child_searchable'] = 'Значение Доступ
 $_lang['collections.template.child_richtext'] = 'Значение Использовать HTML-редактор  по умолчанию для дочерних ресурсов';
 $_lang['collections.template.child_content_type'] = 'Тип контента дочерних ресурсов по умолчанию';
 $_lang['collections.template.parent'] = 'Parent-id (optional, @SNIPPET can be used)';
+$_lang['collections.template.child_selection'] = 'Условие фильтра ресурсов (опционально, в формате JSON)';
 $_lang['collections.template.child_content_disposition'] = 'Default children\'s content disposition';
 $_lang['collections.template.sort_type'] = 'Сортировать по типу';
 $_lang['collections.template.permanent_sort_before'] = 'Permanent sort - Before';
