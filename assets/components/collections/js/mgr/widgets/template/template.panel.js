@@ -913,7 +913,12 @@ Ext.extend(collections.panel.Template, MODx.FormPanel,{
                             msgTarget: 'under'
                             ,anchor: '100%'
                         }
-                        ,items: []
+                        ,items: [{
+                            xtype: 'textfield'
+                            ,fieldLabel: _('collections.template.child_selection')
+                            ,name: 'child_selection'
+                            ,value: (config.record) ? config.record.child_selection : ''
+                        }]
                     }]
                 }]
             },{
