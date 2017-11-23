@@ -167,6 +167,13 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         }else{
             $parent = $this->resource->get('id');
         }
+        
+        $child_selection = !empty($template->child_selection) ? $template->child_selection : '';
+        if (substr($child_selection,0,8) == '@SNIPPET'){
+            $snippet = trim(substr($child_selection,8));
+            $properties = array();
+            $child_selection = $this->modx->runSnippet($snippet,$properties);
+        }
 
         $templateOptions = array(
             'fields' => array('actions', 'action_edit', 'preview_url', 'menu_actions', 'icons', 'has_children'),
@@ -191,6 +198,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'resourceDerivatives' => $derivates,
             'selection_create_sort' => $template->selection_create_sort,
             'parent' => $parent,
+            'child_selection' => $child_selection,
             'parent_context' => $parent_context,
             'permanent_sort' => array (
                 'before' => $template->permanent_sort_before,
