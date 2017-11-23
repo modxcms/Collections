@@ -133,6 +133,7 @@ $_lang['collections.template.child_searchable'] = 'Standard-\'Durchsuchbar\'-Ein
 $_lang['collections.template.child_richtext'] = 'Standard-\'Rich-Text-Editor verwenden\'-Einstellung für Unterressourcen';
 $_lang['collections.template.child_content_type'] = 'Standard-Inhaltstyp für Unteressourcen';
 $_lang['collections.template.parent'] = 'ID der Eltern-Ressource (optional, @SNIPPET verwendbar)';
+$_lang['collections.template.child_selection'] = 'Where condition (optional, in JSON)';
 $_lang['collections.template.child_content_disposition'] = 'Standard-\'Content-Disposition\'-Einstellung für Unterressourcen';
 $_lang['collections.template.sort_type'] = 'Sortierungsart';
 $_lang['collections.template.permanent_sort_before'] = 'Permanente Sortierung - Zuvor';
