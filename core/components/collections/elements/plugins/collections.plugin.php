@@ -21,6 +21,8 @@ $collections = $modx->getService(
     )
 );
 
+if (!($collections instanceof Collections)) { return ''; }
+
 $className = 'Collections' . $modx->event->name;
 
 $modx->loadClass('CollectionsPlugin', $collections->getOption('modelPath') . 'collections/events/', true, true);
