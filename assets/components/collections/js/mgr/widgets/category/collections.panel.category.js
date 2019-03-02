@@ -8,12 +8,9 @@ Ext.extend(collections.panel.Category,MODx.panel.Resource,{
     getPageHeader: function(config) {
         config = config || {record:{}};
         return {
-            html: '<h2>'+_('collections.container_new')+'</h2>'
+            html: _('collections.container_new')
             ,id: 'modx-resource-header'
-            ,cls: 'modx-page-header'
-            ,border: false
-            ,forceLayout: true
-            ,anchor: '100%'
+            ,xtype: 'modx-header'
         };
     }
 
