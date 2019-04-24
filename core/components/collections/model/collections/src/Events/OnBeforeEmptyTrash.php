@@ -1,6 +1,7 @@
 <?php
+namespace Collections\Events;
 
-class CollectionsOnBeforeEmptyTrash extends CollectionsPlugin
+class OnBeforeEmptyTrash extends Event
 {
 
     public function run()

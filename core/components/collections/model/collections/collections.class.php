@@ -82,6 +82,7 @@ class Collections
         $this->modx->addPackage('collections', $this->config['modelPath']);
         $this->modx->lexicon->load('collections:default');
         $this->modx->lexicon->load('collections:selections');
+        $this->autoload();
     }
 
     /**
@@ -149,5 +150,10 @@ class Collections
         }
 
         return $template;
+    }
+
+    protected function autoload()
+    {
+        require_once $this->getOption('modelPath') . 'vendor/autoload.php';
     }
 }

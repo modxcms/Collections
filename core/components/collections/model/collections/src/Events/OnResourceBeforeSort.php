@@ -1,6 +1,8 @@
 <?php
 
-class CollectionsOnResourceBeforeSort extends CollectionsPlugin
+namespace Collections\Events;
+
+class OnResourceBeforeSort extends Event
 {
 
     public function run()

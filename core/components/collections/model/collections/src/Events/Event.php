@@ -1,6 +1,8 @@
 <?php
 
-abstract class CollectionsPlugin
+namespace Collections\Events;
+
+abstract class Event
 {
 
     /** @var \modX $modx */

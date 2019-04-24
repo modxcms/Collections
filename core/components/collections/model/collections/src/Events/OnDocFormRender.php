@@ -1,6 +1,7 @@
 <?php
+namespace Collections\Events;
 
-class CollectionsOnDocFormRender extends CollectionsPlugin
+class OnDocFormRender extends Event
 {
 
     public function run()

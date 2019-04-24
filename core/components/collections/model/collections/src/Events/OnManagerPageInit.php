@@ -1,6 +1,7 @@
 <?php
+namespace Collections\Events;
 
-class CollectionsOnManagerPageInit extends CollectionsPlugin
+class OnManagerPageInit extends Event
 {
 
     public function run()

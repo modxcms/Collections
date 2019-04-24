@@ -8,3 +8,9 @@ crowdin.yaml
 _packages/*.*
 !_packages/.gitignore
 !_packages/*.zip
+
+node_modules
+npm-debug.log
+.sass-cache
+
+core/components/collections/model/vendor

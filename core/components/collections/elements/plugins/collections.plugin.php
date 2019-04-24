@@ -23,13 +23,9 @@ $collections = $modx->getService(
 
 if (!($collections instanceof Collections)) return '';
 
-$className = 'Collections' . $modx->event->name;
-
-$modx->loadClass('CollectionsPlugin', $collections->getOption('modelPath') . 'collections/events/', true, true);
-$modx->loadClass($className, $collections->getOption('modelPath') . 'collections/events/', true, true);
-
+$className = "\\Collections\\Events\\{$modx->event->name}";
 if (class_exists($className)) {
-    /** @var CollectionsPlugin $handler */
+    /** @var \Collections\Events\Event $handler */
     $handler = new $className($modx, $scriptProperties);
     $handler->run();
 }
