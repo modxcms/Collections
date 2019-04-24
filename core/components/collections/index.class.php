@@ -44,13 +44,3 @@ abstract class CollectionsBaseManagerController extends modExtraManagerControlle
         return true;
     }
 }
-
-class IndexManagerController extends CollectionsBaseManagerController
-{
-    public static function getDefaultController()
-    {
-        return 'template';
-    }
-}
-
-

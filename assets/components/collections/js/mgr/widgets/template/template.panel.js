@@ -54,7 +54,7 @@ Ext.extend(collections.panel.Template, MODx.FormPanel,{
 
     ,success: function(o, r) {
         if (this.config.isUpdate == false) {
-            MODx.loadPage(MODx.action['collections:index'], 'action=template/update&id='+ o.result.object.id);
+            MODx.loadPage('template/update', 'namespace=collections&id='+ o.result.object.id);
         }
     }
 

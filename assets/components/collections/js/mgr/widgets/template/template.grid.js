@@ -137,15 +137,15 @@ Ext.extend(collections.grid.Template,MODx.grid.Grid,{
     }
 
     ,editTemplate: function() {
-        MODx.loadPage(MODx.action['collections:index'], 'action=template/update&id='+ this.menu.record.id);
+        MODx.loadPage('template/update', 'namespace=collections&id='+ this.menu.record.id);
     }
 
     ,createTemplate: function() {
-        MODx.loadPage(MODx.action['collections:index'], 'action=template/create');
+        MODx.loadPage('template/create', 'namespace=collections');
     }
     
     ,exportTemplate: function(){
-        MODx.loadPage(MODx.action['collections:index'], 'action=template/export&ids=' + this.getSelectedAsList());                     
+        MODx.loadPage('template/export', 'namespace=collections&ids=' + this.getSelectedAsList());                     
     }
 
     ,removeTemplate: function(btn,e) {
