@@ -10,6 +10,7 @@ class CollectionContainer extends modResource
 {
     public $showInContextMenu = true;
     public $allowDrop = 1;
+    public $allowChildrenResources = false;
 
     function __construct(xPDO & $xpdo)
     {
