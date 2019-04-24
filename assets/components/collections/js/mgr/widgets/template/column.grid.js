@@ -149,6 +149,14 @@ Ext.extend(collections.grid.TemplateColumn,MODx.grid.Grid,{
             ,width: 100
             ,renderer: collections.renderer.qtip
         },{
+            header: _('collections.template.column.php_renderer')
+            ,dataIndex: 'php_renderer'
+            ,sortable: true
+            ,editor: {xtype: 'textfield'}
+            ,hidden: true
+            ,width: 100
+            ,renderer: collections.renderer.qtip
+        },{
             header: _('collections.template.column.position')
             ,dataIndex: 'position'
             ,sortable: true
