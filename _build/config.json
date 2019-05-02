@@ -20,7 +20,9 @@
                     "OnDocFormPrerender", 
                     "OnBeforeEmptyTrash", 
                     "OnDocFormRender",
-                    "OnManagerPageBeforeRender"
+                    "OnManagerPageBeforeRender",
+                    "FredOnBeforeGetResourceTree",
+                    "FredBeforeRender"
                 ]
             }],
             "snippets": [{
