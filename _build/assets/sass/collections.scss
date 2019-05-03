@@ -1,3 +1,63 @@
+@import "sass-inline-svg";
+$white: #FEFEFE;
+.fred--modal-body{
+  .tabulator {
+    .tabulator-header{
+      background-color: #f1f1f1;
+    }
+  }
+}
 .fred--collections-sidebar:before {
   background: url('./bars-solid.svg') center center no-repeat;
+}
+.fred--btn{
+  &-collections{
+    &-newpage{
+      background:#42AB4A !important;
+      margin-bottom: 16px !important;
+    }
+    &-icon{
+      padding: 2px !important;
+      margin: 0px !important;
+      text-indent: -9999px !important;
+      position: relative !important;
+      background-color: transparent !important;
+      height: 24px !important;
+      width: 24px !important;
+      &:before{
+        content: "";
+        position: absolute;
+        display:inline-block;
+        top: 2px;
+        left: 2px;
+        padding: 6px 6px;
+        height: 8px;
+        width: 8px;
+        color: #FEFEFE;
+        background-color: #505050;
+        background-repeat: no-repeat;
+        background-position: center;
+        background-size: 14px;
+        border-radius: 4px;
+      }
+    }
+    &-edit:before{
+      background-image: inline-svg('edit', $white);
+      background-position: 4px;
+    }
+    &-publish:before{
+      background-image: inline-svg('eye-slash', $white);
+    }
+    &-unpublish:before{
+      background-image: inline-svg('eye', $white);
+    }
+    &-delete:before{
+      background-color: #dc3838;
+      background-image: inline-svg('trash', $white);
+    }
+    &-undelete:before{
+      background-image: inline-svg('trash-restore', $white);
+    }
+  }
+
 }

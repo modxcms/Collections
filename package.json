@@ -42,6 +42,8 @@
     "dist-web": "fred_integration.js"
   },
   "dependencies": {
+    "gulp-sass-inline-svg": "^1.0.3",
+    "gulp-svgmin": "^2.2.0",
     "tabulator-tables": "^4.2.6"
   }
 }
