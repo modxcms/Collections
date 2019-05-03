@@ -50,7 +50,7 @@ export default config => (fred, Plugin, pluginTools) => {
         }
 
         renderModal(collection, authors) {
-            const filtersBar = div();
+            const filtersBar = div(['fred--collections-filters']);
             const tableWrapper = div();
 
             const table = new Tabulator(tableWrapper, {
@@ -70,16 +70,17 @@ export default config => (fred, Plugin, pluginTools) => {
                 pagination:"remote",
                 paginationSize:5,
                 ajaxFiltering:true,
+                responsiveLayout:"hide",
                 layout:"fitColumns",
                 columns:[
-                    {title:"Pagetitle", field:"pagetitle", formatter:function(cell, formatterParams, onRendered){
+                    {title:"Pagetitle", field:"pagetitle", responsive:0, formatter:function(cell, formatterParams, onRendered){
                             const data = cell.getRow().getData();
 
                             return cell.getValue() + `<br><a href="${data.fullUrl}">${data.url}</a>`;
                         }},
-                    {title:"Published", field:"publishedon_combined", width: 120},
-                    {title:"Expires", field:"unpub_date", width: 120},
-                    {title:"Author", field:"fullname", headerSort:false, width: 180},
+                    {title:"Published", field:"publishedon_combined", width: 120, responsive:2, widthShrink:1},
+                    {title:"Expires", field:"unpub_date", width: 120, responsive:4, widthShrink:1},
+                    {title:"Author", field:"fullname", headerSort:false, width: 180, responsive:3, widthShrink:1},
                     {
                         title:"Actions",
                         headerSort:false,
@@ -150,8 +151,8 @@ export default config => (fred, Plugin, pluginTools) => {
 
             const search = text({
                 name: 'query',
-                label: 'Search',
-                labelAsPlaceholder: true
+                label: 'Search'/*,
+                labelAsPlaceholder: true*/
             }, '', debouncedFilter);
 
             const publishedFilter = select({
