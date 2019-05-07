@@ -13,7 +13,7 @@ $white: #FEFEFE;
 .fred--btn{
   &-collections{
     &-newpage{
-      background:#42AB4A !important;
+      margin-left: 0px !important;
       margin-bottom: 16px !important;
     }
     &-icon{
@@ -68,4 +68,29 @@ $white: #FEFEFE;
       padding-right: 24px;
     }
   }
+  .fred--collections-createpage{
+    fieldset{
+      & > label, & > div{
+        display: inline-block !important;
+        width: calc(100% / 4) !important;
+        padding-right: 16px !important;
+      }
+      & > div{
+        position: relative !important;
+        top: -5px !important;
+      }
+      & > button{
+        display: inline-block !important;
+        width: calc(24% / 2) !important;
+      }
+    }
+  }
+}
+.fred--collections-createpage,fred--collections-filters,.fred--modal-body .tabulator{
+  animation: fred--collections-fade .5s;
+}
+
+@keyframes fred--collections-fade{
+  0%{opacity:0}
+  100%{opacity:1}
 }

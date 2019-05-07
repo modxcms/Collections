@@ -43,6 +43,7 @@ export default config => (fred, Plugin, pluginTools) => {
         renderModal(collection, view, authors) {
             const filtersBar = div(['fred--collections-filters']);
             const tableWrapper = div();
+            const tableWrapperHide = div();
 
             const table = new Tabulator(tableWrapper, {
                 ajaxURL: config.endpoint,
@@ -169,18 +170,21 @@ export default config => (fred, Plugin, pluginTools) => {
                 name: 'query',
                 label: 'collections.fred.search',
             }, '', debouncedFilter);
+            const searchHide = div();
 
             const publishedFilter = select({
                 name: 'published',
                 label: 'collections.fred.published',
                 options: {'-1': pluginTools.fredConfig.lng('collections.fred.any'), '1': pluginTools.fredConfig.lng('collections.fred.published'), '0': pluginTools.fredConfig.lng('collections.fred.unpublished')}
             }, '-1', debouncedFilter);
+            const publishedFilterHide = div();
 
             const authorFilter = select({
                 name: 'createdby',
                 label: 'collections.fred.author',
                 options: authors
             }, '-1', debouncedFilter);
+            const authorFilterHide = div();
 
 
             filtersBar.appendChild(search);
@@ -188,11 +192,19 @@ export default config => (fred, Plugin, pluginTools) => {
             filtersBar.appendChild(authorFilter);
 
             if (pluginTools.fredConfig.permission.new_document) {
-                const newPage = button('collections.fred.new_page', 'collections.fred.new_page', ['fred--btn', 'fred--btn-collections-newpage'], () => {
+                const newPage = button('collections.fred.new_page', 'collections.fred.new_page', ['fred--btn', 'fred--btn-collections-newpage', 'fred--btn-apply'], () => {
                     const newPageForm = this.showNewPageForm(collection, view, () => {
                         filtersBar.replaceChild(newPage, newPageForm);
+                        filtersBar.replaceChild(search, searchHide);
+                        filtersBar.replaceChild(publishedFilter, publishedFilterHide);
+                        filtersBar.replaceChild(authorFilter, authorFilterHide);
+                        modalContent.replaceChild(tableWrapper, tableWrapperHide);
                     });
                     filtersBar.replaceChild(newPageForm, newPage);
+                    filtersBar.replaceChild(searchHide, search);
+                    filtersBar.replaceChild(publishedFilterHide, publishedFilter);
+                    filtersBar.replaceChild(authorFilterHide, authorFilter);
+                    modalContent.replaceChild(tableWrapperHide, tableWrapper);
                 });
                 filtersBar.appendChild(newPage);
             }
@@ -213,7 +225,7 @@ export default config => (fred, Plugin, pluginTools) => {
         showNewPageForm(collection, view, onCancel) {
             const formWrapper = div();
 
-            const pageForm = form(['fred--pages_create']);
+            const pageForm = form(['fred--collections-createpage']);
 
             const fields = fieldSet();
 
@@ -319,7 +331,7 @@ export default config => (fred, Plugin, pluginTools) => {
 
             fields.appendChild(blueprintInput);
 
-            const createButton = button('fred.fe.pages.create_page', 'fred.fe.pages.create_page', ['fred--btn-panel', 'fred--btn-apply'], () => {
+            const createButton = button('fred.fe.pages.create_page', 'fred.fe.pages.create_page', ['fred--btn', 'fred--btn-collections-newpage', 'fred--btn-apply'], () => {
                 if (!pluginTools.fredConfig.permission.new_document) {
                     alert(pluginTools.fredConfig.lng('fred.fe.permission.new_document'));
                     return;
