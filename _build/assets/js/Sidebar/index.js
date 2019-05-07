@@ -1,7 +1,6 @@
 import Actions from './Actions';
 import Tabulator from 'tabulator-tables';
 import {debounce} from './Utils';
-import fredConfig from "../../../../../fred/_build/assets/js/Config";
 
 export default config => (fred, Plugin, pluginTools) => {
     const {dl, dt, div, button, form, fieldSet} = pluginTools.ui.els;
