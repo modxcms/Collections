@@ -7,6 +7,10 @@ $xpdo_meta_map['CollectionSelection']= array (
   'version' => NULL,
   'table' => 'collection_selections',
   'extends' => 'xPDOObject',
+  'tableMeta' => 
+  array (
+    'engine' => 'MyISAM',
+  ),
   'fields' => 
   array (
     'collection' => NULL,

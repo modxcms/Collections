@@ -20,5 +20,13 @@ export default class Actions {
             return data.data;
         });
     }
+
+    getCollectionView(collection) {
+        return this.fetch(`${this.config.endpoint}?action=get-collection-view&collection=${collection}`).then(response => {
+            return response.json();
+        }).then(data => {
+            return data.data;
+        });
+    }
 }
 

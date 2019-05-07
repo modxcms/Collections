@@ -6,6 +6,10 @@ $xpdo_meta_map['SelectionContainer']= array (
   'package' => 'collections',
   'version' => NULL,
   'extends' => 'CollectionContainer',
+  'tableMeta' => 
+  array (
+    'engine' => 'MyISAM',
+  ),
   'fields' => 
   array (
   ),

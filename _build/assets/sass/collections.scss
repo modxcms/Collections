@@ -46,10 +46,10 @@ $white: #FEFEFE;
       background-position: 4px;
     }
     &-publish:before{
-      background-image: inline-svg('eye-slash', $white);
+      background-image: inline-svg('eye', $white);
     }
     &-unpublish:before{
-      background-image: inline-svg('eye', $white);
+      background-image: inline-svg('eye-slash', $white);
     }
     &-delete:before{
       background-color: #dc3838;
