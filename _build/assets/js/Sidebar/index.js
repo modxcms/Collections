@@ -359,7 +359,7 @@ export default config => (fred, Plugin, pluginTools) => {
                 );
             });
 
-            const cancelButton = button('collections.fred.cancel', 'collections.fred.cancel', ['fred--btn-panel', 'fred--btn-danger'], () => {
+            const cancelButton = button('collections.fred.cancel', 'collections.fred.cancel', ['fred--btn-panel'], () => {
                 onCancel();
             });
 
