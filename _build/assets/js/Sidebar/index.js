@@ -27,7 +27,7 @@ export default config => (fred, Plugin, pluginTools) => {
 
             collections.forEach(collection => {
                 const link = dt(collection.pagetitle, [], () => {
-                    pluginTools.emitter.emit('fred-loading', 'collections.fred.loading_colleciton');
+                    pluginTools.emitter.emit('fred-loading', pluginTools.fredConfig.lng('collections.fred.loading_collection'));
                     Promise.all([this.actions.getCollectionView(collection.id), this.actions.getAuthors(collection.id)]).then(values => {
                         this.renderModal(collection, ...values);
                         pluginTools.emitter.emit('fred-loading-hide');
