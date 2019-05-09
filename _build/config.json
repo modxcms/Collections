@@ -3,7 +3,7 @@
     ,"lowCaseName": "collections"
     ,"description": "Hides resources under this container in tree. Adding grid int o the update resource panel."
     ,"author": "John Peca"
-    ,"version": "3.6.0"
+    ,"version": "3.7.0-alpha"
     ,"package":{
         "menus": [{
             "text": "collections.menu.collection_templates"
@@ -14,11 +14,11 @@
             "plugins": [{
                 "name": "Collections"
                 ,"events": [
-                    "OnManagerPageInit", 
-                    "OnBeforeDocFormSave", 
-                    "OnResourceBeforeSort", 
-                    "OnDocFormPrerender", 
-                    "OnBeforeEmptyTrash", 
+                    "OnManagerPageInit",
+                    "OnBeforeDocFormSave",
+                    "OnResourceBeforeSort",
+                    "OnDocFormPrerender",
+                    "OnBeforeEmptyTrash",
                     "OnDocFormRender",
                     "OnManagerPageBeforeRender",
                     "FredOnBeforeGetResourceTree",
