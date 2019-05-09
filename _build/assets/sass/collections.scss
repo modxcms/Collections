@@ -68,7 +68,7 @@ $white: #FEFEFE;
       padding-right: 24px;
     }
   }
-  /*.fred--collections-createpage{
+  .fred--collections-createpage{
     fieldset{
       & > label, & > div{
         display: inline-block !important;
@@ -84,7 +84,7 @@ $white: #FEFEFE;
         width: calc(24% / 2) !important;
       }
     }
-  }*/
+  }
 }
 .fred--collections-createpage,fred--collections-filters,.fred--modal-body .tabulator{
   animation: fred--collections-fade .5s;

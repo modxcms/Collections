@@ -198,13 +198,13 @@ export default config => (fred, Plugin, pluginTools) => {
                         filtersBar.replaceChild(search, searchHide);
                         filtersBar.replaceChild(publishedFilter, publishedFilterHide);
                         filtersBar.replaceChild(authorFilter, authorFilterHide);
-                        modalContent.replaceChild(tableWrapper, tableWrapperHide);
+                        //modalContent.replaceChild(tableWrapper, tableWrapperHide);
                     });
                     filtersBar.replaceChild(newPageForm, newPage);
                     filtersBar.replaceChild(searchHide, search);
                     filtersBar.replaceChild(publishedFilterHide, publishedFilter);
                     filtersBar.replaceChild(authorFilterHide, authorFilter);
-                    modalContent.replaceChild(tableWrapperHide, tableWrapper);
+                    //modalContent.replaceChild(tableWrapperHide, tableWrapper);
                 });
                 filtersBar.appendChild(newPage);
             }
