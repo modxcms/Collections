@@ -31,9 +31,9 @@ $white: #FEFEFE;
         display:inline-block;
         top: 2px;
         left: 2px;
-        padding: 6px 6px;
-        height: 8px;
-        width: 8px;
+        //padding: 6px 6px;
+        height: 100%;
+        width: 100%;
         color: #FEFEFE;
         background-color: #505050;
         background-repeat: no-repeat;
@@ -44,7 +44,7 @@ $white: #FEFEFE;
     }
     &-edit:before{
       background-image: inline-svg('edit', $white);
-      background-position: 4px;
+      background-position: 6px;
     }
     &-publish:before{
       background-image: inline-svg('eye', $white);
