@@ -15,28 +15,15 @@
  * &sortdir                 string  optional    Direction of sorting by linked resource's menuindex. Default: ASC
  * &selections              string  optional    Comma separated list of Selection IDs for which should be retrieved linked resources. Default: empty string
  * &getResourcesSnippet     string  optional    Name of getResources snippet. Default: getResources
- * &excludeResources        string  optional    Comma separated list of Resources to exclude, even though they are in the Selection
  *
  * USAGE:
  *
  * [[getSelections? &selections=`1` &tpl=`rowTpl`]]
  * [[getSelections? &selections=`1` &tpl=`rowTpl` &sortby=`RAND()`]]
  *
- * @var modX $modx
- * @var array $scriptProperties
  */
 
-$corePath = $modx->getOption('collections.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/collections/');
-
-/** @var Collections $collections */
-$collections = $modx->getService(
-    'collections',
-    'Collections',
-    $corePath . 'model/collections/',
-    array(
-        'core_path' => $corePath
-    )
-);
+$collections = $modx->getService('collections','Collections',$modx->getOption('collections.core_path',null,$modx->getOption('core_path').'components/collections/').'model/collections/',$scriptProperties);
 if (!($collections instanceof Collections)) return '';
 
 $getResourcesSnippet = $modx->getOption('getResourcesSnippet', $scriptProperties, 'getResources');
@@ -47,8 +34,9 @@ if ($getResourcesExists == 0) return 'getResources not found';
 $sortDir = strtolower($modx->getOption('sortdir', $scriptProperties, 'asc'));
 $selections = $modx->getOption('selections', $scriptProperties, '');
 $sortBy = $modx->getOption('sortby', $scriptProperties, '');
+$excludeToPlaceholder = $modx->getOption('excludeToPlaceholder', $scriptProperties, '');
 
-$selections = $collections->explodeAndClean($selections);
+$selections = $modx->collections->explodeAndClean($selections);
 
 if ($sortDir != 'asc') {
     $sortDir = 'desc';
@@ -76,11 +64,13 @@ $linkedResourcesQuery->stmt->execute();
 
 $linkedResources = $linkedResourcesQuery->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
-$excludedResources = $modx->getOption('excludeResources', $scriptProperties, '');
-$excludedResources = $collections->explodeAndClean($excludedResources);
-
-if (!empty($excludedResources)) {
-    $linkedResources = array_diff($linkedResources, $excludedResources);
+if (!empty($excludeToPlaceholder)) {
+    $excludeResources = array();
+    foreach($linkedResources as $res) {
+        $excludeResources[] = '-' . $res;
+    }
+    $excludeResources = implode(',', $excludeResources);
+    $modx->setPlaceholder($excludeToPlaceholder, $excludeResources);
 }
 
 $linkedResources = implode(',', $linkedResources);
