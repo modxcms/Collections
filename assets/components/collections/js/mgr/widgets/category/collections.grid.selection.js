@@ -273,7 +273,6 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
 
 
     ,handleButtons: function(e){
-        debugger;
         var t = e.getTarget();
         var elm;
         var action = null;
@@ -413,9 +412,9 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
     ,destroyScrollManager: function() {
         Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
     }
-    
+
     ,initBreadCrumbs: function(){
-                     
+
     }
 });
 Ext.reg('collections-grid-selection',collections.grid.ContainerSelection);
