@@ -31,7 +31,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
     public $searchQueryTitleOnly = false;
 
     public $iconMap = array();
-    
+
     public $permissions = array(
         'publish_document' => false,
         'unpublish_document' => false,
@@ -48,7 +48,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
         if (empty($parent)) {
             return false;
         }
-        
+
         $this->permissions = array(
             'publish_document' => $this->modx->hasPermission('publish_document'),
             'unpublish_document' => $this->modx->hasPermission('unpublish_document'),
@@ -58,7 +58,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
             'edit_document' => $this->modx->hasPermission('edit_document'),
             'purge_deleted' => $this->modx->hasPermission('purge_deleted'),
         );
-        
+
         $this->setActions();
 
         $parentObject = $this->modx->getObject('modResource', $parent);
@@ -296,7 +296,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
                     'OR:CreatedBy.username:LIKE' => '%' . $query . '%',
                 );
             }
-            
+
             if ($this->searchQueryExcludeTvs == false) {
                 // tv columns search rules
                 foreach ($this->tvColumns as $column) {
@@ -305,7 +305,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
                     ));
                 }
             }
-            
+
             if ($this->searchQueryExcludeTagger == false) {
                 if ($this->useTagger) {
                     $c->leftJoin('TaggerTagResource', 'TagResource', array('TagResource.resource = modResource.id'));
@@ -476,7 +476,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
         }
 
         $this->modx->getContext($resourceArray['context_key']);
-        
+
         if(!$resourceArray['deleted']) {
             $resourceArray['preview_url'] = $this->modx->makeUrl($resourceArray['id'], $resourceArray['context_key']);
         } else {
@@ -558,13 +558,13 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
         if ($this->permissions['view_document'] && !$resourceArray['deleted']) {
             $resourceArray['menu_actions']['view'] = $this->actions['view'];
         }
-        
+
         if ($this->permissions['edit_document']) {
             $resourceArray['menu_actions']['edit'] = $this->actions['edit'];
         }
-        
+
         $resourceArray['menu_actions']['duplicate'] = $this->actions['duplicate'];
-        
+
         if ($this->permissions['edit_document']) {
             $resourceArray['menu_actions']['quickupdate'] = $this->actions['quickupdate'];
         }
@@ -583,7 +583,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
             if ($this->permissions['undelete_document']) {
                 $resourceArray['menu_actions']['undelete'] = $this->actions['undelete'];
             }
-            
+
             if ($this->permissions['purge_deleted']) {
                 $resourceArray['menu_actions']['remove'] = $this->actions['remove'];
             }
@@ -625,11 +625,11 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
             $classKey = substr($classKey, 3);
         }
 
-        if (!isset($this->iconMap['template'][$resourceArray[$classKey]])) {
+        if (!isset($this->iconMap['template'][$classKey])) {
             $classKeyIcon = $this->modx->getOption('mgr_tree_icon_' . $classKey, null, 'tree-resource', true);
-            $this->iconMap['classKey'][$resourceArray[$classKey]] = $classKeyIcon;
+            $this->iconMap['classKey'][$classKey] = $classKeyIcon;
         } else {
-            $classKeyIcon = $this->iconMap['template'][$resourceArray[$classKey]];
+            $classKeyIcon = $this->iconMap['template'][$classKey];
         }
 
         if (!empty($tplIcon)) {
