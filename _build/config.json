@@ -22,7 +22,8 @@
                     "OnDocFormRender",
                     "OnManagerPageBeforeRender",
                     "FredOnBeforeGetResourceTree",
-                    "FredBeforeRender"
+                    "FredBeforeRender",
+                    "OnResourceDuplicate"
                 ]
             }],
             "snippets": [{
