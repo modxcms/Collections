@@ -34,18 +34,23 @@ class CollectionsReorderResourceUpdateProcessor extends modObjectProcessor
         $items->sortby('menuindex', 'ASC');
 
         $itemsCollection = $this->modx->getCollection($this->classKey, $items);
+        $affectedResources = [];
 
         if (min($oldIndex, $newIndex) == $newIndex) {
             foreach ($itemsCollection as $item) {
                 $itemObject = $this->modx->getObject($this->classKey, $item->get('id'));
                 $itemObject->set('menuindex', $itemObject->get('menuindex') + 1);
                 $itemObject->save();
+
+                $affectedResources[] = $itemObject;
             }
         } else {
             foreach ($itemsCollection as $item) {
                 $itemObject = $this->modx->getObject($this->classKey, $item->get('id'));
                 $itemObject->set('menuindex', $itemObject->get('menuindex') - 1);
                 $itemObject->save();
+
+                $affectedResources[] = $itemObject;
             }
         }
 
@@ -53,10 +58,16 @@ class CollectionsReorderResourceUpdateProcessor extends modObjectProcessor
         $itemObject->set('menuindex', $newIndex);
         $itemObject->save();
 
+        $this->modx->invokeEvent('CollectionsOnResourceSort', array(
+            'resourceId' => $idItem,
+            'parentId' => $parent,
+            'oldIndex' => $oldIndex,
+            'newIndex' => $newIndex,
+            'affectedResources' => &$affectedResources,
+        ));
 
         return $this->success('', $itemObject);
     }
-
 }
 
 return 'CollectionsReorderResourceUpdateProcessor';

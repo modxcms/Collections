@@ -82,7 +82,7 @@
     ,"extensionPackage": {}
     ,"build": {
         "resolver": {
-            "before": ["resolve.switchback.php"]
+            "before": ["resolve.customevents.php", "resolve.switchback.php"]
             ,"after": ["resolve.synctables.php", "resolve.updatefromfirst.php", "resolve.defaulttemplate.php", "resolve.fixselections.php", "resolve.fixsystemsettings.php"]
         }
     }
