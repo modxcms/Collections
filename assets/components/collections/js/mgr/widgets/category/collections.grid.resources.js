@@ -1,6 +1,11 @@
 collections.grid.ContainerCollections = function(config) {
     config = config || {};
     this.sm = new Ext.grid.CheckboxSelectionModel();
+
+    this.state = Ext.state.Manager.getProvider();
+
+    var state = this.getPaginationState();
+
     Ext.applyIf(config,{
         id: 'collections-grid-container-collections'
         ,title: _('collections.collections')
@@ -18,7 +23,8 @@ collections.grid.ContainerCollections = function(config) {
         ,fields: collections.template.fields
         ,paging: true
         ,remoteSort: true
-        ,pageSize: collections.template.pageSize
+        ,pageStart: state.start
+        ,pageSize: state.limit
         ,cls: 'collections-grid'
         ,bodyCssClass: 'grid-with-buttons'
         ,sm: this.sm
@@ -39,21 +45,27 @@ collections.grid.ContainerCollections = function(config) {
         }
     });
     collections.grid.ContainerCollections.superclass.constructor.call(this,config);
+
+
     this.on('rowclick',MODx.fireResourceFormChange);
     this.on('click', this.handleButtons, this);
 
     window.history.replaceState({}, '', window.location.href);
-    
+
     this.initBreadCrumbs(config);
-    
+
     if (collections.template.allowDD) {
         this.on('render', this.registerGridDropTarget, this);
         this.on('beforedestroy', this.destroyScrollManager, this);
     }
+
+    this.store.on('load', function(grid, records, options) {
+        this.setPaginationState(options.params.start, options.params.limit);
+    }, this);
 };
 Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
     currentFolder: null
-    
+
     ,getMenu: function() {
         var m = [];
         if (!this.menu.record) return m;
@@ -81,26 +93,27 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
 
         return m;
     }
-    
+
     ,openChild: function(){
+        this.pushHistoryState(this.menu.record.id);
+
         this.store.removeAll();
-        
+
         this.getStore().baseParams.parent = this.menu.record.id;
-        this.getBottomToolbar().changePage(1);
-        
+
+        this.restorePaginationState();
+
         this.bc.crumbs.push({
             id: this.menu.record.id,
             text: this.menu.record.pagetitle
         });
 
         this.currentFolder = this.menu.record.id;
-        
+
         this.bc.tpl.overwrite(this.bc.el, this.bc.crumbs);
         this.bc.show();
-        
-        this.body.slideIn('r', {stopFx:true, duration:.2});       
-        
-        this.pushHistoryState(this.menu.record.id);
+
+        this.body.slideIn('r', {stopFx:true, duration:.2});
     }
 
     ,getColumns: function(config) {
@@ -109,12 +122,12 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         if (collections.template.bulkActions) {
             columns.unshift(this.sm);
         }
-        
+
         var wrapRenderer = function(renderer) {
             if (typeof renderer === 'string') {
                 renderer = eval(renderer);
             }
-            
+
             var newRenderer = function(value, metaData, record, rowIndex, colIndex, store) {
                 record.data.self = this;
                 return renderer(value, metaData, record, rowIndex, colIndex, store);
@@ -122,12 +135,12 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             return newRenderer.bind(this);
         };
         wrapRenderer = wrapRenderer.bind(this);
-        
+
         for (var i = 0; i < columns.length; i++) {
             if (columns[i].renderer) {
                 columns[i].renderer = wrapRenderer(columns[i].renderer);
             }
-            columns[i].scope = self;   
+            columns[i].scope = self;
         }
 
         return columns;
@@ -266,24 +279,24 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         if (this.currentFolder) {
             collectionGet = '&collection=' + collections.template.parent
         }
-        
+
         var folderGet = '';
         var query = Ext.urlDecode(location.search.replace('?', ''));
         if (parseInt(query.folder) > 0) {
-            folderGet = '&folder=' + parseInt(query.folder); 
+            folderGet = '&folder=' + parseInt(query.folder);
         }
-        
+
         MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection + collectionGet + folderGet);
     }
-    
+
     ,getViewChildUrl: function(data) {
         if (data.preview_url == '') {
             return '#';
         }
-        
-        return data.preview_url;                  
+
+        return data.preview_url;
     }
-    
+
     ,getEditChildUrl: function(data) {
         var selection = '';
         if (collections.template.parent != MODx.request.id){
@@ -294,13 +307,13 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         if (this.currentFolder) {
             collectionGet = '&collection=' + collections.template.parent
         }
-        
+
         var folderGet = '';
         var query = Ext.urlDecode(location.search.replace('?', ''));
         if (parseInt(query.folder) > 0) {
-            folderGet = '&folder=' + parseInt(query.folder); 
+            folderGet = '&folder=' + parseInt(query.folder);
         }
-        
+
         return collections.getPageUrl(MODx.request.a, 'id=' + data.id + selection + collectionGet + folderGet);
     }
 
@@ -324,7 +337,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         if (parseInt(query.folder) > 0) {
             folderGet = '&folder=' + parseInt(query.folder);
         }
-        
+
         MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || collections.template.parent) + collectionGet + '&context_key=' + collections.template.parent_context + '&class_key=' + collections.template.children.resource_type + template + selection + folderGet);
     }
 
@@ -551,7 +564,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 action = t.className.split(' ')[1];
             }
         }
-        
+
         if(action) {
             var record = this.getSelectionModel().getSelected();
             if (t.dataset.id) {
@@ -565,7 +578,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             if (record.data) {
                 record = record.data;
             }
-            
+
             this.menu.record = record;
             switch (action) {
                 case 'delete':
@@ -604,9 +617,9 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             }
         }
     }
-    
+
     ,parseSortField: function(sort){
-        return sort.split(':')[0];             
+        return sort.split(':')[0];
     }
 
     ,getDragDropText: function(){
@@ -619,7 +632,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 return _('collections.err.bad_sort_column', {column: 'menuindex'});
             }
         }
-        
+
         if (this.parsePermanentSort('menuindex')) {
             return _('collections.err.permanent_sort', {column: 'menuindex'});
         }
@@ -636,21 +649,21 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
     ,parsePermanentSort: function(column){
         if (collections.template.permanent_sort.before.indexOf('*') != -1) return true;
         if (collections.template.permanent_sort.after.indexOf('*') != -1) return true;
-        
+
         var found = false;
-        
+
         Ext.each(collections.template.permanent_sort.before.split(',').concat(collections.template.permanent_sort.after.split(',')).filter(function(e){return e}), function(item){
             if (item.indexOf('=') == -1) {
                 found = true;
                 return false;
-            }                
-            
+            }
+
             if (item.replace(/ /g, '').indexOf('menuindex=') != -1) {
                 found = true;
                 return false;
             }
-        });      
-        
+        });
+
         return found;
     }
 
@@ -746,12 +759,12 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
 
                 ,'afterrowmove': function(objThis, oldIndex, newIndex, records) {
                     var parent = collections.template.parent;
-                    
+
                     var query = Ext.urlDecode(location.search.replace('?', ''));
                     if (parseInt(query.folder) > 0) {
                         parent = parseInt(query.folder);
                     }
-                    
+
                     MODx.Ajax.request({
                         url: collections.connectorUrl
                         ,params: {
@@ -759,7 +772,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                             ,idItem: records.pop().id
                             ,oldIndex: oldIndex
                             ,newIndex: newIndex
-                            ,parent: parent 
+                            ,parent: parent
                         }
                         ,listeners: {
                             'success': {
@@ -816,7 +829,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             }
         });
     }
-    
+
     ,_loadStore: function() {
         if (this.config.grouping) {
             this.store = new Ext.data.GroupingStore({
@@ -869,22 +882,22 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             });
         }
     }
-    
+
     ,loadBreadCrumbs: function(store, options){
         var folder = parseInt(MODx.request.folder);
-        
+
         if (folder > 0) {
             this.currentFolder = folder;
             options.params.parent = folder;
-            store.baseParams.parent = folder;       
+            store.baseParams.parent = folder;
         }
     }
-    
+
     ,pushHistoryState: function(id){
         try {
             var query = Ext.urlDecode(location.search.replace('?', ''));
             var loc = location.href;
-    
+
             if (query.folder) {
                 if (id) {
                     loc = loc.replace('folder=' + query.folder, 'folder=' + id);
@@ -896,11 +909,11 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                     loc += '&folder=' + id;
                 }
             }
-    
+
             window.history.pushState({}, '', loc);
         } catch (err) {}
     }
-    
+
     ,initBreadCrumbs: function(config){
         this.addEvents('breadCrumbsBeforeRender');
         this.addEvents('breadCrumbsRender');
@@ -910,7 +923,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 location.reload();
             }
         }, false);
-        
+
         this.on('breadCrumbsRender', function(toolbar){
             var folder = parseInt(MODx.request.folder);
             var collection = parseInt(MODx.request.id);
@@ -1014,7 +1027,8 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                             toolbar.grid.store.removeAll();
 
                             toolbar.grid.getStore().baseParams.parent = e.target.dataset.id;
-                            toolbar.grid.getBottomToolbar().changePage(1);
+
+                            this.restorePaginationState();
 
                             toolbar.grid.body.slideIn('r', {stopFx:true, duration:.2});
                         }, this);
@@ -1031,7 +1045,43 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 }
             }
         });
-        this.getTopToolbar().add(this.bc);                 
+        this.getTopToolbar().add(this.bc);
+    }
+
+    ,setPaginationState: function(start, limit) {
+        var query = Ext.urlDecode(location.search.replace('?', ''));
+        var folder = query.folder || collections.template.parent;
+
+        this.state.set('collections-grid-container-collections-' + folder, {
+            start: start,
+            limit: limit
+        });
+    }
+
+    ,getPaginationState: function() {
+        var query = Ext.urlDecode(location.search.replace('?', ''));
+        var folder = query.folder || collections.template.parent;
+
+        var state = this.state.get('collections-grid-container-collections-' + folder, {});
+
+        var start = state.start || 0;
+        var limit = state.limit || collections.template.pageSize;
+
+        return {start: start, limit: limit};
+    }
+
+    ,restorePaginationState: function() {
+        var state = this.getPaginationState();
+        var bbar = this.getBottomToolbar();
+
+        bbar.pageSize = state.limit;
+
+        var pageSizeInput = bbar.find('xtype', 'textfield');
+        if (pageSizeInput[0]) {
+            pageSizeInput[0].setValue(state.limit);
+        }
+
+        bbar.doLoad((state.start).constrain(0, state.start));
     }
 });
 Ext.reg('collections-grid-children',collections.grid.ContainerCollections);
