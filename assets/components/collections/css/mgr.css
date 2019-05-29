@@ -175,6 +175,7 @@
 .crumb_wrapper.collections_crumb_wrapper .crumbs li button, .crumb_wrapper.collections_crumb_wrapper .crumbs li span {
     padding: 11px 13px 12px 15px;
     border-radius: 0;
+    line-height: 1;
 }
 
 .collections-children-icon {
