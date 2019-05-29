@@ -805,11 +805,11 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             ,params: {
                 action: 'resource/get'
                 ,id: this.menu.record.id
+                ,skipFormatDates: true
             }
             ,listeners: {
                 'success': {fn:function(r) {
                     var pr = r.object;
-
                     var w = MODx.load({
                         xtype: 'modx-window-quick-update-modResource'
                         ,record: pr
