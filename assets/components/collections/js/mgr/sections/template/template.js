@@ -15,7 +15,7 @@ collections.page.Template = function(config) {
             }]
         },{
             text: _('cancel')
-            ,params: {a:'template', namespace:'collections'}
+            ,params: {a:'home', namespace:'collections'}
         }]
         ,components: [{
             xtype: 'collections-panel-template'
