@@ -63,13 +63,26 @@ if ($object->xpdo) {
                 foreach ($collections as $collection) {
                     $modx->updateCollection('modResource', array('show_in_tree' => 0), array('parent' => $collection->id, 'class_key:!=' => 'CollectionContainer'));
                 }
-                
+
                 /** @var CollectionTemplate[] $views */
                 $views = $modx->getIterator('CollectionTemplate');
                 foreach ($views as $view) {
                     $buttons = $view->get('buttons');
                     if (strpos($buttons, 'open') === false) {
                         $buttons = 'open,' . $buttons;
+                        $view->set('buttons', $buttons);
+                        $view->save();
+                    }
+                }
+            }
+
+            if ($oldPackage && $oldPackage->compareVersion('3.7.0-pl', '>')) {
+                /** @var CollectionTemplate[] $views */
+                $views = $modx->getIterator('CollectionTemplate');
+                foreach ($views as $view) {
+                    $buttons = $view->get('buttons');
+                    if (strpos($buttons, 'changeparent') === false) {
+                        $buttons = $buttons . ',changeparent';
                         $view->set('buttons', $buttons);
                         $view->save();
                     }

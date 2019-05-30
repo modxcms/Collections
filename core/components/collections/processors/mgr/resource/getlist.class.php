@@ -214,6 +214,11 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
             'text' => $this->modx->lexicon('open'),
             'key' => 'open',
         );
+        $this->actions['changeparent'] = array(
+            'className' => 'changeparent',
+            'text' => $this->modx->lexicon('collections.children.changeparent'),
+            'key' => 'changeparent',
+        );
     }
 
     public function process()
@@ -564,6 +569,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
         }
 
         $resourceArray['menu_actions']['duplicate'] = $this->actions['duplicate'];
+        $resourceArray['menu_actions']['changeparent'] = $this->actions['changeparent'];
 
         if ($this->permissions['edit_document']) {
             $resourceArray['menu_actions']['quickupdate'] = $this->actions['quickupdate'];

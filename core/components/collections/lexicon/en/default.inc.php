@@ -72,6 +72,8 @@ $_lang['collections.children.remove_action'] = 'Remove';
 $_lang['collections.children.remove'] = 'Remove child';
 $_lang['collections.children.remove_confirm'] = 'Are you sure, you want to remove this child?<br /><strong>This operation is permanent and can\'t be reverted.</strong>';
 $_lang['collections.children.back_to_collection_label'] = 'Back to Collection';
+$_lang['collections.children.changeparent'] = 'Change Parent';
+$_lang['collections.children.parent'] = 'Parent';
 
 // Template
 $_lang['collections.template.page_title'] = 'Collection views';

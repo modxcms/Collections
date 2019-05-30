@@ -46,7 +46,6 @@ collections.grid.ContainerCollections = function(config) {
     });
     collections.grid.ContainerCollections.superclass.constructor.call(this,config);
 
-
     this.on('rowclick',MODx.fireResourceFormChange);
     this.on('click', this.handleButtons, this);
 
@@ -92,6 +91,29 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         }, this);
 
         return m;
+    }
+
+    ,changeparentChild: function() {
+        var record = {
+            id: this.menu.record.id
+        };
+
+        var changeparent = MODx.load({
+            xtype: 'collections-window-change-parent',
+            record: record,
+            listeners: {
+                success: {
+                    fn: function (r,b,x) {
+                        this.refresh();
+                    },
+                    scope: this
+                }
+            }
+        });
+
+        changeparent.fp.getForm().reset();
+        changeparent.fp.getForm().setValues(record);
+        changeparent.show();
     }
 
     ,openChild: function(){
