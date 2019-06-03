@@ -9,7 +9,8 @@ $white: #FEFEFE;
   }
 }
 .fred--collections-sidebar:before {
-  background: url('./bars-solid.svg') center center no-repeat;
+  mask: url('./bars-solid.svg') center center no-repeat;
+  -webkit-mask: url('./bars-solid.svg') center center no-repeat;
 }
 .fred--btn{
   &-collections{
