@@ -170,15 +170,23 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
 
     ,getTbar: function(config) {
         var items = [];
-
         if (collections.template.resource_type_selection && collections.template.resourceDerivatives.length > 0) {
             var resourceDerivatives = [];
+            var quickrRsourceDerivatives = [];
+
 
             Ext.each(collections.template.resourceDerivatives, function(item){
                 resourceDerivatives.push({
                     text: item.name
                     ,derivative: item.id
                     ,handler: this.createDerivativeChild
+                    ,scope: this
+                });
+
+                quickrRsourceDerivatives.push({
+                    text: item.name
+                    ,derivative: item.id
+                    ,handler: this.quickCreateDerivativeChild
                     ,scope: this
                 });
             }, this);
@@ -190,12 +198,30 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 ,scope: this
                 ,menu: resourceDerivatives
             });
+
+            if (collections.template.show_quick_create) {
+                items.push({
+                    text: (_(collections.template.quick_create_label) == undefined) ? collections.template.quick_create_label : _(collections.template.quick_create_label)
+                    , handler: this.quickCreateChild
+                    , xtype: 'splitbutton'
+                    , scope: this
+                    , menu: quickrRsourceDerivatives
+                });
+            }
         } else {
             items.push({
                 text: (_(collections.template.button_label) == undefined) ? collections.template.button_label : _(collections.template.button_label)
                 ,handler: this.createChild
                 ,scope: this
             });
+
+            if (collections.template.show_quick_create) {
+                items.push({
+                    text: (_(collections.template.quick_create_label) == undefined) ? collections.template.quick_create_label : _(collections.template.quick_create_label)
+                    , handler: this.quickCreateChild
+                    , scope: this
+                });
+            }
         }
 
 
@@ -363,6 +389,43 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || collections.template.parent) + collectionGet + '&context_key=' + collections.template.parent_context + '&class_key=' + collections.template.children.resource_type + template + selection + folderGet);
     }
 
+    ,quickCreateChild: function(btn,e) {
+        var r = {
+            class_key: collections.template.children.resource_type
+            ,context_key: collections.template.parent_context || 'web'
+            ,parent: this.currentFolder || collections.template.parent
+            ,template: this.getSetting(collections.template.children.template, parseInt(MODx.config.default_template))
+            ,richtext: this.getSetting(collections.template.children.rich_text, parseInt(MODx.config.richtext_default))
+            ,hidemenu: this.getSetting(collections.template.children.hide_from_menu, parseInt(MODx.config.hidemenu_default))
+            ,searchable: this.getSetting(collections.template.children.searchable, parseInt(MODx.config.search_default))
+            ,cacheable: this.getSetting(collections.template.children.cacheable, parseInt(MODx.config.cache_default))
+            ,published: this.getSetting(collections.template.children.published, parseInt(MODx.config.publish_default))
+            ,content_type: collections.template.children.content_type || parseInt(MODx.config.default_content_type)
+        };
+
+        if (collections.template.children.content_disposition) {
+            r.content_dispo = collections.template.children.content_disposition;
+        }
+
+        var w = MODx.load({
+            xtype: 'collections-quick-create-modResource'
+            ,record: r
+            ,listeners: {
+                'success':{
+                    fn: function() {
+                        this.refresh();
+                    }
+                    ,scope: this}
+                ,'hide':{fn:function() {this.destroy();}}
+                ,'show':{fn:function() {this.center();}}
+            }
+        });
+        w.setValues(r);
+        w.show(e.target,function() {
+            Ext.isSafari ? w.setPosition(null,30) : w.center();
+        },this);
+    }
+
     ,createDerivativeChild: function(btn, e) {
         var template = '';
         var selection = '';
@@ -385,6 +448,49 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         }
 
         MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || collections.template.parent) + collectionGet + '&context_key=' + collections.template.parent_context + '&class_key=' + btn.derivative + template + selection + folderGet);
+    }
+
+    ,quickCreateDerivativeChild: function(btn, e) {
+        var r = {
+            class_key: btn.derivative
+            ,context_key: collections.template.parent_context || 'web'
+            ,parent: this.currentFolder || collections.template.parent
+            ,template: this.getSetting(collections.template.children.template, parseInt(MODx.config.default_template))
+            ,richtext: this.getSetting(collections.template.children.rich_text, parseInt(MODx.config.richtext_default))
+            ,hidemenu: this.getSetting(collections.template.children.hide_from_menu, parseInt(MODx.config.hidemenu_default))
+            ,searchable: this.getSetting(collections.template.children.searchable, parseInt(MODx.config.search_default))
+            ,cacheable: this.getSetting(collections.template.children.cacheable, parseInt(MODx.config.cache_default))
+            ,published: this.getSetting(collections.template.children.published, parseInt(MODx.config.publish_default))
+            ,content_type: collections.template.children.content_type || parseInt(MODx.config.default_content_type)
+        };
+
+        if (collections.template.children.content_disposition) {
+            r.content_dispo = collections.template.children.content_disposition;
+        }
+
+        var w = MODx.load({
+            xtype: 'collections-quick-create-modResource'
+            ,record: r
+            ,listeners: {
+                'success':{
+                    fn: function() {
+                        this.refresh();
+                    }
+                    ,scope: this}
+                ,'hide':{fn:function() {this.destroy();}}
+                ,'show':{fn:function() {this.center();}}
+            }
+        });
+        w.setValues(r);
+        w.show(e.target,function() {
+            Ext.isSafari ? w.setPosition(null,30) : w.center();
+        },this);
+    }
+
+    ,getSetting: function(value, def = null) {
+        if (value === null) return def;
+
+        return value;
     }
 
     ,viewChild: function(btn,e) {

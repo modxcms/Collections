@@ -55,6 +55,8 @@
         <field key="search_query_exclude_tvs" dbtype="int" precision="1" phptype="boolean" null="false" default="0" />
         <field key="search_query_exclude_tagger" dbtype="int" precision="1" phptype="boolean" null="false" default="0" />
         <field key="search_query_title_only" dbtype="int" precision="1" phptype="boolean" null="false" default="0" />
+        <field key="show_quick_create" dbtype="tinyint" precision="1" phptype="boolean" null="false" default="1" />
+        <field key="quick_create_label" dbtype="varchar" precision="255" phptype="string" null="false" default="collections.children.quick_create" />
 
         <aggregate alias="Setting" class="CollectionSetting" local="id" foreign="template" cardinality="one" owner="local" />
         <composite alias="Columns" class="CollectionTemplateColumn" local="id" foreign="template" cardinality="many" owner="local" />

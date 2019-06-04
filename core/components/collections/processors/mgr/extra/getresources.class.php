@@ -82,6 +82,13 @@ class CollectionsExtrasResourceGetListProcessor extends modObjectGetListProcesso
 
     public function prepareQueryBeforeCount(xPDOQuery $c)
     {
+        $id = (int)$this->getProperty('id');
+        if ($id) {
+            $c->where([
+                'id' => $id
+            ]);
+        }
+
         $query = $this->getProperty('query');
         if (!empty($query)) {
             if (stripos($query, 'http') === 0) {

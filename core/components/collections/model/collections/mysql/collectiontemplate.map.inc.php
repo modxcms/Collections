@@ -50,6 +50,8 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'search_query_exclude_tvs' => 0,
     'search_query_exclude_tagger' => 0,
     'search_query_title_only' => 0,
+    'show_quick_create' => 1,
+    'quick_create_label' => 'collections.children.quick_create',
   ),
   'fieldMeta' => 
   array (
@@ -340,6 +342,22 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'boolean',
       'null' => false,
       'default' => 0,
+    ),
+    'show_quick_create' => 
+    array (
+      'dbtype' => 'int',
+      'precision' => '1',
+      'phptype' => 'boolean',
+      'null' => false,
+      'default' => 1,
+    ),
+    'quick_create_label' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '255',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => 'collections.children.quick_create',
     ),
   ),
   'composites' => 

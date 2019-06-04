@@ -51,6 +51,7 @@ $_lang['collections.global.import'] = 'Import';
 // Children
 $_lang['collections.children'] = 'Children';
 $_lang['collections.children.create'] = 'Create child';
+$_lang['collections.children.quick_create'] = 'Quick Create child';
 $_lang['collections.children.view'] = 'View child';
 $_lang['collections.children.edit'] = 'Update child';
 $_lang['collections.children.quickupdate'] = 'Quick Update';
@@ -147,6 +148,8 @@ $_lang['collections.template.import'] = 'Import views';
 $_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
 $_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
 $_lang['collections.template.search_query_title_only'] = 'Search - Title only';
+$_lang['collections.template.show_quick_create'] = 'Show Quick Crete button';
+$_lang['collections.template.quick_create_label'] = 'Quick Create button label';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

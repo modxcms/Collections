@@ -39,7 +39,8 @@
  * @property string $selection_link_condition
  * @property bool|null $search_query_exclude_tvs
  * @property bool|null $search_query_exclude_tagger
- * @property bool|null $search_query_title_only
+ * @property bool $show_quick_create
+ * @property string $quick_create_label
  *
  * @property CollectionSetting $Setting
  * @property CollectionTemplateColumn[] $Columns

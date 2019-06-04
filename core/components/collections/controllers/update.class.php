@@ -179,9 +179,18 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             'bulkActions' => $template->bulk_actions,
             'allowDD' => $template->allow_dd,
             'resource_type_selection' => $template->resource_type_selection,
+            'show_quick_create' => $template->show_quick_create,
+            'quick_create_label' => $template->quick_create_label,
             'children' => array(
                 'template' => $template->child_template,
                 'resource_type' => $template->child_resource_type,
+                'rich_text' => $template->child_richtext,
+                'cacheable' => $template->child_cacheable,
+                'content_type' => $template->child_content_type,
+                'published' => $template->child_published,
+                'content_disposition' => $template->child_content_disposition,
+                'hide_from_menu' => $template->child_hide_from_menu,
+                'searchable' => $template->child_searchable
             ),
             'tab_label' => $template->tab_label,
             'button_label' => $template->button_label,
