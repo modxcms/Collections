@@ -1,16 +1,5 @@
-_build/build.config.php
-config.core.php
-.idea
-.settings
-nbproject
-.project
-crowdin.yaml
-_packages/*.*
-!_packages/.gitignore
-!_packages/*.zip
-
-# OS generated files #
-######################
+# OS-generated and dev tool files #
+###################################
 .DS_Store
 .DS_Store?
 ._*
@@ -18,10 +7,26 @@ _packages/*.*
 .Trashes
 ehthumbs.db
 Thumbs.db
+.idea
+.settings
+nbproject
+.project
 
+# MODX-related files #
+######################
+config.core.php
+crowdin.yaml
+
+# Build-related files for distribution #
+########################################
+_build/build.config.php
+_packages/*.*
+!_packages/.gitignore
+!_packages/*.zip
+_build/build.config.php
 node_modules
 npm-debug.log
 .sass-cache
+assets/components/collections/web/fred_integration.*
 package-lock.json
-
 core/components/collections/model/vendor
