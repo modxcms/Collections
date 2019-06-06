@@ -7,16 +7,24 @@ $white: #FEFEFE;
       background-color: #f1f1f1;
     }
   }
+  fieldset, .fred--collections-filters {
+    vertical-align: top !important;
+    margin-bottom: 16px !important;
+  }
 }
 .fred--collections-sidebar:before {
   mask: url('./bars-solid.svg') center center no-repeat;
   -webkit-mask: url('./bars-solid.svg') center center no-repeat;
 }
+.fred--btn-wrapper {
+  position: absolute;
+  top: 12px;
+  right: 60px;
+}
 .fred--btn{
   &-collections{
     &-newpage{
-      margin-left: 0px !important;
-      margin-bottom: 16px !important;
+      margin-left: 8px !important;
     }
     &-icon{
       padding: 2px !important;
@@ -65,22 +73,22 @@ $white: #FEFEFE;
 @media screen and (min-width: 768px){
   .fred .fred--modal .fred--collections-filters{
     label{
-      width: calc(100% / 3);
       display: inline-block;
-      padding-right: 24px;
+      width: calc(100% / 3);
+      padding: 0 8px;
     }
   }
-  .fred--collections-createpage{
+  .fred--collections-createpage {
     fieldset{
-      & > label, & > div{
+      & > label, & > div:not(.fred--btn-wrapper) {
         display: inline-block !important;
-        width: calc(100% / 4) !important;
-        padding-right: 16px !important;
+        width: calc(100% / 3) !important;
+        padding: 0 8px !important;
       }
-      & > div{
-        position: relative !important;
-        top: -5px !important;
-      }
+      //& > div{
+      //  position: relative !important;
+      //  top: -5px !important;
+      //}
       & > button{
         display: inline-block !important;
         width: calc(24% / 2) !important;
@@ -88,11 +96,13 @@ $white: #FEFEFE;
     }
   }
 }
-.fred--collections-createpage,fred--collections-filters,.fred--modal-body .tabulator{
+.fred--collections-createpage,
+.fred--collections-filters,
+.fred--modal-body .tabulator{
   animation: fred--collections-fade .5s;
 }
 
-@keyframes fred--collections-fade{
+@keyframes fred--collections-fade {
   0%{opacity:0}
   100%{opacity:1}
 }

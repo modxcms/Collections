@@ -192,7 +192,7 @@ export default config => (fred, Plugin, pluginTools) => {
             filtersBar.appendChild(authorFilter);
 
             if (pluginTools.fredConfig.permission.new_document) {
-                const newPage = button('collections.fred.new_page', 'collections.fred.new_page', ['fred--btn', 'fred--btn-collections-newpage', 'fred--btn-apply'], () => {
+                const newPage = button('collections.fred.new_page', 'collections.fred.new_page', ['fred--btn', 'fred--btn-small', 'fred--btn-collections-newpage', 'fred--btn-apply', 'fred--btn-wrapper'], () => {
                     const newPageForm = this.showNewPageForm(collection, view, () => {
                         filtersBar.replaceChild(newPage, newPageForm);
                         filtersBar.replaceChild(search, searchHide);
@@ -328,10 +328,9 @@ export default config => (fred, Plugin, pluginTools) => {
             });
 
             fields.appendChild(templateInput);
-
             fields.appendChild(blueprintInput);
 
-            const createButton = button('fred.fe.pages.create_page', 'fred.fe.pages.create_page', ['fred--btn', 'fred--btn-collections-newpage', 'fred--btn-apply'], () => {
+            const createButton = button('fred.fe.pages.create_page', 'fred.fe.pages.create_page', ['fred--btn', 'fred--btn-small', 'fred--btn-collections-newpage', 'fred--btn-apply'], () => {
                 if (!pluginTools.fredConfig.permission.new_document) {
                     alert(pluginTools.fredConfig.lng('fred.fe.permission.new_document'));
                     return;
@@ -359,12 +358,15 @@ export default config => (fred, Plugin, pluginTools) => {
                 );
             });
 
-            const cancelButton = button('collections.fred.cancel', 'collections.fred.cancel', ['fred--btn-panel'], () => {
+            const cancelButton = button('collections.fred.cancel', 'collections.fred.cancel', ['fred--btn', 'fred--btn-small', 'fred--btn-collections-newpage', 'fred--btn-hollow'], () => {
                 onCancel();
             });
 
-            fields.appendChild(createButton);
-            fields.appendChild(cancelButton);
+            const buttonWrapper = div('fred--btn-wrapper');
+            buttonWrapper.appendChild(createButton);
+            buttonWrapper.appendChild(cancelButton);
+
+            fields.appendChild(buttonWrapper);
 
             pageForm.appendChild(fields);
 
