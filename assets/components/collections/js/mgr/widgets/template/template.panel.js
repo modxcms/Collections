@@ -38,6 +38,12 @@ Ext.extend(collections.panel.Template, MODx.FormPanel,{
                         fn: function(r) {
                             this.getForm().setValues(r.object);
 
+                            var fredDefaultBlueprint = this.find('name', 'fred_default_blueprint');
+                            if (fredDefaultBlueprint[0]) {
+                                fredDefaultBlueprint = fredDefaultBlueprint[0];
+                                fredDefaultBlueprint.baseParams.template = r.object.child_template;
+                            }
+
                             this.fireEvent('ready', r.object);
                             MODx.fireEvent('ready');
                         },
@@ -619,432 +625,506 @@ Ext.extend(collections.panel.Template, MODx.FormPanel,{
     }
 
     ,getCollectionsSettingsFields: function(config) {
-        return [{
-            deferredRender: false
-            ,border: false
-            ,defaults: {
-                autoHeight: true
-                ,layout: 'form'
-                ,labelWidth: 150
-                ,bodyCssClass: 'main-wrapper'
-                ,layoutOnTabChange: true
+        var items = [
+            {
+            defaults: {
+                msgTarget: 'side'
+                ,autoHeight: true
             }
+            ,cls: 'form-with-labels'
+            ,border: false
             ,items: [{
-                defaults: {
-                    msgTarget: 'side'
-                    ,autoHeight: true
-                }
-                ,cls: 'form-with-labels'
+                layout: 'column'
                 ,border: false
-                ,items: [{
-                    layout: 'column'
+                ,height: 100
+                ,defaults: {
+                    layout: 'form'
+                    ,labelAlign: 'top'
+                    ,labelSeparator: ''
+                    ,anchor: '100%'
                     ,border: false
-                    ,height: 100
+                }
+                ,items: [{
+                    columnWidth:.5
+                    ,border: false
                     ,defaults: {
-                        layout: 'form'
-                        ,labelAlign: 'top'
-                        ,labelSeparator: ''
+                        msgTarget: 'under'
                         ,anchor: '100%'
-                        ,border: false
                     }
                     ,items: [{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'modx-combo-boolean'
-                            ,fieldLabel: _('collections.template.resource_type_selection')
-                            ,name: 'resource_type_selection'
-                            ,hiddenName: 'resource_type_selection'
-                            ,value: (config.record) ? config.record.resource_type_selection : true
-                        }]
-                    },{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'textfield'
-                            ,fieldLabel: _('collections.template.button_label')
-                            ,name: 'button_label'
-                            ,value: (config.record) ? config.record.button_label : 'collections.children.create'
-                        }]
+                        xtype: 'modx-combo-boolean'
+                        ,fieldLabel: _('collections.template.resource_type_selection')
+                        ,name: 'resource_type_selection'
+                        ,hiddenName: 'resource_type_selection'
+                        ,value: (config.record) ? config.record.resource_type_selection : true
                     }]
-                }]
-            },{
-                defaults: {
-                    msgTarget: 'side'
-                    ,autoHeight: true
-                }
-                ,cls: 'form-with-labels'
-                ,border: false
-                ,items: [{
-                    layout: 'column'
+                },{
+                    columnWidth:.5
                     ,border: false
-                    ,height: 100
                     ,defaults: {
-                        layout: 'form'
-                        ,labelAlign: 'top'
-                        ,labelSeparator: ''
+                        msgTarget: 'under'
                         ,anchor: '100%'
-                        ,border: false
                     }
                     ,items: [{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'modx-combo-boolean'
-                            ,fieldLabel: _('collections.template.show_quick_create')
-                            ,name: 'show_quick_create'
-                            ,hiddenName: 'show_quick_create'
-                            ,value: (config.record) ? config.record.show_quick_create : true
-                        }]
-                    },{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'textfield'
-                            ,fieldLabel: _('collections.template.quick_create_label')
-                            ,name: 'quick_create_label'
-                            ,value: (config.record) ? config.record.quick_create_label : 'collections.children.quick_create'
-                        }]
-                    }]
-                }]
-            },{
-                defaults: {
-                    msgTarget: 'side'
-                    ,autoHeight: true
-                }
-                ,cls: 'form-with-labels'
-                ,border: false
-                ,items: [{
-                    layout: 'column'
-                    ,border: false
-                    ,height: 100
-                    ,defaults: {
-                        layout: 'form'
-                        ,labelAlign: 'top'
-                        ,labelSeparator: ''
-                        ,anchor: '100%'
-                        ,border: false
-                    }
-                    ,items: [{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'collections-combo-single-template'
-                            ,fieldLabel: _('collections.template.child_template')
-                            ,name: 'child_template'
-                            ,hiddenName: 'child_template'
-                            ,allowBlank: true
-                            ,editable: true
-                            ,addEmpty: true
-                        }]
-                    },{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'modx-combo-class-derivatives'
-                            ,fieldLabel: _('collections.template.child_resource_type')
-                            ,name: 'child_resource_type'
-                            ,hiddenName: 'child_resource_type'
-                            ,allowBlank: false
-                            ,editable: false
-                            ,value: (config.record) ? config.record.child_resource_type : 'modDocument'
-                        }]
-                    }]
-                }]
-            },{
-                defaults: {
-                    msgTarget: 'side'
-                    ,autoHeight: true
-                }
-                ,cls: 'form-with-labels'
-                ,border: false
-                ,items: [{
-                    layout: 'column'
-                    ,border: false
-                    ,height: 100
-                    ,defaults: {
-                        layout: 'form'
-                        ,labelAlign: 'top'
-                        ,labelSeparator: ''
-                        ,anchor: '100%'
-                        ,border: false
-                    }
-                    ,items: [{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'collections-combo-extended-boolean'
-                            ,fieldLabel: _('collections.template.child_published')
-                            ,name: 'child_published'
-                            ,hiddenName: 'child_published'
-                            ,value: (config.record) ? config.record.child_published : null
-                        }]
-                    },{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'collections-combo-content-type'
-                            ,fieldLabel: _('collections.template.child_content_type')
-                            ,name: 'child_content_type'
-                            ,hiddenName: 'child_content_type'
-                            ,allowBlank: true
-                            ,editable: false
-                            ,value: (config.record) ? config.record.child_content_type : 0
-                        }]
-                    }]
-                }]
-            },{
-                defaults: {
-                    msgTarget: 'side'
-                    ,autoHeight: true
-                }
-                ,cls: 'form-with-labels'
-                ,border: false
-                ,items: [{
-                    layout: 'column'
-                    ,border: false
-                    ,height: 100
-                    ,defaults: {
-                        layout: 'form'
-                        ,labelAlign: 'top'
-                        ,labelSeparator: ''
-                        ,anchor: '100%'
-                        ,border: false
-                    }
-                    ,items: [{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'collections-combo-extended-boolean'
-                            ,fieldLabel: _('collections.template.child_hide_from_menu')
-                            ,name: 'child_hide_from_menu'
-                            ,hiddenName: 'child_hide_from_menu'
-                            ,value: (config.record) ? config.record.child_hide_from_menu : null
-                        }]
-                    },{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'collections-combo-extended-boolean'
-                            ,fieldLabel: _('collections.template.child_cacheable')
-                            ,name: 'child_cacheable'
-                            ,hiddenName: 'child_cacheable'
-                            ,value: (config.record) ? config.record.child_cacheable : null
-                        }]
-                    }]
-                }]
-            },{
-                defaults: {
-                    msgTarget: 'side'
-                    ,autoHeight: true
-                }
-                ,cls: 'form-with-labels'
-                ,border: false
-                ,items: [{
-                    layout: 'column'
-                    ,border: false
-                    ,height: 100
-                    ,defaults: {
-                        layout: 'form'
-                        ,labelAlign: 'top'
-                        ,labelSeparator: ''
-                        ,anchor: '100%'
-                        ,border: false
-                    }
-                    ,items: [{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'collections-combo-extended-boolean'
-                            ,fieldLabel: _('collections.template.child_richtext')
-                            ,name: 'child_richtext'
-                            ,hiddenName: 'child_richtext'
-                            ,value: (config.record) ? config.record.child_richtext : null
-                        }]
-                    },{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'collections-combo-extended-boolean'
-                            ,fieldLabel: _('collections.template.child_searchable')
-                            ,name: 'child_searchable'
-                            ,hiddenName: 'child_searchable'
-                            ,value: (config.record) ? config.record.child_searchable : null
-                        }]
-                    }]
-                }]
-            },{
-                defaults: {
-                    msgTarget: 'side'
-                    ,autoHeight: true
-                }
-                ,cls: 'form-with-labels'
-                ,border: false
-                ,items: [{
-                    layout: 'column'
-                    ,border: false
-                    ,height: 100
-                    ,defaults: {
-                        layout: 'form'
-                        ,labelAlign: 'top'
-                        ,labelSeparator: ''
-                        ,anchor: '100%'
-                        ,border: false
-                    }
-                    ,items: [{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'collections-combo-content-disposition-extended'
-                            ,fieldLabel: _('collections.template.child_content_disposition')
-                            ,name: 'child_content_disposition'
-                            ,hiddenName: 'child_content_disposition'
-                            ,value: (config.record) ? config.record.child_content_disposition : null
-                        }]
-                    },{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: []
-                    }]
-                }]
-            },{
-                defaults: {
-                    msgTarget: 'side'
-                    ,autoHeight: true
-                }
-                ,cls: 'form-with-labels'
-                ,border: false
-                ,items: [{
-                    layout: 'column'
-                    ,border: false
-                    ,height: 100
-                    ,defaults: {
-                        layout: 'form'
-                        ,labelAlign: 'top'
-                        ,labelSeparator: ''
-                        ,anchor: '100%'
-                        ,border: false
-                    }
-                    ,items: [{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'textfield'
-                            ,fieldLabel: _('collections.template.back_to_collection')
-                            ,name: 'back_to_collection_label'
-                            ,value: (config.record) ? config.record.back_to_collection_label : 'collections.children.back_to_collection_label'
-                        }]
-                    },{
-                        columnWidth:.5
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'textfield'
-                            ,fieldLabel: _('collections.template.parent')
-                            ,name: 'parent'
-                            ,value: (config.record) ? config.record.parent : ''
-                        }]
-                    }]
-                }]
-            },{
-                defaults: {
-                    msgTarget: 'side'
-                    ,autoHeight: true
-                }
-                ,cls: 'form-with-labels'
-                ,border: false
-                ,items: [{
-                    layout: 'column'
-                    ,border: false
-                    ,height: 100
-                    ,defaults: {
-                        layout: 'form'
-                        ,labelAlign: 'top'
-                        ,labelSeparator: ''
-                        ,anchor: '100%'
-                        ,border: false
-                    }
-                    ,items: [{
-                        columnWidth: 1
-                        ,border: false
-                        ,defaults: {
-                            msgTarget: 'under'
-                            ,anchor: '100%'
-                        }
-                        ,items: [{
-                            xtype: 'textfield'
-                            ,fieldLabel: _('collections.template.allowed_resource_types')
-                            ,description: _('collections.template.allowed_resource_types_desc')
-                            ,name: 'allowed_resource_types'
-                            ,value: (config.record) ? config.record.allowed_resource_types : ''
-                        }]
+                        xtype: 'textfield'
+                        ,fieldLabel: _('collections.template.button_label')
+                        ,name: 'button_label'
+                        ,value: (config.record) ? config.record.button_label : 'collections.children.create'
                     }]
                 }]
             }]
-        }];
+        },{
+            defaults: {
+                msgTarget: 'side'
+                ,autoHeight: true
+            }
+            ,cls: 'form-with-labels'
+            ,border: false
+            ,items: [{
+                layout: 'column'
+                ,border: false
+                ,height: 100
+                ,defaults: {
+                    layout: 'form'
+                    ,labelAlign: 'top'
+                    ,labelSeparator: ''
+                    ,anchor: '100%'
+                    ,border: false
+                }
+                ,items: [{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'modx-combo-boolean'
+                        ,fieldLabel: _('collections.template.show_quick_create')
+                        ,name: 'show_quick_create'
+                        ,hiddenName: 'show_quick_create'
+                        ,value: (config.record) ? config.record.show_quick_create : true
+                    }]
+                },{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'textfield'
+                        ,fieldLabel: _('collections.template.quick_create_label')
+                        ,name: 'quick_create_label'
+                        ,value: (config.record) ? config.record.quick_create_label : 'collections.children.quick_create'
+                    }]
+                }]
+            }]
+        },{
+            defaults: {
+                msgTarget: 'side'
+                ,autoHeight: true
+            }
+            ,cls: 'form-with-labels'
+            ,border: false
+            ,items: [{
+                layout: 'column'
+                ,border: false
+                ,height: 100
+                ,defaults: {
+                    layout: 'form'
+                    ,labelAlign: 'top'
+                    ,labelSeparator: ''
+                    ,anchor: '100%'
+                    ,border: false
+                }
+                ,items: [{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'collections-combo-single-template'
+                        ,fieldLabel: _('collections.template.child_template')
+                        ,name: 'child_template'
+                        ,hiddenName: 'child_template'
+                        ,allowBlank: true
+                        ,editable: true
+                        ,addEmpty: true
+                        ,listeners: {
+                            select: function (combo, record) {
+                                var fredDefaultBlueprint = this.find('name', 'fred_default_blueprint');
+                                if (!fredDefaultBlueprint[0]) return;
+
+                                fredDefaultBlueprint = fredDefaultBlueprint[0];
+                                fredDefaultBlueprint.useTemplate(record.id);
+                            },
+                            scope: this
+                        }
+                    }]
+                },{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'modx-combo-class-derivatives'
+                        ,fieldLabel: _('collections.template.child_resource_type')
+                        ,name: 'child_resource_type'
+                        ,hiddenName: 'child_resource_type'
+                        ,allowBlank: false
+                        ,editable: false
+                        ,value: (config.record) ? config.record.child_resource_type : 'modDocument'
+                    }]
+                }]
+            }]
+        },{
+            defaults: {
+                msgTarget: 'side'
+                ,autoHeight: true
+            }
+            ,cls: 'form-with-labels'
+            ,border: false
+            ,items: [{
+                layout: 'column'
+                ,border: false
+                ,height: 100
+                ,defaults: {
+                    layout: 'form'
+                    ,labelAlign: 'top'
+                    ,labelSeparator: ''
+                    ,anchor: '100%'
+                    ,border: false
+                }
+                ,items: [{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'collections-combo-extended-boolean'
+                        ,fieldLabel: _('collections.template.child_published')
+                        ,name: 'child_published'
+                        ,hiddenName: 'child_published'
+                        ,value: (config.record) ? config.record.child_published : null
+                    }]
+                },{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'collections-combo-content-type'
+                        ,fieldLabel: _('collections.template.child_content_type')
+                        ,name: 'child_content_type'
+                        ,hiddenName: 'child_content_type'
+                        ,allowBlank: true
+                        ,editable: false
+                        ,value: (config.record) ? config.record.child_content_type : 0
+                    }]
+                }]
+            }]
+        },{
+            defaults: {
+                msgTarget: 'side'
+                ,autoHeight: true
+            }
+            ,cls: 'form-with-labels'
+            ,border: false
+            ,items: [{
+                layout: 'column'
+                ,border: false
+                ,height: 100
+                ,defaults: {
+                    layout: 'form'
+                    ,labelAlign: 'top'
+                    ,labelSeparator: ''
+                    ,anchor: '100%'
+                    ,border: false
+                }
+                ,items: [{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'collections-combo-extended-boolean'
+                        ,fieldLabel: _('collections.template.child_hide_from_menu')
+                        ,name: 'child_hide_from_menu'
+                        ,hiddenName: 'child_hide_from_menu'
+                        ,value: (config.record) ? config.record.child_hide_from_menu : null
+                    }]
+                },{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'collections-combo-extended-boolean'
+                        ,fieldLabel: _('collections.template.child_cacheable')
+                        ,name: 'child_cacheable'
+                        ,hiddenName: 'child_cacheable'
+                        ,value: (config.record) ? config.record.child_cacheable : null
+                    }]
+                }]
+            }]
+        },{
+            defaults: {
+                msgTarget: 'side'
+                ,autoHeight: true
+            }
+            ,cls: 'form-with-labels'
+            ,border: false
+            ,items: [{
+                layout: 'column'
+                ,border: false
+                ,height: 100
+                ,defaults: {
+                    layout: 'form'
+                    ,labelAlign: 'top'
+                    ,labelSeparator: ''
+                    ,anchor: '100%'
+                    ,border: false
+                }
+                ,items: [{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'collections-combo-extended-boolean'
+                        ,fieldLabel: _('collections.template.child_richtext')
+                        ,name: 'child_richtext'
+                        ,hiddenName: 'child_richtext'
+                        ,value: (config.record) ? config.record.child_richtext : null
+                    }]
+                },{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'collections-combo-extended-boolean'
+                        ,fieldLabel: _('collections.template.child_searchable')
+                        ,name: 'child_searchable'
+                        ,hiddenName: 'child_searchable'
+                        ,value: (config.record) ? config.record.child_searchable : null
+                    }]
+                }]
+            }]
+        },{
+            defaults: {
+                msgTarget: 'side'
+                ,autoHeight: true
+            }
+            ,cls: 'form-with-labels'
+            ,border: false
+            ,items: [{
+                layout: 'column'
+                ,border: false
+                ,height: 100
+                ,defaults: {
+                    layout: 'form'
+                    ,labelAlign: 'top'
+                    ,labelSeparator: ''
+                    ,anchor: '100%'
+                    ,border: false
+                }
+                ,items: [{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'collections-combo-content-disposition-extended'
+                        ,fieldLabel: _('collections.template.child_content_disposition')
+                        ,name: 'child_content_disposition'
+                        ,hiddenName: 'child_content_disposition'
+                        ,value: (config.record) ? config.record.child_content_disposition : null
+                    }]
+                },{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: []
+                }]
+            }]
+        },{
+            defaults: {
+                msgTarget: 'side'
+                ,autoHeight: true
+            }
+            ,cls: 'form-with-labels'
+            ,border: false
+            ,items: [{
+                layout: 'column'
+                ,border: false
+                ,height: 100
+                ,defaults: {
+                    layout: 'form'
+                    ,labelAlign: 'top'
+                    ,labelSeparator: ''
+                    ,anchor: '100%'
+                    ,border: false
+                }
+                ,items: [{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'textfield'
+                        ,fieldLabel: _('collections.template.back_to_collection')
+                        ,name: 'back_to_collection_label'
+                        ,value: (config.record) ? config.record.back_to_collection_label : 'collections.children.back_to_collection_label'
+                    }]
+                },{
+                    columnWidth:.5
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'textfield'
+                        ,fieldLabel: _('collections.template.parent')
+                        ,name: 'parent'
+                        ,value: (config.record) ? config.record.parent : ''
+                    }]
+                }]
+            }]
+        },{
+            defaults: {
+                msgTarget: 'side'
+                ,autoHeight: true
+            }
+            ,cls: 'form-with-labels'
+            ,border: false
+            ,items: [{
+                layout: 'column'
+                ,border: false
+                ,height: 100
+                ,defaults: {
+                    layout: 'form'
+                    ,labelAlign: 'top'
+                    ,labelSeparator: ''
+                    ,anchor: '100%'
+                    ,border: false
+                }
+                ,items: [{
+                    columnWidth: 1
+                    ,border: false
+                    ,defaults: {
+                        msgTarget: 'under'
+                        ,anchor: '100%'
+                    }
+                    ,items: [{
+                        xtype: 'textfield'
+                        ,fieldLabel: _('collections.template.allowed_resource_types')
+                        ,description: _('collections.template.allowed_resource_types_desc')
+                        ,name: 'allowed_resource_types'
+                        ,value: (config.record) ? config.record.allowed_resource_types : ''
+                    }]
+                }]
+            }]
+        }
+        ];
+
+        if (config.fredInstalled) {
+            items.push({
+                defaults: {
+                    msgTarget: 'side',
+                    autoHeight: true
+                },
+                cls: 'form-with-labels',
+                border: false,
+                items: [
+                    {
+                        layout: 'column',
+                        border: false,
+                        height: 100,
+                        defaults: {
+                            layout: 'form',
+                            labelAlign: 'top',
+                            labelSeparator: '',
+                            anchor: '100%',
+                            border: false
+                        },
+                        items: [
+                            {
+                                columnWidth: 1,
+                                border: false,
+                                defaults: {
+                                    msgTarget: 'under',
+                                    anchor: '100%'
+                                },
+                                items: [
+                                    {
+                                        xtype: 'collections-combo-fred-blueprints',
+                                        fieldLabel: _('collections.template.fred_default_blueprint'),
+                                        description: _('collections.template.fred_default_blueprint_desc'),
+                                        name: 'fred_default_blueprint',
+                                        hiddenName: 'fred_default_blueprint',
+                                        addNone: 1,
+                                        useTemplate: function(template) {
+                                            this.baseParams.template = template;
+                                            this.store.on('load', function(store, records, options) {
+                                                if (records.length === 2) {
+                                                    this.setValue(options.params.uuid);
+                                                } else {
+                                                    this.setValue("");
+                                                }
+
+                                                this.lastQuery = null;
+                                            }, this, {single: true});
+                                            this.store.load({params: {uuid: this.getValue()}});
+                                        }
+                                    }
+                                ]
+                            }
+                        ]
+                    }
+                ]
+            });
+        }
+
+        return [
+            {
+                deferredRender: false,
+                border: false,
+                defaults: {
+                    autoHeight: true,
+                    layout: 'form',
+                    labelWidth: 150,
+                    bodyCssClass: 'main-wrapper',
+                    layoutOnTabChange: true
+                },
+                items: items
+            }
+        ];
     }
 
     ,getSelectionsSettingsFields: function(config) {

@@ -194,7 +194,6 @@ collections.combo.Resource = function(config) {
 Ext.extend(collections.combo.Resource,MODx.combo.ComboBox);
 Ext.reg('collections-combo-resource',collections.combo.Resource);
 
-
 collections.combo.ViewFor = function(config) {
     config = config || {};
     Ext.applyIf(config,{
@@ -325,3 +324,32 @@ collections.combo.SortType = function(config) {
 };
 Ext.extend(collections.combo.SortType,MODx.combo.ComboBox);
 Ext.reg('collections-combo-sort-type',collections.combo.SortType);
+
+collections.combo.FredBlueprints = function(config) {
+    config = config || {};
+    Ext.applyIf(config,{
+        name: 'blueprint',
+        hiddenName: 'blueprint',
+        displayField: 'name',
+        valueField: 'uuid',
+        fields: ['name','uuid', 'category_name', 'theme_name'],
+        pageSize: 20,
+        minChars: 1,
+        editable: true,
+        triggerAction: 'all',
+        typeAhead: false,
+        forceSelection: true,
+        selectOnFocus: false,
+        url: collections.config.connectorUrl,
+        baseParams:{
+            action: 'mgr/extra/fredgetblueprints',
+            addNone: config.addNone || 0
+        },
+        tpl: new Ext.XTemplate('<tpl for="."><div class="x-combo-list-item"><span style="font-weight: bold">{name:htmlEncode}</span><br />',
+        '<tpl if="category_name">Category: <span>{category_name:htmlEncode}</span><br />Theme: <span>{theme_name:htmlEncode}</span></tpl>',
+        '</div></tpl>')
+    });
+    collections.combo.FredBlueprints.superclass.constructor.call(this,config);
+};
+Ext.extend(collections.combo.FredBlueprints,MODx.combo.ComboBox);
+Ext.reg('collections-combo-fred-blueprints',collections.combo.FredBlueprints);

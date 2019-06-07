@@ -150,6 +150,8 @@ $_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude T
 $_lang['collections.template.search_query_title_only'] = 'Search - Title only';
 $_lang['collections.template.show_quick_create'] = 'Show Quick Crete button';
 $_lang['collections.template.quick_create_label'] = 'Quick Create button label';
+$_lang['collections.template.fred_default_blueprint'] = 'Fred Default Blueprint';
+$_lang['collections.template.fred_default_blueprint_desc'] = 'When creating children from Fred, this blueprint will get preselected by default.';
 
 $_lang['collections.template.column.none'] = 'This view doesn\'t have columns yet.';
 $_lang['collections.template.column.name'] = 'Name';

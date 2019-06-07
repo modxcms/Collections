@@ -250,6 +250,7 @@ export default config => (fred, Plugin, pluginTools) => {
                         getBlueprints(true, state.theme)
                             .then(categories => {
                                 const groups = [];
+                                var defaultBlueprint = view.blueprint || value.customProperties.default_blueprint;
 
                                 categories.forEach(category => {
                                     const options = [];
@@ -260,7 +261,7 @@ export default config => (fred, Plugin, pluginTools) => {
                                             value: '' + blueprint.id
                                         };
 
-                                        if (value.customProperties.default_blueprint && (blueprint.id === value.customProperties.default_blueprint)) {
+                                        if (defaultBlueprint && (blueprint.id === defaultBlueprint)) {
                                             blueprintOption.selected = true;
                                             state.blueprint = blueprint.id;
                                         }
@@ -311,14 +312,29 @@ export default config => (fred, Plugin, pluginTools) => {
             const templateInput = choices({
                 name: 'template',
                 label: pluginTools.fredConfig.lng('fred.fe.pages.template'),
-            }, state.parent, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
+            }, state.template, onChangeChoices, (setting, label, select, choicesInstance, defaultValue) => {
                 choicesInstance.ajax(callback => {
                     getTemplates()
                         .then(data => {
-                            if (data.data.templates[0]) {
-                                onChangeChoices('template', data.data.templates[0]);
+                            let defaultSet = false;
+                            let defaultTemplate = null;
+
+                            for (let template of data.data.templates) {
+                                if (parseInt(template.id) === parseInt(state.template)) {
+                                    template.selected = true;
+                                    defaultTemplate = template;
+                                    defaultSet = true;
+                                    break;
+                                }
+                            }
+
+                            if (!defaultSet && data.data.templates[0]) {
+                                defaultTemplate = data.data.templates[0];
                                 data.data.templates[0].selected = true;
                             }
+
+                            onChangeChoices('template', defaultTemplate);
+
                             callback(data.data.templates, 'value', 'name');
                         })
                         .catch(error => {

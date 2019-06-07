@@ -21,6 +21,7 @@ collections.page.Template = function(config) {
             xtype: 'collections-panel-template'
             ,renderTo: 'collections-panel-template-div'
             ,isUpdate: config.isUpdate
+            ,fredInstalled: !!config.fredInstalled
         }]
     });
     collections.page.Template.superclass.constructor.call(this,config);

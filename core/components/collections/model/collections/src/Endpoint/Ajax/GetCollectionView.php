@@ -20,11 +20,30 @@ class GetCollectionView extends Endpoint
         $templates = array_flip($templates);
 
         $childTemplate = isset($templates[$view->child_template]) ? $view->child_template : 0;
+        $defaultBlueprint = 0;
+
+        if (($childTemplate > 0) && ($view->fred_default_blueprint > 0)) {
+            /** @var \FredBlueprint $blueprint */
+            $blueprint = $this->modx->getObject('FredBlueprint', ['uuid' => $view->fred_default_blueprint]);
+
+            if ($blueprint) {
+                $category = $blueprint->Category;
+                if ($category) {
+                        $themedTemplate = $this->modx->getCount('FredThemedTemplate', [
+                            'theme' => $category->get('theme'),
+                            'template' => $childTemplate
+                        ]);
+
+                        if ($themedTemplate === 1) {
+                            $defaultBlueprint = $blueprint->id;
+                        }
+                }
+            }
+        }
 
         return $this->data([
-            'template' => $childTemplate
+            'template' => $childTemplate,
+            'blueprint' => $defaultBlueprint
         ]);
     }
-
-
 }

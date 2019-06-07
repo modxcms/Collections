@@ -41,6 +41,7 @@
  * @property bool|null $search_query_exclude_tagger
  * @property bool $show_quick_create
  * @property string $quick_create_label
+ * @property int $fred_default_blueprint
  *
  * @property CollectionSetting $Setting
  * @property CollectionTemplateColumn[] $Columns

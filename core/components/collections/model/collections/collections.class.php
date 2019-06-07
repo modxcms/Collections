@@ -56,6 +56,22 @@ class Collections
             $quip = null;
         }
 
+        $fredCorePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
+
+        if (file_exists($fredCorePath . 'model/fred/fred.class.php')) {
+            /** @var Fred $fred */
+            $fred = $modx->getService(
+                'fred',
+                'Fred',
+                $fredCorePath . 'model/fred/',
+                array(
+                    'core_path' => $fredCorePath
+                )
+            );
+        } else {
+            $fred = null;
+        }
+
         $this->config = array_merge(array(
             'assets_url' => $assetsUrl,
             'core_path' => $corePath,
@@ -77,6 +93,7 @@ class Collections
 
             'taggerInstalled' => $tagger instanceof Tagger,
             'quipInstalled' => $quip instanceof Quip,
+            'fredInstalled' => $fred instanceof Fred,
         ), $config);
 
         $this->modx->addPackage('collections', $this->config['modelPath']);

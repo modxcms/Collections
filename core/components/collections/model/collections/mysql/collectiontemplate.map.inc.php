@@ -52,6 +52,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     'search_query_title_only' => 0,
     'show_quick_create' => 1,
     'quick_create_label' => 'collections.children.quick_create',
+    'fred_default_blueprint' => '',
   ),
   'fieldMeta' => 
   array (
@@ -345,7 +346,7 @@ $xpdo_meta_map['CollectionTemplate']= array (
     ),
     'show_quick_create' => 
     array (
-      'dbtype' => 'int',
+      'dbtype' => 'tinyint',
       'precision' => '1',
       'phptype' => 'boolean',
       'null' => false,
@@ -358,6 +359,14 @@ $xpdo_meta_map['CollectionTemplate']= array (
       'phptype' => 'string',
       'null' => false,
       'default' => 'collections.children.quick_create',
+    ),
+    'fred_default_blueprint' => 
+    array (
+      'dbtype' => 'varchar',
+      'precision' => '36',
+      'phptype' => 'string',
+      'null' => false,
+      'default' => '',
     ),
   ),
   'composites' => 

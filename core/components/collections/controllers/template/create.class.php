@@ -32,7 +32,10 @@ class CollectionsTemplateCreateManagerController extends CollectionsBaseManagerC
         $this->addHtml('
         <script type="text/javascript">
             Ext.onReady(function() {
-                MODx.load({ xtype: "collections-page-template"});
+                MODx.load({ 
+                    xtype: "collections-page-template",
+                    fredInstalled: ' . (int)$this->collections->getOption("fredInstalled", null, 0) . '
+                });
             });
         </script>
         ');
