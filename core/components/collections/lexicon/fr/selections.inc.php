@@ -30,7 +30,7 @@ $_lang['selections.delete_multiple'] = 'Supprimer la sélection';
 $_lang['selections.delete_multiple_confirm'] = 'Êtes-vous sûr de vouloir supprimer toutes les ressources sélectionnées ?';
 $_lang['selections.remove'] = 'Enlever la ressource';
 $_lang['selections.remove_confirm'] = 'Êtes-vous sûr de vouloir enlever cette ressource ? <br /><strong>Cette opération est irrémédiable et irréversible.</strong>';
-$_lang['selections.resource'] = 'Ressource';
+$_lang['selections.resource'] = 'Resource';
 $_lang['selections.unlink_multiple'] = 'Délier multiple';
 $_lang['selections.back_to_selection_label'] = 'Retour à la sélection';
 

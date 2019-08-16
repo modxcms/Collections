@@ -51,6 +51,7 @@ $_lang['collections.global.import'] = 'Import';
 // Children
 $_lang['collections.children'] = 'Subdocumenten';
 $_lang['collections.children.create'] = 'Maak nieuw subdocment';
+$_lang['collections.children.quick_create'] = 'Quick Create child';
 $_lang['collections.children.view'] = 'Bekijk subdocument';
 $_lang['collections.children.edit'] = 'Update subdocument';
 $_lang['collections.children.quickupdate'] = 'Quick Update';
@@ -72,6 +73,8 @@ $_lang['collections.children.remove_action'] = 'Verwijder';
 $_lang['collections.children.remove'] = 'Verwijder subdocument';
 $_lang['collections.children.remove_confirm'] = 'Weet je zeker dat je dit document wilt verwijderen?<br /><strong>Deze wijziging is permanent en kan niet ongedaan gemaakt worden.</strong>';
 $_lang['collections.children.back_to_collection_label'] = 'Terug naar Collectie';
+$_lang['collections.children.changeparent'] = 'Change Parent';
+$_lang['collections.children.parent'] = 'Parent';
 
 // Template
 $_lang['collections.template.page_title'] = 'Collectie weergaven';
@@ -142,6 +145,13 @@ $_lang['collections.template.selection_link_condition_desc'] = 'JSON encoded xPD
 $_lang['collections.template.export_more'] = 'Export views';
 $_lang['collections.template.export'] = 'Export view';
 $_lang['collections.template.import'] = 'Import views';
+$_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
+$_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
+$_lang['collections.template.search_query_title_only'] = 'Search - Title only';
+$_lang['collections.template.show_quick_create'] = 'Show Quick Crete button';
+$_lang['collections.template.quick_create_label'] = 'Quick Create button label';
+$_lang['collections.template.fred_default_blueprint'] = 'Fred Default Blueprint';
+$_lang['collections.template.fred_default_blueprint_desc'] = 'When creating children from Fred, this blueprint will get preselected by default.';
 
 $_lang['collections.template.column.none'] = 'Deze weergave heeft nog geen kolommen. ';
 $_lang['collections.template.column.name'] = 'Naam';

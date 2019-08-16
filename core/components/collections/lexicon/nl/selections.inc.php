@@ -30,7 +30,7 @@ $_lang['selections.delete_multiple'] = 'Verwijder geselecteerde';
 $_lang['selections.delete_multiple_confirm'] = 'Weet je zeker dat je alle geselecteerde documenten wilt verwijderen?';
 $_lang['selections.remove'] = 'Verwijder document';
 $_lang['selections.remove_confirm'] = 'Weet je zeker dat je dit document wilt verwijderen?<br/><strong>Deze handeling is definitief en kan niet worden teruggedraaid.</strong>';
-$_lang['selections.resource'] = 'Document';
+$_lang['selections.resource'] = 'Resource';
 $_lang['selections.unlink_multiple'] = 'Ontkoppel meerdere';
 $_lang['selections.back_to_selection_label'] = 'Terug naar Selectie';
 

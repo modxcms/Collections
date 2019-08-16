@@ -51,6 +51,7 @@ $_lang['collections.global.import'] = 'Importovat';
 // Children
 $_lang['collections.children'] = 'Záznamy';
 $_lang['collections.children.create'] = 'Vytvořit záznam';
+$_lang['collections.children.quick_create'] = 'Quick Create child';
 $_lang['collections.children.view'] = 'Zobrazit záznam';
 $_lang['collections.children.edit'] = 'Upravit záznam';
 $_lang['collections.children.quickupdate'] = 'Quick Update';
@@ -72,6 +73,8 @@ $_lang['collections.children.remove_action'] = 'Odstranit';
 $_lang['collections.children.remove'] = 'Odstranit záznam';
 $_lang['collections.children.remove_confirm'] = 'Opravdu chcete odstranit tento záznam?<br /><strong>Tato změna je nevratná.</strong>';
 $_lang['collections.children.back_to_collection_label'] = 'Zpět do kolekce';
+$_lang['collections.children.changeparent'] = 'Change Parent';
+$_lang['collections.children.parent'] = 'Parent';
 
 // Template
 $_lang['collections.template.page_title'] = 'Zobrazení kolekcí';
@@ -142,6 +145,13 @@ $_lang['collections.template.selection_link_condition_desc'] = 'xPDO podmínka v
 $_lang['collections.template.export_more'] = 'Exportovat označené zobrazení';
 $_lang['collections.template.export'] = 'Exportovat zobrazení';
 $_lang['collections.template.import'] = 'Importovat zobrazení';
+$_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
+$_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
+$_lang['collections.template.search_query_title_only'] = 'Search - Title only';
+$_lang['collections.template.show_quick_create'] = 'Show Quick Crete button';
+$_lang['collections.template.quick_create_label'] = 'Quick Create button label';
+$_lang['collections.template.fred_default_blueprint'] = 'Fred Default Blueprint';
+$_lang['collections.template.fred_default_blueprint_desc'] = 'When creating children from Fred, this blueprint will get preselected by default.';
 
 $_lang['collections.template.column.none'] = 'Toto zobrazení nemá definované sloupce.';
 $_lang['collections.template.column.name'] = 'Název';

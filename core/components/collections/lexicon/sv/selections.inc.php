@@ -30,7 +30,7 @@ $_lang['selections.delete_multiple'] = 'Radera valda';
 $_lang['selections.delete_multiple_confirm'] = 'Är du säker på att du vill radera alla valda resurser?';
 $_lang['selections.remove'] = 'Radera resurs';
 $_lang['selections.remove_confirm'] = 'Är du säker på att du vill radera denna resurs?<br /><strong>Denna åtgärd är permanent och kan inte återställas.</strong>';
-$_lang['selections.resource'] = 'Resurs';
+$_lang['selections.resource'] = 'Resource';
 $_lang['selections.unlink_multiple'] = 'Avlänka flera';
 $_lang['selections.back_to_selection_label'] = 'Tillbaka till urval';
 
