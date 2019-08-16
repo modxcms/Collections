@@ -23,14 +23,14 @@ $_lang['setting_collections.user_css'] = 'File CSS dell\'utente';
 $_lang['setting_collections.user_css_desc'] = 'Indirizzo URL del file CSS definito dall\'utente, che può contenere stili personalizzati.';
 $_lang['setting_mgr_tree_icon_collectioncontainer'] = 'Icona Collezione';
 $_lang['setting_mgr_tree_icon_collectioncontainer_desc'] = 'Classe CSS che sarà usata per le Collezioni';
-$_lang['setting_collections.renderer_image_path'] = 'Renderer image path';
-$_lang['setting_collections.renderer_image_path_desc'] = 'Image path that will be used for Image renderer. Path will be appended to base_url.';
-$_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Selections icon';
-$_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'CSS class that will be used for Selections';
-$_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection';
-$_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
-$_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
-$_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
+$_lang['setting_collections.renderer_image_path'] = 'Percorso per il Renderer delle immagini';
+$_lang['setting_collections.renderer_image_path_desc'] = 'Percorso che verrà utilizzato per il rendering dell\'immagine. Il percorso verrà aggiunto a base_url.';
+$_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Icona Collezione';
+$_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'Classe CSS che sarà usata per le Selezioni';
+$_lang['setting_collections.tree_tbar_collection'] = 'Barra degli strumenti dell\'albero - Collezione';
+$_lang['setting_collections.tree_tbar_collection_desc'] = 'Mostra il bottone "Nuova Collezione" nella barra degli strumenti dell\'Albero';
+$_lang['setting_collections.tree_tbar_selection'] = 'Barra degli strumenti dell\'albero - Selezione';
+$_lang['setting_collections.tree_tbar_selection_desc'] = 'Mostra il bottone "Nuova Selezione" nella barra degli strumenti dell\'Albero';
 
 
 // System lexicons
@@ -38,7 +38,7 @@ $_lang['collections.system.type_name'] = 'Collezione';
 $_lang['collections.system.text_create'] = 'Collezione';
 $_lang['collections.system.text_create_here'] = 'Collezione';
 $_lang['collections.system.new_container'] = 'Nuova Collezione';
-$_lang['collections.system.new_selection_container'] = 'New Selection';
+$_lang['collections.system.new_selection_container'] = 'Nuova Selezione';
 $_lang['collections.system.all'] = 'Tutti';
 
 // Global lexicons
@@ -46,14 +46,14 @@ $_lang['collections.global.search'] = 'Cerca';
 $_lang['collections.global.change_order'] = 'Modifica ordinamento di: [[+child]]';
 $_lang['collections.global.change_parent'] = 'Modifica risorsa genitore di: [[+child]]';
 $_lang['collections.global.use_default'] = 'Usa predefinito';
-$_lang['collections.global.import'] = 'Import';
+$_lang['collections.global.import'] = 'Importa';
 
 // Children
 $_lang['collections.children'] = 'Risorse figlie';
 $_lang['collections.children.create'] = 'Crea una risorsa figlia';
 $_lang['collections.children.view'] = 'Vedi figlia';
 $_lang['collections.children.edit'] = 'Aggiorna risorsa figlia';
-$_lang['collections.children.quickupdate'] = 'Quick Update';
+$_lang['collections.children.quickupdate'] = 'Modifica rapida';
 $_lang['collections.children.publish'] = 'Pubblica risorsa figlia';
 $_lang['collections.children.unpublish'] = 'Ritira la risorsa figlia';
 $_lang['collections.children.duplicate'] = 'Duplica la risorsa figlia';
@@ -134,16 +134,16 @@ $_lang['collections.template.child_cacheable'] = 'Di default rendi cachable le r
 $_lang['collections.template.child_searchable'] = 'Di default rendi ricercabili le risorse figlie';
 $_lang['collections.template.child_richtext'] = 'Di default abilita il richtext sulle risorse figlie';
 $_lang['collections.template.child_content_type'] = 'Tipo di contenuto predefinito per le risorse figlie';
-$_lang['collections.template.parent'] = 'Parent-id (optional, @SNIPPET can be used)';
-$_lang['collections.template.child_content_disposition'] = 'Default children\'s content disposition';
-$_lang['collections.template.sort_type'] = 'Sort type';
-$_lang['collections.template.permanent_sort_before'] = 'Permanent sort - Before';
-$_lang['collections.template.permanent_sort_after'] = 'Permanent sort - After';
-$_lang['collections.template.selection_link_condition'] = 'WHERE condition for Link resource window';
-$_lang['collections.template.selection_link_condition_desc'] = 'JSON encoded xPDO WHERE condition';
-$_lang['collections.template.export_more'] = 'Export views';
-$_lang['collections.template.export'] = 'Export view';
-$_lang['collections.template.import'] = 'Import views';
+$_lang['collections.template.parent'] = 'Padre-id (opzionale, @SNIPPET può essere usato)';
+$_lang['collections.template.child_content_disposition'] = 'Contenuto predefinito per le risorse figlie';
+$_lang['collections.template.sort_type'] = 'Tipo di ordinamento';
+$_lang['collections.template.permanent_sort_before'] = 'Ordinamento permanente - Prima';
+$_lang['collections.template.permanent_sort_after'] = 'Ordinamento permanente - Dopo';
+$_lang['collections.template.selection_link_condition'] = 'Condizione WHERE per Link alla finestra della risorsa';
+$_lang['collections.template.selection_link_condition_desc'] = 'Condizione WHERE codificata in JSON xPDO';
+$_lang['collections.template.export_more'] = 'Esporta viste';
+$_lang['collections.template.export'] = 'Esporta vista';
+$_lang['collections.template.import'] = 'Importa viste';
 
 $_lang['collections.template.column.none'] = 'Questa vista non ha ancora alcuna colonna.';
 $_lang['collections.template.column.name'] = 'Nome';
@@ -159,12 +159,12 @@ $_lang['collections.template.column.position'] = 'Posizione';
 $_lang['collections.template.column.editor'] = 'Editor';
 $_lang['collections.template.column.renderer'] = 'Renderer';
 $_lang['collections.template.column.php_renderer'] = 'Snippet Renderer';
-$_lang['collections.template.column.sort_type'] = 'Sort type';
+$_lang['collections.template.column.sort_type'] = 'Tipo di ordinamento';
 
 $_lang['collections.template.sort_type_default'] = 'Default';
-$_lang['collections.template.sort_type_integer'] = 'Integer';
-$_lang['collections.template.sort_type_decimal'] = 'Decimal';
-$_lang['collections.template.sort_type_datetime'] = 'DateTime';
+$_lang['collections.template.sort_type_integer'] = 'Intero';
+$_lang['collections.template.sort_type_decimal'] = 'Decimale';
+$_lang['collections.template.sort_type_datetime'] = 'DataOra';
 
 $_lang['collections.err.parent_ns'] = 'Risorsa genitore non specificata.';
 $_lang['collections.err.template_ns'] = 'Vista non specificata.';
@@ -182,5 +182,5 @@ $_lang['collections.err.template_remove_last'] = 'Non puoi rimuovere l\'ultima V
 $_lang['collections.err.template_remove_global'] = 'Non puoi rimuovere la Vista predefinita. Si prega di impostare un\'altra Vista come predefinita e riprovare successivamente.';
 $_lang['collections.err.template_ae_name'] = 'Un template con questo nome esiste gi&agrave;.';
 $_lang['collections.err.column_dot_name'] = 'Il nome della colonna non pu&ograve; contenere un punto.';
-$_lang['collections.err.template_ns_label'] = 'Label is not specified.';
-$_lang['collections.err.permanent_sort'] = 'Permanent sort can\'t contain an <strong>everytime</strong>, a <strong>[[+column]]</strong> or (if filled) <strong>no</strong> sort field condition to use drag & drop sorting.';
+$_lang['collections.err.template_ns_label'] = 'Etichetta non specificata.';
+$_lang['collections.err.permanent_sort'] = 'L\'ordinamento permanente non può essere un <strong>everytime</strong>, un <strong>[[+column]]</strong> o (se compilato) <strong>no</strong> il campo di condizione da usare per l\'ordinameno drag & drop.';
