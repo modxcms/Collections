@@ -30,7 +30,7 @@ $_lang['selections.delete_multiple'] = 'Slet valgte';
 $_lang['selections.delete_multiple_confirm'] = 'Er du sikker på, at du vil slette alle valgte ressourcer?';
 $_lang['selections.remove'] = 'Fjern ressource';
 $_lang['selections.remove_confirm'] = 'Er du sikker på, du vil fjerne denne ressource? <br /><strong>Denne handling er permanent og kan ikke omgøres.</strong>';
-$_lang['selections.resource'] = 'Ressource';
+$_lang['selections.resource'] = 'Resource';
 $_lang['selections.unlink_multiple'] = 'Fjern sammenkædningen af flere';
 $_lang['selections.back_to_selection_label'] = 'Tilbage til Selection';
 
