@@ -15,7 +15,6 @@ nbproject
 # MODX-related files #
 ######################
 config.core.php
-crowdin.yaml
 
 # Build-related files for distribution #
 ########################################
