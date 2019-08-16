@@ -1,0 +1,4 @@
+files:
+  - source: /core/components/collections/lexicon/en/*.inc.php
+    translation: >-
+      /core/components/collections/lexicon/%two_letters_code%/%original_file_name%
