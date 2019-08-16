@@ -30,7 +30,7 @@ $_lang['selections.delete_multiple'] = 'Odstranit vybrané';
 $_lang['selections.delete_multiple_confirm'] = 'Opravdu chcete odstranit všechny vybrané dokumenty?';
 $_lang['selections.remove'] = 'Odstranit dokument';
 $_lang['selections.remove_confirm'] = 'Opravdu chcete odstranit tento dokument?<br /><strong>Tato změna je nevratná.</strong>';
-$_lang['selections.resource'] = 'Dokument';
+$_lang['selections.resource'] = 'Resource';
 $_lang['selections.unlink_multiple'] = 'Odpojit označené';
 $_lang['selections.back_to_selection_label'] = 'Zpět na výběr';
 
