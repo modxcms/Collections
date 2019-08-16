@@ -51,6 +51,7 @@ $_lang['collections.global.import'] = 'Importer';
 // Children
 $_lang['collections.children'] = 'Enfants';
 $_lang['collections.children.create'] = 'Créer un enfant';
+$_lang['collections.children.quick_create'] = 'Quick Create child';
 $_lang['collections.children.view'] = 'Voir enfant';
 $_lang['collections.children.edit'] = 'Mettre à jour enfant';
 $_lang['collections.children.quickupdate'] = 'Mise à jour rapide';
@@ -72,6 +73,8 @@ $_lang['collections.children.remove_action'] = 'Supprimer';
 $_lang['collections.children.remove'] = 'Supprimer enfant';
 $_lang['collections.children.remove_confirm'] = 'Êtes-vous sûr de vouloir supprimer cet enfant ? < br / ><strong>cette opération est permanente et ne peut pas être inversée.</strong>';
 $_lang['collections.children.back_to_collection_label'] = 'Revenir à la Collection';
+$_lang['collections.children.changeparent'] = 'Change Parent';
+$_lang['collections.children.parent'] = 'Parent';
 
 // Template
 $_lang['collections.template.page_title'] = 'Vues de la Collection';
@@ -142,6 +145,13 @@ $_lang['collections.template.selection_link_condition_desc'] = 'xPDO condition e
 $_lang['collections.template.export_more'] = 'Vues de l\'exportation';
 $_lang['collections.template.export'] = 'Vues de l\'exportation';
 $_lang['collections.template.import'] = 'Importer des vues';
+$_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
+$_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
+$_lang['collections.template.search_query_title_only'] = 'Search - Title only';
+$_lang['collections.template.show_quick_create'] = 'Show Quick Crete button';
+$_lang['collections.template.quick_create_label'] = 'Quick Create button label';
+$_lang['collections.template.fred_default_blueprint'] = 'Fred Default Blueprint';
+$_lang['collections.template.fred_default_blueprint_desc'] = 'When creating children from Fred, this blueprint will get preselected by default.';
 
 $_lang['collections.template.column.none'] = 'Cette vue n\'a pas encore de colonne.';
 $_lang['collections.template.column.name'] = 'Nom';
