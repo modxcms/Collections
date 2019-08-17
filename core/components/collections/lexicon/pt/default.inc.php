@@ -12,23 +12,23 @@ $_lang['collections.menu.collection_templates_desc'] = 'Defina as visualizaçõe
 
 // Settings lexicons
 $_lang['setting_collections.mgr_date_format'] = 'Formato de data da grelha';
-$_lang['setting_collections.mgr_date_format_desc'] = 'Placeholders from <a href="http://docs.sencha.com/extjs/3.4.0/#!/api/Date" target="_blank">http://docs.sencha.com/extjs/3.4.0/#!/api/Date</a> can be used here.';
-$_lang['setting_collections.mgr_time_format'] = 'Grid time format';
-$_lang['setting_collections.mgr_time_format_desc'] = 'Placeholders from <a href="http://docs.sencha.com/extjs/3.4.0/#!/api/Date" target="_blank">http://docs.sencha.com/extjs/3.4.0/#!/api/Date</a> can be used here.';
-$_lang['setting_collections.mgr_datetime_format'] = 'Grid date and time format';
-$_lang['setting_collections.mgr_datetime_format_desc'] = 'Placeholders from <a href="http://docs.sencha.com/extjs/3.4.0/#!/api/Date" target="_blank">http://docs.sencha.com/extjs/3.4.0/#!/api/Date</a> can be used here.';
-$_lang['setting_collections.user_js'] = 'User\'s JS file';
-$_lang['setting_collections.user_js_desc'] = 'URL to user\'s defined JS file which can contain custom renderers, etc.';
-$_lang['setting_collections.user_css'] = 'User\'s CSS file';
-$_lang['setting_collections.user_css_desc'] = 'URL to user\'s defined CSS file which can contain custom styles.';
-$_lang['setting_mgr_tree_icon_collectioncontainer'] = 'Collections icon';
-$_lang['setting_mgr_tree_icon_collectioncontainer_desc'] = 'CSS class that will be used for Collections';
-$_lang['setting_collections.renderer_image_path'] = 'Renderer image path';
-$_lang['setting_collections.renderer_image_path_desc'] = 'Image path that will be used for Image renderer. Path will be appended to base_url.';
-$_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Selections icon';
-$_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'CSS class that will be used for Selections';
-$_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection';
-$_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
+$_lang['setting_collections.mgr_date_format_desc'] = 'Marcadores de posição de <a href="http://docs.sencha.com/extjs/3.4.0/#!/api/Date" target="_blank">http://docs.sencha.com/extjs/3.4.0/#!/api/Date</a> podem ser utilizados aqui.';
+$_lang['setting_collections.mgr_time_format'] = 'Formato de hora da grelha';
+$_lang['setting_collections.mgr_time_format_desc'] = 'Marcadores de posição de <a href="http://docs.sencha.com/extjs/3.4.0/#!/api/Date" target="_blank">http://docs.sencha.com/extjs/3.4.0/#!/api/Date</a> podem ser utilizados aqui.';
+$_lang['setting_collections.mgr_datetime_format'] = 'Formato de data e de hora da grelha';
+$_lang['setting_collections.mgr_datetime_format_desc'] = 'Marcadores de posição de <a href="http://docs.sencha.com/extjs/3.4.0/#!/api/Date" target="_blank">http://docs.sencha.com/extjs/3.4.0/#!/api/Date</a> podem ser utilizados aqui.';
+$_lang['setting_collections.user_js'] = 'Arquivo JS do utilizador';
+$_lang['setting_collections.user_js_desc'] = 'URL para o ficheiro de JS definido pelo utilizador que pode conter renderizadores personalizados, etc.';
+$_lang['setting_collections.user_css'] = 'Arquivo CSS do utilizador';
+$_lang['setting_collections.user_css_desc'] = 'URL para o ficheiro de CSS definido pelo utilizador que pode conter estilos personalizados.';
+$_lang['setting_mgr_tree_icon_collectioncontainer'] = 'Ícone das coleções';
+$_lang['setting_mgr_tree_icon_collectioncontainer_desc'] = 'Classe CSS que será utilizada para as coleções';
+$_lang['setting_collections.renderer_image_path'] = 'Caminho da imagem a renderizar';
+$_lang['setting_collections.renderer_image_path_desc'] = 'Caminho da imagem que será utilizado para o renderizador de Imagem. O caminho será acrescentado ao base_url.';
+$_lang['setting_mgr_tree_icon_selectioncontainer'] = 'Ícone das Seleções';
+$_lang['setting_mgr_tree_icon_selectioncontainer_desc'] = 'Classe CSS que será utilizada para as seleções';
+$_lang['setting_collections.tree_tbar_collection'] = 'Barra de Ferramenta da Árvore - Coleção';
+$_lang['setting_collections.tree_tbar_collection_desc'] = 'Mostrar botão "Nova Coleção" na barra de ferramentas da Árvore';
 $_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
 $_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
 
