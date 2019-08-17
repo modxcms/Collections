@@ -6,20 +6,20 @@
  * @subpackage lexicon
  */
 
-$_lang['collections.fred.collections'] = 'Collections';
-$_lang['collections.fred.loading_collection'] = 'Loading Collection';
-$_lang['collections.fred.pagetitle'] = 'Page Title';
-$_lang['collections.fred.publish'] = 'Publish';
-$_lang['collections.fred.expires'] = 'Expires';
-$_lang['collections.fred.author'] = 'Author';
-$_lang['collections.fred.actions'] = 'Actions';
-$_lang['collections.fred.published'] = 'Published';
-$_lang['collections.fred.any'] = 'Any';
-$_lang['collections.fred.unpublished'] = 'Unpublished';
-$_lang['collections.fred.search'] = 'Search';
-$_lang['collections.fred.new_page'] = 'New Page';
-$_lang['collections.fred.cancel'] = 'Cancel';
-$_lang['collections.fred.edit'] = 'Edit';
-$_lang['collections.fred.unpublish'] = 'Unpublish';
-$_lang['collections.fred.undelete'] = 'Undelete';
-$_lang['collections.fred.delete'] = 'Delete';
+$_lang['collections.fred.collections'] = 'Coleções';
+$_lang['collections.fred.loading_collection'] = 'A Carregar Coleção';
+$_lang['collections.fred.pagetitle'] = 'Título da Página';
+$_lang['collections.fred.publish'] = 'Publicar';
+$_lang['collections.fred.expires'] = 'Expira em';
+$_lang['collections.fred.author'] = 'Autor';
+$_lang['collections.fred.actions'] = 'Ações';
+$_lang['collections.fred.published'] = 'Publicado';
+$_lang['collections.fred.any'] = 'Qualquer';
+$_lang['collections.fred.unpublished'] = 'Não Publicado';
+$_lang['collections.fred.search'] = 'Pesquisa';
+$_lang['collections.fred.new_page'] = 'Nova página';
+$_lang['collections.fred.cancel'] = 'Cancelar';
+$_lang['collections.fred.edit'] = 'Editar';
+$_lang['collections.fred.unpublish'] = 'Retirar publicação';
+$_lang['collections.fred.undelete'] = 'Recuperar';
+$_lang['collections.fred.delete'] = 'Eliminar';
