@@ -5,13 +5,13 @@
  * @package collections
  * @subpackage lexicon
  */
-$_lang['collections'] = 'Collections';
+$_lang['collections'] = 'Coleções';
 
-$_lang['collections.menu.collection_templates'] = 'Collection views';
-$_lang['collections.menu.collection_templates_desc'] = 'Define views for collection\'s children grid.';
+$_lang['collections.menu.collection_templates'] = 'Visualizações da coleção';
+$_lang['collections.menu.collection_templates_desc'] = 'Defina as visualizações para a grelha de filhos da coleção.';
 
 // Settings lexicons
-$_lang['setting_collections.mgr_date_format'] = 'Grid date format';
+$_lang['setting_collections.mgr_date_format'] = 'Formato de data da grelha';
 $_lang['setting_collections.mgr_date_format_desc'] = 'Placeholders from <a href="http://docs.sencha.com/extjs/3.4.0/#!/api/Date" target="_blank">http://docs.sencha.com/extjs/3.4.0/#!/api/Date</a> can be used here.';
 $_lang['setting_collections.mgr_time_format'] = 'Grid time format';
 $_lang['setting_collections.mgr_time_format_desc'] = 'Placeholders from <a href="http://docs.sencha.com/extjs/3.4.0/#!/api/Date" target="_blank">http://docs.sencha.com/extjs/3.4.0/#!/api/Date</a> can be used here.';
