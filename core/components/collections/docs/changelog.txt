@@ -1,5 +1,12 @@
 Changelog for Collections.
 
+Collections 3.7.0
+===================
+- Make pagination stateful
+- Add CollectionsOnResourceSort custom event
+- Add quick create button
+- Sync with crowdin
+- Fred integration
 - Don't makeURL for deleted resources & hide view button
 - Allow duplicating children
 - Fix TV search in selections
@@ -78,7 +85,7 @@ Collections 3.2.0
 - Auto set column label from TV caption or Tagger group name
 - Pass columns value as input to snippet renderer
 - Add sort type as a new Collection's view setting
-- Add content disposition as a new Collection's view setting 
+- Add content disposition as a new Collection's view setting
 - Add parent as a new Collection's view setting
 - Make TV columns searchable
 - Use modx->getTableName to get table names for Tagger tables

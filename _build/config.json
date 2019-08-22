@@ -3,7 +3,7 @@
     ,"lowCaseName": "collections"
     ,"description": "Hides resources under this container in tree. Adding grid int o the update resource panel."
     ,"author": "John Peca"
-    ,"version": "3.7.0-beta"
+    ,"version": "3.7.0-pl"
     ,"package":{
         "menus": [{
             "text": "collections.menu.collection_templates"
