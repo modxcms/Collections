@@ -43,7 +43,9 @@ class GetCollectionView extends Endpoint
 
         return $this->data([
             'template' => $childTemplate,
-            'blueprint' => $defaultBlueprint
+            'blueprint' => $defaultBlueprint,
+            'sort' => $view->sort_field,
+            'sortDir' => $view->sort_dir,
         ]);
     }
 }

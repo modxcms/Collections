@@ -45,6 +45,26 @@ export default config => (fred, Plugin, pluginTools) => {
             const tableWrapper = div();
             const tableWrapperHide = div();
 
+            let initialSort = [];
+
+            if (~['pagetitle', 'publishedon', 'published', 'pub_date', 'unpub_date', 'menuindex'].indexOf(view.sort)) {
+                let sortField = view.sort;
+
+                if (~['publishedon', 'published', 'pub_date'].indexOf(sortField)) {
+                    sortField = 'publishedon_combined';
+                }
+
+                initialSort.push({
+                    column: sortField,
+                    dir: view.sortDir
+                });
+            } else {
+                initialSort.push({
+                    column: "publishedon_combined",
+                    dir: "desc"
+                });
+            }
+
             const table = new Tabulator(tableWrapper, {
                 ajaxURL: config.endpoint,
                 ajaxParams: {
@@ -64,6 +84,7 @@ export default config => (fred, Plugin, pluginTools) => {
                 ajaxFiltering: true,
                 responsiveLayout: "hide",
                 layout: "fitColumns",
+                initialSort,
                 columns: [
                     {
                         title: pluginTools.fredConfig.lng("collections.fred.pagetitle"),
@@ -96,6 +117,14 @@ export default config => (fred, Plugin, pluginTools) => {
                         width: 180,
                         responsive: 3,
                         widthShrink: 1
+                    },
+                    {
+                        title: pluginTools.fredConfig.lng("collections.fred.menuindex"),
+                        field: "menuindex",
+                        width: 180,
+                        responsive: 3,
+                        widthShrink: 1,
+                        visible: false
                     },
                     {
                         title: pluginTools.fredConfig.lng("collections.fred.actions"),

@@ -32,6 +32,12 @@ class GetCollection extends Endpoint
             return $this->failure('No Fred templates');
         }
 
+        /** @var \modResource $parentObject */
+        $parentObject = $this->modx->getObject('modResource', $collection);
+
+        /** @var \CollectionTemplate $template */
+        $template = $this->collections->getCollectionsView($parentObject);
+
         $c = $this->modx->newQuery('modResource');
         $c->where([
             'parent' => $collection,
@@ -70,13 +76,32 @@ class GetCollection extends Endpoint
         ]);
         $c->select($this->modx->getSelectColumns('modUserProfile', 'Profile', '', ['fullname']));
 
+        $gridSort = [];
+        $defaultDir = 'desc';
+
         if (empty($sorters)) {
-            $c->sortby('menuindex');
+            $gridSort[] = 'publishedon_combined';
+        } else {
+            foreach ($sorters as $sorter) {
+                $gridSort[] = $sorter['field'];
+                $defaultDir = $sorter['dir'];
+            }
+        }
+
+        $gridSort = array_map('strtolower', $gridSort);
+
+        $c = $this->permanentSort($c, $gridSort, $template->permanent_sort_before, $defaultDir);
+
+        if (empty($sorters)) {
+            $c->sortby('publishedon_combined', 'desc');
         } else {
             foreach ($sorters as $sorter) {
                 $c->sortby($sorter['field'], $sorter['dir']);
             }
         }
+
+        $c = $this->permanentSort($c, $gridSort, $template->permanent_sort_after, $defaultDir);
+
         /** @var \modResource[] $resources */
         $resources = $this->modx->getIterator('modResource', $c);
         $data = [];
@@ -90,6 +115,7 @@ class GetCollection extends Endpoint
             $data[] = [
                 'id' => $resource->get('id'),
                 'pagetitle' => $resource->get('pagetitle'),
+                'menuindex' => $resource->get('menuindex'),
                 'publishedon_combined' => $publishedonCombined,
                 'unpub_date' => $unpublishOn,
                 'published' => $resource->get('published'),
@@ -127,5 +153,35 @@ class GetCollection extends Endpoint
             $previewUrl = $this->modx->makeUrl($resource->get('id'), $resource->get('context_key'), $sessionEnabled, $schema, array('xhtml_urls' => false));
         }
         return $previewUrl;
+    }
+
+    protected function permanentSort(\xPDOQuery $c, $gridSort, $sortOptions, $defaultDir)
+    {
+        $sorts = explode(',', $sortOptions);
+        foreach ($sorts as $sort) {
+            $sort = explode('=', $sort);
+            if (isset($sort[1])) {
+                if (in_array($sort[0], ['publishedon', 'published', 'pub_date'])) {
+                    $sort[0] = 'publishedon_combined';
+                }
+                if (($sort[0] != '*') && (!in_array(strtolower($sort[0]), $gridSort))) continue;
+            }
+
+            $options = (isset($sort[1])) ? $sort[1] : $sort[0];
+            $options = explode(':', $options);
+            if (empty($options[0])) continue;
+
+            $options['field'] = $options[0];
+            $options['dir'] = empty($options[1]) ? $defaultDir : $options[1];
+            $options['type'] = empty($options[2]) ? null : $options[2];
+
+            if (empty($options['type'])) {
+                $c->sortby('`' . $options['field'] . '`', $options['dir']);
+            } else {
+                $c->sortby('CAST(`' . $options['field'] . '` as ' . $options['type'] . ')', $options['dir']);
+            }
+        }
+
+        return $c;
     }
 }
