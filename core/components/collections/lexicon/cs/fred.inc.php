@@ -23,3 +23,4 @@ $_lang['collections.fred.edit'] = 'Edit';
 $_lang['collections.fred.unpublish'] = 'Unpublish';
 $_lang['collections.fred.undelete'] = 'Undelete';
 $_lang['collections.fred.delete'] = 'Delete';
+$_lang['collections.fred.menuindex'] = 'Menu Index';
