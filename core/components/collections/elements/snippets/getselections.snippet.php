@@ -54,7 +54,8 @@ if ($sortBy == '') {
 }
 
 $linkedResourcesQuery->select(array(
-    'resource' => 'DISTINCT(resource)'
+    'resource' => 'DISTINCT(resource)',
+    'menuindex' => 'menuindex'
 ));
 
 $linkedResourcesQuery->prepare();
