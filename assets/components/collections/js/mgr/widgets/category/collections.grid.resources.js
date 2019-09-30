@@ -487,7 +487,9 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         },this);
     }
 
-    ,getSetting: function(value, def = null) {
+    ,getSetting: function(value, def) {
+        if (def === undefined) def = null;
+
         if (value === null) return def;
 
         return value;
