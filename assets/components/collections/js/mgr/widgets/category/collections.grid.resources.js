@@ -148,10 +148,10 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         var wrapRenderer = function(renderer) {
             if (typeof renderer === 'string') {
                 renderer = eval(renderer);
+                renderer = renderer.bind(this);
             }
 
             var newRenderer = function(value, metaData, record, rowIndex, colIndex, store) {
-                record.data.self = this;
                 return renderer(value, metaData, record, rowIndex, colIndex, store);
             };
             return newRenderer.bind(this);

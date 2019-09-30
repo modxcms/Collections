@@ -53,7 +53,7 @@ var pagetitleWithIcons = new Ext.XTemplate('<tpl for="."><div class="collections
     +'<li><a href="javascript:void(0);" class="controlBtn {className}" title="{text}">'
     +'<i class="icon icon-fw icon {[ iconClass[values.key] ]}" data-id="{parent.id}" data-action="{values.key}"></i>{[ iconClass[values.key] ? "":values.text ]}'
     +'</a></li>'
-    +'</tpl>'    
+    +'</tpl>'
     +'</tpl>'
     +'</ul>'
     +'</div></tpl>',{
@@ -80,7 +80,9 @@ var icons = new Ext.XTemplate('<tpl for=".">'
 });
 
 collections.renderer.buttons = function(value, metaData, record, rowIndex, colIndex, store) {
-    return icons.apply(record.data);
+    var data = JSON.parse(JSON.stringify(record.data));
+    data.self = this;
+    return icons.apply(data);
 };
 
 collections.renderer.qtip = function(value, metaData, record, rowIndex, colIndex, store) {
@@ -89,19 +91,27 @@ collections.renderer.qtip = function(value, metaData, record, rowIndex, colIndex
 };
 
 collections.renderer.pagetitleWithButtons = function(value, metaData, record, rowIndex, colIndex, store) {
-    return pagetitleWithButtons.apply(record.data);
+    var data = JSON.parse(JSON.stringify(record.data));
+    data.self = this;
+    return pagetitleWithButtons.apply(data);
 };
 
 collections.renderer.pagetitleWithIcons = function(value, metaData, record, rowIndex, colIndex, store) {
-    return pagetitleWithIcons.apply(record.data);
+    var data = JSON.parse(JSON.stringify(record.data));
+    data.self = this;
+    return pagetitleWithIcons.apply(data);
 };
 
 collections.renderer.pagetitle = function(value, metaData, record, rowIndex, colIndex, store) {
-    return pagetitle.apply(record.data);
+    var data = JSON.parse(JSON.stringify(record.data));
+    data.self = this;
+    return pagetitle.apply(data);
 };
 
 collections.renderer.pagetitleLink = function(value, metaData, record, rowIndex, colIndex, store) {
-    return pagetitleLink.apply(record.data);
+    var data = JSON.parse(JSON.stringify(record.data));
+    data.self = this;
+    return pagetitleLink.apply(data);
 };
 
 collections.renderer.datetimeTwoLines = function(value, metaData, record, rowIndex, colIndex, store) {
