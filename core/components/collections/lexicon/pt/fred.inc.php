@@ -23,4 +23,4 @@ $_lang['collections.fred.edit'] = 'Editar';
 $_lang['collections.fred.unpublish'] = 'Retirar publicação';
 $_lang['collections.fred.undelete'] = 'Recuperar';
 $_lang['collections.fred.delete'] = 'Eliminar';
-$_lang['collections.fred.menuindex'] = 'Menu Index';
+$_lang['collections.fred.menuindex'] = 'Disposição no Menu';
