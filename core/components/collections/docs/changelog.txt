@@ -1,5 +1,10 @@
 Changelog for Collections.
 
+Collections 3.7.1
+===================
+- Fix lexicon typo
+- Fix editing from grid
+
 Collections 3.7.0
 ===================
 - Make pagination stateful
