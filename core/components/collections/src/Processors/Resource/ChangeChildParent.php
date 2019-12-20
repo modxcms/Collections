@@ -1,5 +1,6 @@
 <?php
 namespace Collections\Processors\Resource;
+use Collections\Model\CollectionContainer;
 use MODX\Revolution\modResource;
 use MODX\Revolution\Processors\Model\UpdateProcessor;
 
@@ -25,7 +26,7 @@ class ChangeChildParent extends UpdateProcessor
     {
         /** @var modResource $parent */
         $parent = $this->modx->getObject(modResource::class, $this->object->parent);
-        if ($parent && ($parent->class_key == 'CollectionContainer')) {
+        if ($parent && ($parent->class_key == CollectionContainer::class)) {
             $this->object->set('show_in_tree', 0);
         } else {
             $this->object->set('show_in_tree', 1);

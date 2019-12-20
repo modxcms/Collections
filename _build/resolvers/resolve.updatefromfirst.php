@@ -1,5 +1,6 @@
 <?php
 
+use Collections\Model\CollectionContainer;
 use Collections\Model\CollectionTemplate;
 use MODX\Revolution\modSystemSetting;
 use MODX\Revolution\Transport\modTransportPackage;
@@ -65,9 +66,9 @@ if ($object->xpdo) {
 
             if ($oldPackage && $oldPackage->compareVersion('3.4.0-pl', '>')) {
                 /** @var modResource[] $collections */
-                $collections = $modx->getIterator(modResource::class, ['class_key' => 'CollectionContainer']);
+                $collections = $modx->getIterator(modResource::class, ['class_key' => CollectionContainer::class]);
                 foreach ($collections as $collection) {
-                    $modx->updateCollection(modResource::class, ['show_in_tree' => 0], ['parent' => $collection->id, 'class_key:!=' => 'CollectionContainer']);
+                    $modx->updateCollection(modResource::class, ['show_in_tree' => 0], ['parent' => $collection->id, 'class_key:!=' => CollectionContainer::class]);
                 }
 
                 /** @var CollectionTemplate[] $views */

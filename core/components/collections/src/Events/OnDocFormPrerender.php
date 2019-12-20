@@ -1,8 +1,14 @@
 <?php
 namespace Collections\Events;
 
+use Collections\Model\CollectionContainer;
+use Collections\Model\CollectionSelection;
 use Collections\Model\CollectionTemplate;
+use MODX\Revolution\modDocument;
 use MODX\Revolution\modResource;
+use MODX\Revolution\modStaticResource;
+use MODX\Revolution\modSymLink;
+use MODX\Revolution\modWebLink;
 
 class OnDocFormPrerender extends Event
 {
@@ -24,17 +30,17 @@ class OnDocFormPrerender extends Event
             if (isset($_GET['parent'])) {
                 $parent = intval($_GET['parent']);
 
-                $parent = $this->modx->getObject('modResource', $parent);
+                $parent = $this->modx->getObject(modResource::class, $parent);
                 if ($parent) {
-                    $inject = ($parent->class_key == 'CollectionContainer');
+                    $inject = ($parent->class_key == CollectionContainer::class);
                 }
             }
         } else {
-            $inject = ($parent->class_key == 'CollectionContainer' && $resource->class_key != 'CollectionContainer');
+            $inject = ($parent->class_key == CollectionContainer::class && $resource->class_key != CollectionContainer::class);
         }
 
         if (!$inject && isset($_GET['selection']) && intval($_GET['selection'] > 0)) {
-            $selection = $this->modx->getCount('CollectionSelection', ['resource' => $resource->id]);
+            $selection = $this->modx->getCount(CollectionSelection::class, ['resource' => $resource->id]);
             if ($selection > 0) $inject = true;
         }
 
@@ -47,7 +53,7 @@ class OnDocFormPrerender extends Event
         if (!$inject && $parent) {
             $grandParent = $parent->Parent;
             while ($grandParent) {
-                if ($grandParent->class_key == 'CollectionContainer') {
+                if ($grandParent->class_key == CollectionContainer::class) {
                     $collectionGet = $grandParent->id;
                     $inject = true;
                     break;
@@ -78,19 +84,19 @@ class OnDocFormPrerender extends Event
                 }
             }
 
-            if ($classKey == '') $classKey = 'modDocument';
+            if ($classKey == '') $classKey = modDocument::class;
 
             switch ($classKey) {
-                case 'modDocument':
+                case modDocument::class:
                     $classKey = 'Resource';
                     break;
-                case 'modStaticResource':
+                case modStaticResource::class:
                     $classKey = 'Static';
                     break;
-                case 'modSymLink':
+                case modSymLink::class:
                     $classKey = 'SymLink';
                     break;
-                case 'modWebLink':
+                case modWebLink::class:
                     $classKey = 'WebLink';
                     break;
                 default:

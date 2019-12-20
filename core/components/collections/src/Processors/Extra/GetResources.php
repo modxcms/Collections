@@ -3,6 +3,7 @@ namespace Collections\Processors\Extra;
 
 use Collections\Model\CollectionSelection;
 use Collections\Model\CollectionTemplate;
+use Collections\Model\SelectionContainer;
 use MODX\Revolution\modResource;
 use MODX\Revolution\Processors\Model\GetListProcessor;
 use xPDO\Om\xPDOObject;
@@ -39,7 +40,7 @@ class GetResources extends GetListProcessor
         $selection = intval($this->getProperty('selection', 0));
         if ($selection > 0) {
             $selection = $this->modx->getObject(modResource::class, $selection);
-            if ($selection && ($selection->class_key == 'SelectionContainer')) {
+            if ($selection && ($selection->class_key == SelectionContainer::class)) {
                 $this->selection = $selection;
                 $this->collectionTemplate = $this->collections->getCollectionsView($this->selection);
             }

@@ -1,6 +1,7 @@
 <?php
 namespace Collections\Events;
 
+use Collections\Model\CollectionContainer;
 use Collections\Model\CollectionTemplate;
 use MODX\Revolution\modResource;
 
@@ -15,7 +16,7 @@ class OnDocFormRender extends Event
         /** @var modResource $parent */
         $parent = $this->scriptProperties['resource']->Parent;
 
-        if (empty($parent) || $parent->class_key != 'CollectionContainer') {
+        if (empty($parent) || $parent->class_key != CollectionContainer::class) {
             return;
         }
 

@@ -20,7 +20,7 @@ class SelectionContainer extends CollectionContainer
     function __construct(xPDO & $xpdo)
     {
         parent:: __construct($xpdo);
-        $this->set('class_key', 'SelectionContainer');
+        $this->set('class_key', SelectionContainer::class);
     }
 
     public static function getControllerPath(xPDO &$modx)

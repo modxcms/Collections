@@ -1,5 +1,6 @@
 <?php
 namespace Collections\Processors\Resource;
+use Collections\Model\CollectionContainer;
 use Collections\Model\CollectionTemplate;
 use Collections\Model\CollectionTemplateColumn;
 use Collections\Utils;
@@ -365,7 +366,7 @@ class GetList extends GetListProcessor
         }
 
         $c->where([
-            'class_key:!=' => 'CollectionContainer',
+            'class_key:!=' => CollectionContainer::class,
 //            "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
         ]);
 

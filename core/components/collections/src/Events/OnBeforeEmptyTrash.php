@@ -1,6 +1,8 @@
 <?php
 namespace Collections\Events;
 
+use Collections\Model\CollectionContainer;
+
 class OnBeforeEmptyTrash extends Event
 {
 
@@ -23,7 +25,7 @@ class OnBeforeEmptyTrash extends Event
             $grandParent = $parent->Parent;
             if (!$grandParent) return;
 
-            if (($grandParent->class_key == 'CollectionContainer') && ($parent->class_key != 'CollectionContainer')) {
+            if (($grandParent->class_key == CollectionContainer::class) && ($parent->class_key != CollectionContainer::class)) {
                 $parent->set('show_in_tree', 0);
                 $parent->save();
             }

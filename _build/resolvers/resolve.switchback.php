@@ -1,5 +1,9 @@
 <?php
 
+use Collections\Model\CollectionContainer;
+use Collections\Model\SelectionContainer;
+use MODX\Revolution\modDocument;
+
 if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
@@ -10,7 +14,7 @@ if ($object->xpdo) {
             $modx =& $object->xpdo;
 
             $c = $modx->newQuery(\MODX\Revolution\modResource::class);
-            $c->where(['class_key' => 'CollectionContainer']);
+            $c->where(['class_key' => CollectionContainer::class]);
 
             /** @var modResource $collections[] */
             $collections = $modx->getCollection(\MODX\Revolution\modResource::class, $c);
@@ -21,18 +25,18 @@ if ($object->xpdo) {
                     $child->save();
                 }
 
-                $collection->set('class_key', 'modDocument');
+                $collection->set('class_key', modDocument::class);
                 $collection->save();
             }
 
             $c = $modx->newQuery(\MODX\Revolution\modResource::class);
-            $c->where(['class_key' => 'SelectionContainer']);
+            $c->where(['class_key' => SelectionContainer::class]);
 
             /** @var modResource[] $selections */
             $selections = $modx->getCollection(\MODX\Revolution\modResource::class, $c);
             foreach ($selections as $selection) {
                 $selection->set('hide_children_in_tree', 0);
-                $selection->set('class_key', 'modDocument');
+                $selection->set('class_key', modDocument::class);
                 $selection->save();
             }
 

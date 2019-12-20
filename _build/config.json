@@ -80,6 +80,7 @@
         "tables": ["CollectionSetting", "CollectionTemplate", "CollectionTemplateColumn", "CollectionResourceTemplate", "CollectionSelection"]
     }
     ,"build": {
+        "schemaPath": "/core/components/collections/schema/collections.mysql.schema.xml",
         "resolver": {
             "before": ["resolve.customevents.php", "resolve.switchback.php"]
             ,"after": ["resolve.synctables.php", "resolve.updatefromfirst.php", "resolve.defaulttemplate.php", "resolve.fixselections.php", "resolve.fixsystemsettings.php"]

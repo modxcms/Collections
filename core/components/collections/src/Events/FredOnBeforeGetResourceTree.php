@@ -1,6 +1,9 @@
 <?php
 namespace Collections\Events;
 
+use Collections\Model\CollectionContainer;
+use MODX\Revolution\modResource;
+
 class FredOnBeforeGetResourceTree extends Event
 {
     /** @var \Fred */
@@ -34,11 +37,11 @@ class FredOnBeforeGetResourceTree extends Event
         $params = $this->modx->getOption('params', $this->scriptProperties);
         if (empty($params)) return false;
 
-        $query = $this->modx->newQuery('modResource', [
-            'class_key' => 'CollectionContainer'
+        $query = $this->modx->newQuery(modResource::class, [
+            'class_key' => CollectionContainer::class
         ]);
 
-        $query->select($this->modx->getSelectColumns('modResource', 'modResource', '', ['id']));
+        $query->select($this->modx->getSelectColumns(modResource::class, 'modResource', '', ['id']));
 
         $query->prepare();
         $query->stmt->execute();

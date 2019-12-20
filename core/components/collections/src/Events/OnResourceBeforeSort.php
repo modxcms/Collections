@@ -2,6 +2,8 @@
 
 namespace Collections\Events;
 
+use Collections\Model\CollectionContainer;
+
 class OnResourceBeforeSort extends Event
 {
 
@@ -32,7 +34,7 @@ class OnResourceBeforeSort extends Event
 //                $this->handleOriginalParent($originalParent);
 //            }
 
-            if ($resource->class_key == 'CollectionContainer') {
+            if ($resource->class_key == CollectionContainer::class) {
                 $resource->set('show_in_tree', 1);
             }
 
@@ -49,15 +51,15 @@ class OnResourceBeforeSort extends Event
     protected function handleParent($parent, $resource, $originalParent)
     {
         if ($parent) {
-            if ($parent->class_key == 'CollectionContainer') {
+            if ($parent->class_key == CollectionContainer::class) {
                 $resource->set('show_in_tree', 0);
             } else {
-                if (($originalParent->class_key == 'CollectionContainer') && ($parent->class_key != 'CollectionContainer')) {
+                if (($originalParent->class_key == CollectionContainer::class) && ($parent->class_key != CollectionContainer::class)) {
                     $resource->set('show_in_tree', 1);
                 }
             }
         } else {
-            if ($originalParent && ($originalParent->class_key == 'CollectionContainer')) {
+            if ($originalParent && ($originalParent->class_key == CollectionContainer::class)) {
                 $resource->set('show_in_tree', 1);
             }
         }
@@ -70,7 +72,7 @@ class OnResourceBeforeSort extends Event
     {
         $originalGreatParent = $originalParent->Parent;
 
-        if ($originalGreatParent && ($originalGreatParent->class_key == 'CollectionContainer') && ($originalParent->hasChildren() == 0)) {
+        if ($originalGreatParent && ($originalGreatParent->class_key == CollectionContainer::class) && ($originalParent->hasChildren() == 0)) {
             $originalParent->set('show_in_tree', 0);
             $originalParent->save();
         }

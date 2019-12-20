@@ -2,6 +2,7 @@
 
 namespace Collections\Endpoint\Ajax;
 
+use Collections\Model\CollectionContainer;
 use MODX\Revolution\modResource;
 
 class GetCollections extends Endpoint
@@ -14,7 +15,7 @@ class GetCollections extends Endpoint
 
         $c = $this->modx->newQuery(modResource::class);
         $c->where([
-            'class_key' => 'CollectionContainer',
+            'class_key' => CollectionContainer::class,
             'context_key' => $context
         ]);
         $c->sortby('pagetitle');

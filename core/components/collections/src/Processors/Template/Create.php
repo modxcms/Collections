@@ -1,6 +1,7 @@
 <?php
 namespace Collections\Processors\Template;
 
+use Collections\Model\CollectionContainer;
 use Collections\Model\CollectionResourceTemplate;
 use Collections\Model\CollectionTemplate;
 use Collections\Model\CollectionTemplateColumn;
@@ -245,7 +246,7 @@ class Create extends CreateProcessor
 
         $resourcesQuery = $this->modx->newQuery(modResource::class);
         $resourcesQuery->where([
-            'class_key' => 'CollectionContainer'
+            'class_key' => CollectionContainer::class
         ]);
 
         if (!empty($templates)) {
@@ -296,7 +297,7 @@ class Create extends CreateProcessor
         //@TODO: Look for CollectionSetting if there is not an override for Selection
         $resourcesQuery = $this->modx->newQuery(modResource::class);
         $resourcesQuery->where([
-            'class_key' => 'CollectionContainer'
+            'class_key' => CollectionContainer::class
         ]);
 
         if (!empty($templates)) {

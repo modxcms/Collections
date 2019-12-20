@@ -1,34 +1,39 @@
 <?php
 namespace Collections\Events;
 
+use Collections\Model\CollectionContainer;
+use Collections\Model\CollectionSelection;
+use Collections\Model\SelectionContainer;
+use MODX\Revolution\modResource;
+
 class OnBeforeDocFormSave extends Event
 {
 
     public function run()
     {
-        /** @var \modResource $resource */
+        /** @var modResource $resource */
         $resource = $this->scriptProperties['resource'];
 
-        /** @var \modResource $parent */
+        /** @var modResource $parent */
         $parent = $resource->Parent;
 
-        if ($parent && ($parent->class_key == 'CollectionContainer')) {
+        if ($parent && ($parent->class_key == CollectionContainer::class)) {
             $this->handleParent($resource);
         }
 
-        if ($resource->class_key == 'CollectionContainer') {
+        if ($resource->class_key == CollectionContainer::class) {
             $resource->set('show_in_tree', 1);
         }
 
-        /** @var \modResource $original */
-        $original = $this->modx->getObject('modResource', $resource->id);
+        /** @var modResource $original */
+        $original = $this->modx->getObject(modResource::class, $resource->id);
         if ($original) {
-            if ($resource->class_key == 'SelectionContainer' && $original->class_key != 'SelectionContainer') {
+            if ($resource->class_key == SelectionContainer::class && $original->class_key != SelectionContainer::class) {
                 $this->revealChildrenInTree($resource);
             }
 
-            if ($resource->class_key != 'SelectionContainer' && $original->class_key == 'SelectionContainer') {
-                $linkedResources = $this->modx->getCount('CollectionSelection', ['collection' => $resource->id]);
+            if ($resource->class_key != SelectionContainer::class && $original->class_key == SelectionContainer::class) {
+                $linkedResources = $this->modx->getCount(CollectionSelection::class, ['collection' => $resource->id]);
                 if ($linkedResources > 0) {
                     $this->modx->event->_output = $this->modx->lexicon('collections.err.cant_switch_from_selection_linked');
 
@@ -42,7 +47,7 @@ class OnBeforeDocFormSave extends Event
     }
 
     /**
-     * @param \modResource $resource
+     * @param modResource $resource
      */
     protected function handleParent($resource)
     {
@@ -51,7 +56,7 @@ class OnBeforeDocFormSave extends Event
 
     protected function revealChildrenInTree($resource)
     {
-        /** @var \modResource[] $children */
+        /** @var modResource[] $children */
         $children = $resource->Children;
 
         foreach ($children as $child) {
@@ -61,13 +66,13 @@ class OnBeforeDocFormSave extends Event
     }
 
     /**
-     * @param \modResource $original
-     * @param \modResource $parent
-     * @param \modResource $resource
+     * @param modResource $original
+     * @param modResource $parent
+     * @param modResource $resource
      */
     protected function handleOriginal($original, $parent, $resource)
     {
-        /** @var \modResource $originalParent */
+        /** @var modResource $originalParent */
         $originalParent = $original->Parent;
 
         if ($originalParent && (!$parent || ($originalParent->id != $parent->id))) {
@@ -81,53 +86,53 @@ class OnBeforeDocFormSave extends Event
     }
 
     /**
-     * @param \modResource $parent
-     * @param \modResource $resource
-     * @param \modResource $originalParent
+     * @param modResource $parent
+     * @param modResource $resource
+     * @param modResource $originalParent
      */
     protected function handleOriginalParent($parent, $resource, $originalParent)
     {
-        if ($originalParent->class_key == 'CollectionContainer') {
-            if ($parent->class_key != 'CollectionContainer') {
+        if ($originalParent->class_key == CollectionContainer::class) {
+            if ($parent->class_key != CollectionContainer::class) {
                 $resource->set('show_in_tree', 1);
             }
         } else {
-            /** @var \modResource $originalGreatParent */
+            /** @var modResource $originalGreatParent */
             $originalGreatParent = $originalParent->Parent;
 
-            if ($originalGreatParent && ($originalGreatParent->class_key == 'CollectionContainer')) {
+            if ($originalGreatParent && ($originalGreatParent->class_key == CollectionContainer::class)) {
                 $resource->set('show_in_tree', 1);
             }
         }
     }
 
     /**
-     * @param \modResource $original
-     * @param \modResource $resource
+     * @param modResource $original
+     * @param modResource $resource
      */
     protected function switchResourceType($original, $resource)
     {
-        if (($original->class_key != 'CollectionContainer') && ($resource->class_key == 'CollectionContainer')) {
+        if (($original->class_key != CollectionContainer::class) && ($resource->class_key == CollectionContainer::class)) {
             $this->switchToCollections($resource);
         }
 
-        if (($original->class_key == 'CollectionContainer') && ($resource->class_key != 'CollectionContainer')) {
+        if (($original->class_key == CollectionContainer::class) && ($resource->class_key != CollectionContainer::class)) {
             $this->revealChildrenInTree($resource);
         }
     }
 
     /**
-     * @param \modResource $resource
+     * @param modResource $resource
      */
     protected function switchToCollections($resource)
     {
-        /** @var \modResource[] $children */
+        /** @var modResource[] $children */
         $children = $resource->Children;
 
         foreach ($children as $child) {
             $child->set('show_in_tree', 0);
 
-            if ($child->class_key == 'CollectionContainer') {
+            if ($child->class_key == CollectionContainer::class) {
                 $child->set('show_in_tree', 1);
             }
 
