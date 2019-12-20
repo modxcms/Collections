@@ -17,18 +17,16 @@ if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
-            $modelPath = $modx->getOption('collections.core_path', null, $modx->getOption('core_path') . 'components/collections/') . 'model/';
-            
-            $modx->addPackage('collections', $modelPath, null);
-
+            $srcPath = $modx->getOption('collections.core_path', null, $modx->getOption('core_path') . 'components/collections/') . 'src/';
+            $modx->addPackage('Collections\Model', $srcPath, null, 'Collections\\');
 
             $manager = $modx->getManager();
 
-            $manager->createObjectContainer('CollectionSetting');
-            $manager->createObjectContainer('CollectionTemplate');
-            $manager->createObjectContainer('CollectionTemplateColumn');
-            $manager->createObjectContainer('CollectionResourceTemplate');
-            $manager->createObjectContainer('CollectionSelection');
+            $manager->createObjectContainer(\Collections\Model\CollectionSetting::class);
+            $manager->createObjectContainer(\Collections\Model\CollectionTemplate::class);
+            $manager->createObjectContainer(\Collections\Model\CollectionTemplateColumn::class);
+            $manager->createObjectContainer(\Collections\Model\CollectionResourceTemplate::class);
+            $manager->createObjectContainer(\Collections\Model\CollectionSelection::class);
 
             break;
     }

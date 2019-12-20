@@ -1,4 +1,8 @@
 <?php
+
+use Collections\Model\CollectionTemplate;
+use Collections\Utils;
+
 require_once dirname(dirname(dirname(__FILE__))) . '/index.class.php';
 
 /**
@@ -11,28 +15,28 @@ class CollectionsTemplateExportManagerController extends CollectionsBaseManagerC
 {
     public function getLanguageTopics()
     {
-        return array('collections:default');
+        return ['collections:default'];
     }
 
-    public function process(array $scriptProperties = array())
+    public function process(array $scriptProperties = [])
     {
         $templateIDs = $_GET['ids'];
-        $templateIDs = $this->collections->explodeAndClean($templateIDs);
+        $templateIDs = Utils::explodeAndClean($templateIDs);
 
         if (empty($templateIDs)) {
             die($this->modx->lexicon('collections.err.template_ns'));
         }
 
         /** @var CollectionTemplate[] $templates */
-        $templates = $this->modx->getIterator('CollectionTemplate', array('id:IN' => $templateIDs));
+        $templates = $this->modx->getIterator(CollectionTemplate::class, ['id:IN' => $templateIDs]);
 
-        $fileContent = array();
+        $fileContent = [];
         $fileName = '';
 
         foreach ($templates as $template) {
             $export = $template->toArray();
             unset($export['id'], $export['global_template']);
-            $export['columns'] = array();
+            $export['columns'] = [];
 
             foreach ($template->Columns as $column) {
                 $exportColumn = $column->toArray();

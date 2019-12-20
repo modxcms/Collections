@@ -4,9 +4,9 @@ collections.panel.Template = function(config) {
         border: false
         ,id: 'collections-panel-template'
         ,cls: 'container'
-        ,url: collections.config.connectorUrl
+        ,url: MODx.config.connector_url
         ,baseParams: {
-            action: 'mgr/template/create'
+            action: 'Collections\\Processors\\Template\\Create'
         }
         ,useLoadingMask: true
         ,items: this.getItems(config)
@@ -30,7 +30,7 @@ Ext.extend(collections.panel.Template, MODx.FormPanel,{
             MODx.Ajax.request({
                 url: this.config.url
                 ,params: {
-                    action: 'mgr/template/get'
+                    action: 'Collections\\Processors\\Template\\Get'
                     ,id: MODx.request.id
                 },
                 listeners: {

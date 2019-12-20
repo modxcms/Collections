@@ -9,7 +9,7 @@ require_once dirname(dirname(dirname(__FILE__))) . '/index.class.php';
  */
 class CollectionsTemplateCreateManagerController extends CollectionsBaseManagerController {
     public function getLanguageTopics() {
-        return array('collections:default');
+        return ['collections:default'];
     }
 
     /**
@@ -21,7 +21,7 @@ class CollectionsTemplateCreateManagerController extends CollectionsBaseManagerC
         return $this->modx->lexicon('collections.template.page_title');
     }
 
-    public function process(array $scriptProperties = array()) {}
+    public function process(array $scriptProperties = []) {}
 
     public function loadCustomCssJs() {
         $this->addLastJavascript($this->collections->getOption('jsUrl').'mgr/extra/collections.combo.js');

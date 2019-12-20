@@ -25,19 +25,11 @@ collections.combo.Template = function(config, getStore) {
     config = config || {};
 
     if (!config.clearBtnCls) {
-        if (MODx.config.connector_url) {
-            config.clearBtnCls = 'x-form-trigger';
-        } else {
-            config.clearBtnCls = null;
-        }
+        config.clearBtnCls = 'x-form-trigger';
     }
 
     if (!config.expandBtnCls) {
-        if (MODx.config.connector_url) {
-            config.expandBtnCls = 'x-form-trigger';
-        } else {
-            config.expandBtnCls = null;
-        }
+        config.expandBtnCls = 'x-form-trigger';
     }
 
     Ext.applyIf(config,{
@@ -52,9 +44,9 @@ collections.combo.Template = function(config, getStore) {
         ,editable: true
         ,forceSelection: false
         ,pageSize: 20
-        ,url: collections.config.connectorUrl
+        ,url: MODx.config.connector_url
         ,baseParams: {
-            action: 'mgr/extra/gettemplates'
+            action: 'Collections\\Processors\\Extra\\GetTemplates'
             ,template: (MODx.request.id != undefined) ? MODx.request.id : 0
             ,addEmpty: 1
         }
@@ -111,9 +103,9 @@ collections.combo.CollectionsTemplate = function(config) {
         ,valueField: 'id'
         ,fields: ['name','id']
         ,pageSize: 20
-        ,url: collections.config.connectorUrl
+        ,url: MODx.config.connector_url
         ,baseParams:{
-            action: 'mgr/template/getlist'
+            action: 'Collections\\Processors\\Template\\GetList'
         }
     });
     collections.combo.CollectionsTemplate.superclass.constructor.call(this,config);
@@ -130,9 +122,9 @@ collections.combo.SingleTemplate = function(config) {
         ,valueField: 'id'
         ,fields: ['templatename','id']
         ,pageSize: 20
-        ,url: collections.config.connectorUrl
+        ,url: MODx.config.connector_url
         ,baseParams:{
-            action: 'mgr/extra/gettemplates'
+            action: 'Collections\\Processors\\Extra\\GetTemplates'
             ,addEmpty: config.addEmpty | 0
         }
     });
@@ -184,9 +176,9 @@ collections.combo.Resource = function(config) {
         ,typeAhead: false
         ,forceSelection: true
         ,selectOnFocus: false
-        ,url: collections.config.connectorUrl
+        ,url: MODx.config.connector_url
         ,baseParams:{
-            action: 'mgr/extra/getresources'
+            action: 'Collections\\Processors\\Extra\\GetResources'
         }
     });
     collections.combo.Resource.superclass.constructor.call(this,config);
@@ -260,9 +252,9 @@ collections.combo.ContentType = function(config) {
         ,editable: false
         ,allowBlank: true
         ,pageSize: 20
-        ,url: collections.config.connectorUrl
+        ,url: MODx.config.connector_url
         ,baseParams: {
-            action: 'mgr/extra/getcontenttypes'
+            action: 'Collections\\Processors\\Extra\\GetContentTypes'
         }
     });
     collections.combo.ContentType.superclass.constructor.call(this,config);
@@ -340,9 +332,9 @@ collections.combo.FredBlueprints = function(config) {
         typeAhead: false,
         forceSelection: true,
         selectOnFocus: false,
-        url: collections.config.connectorUrl,
+        url: MODx.config.connector_url,
         baseParams:{
-            action: 'mgr/extra/fredgetblueprints',
+            action: 'Collections\\Processors\\Extra\\FredGetBlueprints',
             addNone: config.addNone || 0
         },
         tpl: new Ext.XTemplate('<tpl for="."><div class="x-combo-list-item"><span style="font-weight: bold">{name:htmlEncode}</span><br />',

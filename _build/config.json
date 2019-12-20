@@ -79,7 +79,6 @@
     ,"database":{
         "tables": ["CollectionSetting", "CollectionTemplate", "CollectionTemplateColumn", "CollectionResourceTemplate", "CollectionSelection"]
     }
-    ,"extensionPackage": {}
     ,"build": {
         "resolver": {
             "before": ["resolve.customevents.php", "resolve.switchback.php"]

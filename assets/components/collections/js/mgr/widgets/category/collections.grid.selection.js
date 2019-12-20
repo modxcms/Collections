@@ -2,11 +2,11 @@ collections.grid.ContainerSelection = function(config) {
     config = config || {};
     this.sm = new Ext.grid.CheckboxSelectionModel();
     Ext.applyIf(config,{
-        save_action: 'mgr/selection/updatefromgrid'
+        save_action: 'Collections\\Processors\\Selection\\UpdateFromGrid'
         ,ddGroup: 'collectionChildDDGroup'
         ,enableDragDrop: false
         ,baseParams: {
-            action: 'mgr/selection/getlist'
+            action: 'Collections\\Processors\\Selection\\GetList'
             ,parent: MODx.request.id
             ,sort: collections.template.sort.field
             ,dir: collections.template.sort.dir
@@ -145,7 +145,7 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
 
     ,clearFilter: function() {
         this.getStore().baseParams = {
-            action: 'mgr/selection/getList'
+            action: 'Collections\\Processors\\Selection\\GetList'
             ,'parent': MODx.request.id
             ,sort: collections.template.sort.field
             ,dir: collections.template.sort.dir
@@ -186,7 +186,7 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
             ,text: _('selections.delete_confirm')
             ,url: this.config.url
             ,params: {
-                action: 'mgr/resource/delete'
+                action: 'Collections\\Processors\\Resource\\Delete'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -201,7 +201,7 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
             ,text: _('selections.remove_confirm')
             ,url: this.config.url
             ,params: {
-                action: 'mgr/resource/remove'
+                action: 'Collections\\Processors\\Resource\\Remove'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -219,7 +219,7 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
             ,text: _('selections.delete_multiple_confirm')
             ,url: this.config.url
             ,params: {
-                action: 'mgr/resource/deletemultiple'
+                action: 'Collections\\Processors\\Resource\\DeleteMultiple'
                 ,ids: cs
             }
             ,listeners: {
@@ -238,7 +238,7 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
             ,text: _('selections.unlink_confirm')
             ,url: this.config.url
             ,params: {
-                action: 'mgr/selection/remove'
+                action: 'Collections\\Processors\\Selection\\Remove'
                 ,resource: this.menu.record.id
                 ,collection: MODx.request.id
             }
@@ -257,7 +257,7 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
         MODx.Ajax.request({
             url: this.config.url
             ,params: {
-                action: 'mgr/selection/removemultiple'
+                action: 'Collections\\Processors\\Selection\\RemoveMultiple'
                 ,resources: cs
                 ,collection: MODx.request.id
             }
@@ -380,9 +380,9 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
 
                 ,'afterrowmove': function(objThis, oldIndex, newIndex, records) {
                     MODx.Ajax.request({
-                        url: collections.connectorUrl
+                        url: MODx.config.connector_url
                         ,params: {
-                            action: 'mgr/selection/ddreorder'
+                            action: 'Collections\\Processors\\Selection\\DDReorder'
                             ,idItem: records.pop().id
                             ,oldIndex: oldIndex
                             ,newIndex: newIndex

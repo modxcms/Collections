@@ -76,7 +76,7 @@ Ext.extend(collections.panel.Selection,MODx.panel.Resource,{
                     });
                 }
 	        }
-            
+
         }
 
         return fields;
@@ -100,9 +100,9 @@ Ext.extend(collections.panel.Selection,MODx.panel.Resource,{
                     ,name: 'collections_template'
                     ,hiddenName: 'collections_template'
                     ,anchor: '100%'
-                    ,url: collections.connectorUrl
+                    ,url: MODx.config.connector_url
                     ,baseParams: {
-                        action: 'mgr/template/getlist'
+                        action: 'Collections\\Processors\\Template\\GetList'
                         ,addEmpty: 1
                     }
                 }]
@@ -123,7 +123,7 @@ Ext.extend(collections.panel.Selection,MODx.panel.Resource,{
 
         items.push({
             'xtype': 'collections-grid-selection'
-            ,url: collections.connectorUrl
+            ,url: MODx.config.connector_url
             ,anchor: '100%'
         });
 

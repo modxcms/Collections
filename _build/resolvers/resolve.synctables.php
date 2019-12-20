@@ -100,16 +100,16 @@ if ($object->xpdo) {
             /** @var modX $modx */
             $modx =& $object->xpdo;
 
-            $tables = array(
-                'CollectionSetting',
-                'CollectionTemplate',
-                'CollectionTemplateColumn',
-                'CollectionResourceTemplate',
-                'CollectionSelection'
-            );
+            $tables = [
+                Collections\Model\CollectionSetting::class,
+                Collections\Model\CollectionTemplate::class,
+                Collections\Model\CollectionTemplateColumn::class,
+                Collections\Model\CollectionResourceTemplate::class,
+                Collections\Model\CollectionSelection::class
+            ];
 
-            $modelPath = $modx->getOption('collections.core_path', null, $modx->getOption('core_path') . 'components/collections/') . 'model/';
-            $modx->addPackage('collections', $modelPath);
+            $srcPath = $modx->getOption('collections.core_path', null, $modx->getOption('core_path') . 'components/collections/') . 'src/';
+            $modx->addPackage('Collections\Model', $srcPath, null, 'Collections\\');
 
             foreach ($tables as $table) {
                 $modx->log(modX::LOG_LEVEL_INFO, 'Altering table: ' . $table);

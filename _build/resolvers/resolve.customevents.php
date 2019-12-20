@@ -11,9 +11,9 @@ if ($object->xpdo) {
         case xPDOTransport::ACTION_INSTALL:
         case xPDOTransport::ACTION_UPGRADE:
             foreach ($events as $eventName) {
-                $event = $modx->getObject('modEvent', ['name' => $eventName]);
+                $event = $modx->getObject(\MODX\Revolution\modEvent::class, ['name' => $eventName]);
                 if (!$event) {
-                    $event = $modx->newObject('modEvent');
+                    $event = $modx->newObject(\MODX\Revolution\modEvent::class);
                     $event->set('name', $eventName);
                     $event->set('service', 6);
                     $event->set('groupname', 'Collections');
@@ -24,7 +24,7 @@ if ($object->xpdo) {
             break;
         case xPDOTransport::ACTION_UNINSTALL:
             foreach ($events as $eventName) {
-                $event = $modx->getObject('modEvent', ['name' => $eventName]);
+                $event = $modx->getObject(\MODX\Revolution\modEvent::class, ['name' => $eventName]);
                 if ($event) {
                     $event->remove();
                 }

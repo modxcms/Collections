@@ -9,13 +9,13 @@ collections.grid.ContainerCollections = function(config) {
     Ext.applyIf(config,{
         id: 'collections-grid-container-collections'
         ,title: _('collections.collections')
-        ,url: collections.connectorUrl
+        ,url: MODx.config.connector_url
         ,autosave: true
-        ,save_action: 'mgr/resource/updatefromgrid'
+        ,save_action: 'Collections\\Processors\\Resource\\UpdateFromGrid'
         ,ddGroup: 'collectionChildDDGroup'
         ,enableDragDrop: false
         ,baseParams: {
-            action: 'mgr/resource/getlist'
+            action: 'Collections\\Processors\\Resource\\GetList'
             ,parent: collections.template.parent
             ,sort: collections.template.sort.field
             ,dir: collections.template.sort.dir
@@ -304,7 +304,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
     ,clearFilter: function() {
         var store = this.getStore();
         store.baseParams = {
-            action: 'mgr/resource/getList'
+            action: 'Collections\\Processors\\Resource\\GetList'
             ,parent: store.baseParams.parent
             ,sort: collections.template.sort.field
             ,dir: collections.template.sort.dir
@@ -537,7 +537,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             ,text: _('collections.children.delete_confirm')
             ,url: this.config.url
             ,params: {
-                action: 'mgr/resource/delete'
+                action: 'Collections\\Processors\\Resource\\Delete'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -552,7 +552,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             ,text: _('collections.children.remove_confirm')
             ,url: this.config.url
             ,params: {
-                action: 'mgr/resource/remove'
+                action: 'Collections\\Processors\\Resource\\Remove'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -570,7 +570,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             ,text: _('collections.children.delete_multiple_confirm')
             ,url: this.config.url
             ,params: {
-                action: 'mgr/resource/deletemultiple'
+                action: 'Collections\\Processors\\Resource\\DeleteMultiple'
                 ,ids: cs
             }
             ,listeners: {
@@ -590,7 +590,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.Ajax.request({
             url: this.config.url
             ,params: {
-                action: 'mgr/resource/undeletemultiple'
+                action: 'Collections\\Processors\\Resource\\UnDeleteMultiple'
                 ,ids: cs
             }
             ,listeners: {
@@ -607,7 +607,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.Ajax.request({
             url: this.config.url
             ,params: {
-                action: 'mgr/resource/undelete'
+                action: 'Collections\\Processors\\Resource\\UnDelete'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -623,7 +623,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.Ajax.request({
             url: this.config.url
             ,params: {
-                action: 'mgr/resource/publishmultiple'
+                action: 'Collections\\Processors\\Resource\\PublishMultiple'
                 ,ids: cs
             }
             ,listeners: {
@@ -643,7 +643,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.Ajax.request({
             url: this.config.url
             ,params: {
-                action: 'mgr/resource/unpublishmultiple'
+                action: 'Collections\\Processors\\Resource\\UnPublishMultiple'
                 ,ids: cs
             }
             ,listeners: {
@@ -660,7 +660,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.Ajax.request({
             url: this.config.url
             ,params: {
-                action: 'mgr/resource/publish'
+                action: 'Collections\\Processors\\Resource\\Publish'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -673,7 +673,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.Ajax.request({
             url: this.config.url
             ,params: {
-                action: 'mgr/resource/unpublish'
+                action: 'Collections\\Processors\\Resource\\UnPublish'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -848,9 +848,9 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
 
                 t.dropZone.onNodeDrop = function (nodeData, source, e) {
                     MODx.Ajax.request({
-                        url: collections.connectorUrl
+                        url: MODx.config.connector_url
                         ,params: {
-                            action: 'mgr/resource/changeparent'
+                            action: 'Collections\\Processors\\Resource\\ChangeParent'
                             ,id: source.dragData.selections[0].id
                             ,parent: nodeData.node.attributes.id
                         }
@@ -896,9 +896,9 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                     }
 
                     MODx.Ajax.request({
-                        url: collections.connectorUrl
+                        url: MODx.config.connector_url
                         ,params: {
-                            action: 'mgr/resource/ddreorder'
+                            action: 'Collections\\Processors\\Resource\\DDReorder'
                             ,idItem: records.pop().id
                             ,oldIndex: oldIndex
                             ,newIndex: newIndex
@@ -933,7 +933,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.Ajax.request({
             url: MODx.config.connector_url
             ,params: {
-                action: 'resource/get'
+                action: 'MODX\\Revoltion\\Processors\\Resource\\Get'
                 ,id: this.menu.record.id
                 ,skipFormatDates: true
             }
@@ -1060,9 +1060,9 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
 
             if ((folder > 0) && (collection > 0)) {
                 MODx.Ajax.request({
-                    url: collections.connectorUrl
+                    url: MODx.config.connector_url
                     ,params: {
-                        action: 'mgr/extra/breadcrumbs'
+                        action: 'Collections\\Processors\\Extra\\Breadcrumbs'
                         ,collection: collection
                         ,folder: folder
                     }

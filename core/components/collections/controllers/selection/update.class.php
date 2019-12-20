@@ -17,7 +17,6 @@ class SelectionContainerUpdateManagerController extends CollectionContainerUpdat
     {
         $managerUrl = $this->context->getOption('manager_url', MODX_MANAGER_URL, $this->modx->_userConfig);
         $collectionsAssetsUrl = $this->modx->getOption('collections.assets_url', null, $this->modx->getOption('assets_url', null, MODX_ASSETS_URL) . 'components/collections/');
-        $connectorUrl = $collectionsAssetsUrl . 'connector.php';
         $collectionsJsUrl = $collectionsAssetsUrl . 'js/mgr/';
 
         $this->addCss($collectionsAssetsUrl . 'css/mgr.css');
@@ -52,14 +51,14 @@ class SelectionContainerUpdateManagerController extends CollectionContainerUpdat
 
         $collectionsTemplate = $this->getCollectionsTemplate();
 
-        $response = $this->modx->runProcessor('system/derivatives/getlist', array(
+        $response = $this->modx->runProcessor('MODX\\Revolution\\Processors\\System\\Derivatives\\GetList', [
             'skip' => 'modXMLRPCResource',
             'class' => 'modResource',
-        ));
+        ]);
 
-        $response = $this->modx->fromJSON($response->response);
+        $response = json_decode($response->response, true);
         if ($response == '') {
-            $response = array();
+            $response = [];
         } else {
             $response = $response['results'];
         }
@@ -70,19 +69,17 @@ class SelectionContainerUpdateManagerController extends CollectionContainerUpdat
         <script type="text/javascript">
         // <![CDATA[
         collections.assetsUrl = "' . $collectionsAssetsUrl . '";
-        collections.connectorUrl = "' . $connectorUrl . '";
-        collections.config = ' . $this->modx->toJSON($this->collections->config) . ';
-        collections.config.connector_url = "' . $this->collections->config['connectorUrl'] . '";
+        collections.config = ' . json_encode($this->collections->config) . ';
         MODx.config.publish_document = "' . $this->canPublish . '";
         MODx.onDocFormRender = "' . $this->onDocFormRender . '";
         MODx.ctx = "' . $this->resource->get('context_key') . '";
         collections.template = ' . $collectionsTemplate . ';
-        collections.resourceDerivatives = ' . $this->modx->toJSON($response) . ';
+        collections.resourceDerivatives = ' . json_encode($response) . ';
         Ext.onReady(function() {
             MODx.load({
                 xtype: "collections-page-selection-update"
                 ,resource: "' . $this->resource->get('id') . '"
-                ,record: ' . $this->modx->toJSON($this->resourceArray) . '
+                ,record: ' . json_encode($this->resourceArray) . '
                 ,publish_document: "' . $this->canPublish . '"
                 ,preview_url: "' . $this->previewUrl . '"
                 ,locked: ' . ($this->locked ? 1 : 0) . '

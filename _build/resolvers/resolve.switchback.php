@@ -9,11 +9,11 @@ if ($object->xpdo) {
             /** @var modX $modx */
             $modx =& $object->xpdo;
 
-            $c = $modx->newQuery('modResource');
-            $c->where(array('class_key' => 'CollectionContainer'));
+            $c = $modx->newQuery(\MODX\Revolution\modResource::class);
+            $c->where(['class_key' => 'CollectionContainer']);
 
             /** @var modResource $collections[] */
-            $collections = $modx->getCollection('modResource', $c);
+            $collections = $modx->getCollection(\MODX\Revolution\modResource::class, $c);
             foreach ($collections as $collection) {
                 $children = $collection->Children;
                 foreach ($children as $child) {
@@ -25,11 +25,11 @@ if ($object->xpdo) {
                 $collection->save();
             }
 
-            $c = $modx->newQuery('modResource');
-            $c->where(array('class_key' => 'SelectionContainer'));
+            $c = $modx->newQuery(\MODX\Revolution\modResource::class);
+            $c->where(['class_key' => 'SelectionContainer']);
 
             /** @var modResource[] $selections */
-            $selections = $modx->getCollection('modResource', $c);
+            $selections = $modx->getCollection(\MODX\Revolution\modResource::class, $c);
             foreach ($selections as $selection) {
                 $selection->set('hide_children_in_tree', 0);
                 $selection->set('class_key', 'modDocument');

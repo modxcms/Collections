@@ -4,8 +4,8 @@ collections.window.Selection = function(config) {
         title: _('collections.selection.create')
         ,closeAction: 'close'
         ,isUpdate: false
-        ,url: collections.config.connectorUrl
-        ,action: 'mgr/selection/create'
+        ,url: MODx.config.connector_url
+        ,action: 'Collections\\Processors\\Selection\\Create'
         ,fields: this.getFields(config)
     });
     collections.window.Selection.superclass.constructor.call(this,config);
@@ -25,7 +25,7 @@ Ext.extend(collections.window.Selection,MODx.Window, {
             ,hiddenName: 'resource'
             ,anchor: '100%'
             ,baseParams:{
-                action: 'mgr/extra/getresources'
+                action: 'Collections\\Processors\\Extra\\GetResources'
                 ,sort: config.resourcesSort
                 ,selection: config.selection
             }
@@ -43,8 +43,8 @@ collections.window.ChangeParent = function(config) {
         title: _('collections.children.changeparent')
         ,closeAction: 'close'
         ,isUpdate: false
-        ,url: collections.config.connectorUrl
-        ,action: 'mgr/resource/changechildparent'
+        ,url: MODx.config.connector_url
+        ,action: 'Collections\\Processors\\Resource\\ChangeChildParent'
         ,fields: this.getFields(config)
     });
     collections.window.ChangeParent.superclass.constructor.call(this,config);
@@ -64,7 +64,7 @@ Ext.extend(collections.window.ChangeParent,MODx.Window, {
             ,hiddenName: 'parent'
             ,anchor: '100%'
             ,baseParams:{
-                action: 'mgr/extra/getresources'
+                action: 'Collections\\Processors\\Extra\\GetResources'
                 ,sort: 'pagetitle:asc'
             }
         },{
@@ -150,7 +150,7 @@ collections.window.QuickCreateResource = function(config) {
                             ,editable: false
                             ,anchor: '100%'
                             ,baseParams: {
-                                action: 'element/template/getList'
+                                action: 'MODX\\Revolution\\Processors\\Element\\Template\\GetList'
                                 ,combo: '1'
                                 ,limit: 0
                             }
@@ -253,7 +253,7 @@ Ext.extend(collections.window.QuickCreateResource, MODx.window.QuickCreateResour
                     ,hiddenName: 'parent'
                     ,anchor: '100%'
                     ,baseParams:{
-                        action: 'mgr/extra/getresources'
+                        action: 'Collections\\Processors\\Extra\\GetResources'
                         ,sort: 'pagetitle:asc'
                     }
                 },{

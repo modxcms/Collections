@@ -1,11 +1,11 @@
 collections.grid.TemplateColumn = function(config) {
     config = config || {};
     Ext.applyIf(config,{
-        url: collections.config.connectorUrl
+        url: MODx.config.connector_url
         ,autosave: true
-        ,save_action: 'mgr/template/column/updatefromgrid'
+        ,save_action: 'Collections\\Processors\\Template\\Column\\UpdateFromGrid'
         ,baseParams: {
-            action: 'mgr/template/column/getList'
+            action: 'Collections\\Processors\\Template\\Column\\GetList'
             ,template: MODx.request.id
             ,sort: 'position'
             ,dir: 'asc'
@@ -66,7 +66,7 @@ Ext.extend(collections.grid.TemplateColumn,MODx.grid.Grid,{
         var updateColumn = MODx.load({
             xtype: 'collections-window-template-column'
             ,title: _('collections.template.column.update')
-            ,action: 'mgr/template/column/update'
+            ,action: 'Collections\\Processors\\Template\\Column\\Update'
             ,isUpdate: true
             ,record: this.menu.record
             ,listeners: {
@@ -87,7 +87,7 @@ Ext.extend(collections.grid.TemplateColumn,MODx.grid.Grid,{
             ,text: _('collections.template.column.remove_confirm')
             ,url: this.config.url
             ,params: {
-                action: 'mgr/template/column/remove'
+                action: 'Collections\\Processors\\Template\\Column\\Remove'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -176,9 +176,9 @@ Ext.extend(collections.grid.TemplateColumn,MODx.grid.Grid,{
 
                 ,'afterrowmove': function(objThis, oldIndex, newIndex, records) {
                     MODx.Ajax.request({
-                        url: collections.config.connectorUrl
+                        url: MODx.config.connector_url
                         ,params: {
-                            action: 'mgr/template/column/ddreorder'
+                            action: 'Collections\\Processors\\Template\\Column\\DDReorder'
                             ,idItem: records.pop().id
                             ,oldIndex: oldIndex
                             ,newIndex: newIndex
@@ -204,7 +204,7 @@ Ext.extend(collections.grid.TemplateColumn,MODx.grid.Grid,{
 
         Ext.dd.ScrollManager.register(this.getView().getEditorParent());
     }
-    
+
     ,destroyScrollManager: function() {
         Ext.dd.ScrollManager.unregister(this.getView().getEditorParent());
     }

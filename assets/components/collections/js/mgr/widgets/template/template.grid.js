@@ -16,15 +16,15 @@ collections.grid.Template = function(config) {
             }
         }
     });
-    
+
     Ext.applyIf(config,{
         title: _('collections.collections')
-        ,url: collections.config.connectorUrl
+        ,url: MODx.config.connector_url
         ,baseParams: {
-            action: 'mgr/template/getList'
+            action: 'Collections\\Processors\\Template\\GetList'
             ,'template': 1
         }
-        ,save_action: 'mgr/template/updatefromgrid'
+        ,save_action: 'Collections\\Processors\\Template\\UpdateFromGrid'
         ,autosave: true
         ,preventSaveRefresh: false
         ,fields: ['id','name', 'description', 'global_template', 'default_for_templates']
@@ -56,7 +56,7 @@ collections.grid.Template = function(config) {
             ,width: 60
             ,renderer: function(value, metaData, record, rowIndex, colIndex, store) {
                 metaData.attr = 'ext:qtip="' + value.join('<br />') + '"';
-                
+
                 return value;
             }
         },{
@@ -89,20 +89,20 @@ Ext.extend(collections.grid.Template,MODx.grid.Grid,{
             this.selectedRecords.push(record.id);
         }
     }
-    
+
     ,forgotRow: function(record){
         this.selectedRecords.remove(record.id);
     }
-    
+
     ,refreshSelection: function() {
         var rowsToSelect = [];
         Ext.each(this.selectedRecords, function(item){
             rowsToSelect.push(this.store.indexOfId(item));
         },this);
-    
+
         this.getSelectionModel().selectRows(rowsToSelect);
     }
-    
+
     ,getSelectedAsList: function(){
         return this.selectedRecords.join();
     }
@@ -126,7 +126,7 @@ Ext.extend(collections.grid.Template,MODx.grid.Grid,{
             text: (this.selectedRecords.length > 1) ? _('collections.template.export_more') : _('collections.template.export')
             ,handler: this.exportTemplate
         });
-        
+
         m.push('-');
 
         m.push({
@@ -143,9 +143,9 @@ Ext.extend(collections.grid.Template,MODx.grid.Grid,{
     ,createTemplate: function() {
         MODx.loadPage('template/create', 'namespace=collections');
     }
-    
+
     ,exportTemplate: function(){
-        MODx.loadPage('template/export', 'namespace=collections&ids=' + this.getSelectedAsList());                     
+        MODx.loadPage('template/export', 'namespace=collections&ids=' + this.getSelectedAsList());
     }
 
     ,removeTemplate: function(btn,e) {
@@ -156,7 +156,7 @@ Ext.extend(collections.grid.Template,MODx.grid.Grid,{
             ,text: _('collections.template.remove_confirm')
             ,url: this.config.url
             ,params: {
-                action: 'mgr/template/remove'
+                action: 'Collections\\Processors\\Template\\Remove'
                 ,id: this.menu.record.id
             }
             ,listeners: {
@@ -189,7 +189,7 @@ Ext.extend(collections.grid.Template,MODx.grid.Grid,{
 
         return true;
     }
-    
+
     ,importTemplate: function(btn, e) {
         var importWindow = MODx.load({
             xtype: 'collections-window-template-import'
@@ -200,7 +200,7 @@ Ext.extend(collections.grid.Template,MODx.grid.Grid,{
 
         importWindow.show(e.target);
 
-        return true; 
+        return true;
     }
 
 });

@@ -8,7 +8,7 @@ collections.page.Template = function(config) {
         ,buttons: [{
             text: _('save')
             ,method: 'remote'
-            ,process: config.isUpdate ? 'mgr/template/update' : 'mgr/template/create'
+            ,process: config.isUpdate ? 'Collections\\Processors\\Template\\Update' : 'Collections\\Processors\\Template\\Create'
             ,keys: [{
                 key: MODx.config.keymap_save || 's'
                 ,ctrl: true

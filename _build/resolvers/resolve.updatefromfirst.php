@@ -1,4 +1,10 @@
 <?php
+
+use Collections\Model\CollectionTemplate;
+use MODX\Revolution\modSystemSetting;
+use MODX\Revolution\Transport\modTransportPackage;
+use MODX\Revolution\modResource;
+
 set_time_limit(0);
 if ($object->xpdo) {
     switch ($options[xPDOTransport::PACKAGE_ACTION]) {
@@ -7,12 +13,12 @@ if ($object->xpdo) {
             $modx =& $object->xpdo;
 
             // http://forums.modx.com/thread/88734/package-version-check#dis-post-489104
-            $c = $modx->newQuery('transport.modTransportPackage');
-            $c->where(array(
+            $c = $modx->newQuery(modTransportPackage::class);
+            $c->where([
                 'workspace' => 1,
                 "(SELECT
                         `signature`
-                      FROM {$modx->getTableName('modTransportPackage')} AS `latestPackage`
+                      FROM {$modx->getTableName(modTransportPackage::class)} AS `latestPackage`
                       WHERE `latestPackage`.`package_name` = `modTransportPackage`.`package_name`
                       ORDER BY
                          `latestPackage`.`version_major` DESC,
@@ -21,22 +27,22 @@ if ($object->xpdo) {
                          IF(`release` = '' OR `release` = 'ga' OR `release` = 'pl','z',`release`) DESC,
                          `latestPackage`.`release_index` DESC
                       LIMIT 1,1) = `modTransportPackage`.`signature`",
-            ));
-            $c->where(array(
+            ]);
+            $c->where([
                 'modTransportPackage.package_name' => 'collections',
                 'installed:IS NOT' => null
-            ));
+            ]);
 
             /** @var modTransportPackage $oldPackage */
-            $oldPackage = $modx->getObject('transport.modTransportPackage', $c);
+            $oldPackage = $modx->getObject(modTransportPackage::class, $c);
 
-            $modelPath = $modx->getOption('collections.core_path',null,$modx->getOption('core_path').'components/collections/').'model/';
-            $modx->addPackage('collections',$modelPath);
+            $srcPath = $modx->getOption('collections.core_path', null, $modx->getOption('core_path') . 'components/collections/') . 'src/';
+            $modx->addPackage('Collections\Model', $srcPath, null, 'Collections\\');
 
             if ($oldPackage && $oldPackage->compareVersion('2.0.0-pl', '>')) {
-                $date = $modx->getObject('modSystemSetting', array('key' => 'collections.mgr_date_format'));
+                $date = $modx->getObject(modSystemSetting::class, ['key' => 'collections.mgr_date_format']);
                 if (!$date) {
-                    $date = $modx->newObject('modSystemSetting');
+                    $date = $modx->newObject(modSystemSetting::class);
                     $date->set('key', 'collections.mgr_date_format');
                     $date->set('namespace', 'collections');
                     $date->set('xtype', 'textfield');
@@ -45,9 +51,9 @@ if ($object->xpdo) {
                 $date->set('value', 'M d');
                 $date->save();
 
-                $time = $modx->getObject('modSystemSetting', array('key' => 'collections.mgr_time_format'));
+                $time = $modx->getObject(modSystemSetting::class, ['key' => 'collections.mgr_time_format']);
                 if (!$time) {
-                    $time = $modx->newObject('modSystemSetting');
+                    $time = $modx->newObject(modSystemSetting::class);
                     $time->set('key', 'collections.mgr_time_format');
                     $time->set('namespace', 'collections');
                     $time->set('xtype', 'textfield');
@@ -59,13 +65,13 @@ if ($object->xpdo) {
 
             if ($oldPackage && $oldPackage->compareVersion('3.4.0-pl', '>')) {
                 /** @var modResource[] $collections */
-                $collections = $modx->getIterator('modResource', array('class_key' => 'CollectionContainer'));
+                $collections = $modx->getIterator(modResource::class, ['class_key' => 'CollectionContainer']);
                 foreach ($collections as $collection) {
-                    $modx->updateCollection('modResource', array('show_in_tree' => 0), array('parent' => $collection->id, 'class_key:!=' => 'CollectionContainer'));
+                    $modx->updateCollection(modResource::class, ['show_in_tree' => 0], ['parent' => $collection->id, 'class_key:!=' => 'CollectionContainer']);
                 }
 
                 /** @var CollectionTemplate[] $views */
-                $views = $modx->getIterator('CollectionTemplate');
+                $views = $modx->getIterator(CollectionTemplate::class);
                 foreach ($views as $view) {
                     $buttons = $view->get('buttons');
                     if (strpos($buttons, 'open') === false) {
@@ -78,7 +84,7 @@ if ($object->xpdo) {
 
             if ($oldPackage && $oldPackage->compareVersion('3.7.0-pl', '>')) {
                 /** @var CollectionTemplate[] $views */
-                $views = $modx->getIterator('CollectionTemplate');
+                $views = $modx->getIterator(CollectionTemplate::class);
                 foreach ($views as $view) {
                     $buttons = $view->get('buttons');
                     if (strpos($buttons, 'changeparent') === false) {

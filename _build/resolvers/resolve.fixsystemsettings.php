@@ -5,8 +5,8 @@ if ($object->xpdo) {
             /** @var modX $modx */
             $modx =& $object->xpdo;
 
-            /** @var modSystemSetting $ss */
-            $ss = $modx->getObject('modSystemSetting', array('key' => 'renderer_image_path'));
+            /** @var \MODX\Revolution\modSystemSetting $ss */
+            $ss = $modx->getObject(\MODX\Revolution\modSystemSetting::class, ['key' => 'renderer_image_path']);
             if ($ss) {
                 $ss->remove();
             }

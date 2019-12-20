@@ -6,8 +6,8 @@ collections.window.TemplateColumn = function(config) {
         ,isUpdate: false
         ,width: 600
         ,autoHeight: true
-        ,url: collections.config.connectorUrl
-        ,action: 'mgr/template/column/create'
+        ,url: MODx.config.connector_url
+        ,action: 'Collections\\Processors\\Template\\Column\\Create'
         ,fields: this.getFields(config)
     });
     collections.window.TemplateColumn.superclass.constructor.call(this,config);

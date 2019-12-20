@@ -4,8 +4,8 @@ collections.window.TemplateDuplicate = function(config) {
         title: _('collections.template.duplicate')
         ,closeAction: 'close'
         ,isUpdate: false
-        ,url: collections.config.connectorUrl
-        ,action: 'mgr/template/duplicate'
+        ,url: MODx.config.connector_url
+        ,action: 'Collections\\Processors\\Template\\Duplicate'
         ,fields: this.getFields(config)
     });
     collections.window.TemplateDuplicate.superclass.constructor.call(this,config);
@@ -41,8 +41,8 @@ collections.window.TemplateImport = function(config) {
         ,closeAction: 'close'
         ,isUpdate: false
         ,fileUpload: true
-        ,url: collections.config.connectorUrl
-        ,action: 'mgr/template/import'
+        ,url: MODx.config.connector_url
+        ,action: 'Collections\\Processors\\Template\\Import'
         ,fields: this.getFields(config)
         ,autoHeight: true
         ,saveBtnText: _('collections.global.import')
@@ -59,7 +59,7 @@ Ext.extend(collections.window.TemplateImport,MODx.Window, {
             ,allowBlank: false
             ,listeners: {
                 render: function(){
-                    this.fileInput.dom.setAttribute('accept', '.json');                                 
+                    this.fileInput.dom.setAttribute('accept', '.json');
                 },
                 fileselected: {
                     fn: function(field, value){
@@ -67,16 +67,16 @@ Ext.extend(collections.window.TemplateImport,MODx.Window, {
                             var text = field.fileInput.dom.files[0];
                             var reader = new FileReader();
                             reader.readAsText(text);
-                            
+
                             var window = this;
-                            
+
                             reader.onload = function(event) {
                                 var templates = JSON.parse(event.target.result);
                                 var checkboxGroup = Ext.getCmp('template-checkbox-group');
                                 if (checkboxGroup) {
                                     checkboxGroup.destroy();
                                 }
-                                
+
                                 checkboxGroup = {
                                     xtype: 'checkboxgroup',
                                     id: 'template-checkbox-group',
@@ -85,10 +85,10 @@ Ext.extend(collections.window.TemplateImport,MODx.Window, {
                                     columns: 3,
                                     items: []
                                 };
-                                
+
                                 Ext.each(templates, function(template){
                                     checkboxGroup.items.push({
-                                        boxLabel: template.name, 
+                                        boxLabel: template.name,
                                         name: 'template[]',
                                         value: template.name,
                                         checked: true,
@@ -97,9 +97,9 @@ Ext.extend(collections.window.TemplateImport,MODx.Window, {
                                                 this.el.dom.setAttribute('value', this.value);
                                             }
                                         }
-                                    });             
+                                    });
                                 });
-                            
+
                                 window.fp.add(checkboxGroup);
                                 window.doLayout();
                             };

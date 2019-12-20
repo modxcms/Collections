@@ -1,4 +1,10 @@
 <?php
+
+use Collections\Model\CollectionSetting;
+use Collections\Model\CollectionTemplateColumn;
+use Collections\Utils;
+use MODX\Revolution\modResource;
+
 /**
  * Update controller for Collections Container
  *
@@ -9,26 +15,18 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
     /** @var modResource $resource */
     public $resource;
 
-    /** @var Collections $collections */
+    /** @var Collections\Collections $collections */
     public $collections;
 
     public function initialize()
     {
-        $corePath = $this->modx->getOption('collections.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/collections/');
-        $this->collections = $this->modx->getService(
-            'collections',
-            'Collections',
-            $corePath . 'model/collections/',
-            array(
-                'core_path' => $corePath
-            )
-        );
+        $this->collections = $this->modx->services->get('collections');
 
         parent::initialize();
     }
 
     public function getLanguageTopics() {
-        return array('resource','collections:default', 'collections:templates', 'collections:custom', 'collections:selections');
+        return ['resource','collections:default', 'collections:templates', 'collections:custom', 'collections:selections'];
     }
 
     /**
@@ -38,7 +36,6 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
     public function loadCustomCssJs() {
         $managerUrl = $this->context->getOption('manager_url', MODX_MANAGER_URL, $this->modx->_userConfig);
         $collectionsAssetsUrl = $this->modx->getOption('collections.assets_url',null,$this->modx->getOption('assets_url',null,MODX_ASSETS_URL).'components/collections/');
-        $connectorUrl = $collectionsAssetsUrl.'connector.php';
         $collectionsJsUrl = $collectionsAssetsUrl.'js/mgr/';
 
         $this->addCss($collectionsAssetsUrl . 'css/mgr.css');
@@ -77,9 +74,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         <script type="text/javascript">
         // <![CDATA[
         collections.assetsUrl = "'.$collectionsAssetsUrl.'";
-        collections.connectorUrl = "'.$connectorUrl.'";
-        collections.config = '.$this->modx->toJSON($this->collections->config).';
-        collections.config.connector_url = "'.$this->collections->config['connectorUrl'].'";
+        collections.config = '.json_encode($this->collections->config).';
         MODx.config.publish_document = "'.$this->canPublish.'";
         MODx.onDocFormRender = "'.$this->onDocFormRender.'";
         MODx.ctx = "'.$this->resource->get('context_key').'";
@@ -88,7 +83,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             MODx.load({
                 xtype: "collections-page-category-update"
                 ,resource: "'.$this->resource->get('id').'"
-                ,record: '.$this->modx->toJSON($this->resourceArray).'
+                ,record: '.json_encode($this->resourceArray).'
                 ,publish_document: "'.$this->canPublish.'"
                 ,preview_url: "'.$this->previewUrl.'"
                 ,locked: '.($this->locked ? 1 : 0).'
@@ -111,26 +106,24 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
     public function getCollectionsTemplate() {
         $template = $this->collections->getCollectionsView($this->resource);
 
-        $c = $this->modx->newQuery('CollectionTemplateColumn');
+        $c = $this->modx->newQuery(CollectionTemplateColumn::class);
         $c->sortby('position', 'ASC');
-        $c->where(array(
+        $c->where([
             'template' => $template->id
-        ));
+        ]);
 
         /** @var CollectionTemplateColumn[] $columns */
-        $columns = $this->modx->getIterator('CollectionTemplateColumn', $c);
+        $columns = $this->modx->getIterator(CollectionTemplateColumn::class, $c);
 
-        $derivates = array();
+        $derivates = [];
 
         if ($template->resource_type_selection) {
-            $response = $this->modx->runProcessor('mgr/extra/getderivates', array(
+            $response = $this->modx->runProcessor('Collections\\Processors\\Extra\\GetDerivates', [
                 'skip' => 'modXMLRPCResource',
-                'class' => 'modResource',
-            ), array(
-                'processors_path' => $this->collections->getOption('processorsPath'),
-            ));
+                'class' => 'MODX\\Revolution\\modResource',
+            ]);
 
-            $response = $this->modx->fromJSON($response->response);
+            $response = json_decode($response->response, true);
 
             if ($response != '') {
                 if ($template->allowed_resource_types == '') {
@@ -138,7 +131,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
                         $derivates[] = $type;
                     }
                 } else {
-                    $allowedTypes = $this->collections->explodeAndClean($template->allowed_resource_types);
+                    $allowedTypes = Utils::explodeAndClean($template->allowed_resource_types);
 
                     foreach ($allowedTypes as $type) {
                         if (isset($response['results'][$type])) {
@@ -153,35 +146,35 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
         $parent = !empty($template->parent) ? $template->parent : '';
         if (substr($parent,0,8) == '@SNIPPET'){
             $snippet = trim(substr($parent,8));
-            $properties = array(
+            $properties = [
                 'resource' => & $this->resource
-            );
+            ];
             $parent = $this->modx->runSnippet($snippet,$properties);
         }
         $parent_context = $this->resource->get('context_key');
         if (!empty($parent)){
             //we have a custom parent - try to get the context_key
-            if ($p_resource = $this->modx->getObject('modResource',$parent)){
+            if ($p_resource = $this->modx->getObject(modResource::class,$parent)){
                 $parent_context = $p_resource->get('context_key');
             }
         }else{
             $parent = $this->resource->get('id');
         }
 
-        $templateOptions = array(
-            'fields' => array('actions', 'action_edit', 'preview_url', 'menu_actions', 'icons', 'has_children'),
-            'columns' => array(),
-            'sort' => array(
+        $templateOptions = [
+            'fields' => ['actions', 'action_edit', 'preview_url', 'menu_actions', 'icons', 'has_children'],
+            'columns' => [],
+            'sort' => [
                 'field' => $template->sort_field . ':' . $template->sort_type,
                 'dir' => $template->sort_dir,
-            ),
+            ],
             'pageSize' => $template->page_size,
             'bulkActions' => $template->bulk_actions,
             'allowDD' => $template->allow_dd,
             'resource_type_selection' => $template->resource_type_selection,
             'show_quick_create' => $template->show_quick_create,
             'quick_create_label' => $template->quick_create_label,
-            'children' => array(
+            'children' => [
                 'template' => $template->child_template,
                 'resource_type' => $template->child_resource_type,
                 'rich_text' => $template->child_richtext,
@@ -191,24 +184,24 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
                 'content_disposition' => $template->child_content_disposition,
                 'hide_from_menu' => $template->child_hide_from_menu,
                 'searchable' => $template->child_searchable
-            ),
+            ],
             'tab_label' => $template->tab_label,
             'button_label' => $template->button_label,
             'link_label' => $template->link_label,
             'content_place' => $template->content_place,
-            'context_menu' => $this->collections->explodeAndClean($template->context_menu, ',', 1),
+            'context_menu' => Utils::explodeAndClean($template->context_menu, ',', 1),
             'resourceDerivatives' => $derivates,
             'selection_create_sort' => $template->selection_create_sort,
             'parent' => $parent,
             'parent_context' => $parent_context,
-            'permanent_sort' => array (
+            'permanent_sort' => [
                 'before' => $template->permanent_sort_before,
                 'after' => $template->permanent_sort_after,
-            ),
+            ],
             'search_query_exclude_tvs' => $template->search_query_exclude_tvs,
             'search_query_exclude_tagger' => $template->search_query_exclude_tagger,
             'search_query_title_only' => $template->search_query_title_only,
-        );
+        ];
 
         foreach ($columns as $column) {
             $templateOptions['fields'][] = $column->name;
@@ -218,21 +211,21 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
                 $header = $column->label;
             }
 
-            $columnDef = array(
+            $columnDef = [
                 'header' => $header,
                 'dataIndex' => $column->name,
                 'hidden' => $column->hidden,
                 'sortable' => $column->sortable,
                 'width' => $column->width,
-            );
+            ];
 
             if ($column->editor != '') {
-                $editorObj = $this->modx->fromJSON($column->editor);
+                $editorObj = json_decode($column->editor, to);
                 if ($editorObj == null) {
-                    $editorObj = array(
+                    $editorObj = [
                         'xtype' => $column->editor,
                         'renderer' => false
-                    );
+                    ];
                 }
 
                 $columnDef['editor'] = $editorObj;
@@ -245,11 +238,11 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             $templateOptions['columns'][] = $columnDef;
         }
 
-        return $this->modx->toJSON($templateOptions);
+        return json_encode($templateOptions);
     }
 
     public function loadConfig() {
-        $config = $this->modx->getObject('CollectionSetting', array('collection' => $this->resource->id));
+        $config = $this->modx->getObject(CollectionSetting::class, ['collection' => $this->resource->id]);
         if ($config) {
             $this->resourceArray['collections_template'] = $config->template;
         }

@@ -7,12 +7,12 @@ if ($object->xpdo) {
             /** @var modX $modx */
             $modx =& $object->xpdo;
 
-            $modelPath = $modx->getOption('collections.core_path',null,$modx->getOption('core_path').'components/collections/').'model/';
-            $modx->addPackage('collections',$modelPath);
+            $srcPath = $modx->getOption('collections.core_path', null, $modx->getOption('core_path') . 'components/collections/') . 'src/';
+            $modx->addPackage('Collections\Model', $srcPath, null, 'Collections\\');
 
-            $templates = $modx->getCount('CollectionTemplate');
+            $templates = $modx->getCount(Collections\Model\CollectionTemplate::class);
             if ($templates == 0) {
-                /** @var CollectionTemplate $template */
+                /** @var Collections\Model\CollectionTemplate $template */
                 $template = $modx->newObject('CollectionTemplate');
                 $template->set('name', 'Blog');
                 $template->set('description', 'A default view that works well for blogs.');
@@ -26,9 +26,9 @@ if ($object->xpdo) {
                 $template->set('child_resource_type', 'modDocument');
                 $template->set('resource_type_selection', true);
 
-                $columns = array();
-                $columns[0] = $modx->newObject('CollectionTemplateColumn');
-                $columns[0]->fromArray(array(
+                $columns = [];
+                $columns[0] = $modx->newObject(Collections\Model\CollectionTemplateColumn::class);
+                $columns[0]->fromArray([
                     'label' => 'id',
                     'name' => 'id',
                     'hidden' => true,
@@ -37,10 +37,10 @@ if ($object->xpdo) {
                     'editor' => '',
                     'renderer' => '',
                     'position' => 0,
-                ));
+               ]);
 
-                $columns[1] = $modx->newObject('CollectionTemplateColumn');
-                $columns[1]->fromArray(array(
+                $columns[1] = $modx->newObject(Collections\Model\CollectionTemplateColumn::class);
+                $columns[1]->fromArray([
                     'label' => 'publishedon',
                     'name' => 'publishedon',
                     'hidden' => false,
@@ -49,10 +49,10 @@ if ($object->xpdo) {
                     'editor' => '',
                     'renderer' => 'Collections.renderer.datetimeTwoLines',
                     'position' => 1,
-                ));
+                ]);
 
-                $columns[2] = $modx->newObject('CollectionTemplateColumn');
-                $columns[2]->fromArray(array(
+                $columns[2] = $modx->newObject(Collections\Model\CollectionTemplateColumn::class);
+                $columns[2]->fromArray([
                     'label' => 'pagetitle',
                     'name' => 'pagetitle',
                     'hidden' => false,
@@ -61,10 +61,10 @@ if ($object->xpdo) {
                     'editor' => '',
                     'renderer' => 'Collections.renderer.pagetitleWithButtons',
                     'position' => 2,
-                ));
+                ]);
 
-                $columns[3] = $modx->newObject('CollectionTemplateColumn');
-                $columns[3]->fromArray(array(
+                $columns[3] = $modx->newObject(Collections\Model\CollectionTemplateColumn::class);
+                $columns[3]->fromArray([
                     'label' => 'alias',
                     'name' => 'alias',
                     'hidden' => false,
@@ -73,10 +73,10 @@ if ($object->xpdo) {
                     'editor' => '',
                     'renderer' => '',
                     'position' => 3,
-                ));
+                ]);
 
-                $columns[4] = $modx->newObject('CollectionTemplateColumn');
-                $columns[4]->fromArray(array(
+                $columns[4] = $modx->newObject(Collections\Model\CollectionTemplateColumn::class);
+                $columns[4]->fromArray([
                     'label' => 'resource_menuindex',
                     'name' => 'menuindex',
                     'hidden' => false,
@@ -85,7 +85,7 @@ if ($object->xpdo) {
                     'editor' => '{"xtype":"numberfield","allowNegative":false,"allowDecimal":false}',
                     'renderer' => '',
                     'position' => 4,
-                ));
+                ]);
 
                 $template->addMany($columns, 'Columns');
 

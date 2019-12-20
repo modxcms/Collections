@@ -26,16 +26,8 @@ $modx->startTime= $tStart;
 
 $modx->initialize('web');
 
-$corePath = $modx->getOption('collections.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/collections/');
-/** @var Collections $collections */
-$collections = $modx->getService(
-    'collections',
-    'Collections',
-    $corePath . 'model/collections/',
-    array(
-        'core_path' => $corePath
-    )
-);
+/** @var Collections\Collections $collections */
+$collections = $modx->services->get('collections');
 
 $ajax = new \Collections\Endpoint\Ajax($collections);
 $ajax->run();

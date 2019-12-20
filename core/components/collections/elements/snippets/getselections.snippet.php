@@ -21,14 +21,22 @@
  * [[getSelections? &selections=`1` &tpl=`rowTpl`]]
  * [[getSelections? &selections=`1` &tpl=`rowTpl` &sortby=`RAND()`]]
  *
+ *
+ * @var \MODX\Revolution\modX $modx
+ * @var array $scriptProperties
  */
 
-$collections = $modx->getService('collections','Collections',$modx->getOption('collections.core_path',null,$modx->getOption('core_path').'components/collections/').'model/collections/',$scriptProperties);
-if (!($collections instanceof Collections)) return '';
+use Collections\Model\CollectionSelection;
+use Collections\Utils;
+use MODX\Revolution\modSnippet;
+
+/** @var Collections\Collections $collections */
+$collections = $modx->services->get('collections');
+if (!($collections instanceof Collections\Collections)) return '';
 
 $getResourcesSnippet = $modx->getOption('getResourcesSnippet', $scriptProperties, 'getResources');
 
-$getResourcesExists = $modx->getCount('modSnippet', array('name' => $getResourcesSnippet));
+$getResourcesExists = $modx->getCount(modSnippet::class, ['name' => $getResourcesSnippet]);
 if ($getResourcesExists == 0) return 'getResources not found';
 
 $sortDir = strtolower($modx->getOption('sortdir', $scriptProperties, 'asc'));
@@ -36,28 +44,28 @@ $selections = $modx->getOption('selections', $scriptProperties, '');
 $sortBy = $modx->getOption('sortby', $scriptProperties, '');
 $excludeToPlaceholder = $modx->getOption('excludeToPlaceholder', $scriptProperties, '');
 
-$selections = $modx->collections->explodeAndClean($selections);
+$selections = Utils::explodeAndClean($selections);
 
 if ($sortDir != 'asc') {
     $sortDir = 'desc';
 }
 
-$linkedResourcesQuery = $modx->newQuery('CollectionSelection');
+$linkedResourcesQuery = $modx->newQuery(CollectionSelection::class);
 
 if (!empty($selections)) {
-    $linkedResourcesQuery->where(array(
+    $linkedResourcesQuery->where([
         'collection:IN' => $selections
-    ));
+    ]);
 }
 
 if ($sortBy == '') {
     $linkedResourcesQuery->sortby('menuindex', $sortDir);
 }
 
-$linkedResourcesQuery->select(array(
+$linkedResourcesQuery->select([
     'resource' => 'DISTINCT(resource)',
     'menuindex' => 'menuindex'
-));
+]);
 
 $linkedResourcesQuery->prepare();
 
@@ -66,7 +74,7 @@ $linkedResourcesQuery->stmt->execute();
 $linkedResources = $linkedResourcesQuery->stmt->fetchAll(PDO::FETCH_COLUMN, 0);
 
 if (!empty($excludeToPlaceholder)) {
-    $excludeResources = array();
+    $excludeResources = [];
     foreach($linkedResources as $res) {
         $excludeResources[] = '-' . $res;
     }
