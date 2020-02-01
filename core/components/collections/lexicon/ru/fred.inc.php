@@ -6,7 +6,7 @@
  * @subpackage lexicon
  */
 
-$_lang['collections.fred.collections'] = 'Collections';
+$_lang['collections.fred.collections'] = 'Коллекции';
 $_lang['collections.fred.loading_collection'] = 'Loading Collection';
 $_lang['collections.fred.pagetitle'] = 'Page Title';
 $_lang['collections.fred.publish'] = 'Publish';
