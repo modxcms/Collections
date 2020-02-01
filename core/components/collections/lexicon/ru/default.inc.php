@@ -148,8 +148,8 @@ $_lang['collections.template.import'] = 'Импорт представлений
 $_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
 $_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
 $_lang['collections.template.search_query_title_only'] = 'Search - Title only';
-$_lang['collections.template.show_quick_create'] = 'Show Quick Create button';
-$_lang['collections.template.quick_create_label'] = 'Quick Create button label';
+$_lang['collections.template.show_quick_create'] = 'Показать кнопку быстрого создания ресурсов';
+$_lang['collections.template.quick_create_label'] = 'Надпись кнопки быстрого создания ресурсов';
 $_lang['collections.template.fred_default_blueprint'] = 'Fred Default Blueprint';
 $_lang['collections.template.fred_default_blueprint_desc'] = 'When creating children from Fred, this blueprint will get preselected by default.';
 
