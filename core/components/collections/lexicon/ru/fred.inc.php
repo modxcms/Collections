@@ -7,15 +7,15 @@
  */
 
 $_lang['collections.fred.collections'] = 'Коллекции';
-$_lang['collections.fred.loading_collection'] = 'Loading Collection';
-$_lang['collections.fred.pagetitle'] = 'Page Title';
-$_lang['collections.fred.publish'] = 'Publish';
-$_lang['collections.fred.expires'] = 'Expires';
-$_lang['collections.fred.author'] = 'Author';
-$_lang['collections.fred.actions'] = 'Actions';
-$_lang['collections.fred.published'] = 'Published';
-$_lang['collections.fred.any'] = 'Any';
-$_lang['collections.fred.unpublished'] = 'Unpublished';
+$_lang['collections.fred.loading_collection'] = 'Загрузка коллекции';
+$_lang['collections.fred.pagetitle'] = 'Заголовок страницы';
+$_lang['collections.fred.publish'] = 'Публиковать';
+$_lang['collections.fred.expires'] = 'Истекает';
+$_lang['collections.fred.author'] = 'Автор';
+$_lang['collections.fred.actions'] = 'Действия';
+$_lang['collections.fred.published'] = 'Публикация';
+$_lang['collections.fred.any'] = 'Все';
+$_lang['collections.fred.unpublished'] = 'Неопубликованные';
 $_lang['collections.fred.search'] = 'Search';
 $_lang['collections.fred.new_page'] = 'New Page';
 $_lang['collections.fred.cancel'] = 'Cancel';
