@@ -150,8 +150,8 @@ $_lang['collections.template.search_query_exclude_tagger'] = 'Поиск - Ис�
 $_lang['collections.template.search_query_title_only'] = 'Поиск - Только по заголовкам';
 $_lang['collections.template.show_quick_create'] = 'Показать кнопку быстрого создания ресурсов';
 $_lang['collections.template.quick_create_label'] = 'Надпись кнопки быстрого создания ресурсов';
-$_lang['collections.template.fred_default_blueprint'] = 'Fred Default Blueprint';
-$_lang['collections.template.fred_default_blueprint_desc'] = 'When creating children from Fred, this blueprint will get preselected by default.';
+$_lang['collections.template.fred_default_blueprint'] = 'Макет по умолчанию для Fred';
+$_lang['collections.template.fred_default_blueprint_desc'] = 'При создании дочерних ресурсов через Fred, этот макет будет предустановлен по умолчанию.';
 
 $_lang['collections.template.column.none'] = 'Этот вид еще не имеет столбцов.';
 $_lang['collections.template.column.name'] = 'Название';
