@@ -51,7 +51,7 @@ $_lang['collections.global.import'] = 'Импорт';
 // Children
 $_lang['collections.children'] = 'Дочерние ресурсы';
 $_lang['collections.children.create'] = 'Создать дочерний ресурс';
-$_lang['collections.children.quick_create'] = 'Quick Create child';
+$_lang['collections.children.quick_create'] = 'Быстро создать';
 $_lang['collections.children.view'] = 'Просмотреть дочерний ресурс';
 $_lang['collections.children.edit'] = 'Изменить дочерний ресурс';
 $_lang['collections.children.quickupdate'] = 'Быстрое обновление';
@@ -73,8 +73,8 @@ $_lang['collections.children.remove_action'] = 'Удалить';
 $_lang['collections.children.remove'] = 'Удалить дочерний ресурс';
 $_lang['collections.children.remove_confirm'] = 'Вы уверены, что хотите удалить этот дочерний ресурс?<br /><strong>Это действие нельзя отменить.</strong>';
 $_lang['collections.children.back_to_collection_label'] = 'Вернуться в Коллекцию';
-$_lang['collections.children.changeparent'] = 'Change Parent';
-$_lang['collections.children.parent'] = 'Parent';
+$_lang['collections.children.changeparent'] = 'Изменить родителя';
+$_lang['collections.children.parent'] = 'Родитель';
 
 // Template
 $_lang['collections.template.page_title'] = 'Виды Коллекции';
