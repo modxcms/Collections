@@ -8,7 +8,7 @@ class CollectionSelection extends \Collections\Model\CollectionSelection
 
     public static $metaMap = array (
         'package' => 'Collections\\Model\\',
-        'version' => NULL,
+        'version' => '3.0',
         'table' => 'collection_selections',
         'tableMeta' => 
         array (

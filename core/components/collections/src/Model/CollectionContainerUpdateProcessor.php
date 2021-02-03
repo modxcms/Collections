@@ -1,6 +1,16 @@
 <?php
 namespace Collections\Model;
 
+use xPDO\xPDO;
+
+/**
+ * Class CollectionContainer
+ *
+ *
+ * @property \Collections\Model\CollectionSetting $Setting
+ *
+ * @package Collections\Model
+ */
 class CollectionContainerUpdateProcessor extends \MODX\Revolution\Processors\Resource\Update
 {
     public function afterSave()

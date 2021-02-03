@@ -8,7 +8,7 @@ class CollectionResourceTemplate extends \Collections\Model\CollectionResourceTe
 
     public static $metaMap = array (
         'package' => 'Collections\\Model\\',
-        'version' => NULL,
+        'version' => '3.0',
         'table' => 'collection_resource_template',
         'tableMeta' => 
         array (

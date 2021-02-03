@@ -8,7 +8,7 @@ class CollectionTemplateColumn extends \Collections\Model\CollectionTemplateColu
 
     public static $metaMap = array (
         'package' => 'Collections\\Model\\',
-        'version' => NULL,
+        'version' => '3.0',
         'table' => 'collection_template_columns',
         'extends' => 'xPDO\\Om\\xPDOSimpleObject',
         'tableMeta' => 

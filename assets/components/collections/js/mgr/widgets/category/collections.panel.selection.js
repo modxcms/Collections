@@ -6,17 +6,15 @@ collections.panel.Selection = function(config) {
 };
 Ext.extend(collections.panel.Selection,MODx.panel.Resource,{
     getPageHeader: function(config) {
-        config = config || {record:{}};
-        return {
-            html: _('collections.container_new')
-            ,id: 'modx-resource-header'
-            ,xtype: 'modx-header'
-        };
+        var header =  collections.panel.Selection.superclass.getPageHeader.call(this,config);
+        header.html = _('collections.container_new')
+
+        return header;
     }
 
     ,getContentField: function(config) {
-        if (collections.template.content_place == 'none') return false;
-        if (collections.template.content_place == 'in-tab') return false;
+        if (collections.template.content_place === 'none') return false;
+        if (collections.template.content_place === 'in-tab') return false;
 
         return collections.panel.Category.superclass.getContentField.call(this,config);
     }
@@ -25,7 +23,7 @@ Ext.extend(collections.panel.Selection,MODx.panel.Resource,{
         var fields = collections.panel.Category.superclass.getFields.call(this,config);
 
         var tabs = fields.filter(function (row) {
-            if(row.id == 'modx-resource-tabs') {
+            if(row.id === 'modx-resource-tabs') {
                 return row;
             } else {
                 return false;
@@ -33,13 +31,13 @@ Ext.extend(collections.panel.Selection,MODx.panel.Resource,{
         });
 
 
-        if (tabs != false && tabs[0]) {
-        	if (config.mode == 'update') {
+        if (tabs !== false && tabs[0]) {
+        	if (config.mode === 'update') {
 
-                if (collections.template.content_place == 'original-except-children') {
+                if (collections.template.content_place === 'original-except-children') {
                     tabs[0].listeners = {
                         tabchange: function(t, tab) {
-                            if (tab.id == 'collections-category-resources') {
+                            if (tab.id === 'collections-category-resources') {
                                 Ext.getCmp('modx-resource-content').hide();
                             } else {
                                 Ext.getCmp('modx-resource-content').show();
@@ -49,7 +47,7 @@ Ext.extend(collections.panel.Selection,MODx.panel.Resource,{
                 }
 
 	            tabs[0].items.unshift({
-	                title: (_(collections.template.tab_label) == undefined) ? collections.template.tab_label : _(collections.template.tab_label)
+	                title: (_(collections.template.tab_label) === undefined) ? collections.template.tab_label : _(collections.template.tab_label)
 	                ,id: 'collections-category-resources'
 	                ,cls: 'modx-resource-tab'
 	                ,layout: 'form'
@@ -65,7 +63,7 @@ Ext.extend(collections.panel.Selection,MODx.panel.Resource,{
 	                ,items: this.getCollectionsChildrenTab(config)
 	            });
 
-                if (collections.template.content_place == 'in-tab') {
+                if (collections.template.content_place === 'in-tab') {
                     tabs[0].items.splice(2,0,{
                         title: _('resource_content')
                         ,layout: 'form'

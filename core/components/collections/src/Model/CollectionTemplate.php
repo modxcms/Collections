@@ -56,11 +56,11 @@ class CollectionTemplate extends \xPDO\Om\xPDOSimpleObject
 {
     public function setTemplates($templates)
     {
-        $this->xpdo->removeCollection('CollectionResourceTemplate', ['collection_template' => $this->id]);
+        $this->xpdo->removeCollection(CollectionResourceTemplate::class, ['collection_template' => $this->id]);
 
         if (!empty($templates)) {
             foreach ($templates as $idTemplate) {
-                $newTemplate = $this->xpdo->newObject('CollectionResourceTemplate');
+                $newTemplate = $this->xpdo->newObject(CollectionResourceTemplate::class);
                 $newTemplate->set('collection_template', $this->id);
                 $newTemplate->set('resource_template', $idTemplate);
                 $newTemplate->save();

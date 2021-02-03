@@ -8,7 +8,7 @@ class CollectionSetting extends \Collections\Model\CollectionSetting
 
     public static $metaMap = array (
         'package' => 'Collections\\Model\\',
-        'version' => NULL,
+        'version' => '3.0',
         'table' => 'collection_settings',
         'extends' => 'xPDO\\Om\\xPDOSimpleObject',
         'tableMeta' => 

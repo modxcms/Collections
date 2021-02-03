@@ -8,7 +8,7 @@ class CollectionContainer extends \Collections\Model\CollectionContainer
 
     public static $metaMap = array (
         'package' => 'Collections\\Model\\',
-        'version' => NULL,
+        'version' => '3.0',
         'extends' => 'MODX\\Revolution\\modResource',
         'tableMeta' => 
         array (

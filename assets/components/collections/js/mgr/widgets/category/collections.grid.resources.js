@@ -386,7 +386,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             folderGet = '&folder=' + parseInt(query.folder);
         }
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || collections.template.parent) + collectionGet + '&context_key=' + collections.template.parent_context + '&class_key=' + collections.template.children.resource_type + template + selection + folderGet);
+        MODx.loadPage('resource/create', 'parent=' + (this.currentFolder || collections.template.parent) + collectionGet + '&context_key=' + collections.template.parent_context + '&class_key=' + collections.template.children.resource_type + template + selection + folderGet);
     }
 
     ,quickCreateChild: function(btn,e) {
@@ -447,7 +447,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             folderGet = '&folder=' + parseInt(query.folder);
         }
 
-        MODx.loadPage(MODx.action['resource/create'], 'parent=' + (this.currentFolder || collections.template.parent) + collectionGet + '&context_key=' + collections.template.parent_context + '&class_key=' + btn.derivative + template + selection + folderGet);
+        MODx.loadPage('resource/create', 'parent=' + (this.currentFolder || collections.template.parent) + collectionGet + '&context_key=' + collections.template.parent_context + '&class_key=' + btn.derivative + template + selection + folderGet);
     }
 
     ,quickCreateDerivativeChild: function(btn, e) {

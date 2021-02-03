@@ -87,7 +87,8 @@ class Collections
             'imagesUrl' => $assetsUrl . 'images/',
 
             'corePath' => $corePath,
-            'modelPath' => $corePath . 'model/',
+            'srcPath' => $corePath . 'src/',
+            'modelPath' => $corePath . 'src/model/',
             'chunksPath' => $corePath . 'elements/chunks/',
             'chunkSuffix' => '.chunk.tpl',
             'snippetsPath' => $corePath . 'elements/snippets/',

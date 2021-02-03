@@ -44,19 +44,3 @@ class SelectionContainer extends CollectionContainer
         return $this->xpdo->lexicon('selections.system.type_name');
     }
 }
-
-class SelectionContainerCreateProcessor extends CollectionContainerCreateProcessor
-{
-    public function afterSave()
-    {
-        return parent::afterSave();
-    }
-}
-
-class SelectionContainerUpdateProcessor extends CollectionContainerUpdateProcessor
-{
-    public function afterSave()
-    {
-        return parent::afterSave();
-    }
-}

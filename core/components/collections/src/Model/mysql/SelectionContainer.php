@@ -8,7 +8,7 @@ class SelectionContainer extends \Collections\Model\SelectionContainer
 
     public static $metaMap = array (
         'package' => 'Collections\\Model\\',
-        'version' => NULL,
+        'version' => '3.0',
         'extends' => 'Collections\\Model\\CollectionContainer',
         'tableMeta' => 
         array (
