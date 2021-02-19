@@ -263,7 +263,9 @@ export default config => (fred, Plugin, pluginTools) => {
                 parent: collection.id,
                 blueprint: 0,
                 template: view.template,
-                theme: pluginTools.fredConfig.config.theme
+                theme: pluginTools.fredConfig.config.theme,
+                hidemenu: view.hidemenu,
+                published: view.published,
             };
 
             const onChange = (name, value) => {
@@ -388,7 +390,7 @@ export default config => (fred, Plugin, pluginTools) => {
 
                 emitter.emit('fred-loading', pluginTools.fredConfig.lng('fred.fe.pages.creating_page'));
 
-                createResource(state.parent, state.template, state.pagetitle, state.blueprint)
+                createResource(state.parent, state.template, state.pagetitle, state.blueprint, state.published, state.hidemenu)
                     .then(json => {
                         location.href = json.url;
                         emitter.emit('fred-loading-hide');

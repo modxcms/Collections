@@ -46,6 +46,8 @@ class GetCollectionView extends Endpoint
             'blueprint' => $defaultBlueprint,
             'sort' => $view->sort_field,
             'sortDir' => $view->sort_dir,
+            'published' => $view->child_published,
+            'hidemenu' => $view->child_hide_from_menu,
         ]);
     }
 }
