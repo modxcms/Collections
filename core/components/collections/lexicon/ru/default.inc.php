@@ -51,10 +51,10 @@ $_lang['collections.global.import'] = 'Импорт';
 // Children
 $_lang['collections.children'] = 'Дочерние ресурсы';
 $_lang['collections.children.create'] = 'Создать дочерний ресурс';
-$_lang['collections.children.quick_create'] = 'Быстро создать';
+$_lang['collections.children.quick_create'] = 'Быстро создать дочерний ресурс';
 $_lang['collections.children.view'] = 'Просмотреть дочерний ресурс';
 $_lang['collections.children.edit'] = 'Изменить дочерний ресурс';
-$_lang['collections.children.quickupdate'] = 'Быстрое обновление';
+$_lang['collections.children.quickupdate'] = 'Быстро изменить';
 $_lang['collections.children.publish'] = 'Опубликовать дочерний ресурс';
 $_lang['collections.children.unpublish'] = 'Отменить публикацию дочернего ресурса';
 $_lang['collections.children.duplicate'] = 'Копировать дочерний ресурс';
