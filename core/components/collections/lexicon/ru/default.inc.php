@@ -51,7 +51,7 @@ $_lang['collections.global.import'] = 'Импорт';
 // Children
 $_lang['collections.children'] = 'Дочерние ресурсы';
 $_lang['collections.children.create'] = 'Создать дочерний ресурс';
-$_lang['collections.children.quick_create'] = 'Quick Create child';
+$_lang['collections.children.quick_create'] = 'Быстро создать';
 $_lang['collections.children.view'] = 'Просмотреть дочерний ресурс';
 $_lang['collections.children.edit'] = 'Изменить дочерний ресурс';
 $_lang['collections.children.quickupdate'] = 'Быстрое обновление';
@@ -73,8 +73,8 @@ $_lang['collections.children.remove_action'] = 'Удалить';
 $_lang['collections.children.remove'] = 'Удалить дочерний ресурс';
 $_lang['collections.children.remove_confirm'] = 'Вы уверены, что хотите удалить этот дочерний ресурс?<br /><strong>Это действие нельзя отменить.</strong>';
 $_lang['collections.children.back_to_collection_label'] = 'Вернуться в Коллекцию';
-$_lang['collections.children.changeparent'] = 'Change Parent';
-$_lang['collections.children.parent'] = 'Parent';
+$_lang['collections.children.changeparent'] = 'Изменить родителя';
+$_lang['collections.children.parent'] = 'Родитель';
 
 // Template
 $_lang['collections.template.page_title'] = 'Виды Коллекции';
@@ -145,13 +145,13 @@ $_lang['collections.template.selection_link_condition_desc'] = 'JSON-предс�
 $_lang['collections.template.export_more'] = 'Экспорт представлений';
 $_lang['collections.template.export'] = 'Экспорт';
 $_lang['collections.template.import'] = 'Импорт представлений';
-$_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
-$_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
-$_lang['collections.template.search_query_title_only'] = 'Search - Title only';
-$_lang['collections.template.show_quick_create'] = 'Show Quick Create button';
-$_lang['collections.template.quick_create_label'] = 'Quick Create button label';
-$_lang['collections.template.fred_default_blueprint'] = 'Fred Default Blueprint';
-$_lang['collections.template.fred_default_blueprint_desc'] = 'When creating children from Fred, this blueprint will get preselected by default.';
+$_lang['collections.template.search_query_exclude_tvs'] = 'Поиск - Исключить столбцы TV';
+$_lang['collections.template.search_query_exclude_tagger'] = 'Поиск - Исключить Tagger';
+$_lang['collections.template.search_query_title_only'] = 'Поиск - Только по заголовкам';
+$_lang['collections.template.show_quick_create'] = 'Показать кнопку быстрого создания ресурсов';
+$_lang['collections.template.quick_create_label'] = 'Надпись кнопки быстрого создания ресурсов';
+$_lang['collections.template.fred_default_blueprint'] = 'Макет по умолчанию для Fred';
+$_lang['collections.template.fred_default_blueprint_desc'] = 'При создании дочерних ресурсов через Fred, этот макет будет предустановлен по умолчанию.';
 
 $_lang['collections.template.column.none'] = 'Этот вид еще не имеет столбцов.';
 $_lang['collections.template.column.name'] = 'Название';
