@@ -1,14 +1,14 @@
 <?php
+use MODX\Revolution\modX;
+use xPDO\Transport\xPDOTransport;
+
 /**
- * @var \Teleport\Transport\Transport $transport
+ * @var \xPDO\Transport\xPDOTransport $transport
  * @var array $object
  * @var array $options
  */
 
-use MODX\Revolution\modX;
-
 set_time_limit(0);
-
 
 if (!function_exists('updateTableColumns')) {
     /**
@@ -113,8 +113,8 @@ if ($object->xpdo) {
                 \Collections\Model\CollectionTemplate::class,
                 \Collections\Model\CollectionTemplateColumn::class,
                 \Collections\Model\CollectionResourceTemplate::class,
-                \Collections\Model\CollectionSelection::class
-            ];            
+                \Collections\Model\CollectionSelection::class,
+            ];
 
             foreach ($tables as $table) {
                 $modx->log(modX::LOG_LEVEL_INFO, 'Altering table: ' . $table);

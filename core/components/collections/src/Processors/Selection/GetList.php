@@ -305,8 +305,8 @@ class GetList extends GetListProcessor
             if ($this->searchQueryExcludeTagger == false) {
                 $taggerInstalled = $this->collections->getOption('taggerInstalled', null, false);
                 if ($taggerInstalled) {
-                    $c->leftJoin('TaggerTagResource', 'TagResource', ['TagResource.resource = modResource.id']);
-                    $c->leftJoin('TaggerTag', 'Tag', ['Tag.id = TagResource.tag']);
+                    $c->leftJoin('Tagger\\Model\\TaggerTagResource', 'TagResource', ['TagResource.resource = modResource.id']);
+                    $c->leftJoin('Tagger\\Model\\TaggerTag', 'Tag', ['Tag.id = TagResource.tag']);
 
                     array_push($queryWhere, [
                         'OR:Tag.tag:LIKE' => '%' . $query . '%',
@@ -366,7 +366,7 @@ class GetList extends GetListProcessor
         if ($taggerInstalled) {
             foreach ($this->taggerColumns as $column) {
                 $c->select([
-                    '`' . $column . '`' => '(SELECT group_concat(t.tag SEPARATOR \', \') FROM ' . $this->modx->getTableName('TaggerTagResource') . ' tr LEFT JOIN ' . $this->modx->getTableName('TaggerTag') . ' t ON t.id = tr.tag LEFT JOIN ' . $this->modx->getTableName('TaggerGroup') . ' tg ON tg.id = t.group WHERE tr.resource = modResource.id AND tg.alias = \'' . preg_replace('/tagger_/', '', $column, 1) . '\' group by t.group)'
+                    '`' . $column . '`' => '(SELECT group_concat(t.tag SEPARATOR \', \') FROM ' . $this->modx->getTableName('Tagger\\Model\\TaggerTagResource') . ' tr LEFT JOIN ' . $this->modx->getTableName('Tagger\\Model\\TaggerTag') . ' t ON t.id = tr.tag LEFT JOIN ' . $this->modx->getTableName('Tagger\\Model\\TaggerGroup') . ' tg ON tg.id = t.group WHERE tr.resource = modResource.id AND tg.alias = \'' . preg_replace('/tagger_/', '', $column, 1) . '\' group by t.group)'
                 ]);
             }
         }

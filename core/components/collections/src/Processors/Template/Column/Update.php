@@ -61,8 +61,8 @@ class Update extends UpdateProcessor
             $useTagger = $this->collections->getOption('taggerInstalled', null, false);
             if ($useTagger && (strpos($name, 'tagger_') !== false)) {
                 $groupName = preg_replace('/tagger_/', '', $name, 1);
-                /** @var TaggerGroup $taggerGroup */
-                $taggerGroup = $this->modx->getObject('TaggerGroup', array('alias' => $groupName));
+                /** @var \Tagger\Model\TaggerGroup $taggerGroup */
+                $taggerGroup = $this->modx->getObject('Tagger\\Model\\TaggerGroup', array('alias' => $groupName));
                 if ($taggerGroup) {
                     $this->setProperty('label', $taggerGroup->name);
                     $autoLabel = true;

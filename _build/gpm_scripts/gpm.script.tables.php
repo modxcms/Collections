@@ -1,4 +1,6 @@
 <?php
+use xPDO\Transport\xPDOTransport;
+
 /**
  * Create tables
  *
@@ -7,7 +9,7 @@
  * @package collections
  * @subpackage build.scripts
  *
- * @var \Teleport\Transport\Transport $transport
+ * @var \xPDO\Transport\xPDOTransport $transport
  * @var array $object
  * @var array $options
  */
@@ -18,10 +20,10 @@ if ($options[xPDOTransport::PACKAGE_ACTION] === xPDOTransport::ACTION_UNINSTALL)
 
 $manager = $modx->getManager();
 
-$manager->createObjectContainer('\Collections\Model\CollectionSetting');
-$manager->createObjectContainer('\Collections\Model\CollectionTemplate');
-$manager->createObjectContainer('\Collections\Model\CollectionTemplateColumn');
-$manager->createObjectContainer('\Collections\Model\CollectionResourceTemplate');
-$manager->createObjectContainer('\Collections\Model\CollectionSelection');
+$manager->createObjectContainer(\Collections\Model\CollectionSetting::class);
+$manager->createObjectContainer(\Collections\Model\CollectionTemplate::class);
+$manager->createObjectContainer(\Collections\Model\CollectionTemplateColumn::class);
+$manager->createObjectContainer(\Collections\Model\CollectionResourceTemplate::class);
+$manager->createObjectContainer(\Collections\Model\CollectionSelection::class);
 
 return true;

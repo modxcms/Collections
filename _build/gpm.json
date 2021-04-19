@@ -4,7 +4,7 @@
   "namespace": "Collections",
   "description": "Hides resources under this container in tree. Adding grid int o the update resource panel.",
   "author": "John Peca",
-  "version": "3.7.2-pl",
+  "version": "4.0.0-alpha1",
   "menus": [
     {
       "text": "collections.menu.collection_templates",
@@ -64,13 +64,13 @@
       "key": "mgr_tree_icon_collectioncontainer",
       "area": "manager",
       "value": "collectioncontainer",
-      "namespace": ""
+      "namespace": "core"
     },
     {
       "key": "mgr_tree_icon_selectioncontainer",
       "area": "manager",
       "value": "selectioncontainer",
-      "namespace": ""
+      "namespace": "core"
     },
     {
       "key": "renderer_image_path",
@@ -100,18 +100,19 @@
     ]
   },
   "build": {
-    "scripts": {
-      "before": [
-        "resolve.customevents.php",
-        "resolve.switchback.php"
-      ],
-      "after": [
-        "resolve.synctables.php",
-        "resolve.updatefromfirst.php",
-        "resolve.defaulttemplate.php",
-        "resolve.fixselections.php",
-        "resolve.fixsystemsettings.php"
-      ]
+    "scriptsBefore": [
+      "resolve.customevents.php",
+      "resolve.switchback.php"
+    ],
+    "scriptsAfter": [
+      "resolve.updatefromfirst.php",
+      "resolve.defaulttemplate.php",
+      "resolve.fixselections.php",
+      "resolve.fixsystemsettings.php"
+    ],
+    "requires": {
+        "gpm": ">=3.0.0",
+        "modx": ">=3.0.0-alpha"
     }
   }
 }

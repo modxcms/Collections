@@ -24,25 +24,20 @@ class Collections
     function __construct(modX &$modx, array $config = [])
     {
         $this->modx =& $modx;
-        $this->namespace = $this->getOption('namespace', $config, 'collections');
 
         $corePath = $this->getOption('core_path', $config, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/collections/');
         $assetsUrl = $this->getOption('assets_url', $config, $this->modx->getOption('assets_url', null, MODX_ASSETS_URL) . 'components/collections/');
 
-        $taggerCorePath = $modx->getOption('tagger.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/tagger/');
+        $fred = null;
+        $tagger = null;
+        $quip = null;
 
-        if (file_exists($taggerCorePath . 'model/tagger/tagger.class.php')) {
-            /** @var Tagger $tagger */
-            $tagger = $modx->getService(
-                'tagger',
-                'Tagger',
-                $taggerCorePath . 'model/tagger/',
-                [
-                    'core_path' => $taggerCorePath
-                ]
-            );
-        } else {
-            $tagger = null;
+        if ($modx->services->has('tagger')) {
+            $tagger = $modx->services->get('tagger');
+        }
+
+        if ($modx->services->has('fred')) {
+            $fred = $modx->services->get('fred');
         }
 
         $quipCorePath = $modx->getOption('quip.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/quip/');
@@ -57,24 +52,6 @@ class Collections
                     'core_path' => $quipCorePath
                 ]
             );
-        } else {
-            $quip = null;
-        }
-
-        $fredCorePath = $modx->getOption('fred.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
-
-        if (file_exists($fredCorePath . 'model/fred/fred.class.php')) {
-            /** @var Fred $fred */
-            $fred = $modx->getService(
-                'fred',
-                'Fred',
-                $fredCorePath . 'model/fred/',
-                [
-                    'core_path' => $fredCorePath
-                ]
-            );
-        } else {
-            $fred = null;
         }
 
         $this->config = array_merge([
@@ -95,9 +72,9 @@ class Collections
             'processorsPath' => $corePath . 'processors/',
             'templatesPath' => $corePath . 'templates/',
 
-            'taggerInstalled' => $tagger instanceof Tagger,
+            'taggerInstalled' => $tagger !== null,
             'quipInstalled' => $quip instanceof Quip,
-            'fredInstalled' => $fred instanceof Fred,
+            'fredInstalled' => $fred !== null,
         ], $config);
 
         $this->modx->addPackage('collections', $this->config['modelPath']);

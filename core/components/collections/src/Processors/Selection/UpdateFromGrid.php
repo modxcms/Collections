@@ -117,7 +117,7 @@ class UpdateFromGrid extends UpdateProcessor
 
     public function saveTagger($group, $tags)
     {
-        $group = $this->modx->getObject('TaggerGroup', ['alias' => $group]);
+        $group = $this->modx->getObject('Tagger\\Model\\TaggerGroup', ['alias' => $group]);
         if (!$group) {
             return;
         }
@@ -130,10 +130,10 @@ class UpdateFromGrid extends UpdateProcessor
             return;
         }
 
-        $oldTagsQuery = $this->modx->newQuery('TaggerTagResource');
-        $oldTagsQuery->leftJoin('TaggerTag', 'Tag');
+        $oldTagsQuery = $this->modx->newQuery('Tagger\\Model\\TaggerTagResource');
+        $oldTagsQuery->leftJoin('Tagger\\Model\\TaggerTag', 'Tag');
         $oldTagsQuery->where(['resource' => $this->object->id, 'Tag.group' => $group->id]);
-        $oldTagsQuery->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', ['tag']));
+        $oldTagsQuery->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTagResource', 'TaggerTagResource', '', ['tag']));
 
         $oldTagsQuery->prepare();
         $oldTagsQuery->stmt->execute();
@@ -143,10 +143,10 @@ class UpdateFromGrid extends UpdateProcessor
         $tags = Utils::explodeAndClean($tags);
 
         foreach ($tags as $tag) {
-            /** @var TaggerTag $tagObject */
-            $tagObject = $this->modx->getObject('TaggerTag', ['tag' => $tag, 'group' => $group->id]);
+            /** @var \Tagger\Model\TaggerTag $tagObject */
+            $tagObject = $this->modx->getObject('Tagger\\Model\\TaggerTag', ['tag' => $tag, 'group' => $group->id]);
             if ($tagObject) {
-                $existsRelation = $this->modx->getObject('TaggerTagResource', ['tag' => $tagObject->id, 'resource' => $this->object->id]);
+                $existsRelation = $this->modx->getObject('Tagger\\Model\\TaggerTagResource', ['tag' => $tagObject->id, 'resource' => $this->object->id]);
                 if ($existsRelation) {
                     if (isset($oldTags[$existsRelation->tag])) {
                         unset($oldTags[$existsRelation->tag]);
@@ -161,14 +161,14 @@ class UpdateFromGrid extends UpdateProcessor
                     continue;
                 }
 
-                $tagObject = $this->modx->newObject('TaggerTag');
+                $tagObject = $this->modx->newObject('Tagger\\Model\\TaggerTag');
                 $tagObject->set('tag', $tag);
                 $tagObject->addOne($group, 'Group');
                 $tagObject->save();
             }
 
-            /** @var TaggerTagResource $relationObject */
-            $relationObject = $this->modx->newObject('TaggerTagResource');
+            /** @var \Tagger\Model\TaggerTagResource $relationObject */
+            $relationObject = $this->modx->newObject('Tagger\\Model\\TaggerTagResource');
             $relationObject->set('tag', $tagObject->id);
             $relationObject->set('resource', $this->object->id);
             $relationObject->save();
@@ -176,15 +176,15 @@ class UpdateFromGrid extends UpdateProcessor
 
         if (count($oldTags) > 0) {
             $oldTags = array_keys($oldTags);
-            $this->modx->removeCollection('TaggerTagResource', [
+            $this->modx->removeCollection('Tagger\\Model\\TaggerTagResource', [
                 'tag:IN' => $oldTags,
                 'AND:resource:=' => $this->object->id
             ]);
         }
 
         if ($group->remove_unused) {
-            $c = $this->modx->newQuery('TaggerTagResource');
-            $c->select($this->modx->getSelectColumns('TaggerTagResource', 'TaggerTagResource', '', ['tag']));
+            $c = $this->modx->newQuery('Tagger\\Model\\TaggerTagResource');
+            $c->select($this->modx->getSelectColumns('Tagger\\Model\\TaggerTagResource', 'TaggerTagResource', '', ['tag']));
             $c->prepare();
             $c->stmt->execute();
             $IDs = $c->stmt->fetchAll(\PDO::FETCH_COLUMN, 0);
@@ -192,7 +192,7 @@ class UpdateFromGrid extends UpdateProcessor
             $IDs = array_keys(array_flip($IDs));
 
             if (count($IDs) > 0) {
-                $this->modx->removeCollection('TaggerTag', ['id:NOT IN' => $IDs, 'group' => $group->id]);
+                $this->modx->removeCollection('Tagger\\Model\\TaggerTag', ['id:NOT IN' => $IDs, 'group' => $group->id]);
             }
 
         }
