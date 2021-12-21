@@ -6,10 +6,10 @@
  * @subpackage lexicon
  */
 
-$_lang['collections.fred.collections'] = 'Collections';
-$_lang['collections.fred.loading_collection'] = 'Loading Collection';
-$_lang['collections.fred.pagetitle'] = 'Page Title';
-$_lang['collections.fred.publish'] = 'Publish';
+$_lang['collections.fred.collections'] = 'Kollektionen';
+$_lang['collections.fred.loading_collection'] = 'Kollektion wird geladen';
+$_lang['collections.fred.pagetitle'] = 'Seitentitel';
+$_lang['collections.fred.publish'] = 'Veröffentlichen';
 $_lang['collections.fred.expires'] = 'Expires';
 $_lang['collections.fred.author'] = 'Author';
 $_lang['collections.fred.actions'] = 'Actions';
