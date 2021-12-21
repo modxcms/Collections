@@ -30,7 +30,7 @@ $_lang['selections.delete_multiple'] = 'Ausgewählte löschen';
 $_lang['selections.delete_multiple_confirm'] = 'Sind Sie sicher, dass Sie alle ausgewählten Ressourcen löschen möchten?';
 $_lang['selections.remove'] = 'Ressource entfernen';
 $_lang['selections.remove_confirm'] = 'Sind Sie sicher, dass Sie diese Ressource endgültig entfernen möchten?<br /><strong>Dies kann nicht rückgängig gemacht werden.</strong>';
-$_lang['selections.resource'] = 'Resource';
+$_lang['selections.resource'] = 'Ressource';
 $_lang['selections.unlink_multiple'] = 'Auswahl Verlinkung aufheben';
 $_lang['selections.back_to_selection_label'] = 'Zurück zur Selektion';
 
