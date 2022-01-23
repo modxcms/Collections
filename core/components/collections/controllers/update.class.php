@@ -220,7 +220,7 @@ class CollectionContainerUpdateManagerController extends ResourceUpdateManagerCo
             ];
 
             if ($column->editor != '') {
-                $editorObj = json_decode($column->editor, to);
+                $editorObj = json_decode($column->editor, true);
                 if ($editorObj == null) {
                     $editorObj = [
                         'xtype' => $column->editor,
