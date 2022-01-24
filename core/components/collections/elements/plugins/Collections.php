@@ -10,10 +10,13 @@
  * @var \MODX\Revolution\modX $modx
  * @var array $scriptProperties
  */
-$corePath = $modx->getOption('collections.core_path', null, $modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/collections/');
+
+if (!$modx->services->has('collections')) {
+    return;
+}
+
 /** @var Collections\Collections $collections */
 $collections = $modx->services->get('collections');
-
 if (!($collections instanceof Collections\Collections)) return '';
 
 $className = "\\Collections\\Events\\{$modx->event->name}";
