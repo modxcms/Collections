@@ -7,6 +7,7 @@
 
 use Collections\Model\CollectionContainer;
 use Collections\Model\CollectionTemplate;
+use Collections\Model\SelectionContainer;
 use MODX\Revolution\modSystemSetting;
 use MODX\Revolution\Transport\modTransportPackage;
 use MODX\Revolution\modResource;
@@ -95,6 +96,18 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
                     $view->save();
                 }
             }
+        }
+
+        $oldCollections = $modx->getIterator(modResource::class, ['class_key' => 'CollectionContainer']);
+        foreach ($oldCollections as $oldCollection) {
+            $oldCollection->set('class_key', CollectionContainer::class);
+            $oldCollection->save();
+        }
+
+        $oldSelections = $modx->getIterator(modResource::class, ['class_key' => 'SelectionContainer']);
+        foreach ($oldSelections as $oldSelection) {
+            $oldSelection->set('class_key', SelectionContainer::class);
+            $oldSelection->save();
         }
 
         break;
