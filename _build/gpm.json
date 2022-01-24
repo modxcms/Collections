@@ -4,7 +4,7 @@
   "namespace": "Collections",
   "description": "Hides resources under this container in tree. Adding grid int o the update resource panel.",
   "author": "John Peca",
-  "version": "4.0.0-alpha1",
+  "version": "4.0.0-alpha2",
   "menus": [
     {
       "text": "collections.menu.collection_templates",
