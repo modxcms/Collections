@@ -5,6 +5,8 @@
  * @var array $options
  */
 
+use MODX\Revolution\modDocument;
+
 switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_INSTALL:
 
@@ -25,7 +27,7 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
             $template->set('sort_field', 'publishedon');
             $template->set('sort_dir', 'desc');
             $template->set('child_template', null);
-            $template->set('child_resource_type', 'modDocument');
+            $template->set('child_resource_type', modDocument::class);
             $template->set('resource_type_selection', true);
 
             $columns = [];

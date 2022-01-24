@@ -28,7 +28,7 @@
         <field key="sort_dir" dbtype="varchar" precision="4" phptype="string" null="false" default="asc" />
         <field key="sort_type" dbtype="varchar" precision="64" phptype="string" null="true" />
         <field key="child_template" dbtype="int" attributes="unsigned" precision="10" phptype="integer" null="true" />
-        <field key="child_resource_type" dbtype="varchar" precision="100" phptype="string" null="false" default="modDocument" />
+        <field key="child_resource_type" dbtype="varchar" precision="100" phptype="string" null="false" default="MODX\Revolution\modDocument" />
         <field key="resource_type_selection" dbtype="int" precision="1" phptype="boolean" null="false" default="1" />
         <field key="tab_label" dbtype="varchar" precision="255" phptype="string" null="false" default="collections.children" />
         <field key="button_label" dbtype="varchar" precision="255" phptype="string" null="false" default="collections.children.create" />

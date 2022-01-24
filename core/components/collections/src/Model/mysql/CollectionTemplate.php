@@ -27,7 +27,7 @@ class CollectionTemplate extends \Collections\Model\CollectionTemplate
             'sort_dir' => 'asc',
             'sort_type' => NULL,
             'child_template' => NULL,
-            'child_resource_type' => 'modDocument',
+            'child_resource_type' => 'MODX\\Revolution\\modDocument',
             'resource_type_selection' => 1,
             'tab_label' => 'collections.children',
             'button_label' => 'collections.children.create',
@@ -145,7 +145,7 @@ class CollectionTemplate extends \Collections\Model\CollectionTemplate
                 'precision' => '100',
                 'phptype' => 'string',
                 'null' => false,
-                'default' => 'modDocument',
+                'default' => 'MODX\\Revolution\\modDocument',
             ),
             'resource_type_selection' => 
             array (
