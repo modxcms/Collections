@@ -4,7 +4,7 @@ collections.page.UpdateCategory = function(config) {
     Ext.applyIf(config,{
         panelXType: 'collections-panel-category'
     });
-    config.canDelete = false;
+    config.canDelete = true;
     collections.page.UpdateCategory.superclass.constructor.call(this,config);
 };
 Ext.extend(collections.page.UpdateCategory,MODx.page.UpdateResource,{
@@ -18,7 +18,7 @@ collections.page.UpdateSelection = function(config) {
     Ext.applyIf(config,{
         panelXType: 'collections-panel-selection'
     });
-    config.canDelete = false;
+    config.canDelete = true;
     collections.page.UpdateSelection.superclass.constructor.call(this,config);
 };
 Ext.extend(collections.page.UpdateSelection,MODx.page.UpdateResource,{
