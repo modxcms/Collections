@@ -318,23 +318,24 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
      * @deprecated use getEditChildUrl instead
      */
     ,editChild: function(btn,e) {
-        var selection = '';
-        if (collections.template.parent != MODx.request.id){
-           selection = '&selection=' + MODx.request.id;
-        }
-
-        var collectionGet = '';
-        if (this.currentFolder) {
-            collectionGet = '&collection=' + collections.template.parent
-        }
-
-        var folderGet = '';
-        var query = Ext.urlDecode(location.search.replace('?', ''));
-        if (parseInt(query.folder) > 0) {
-            folderGet = '&folder=' + parseInt(query.folder);
-        }
-
-        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection + collectionGet + folderGet);
+        console.log('update');
+        // var selection = '';
+        // if (collections.template.parent != MODx.request.id){
+        //    selection = '&selection=' + MODx.request.id;
+        // }
+        //
+        // var collectionGet = '';
+        // if (this.currentFolder) {
+        //     collectionGet = '&collection=' + collections.template.parent
+        // }
+        //
+        // var folderGet = '';
+        // var query = Ext.urlDecode(location.search.replace('?', ''));
+        // if (parseInt(query.folder) > 0) {
+        //     folderGet = '&folder=' + parseInt(query.folder);
+        // }
+        //
+        // MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection + collectionGet + folderGet);
     }
 
     ,getViewChildUrl: function(data) {
@@ -683,6 +684,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
     }
 
     ,handleButtons: function(e){
+
         var t = e.getTarget();
         var elm;
         var action = null;
@@ -690,7 +692,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             action = t.dataset.action;
         } else {
             elm = t.className.split(' ')[0];
-            if(elm == 'controlBtn') {
+            if(elm === 'controlBtn') {
                 action = t.className.split(' ')[1];
             }
         }
@@ -742,7 +744,6 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                     this.openChild();
                     break;
                 default:
-                    this.editChild();
                     break;
             }
         }
