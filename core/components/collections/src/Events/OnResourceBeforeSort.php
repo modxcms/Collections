@@ -3,25 +3,26 @@
 namespace Collections\Events;
 
 use Collections\Model\CollectionContainer;
+use MODX\Revolution\modResource;
 
 class OnResourceBeforeSort extends Event
 {
 
     public function run()
     {
-        /** @var \modResource[] $nodes */
+        /** @var modResource[] $nodes */
         $nodes =& $this->scriptProperties['nodes'];
 
         foreach ($nodes as $id => $node) {
-            /** @var \modResource $resource */
-            $resource = $this->modx->getObject('modResource', $node['id']);
+            /** @var modResource $resource */
+            $resource = $this->modx->getObject(modResource::class, $node['id']);
             if (!$resource) continue;
 
-            /** @var \modResource $originalParent */
+            /** @var modResource $originalParent */
             $originalParent = $resource->Parent;
 
-            /** @var \modResource $parent */
-            $parent = $this->modx->getObject('modResource', $node['parent']);
+            /** @var modResource $parent */
+            $parent = $this->modx->getObject(modResource::class, $node['parent']);
 
             if (($parent && $originalParent && $parent->id == $originalParent->id) || (!$parent && !$originalParent)) {
                 continue;
@@ -44,9 +45,9 @@ class OnResourceBeforeSort extends Event
     }
 
     /**
-     * @param \modResource $parent
-     * @param \modResource $resource
-     * @param \modResource $originalParent
+     * @param modResource $parent
+     * @param modResource $resource
+     * @param modResource $originalParent
      */
     protected function handleParent($parent, $resource, $originalParent)
     {
@@ -66,7 +67,7 @@ class OnResourceBeforeSort extends Event
     }
 
     /**
-     * @param \modResource $originalParent
+     * @param modResource $originalParent
      */
     protected function handleOriginalParent($originalParent)
     {

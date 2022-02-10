@@ -2,6 +2,7 @@
 
 namespace Collections\Endpoint\Ajax;
 
+use MODX\Revolution\modResource;
 use MODX\Revolution\modUserProfile;
 
 class GetAuthors extends Endpoint
@@ -23,7 +24,7 @@ class GetAuthors extends Endpoint
         }
 
 
-        $c = $this->modx->newQuery('modResource');
+        $c = $this->modx->newQuery(modResource::class);
         $c->where([
             'parent' => $collection,
             'template:IN' => $templates

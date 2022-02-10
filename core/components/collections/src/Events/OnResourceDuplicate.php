@@ -2,17 +2,17 @@
 
 namespace Collections\Events;
 
-use Collections\Model\CollectionContainer;
+use  Collections\Model\CollectionContainer;
 use Collections\Model\CollectionSetting;
 
 class OnResourceDuplicate extends Event
 {
     public function run()
     {
-        /** @var \modResource $newResource */
+        /** @var modResource $newResource */
         $newResource = $this->scriptProperties['newResource'];
 
-        /** @var \modResource $oldResource */
+        /** @var modResource $oldResource */
         $oldResource = $this->scriptProperties['oldResource'];
 
         if ($oldResource->class_key !== CollectionContainer::class) return;

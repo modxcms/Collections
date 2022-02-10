@@ -65,7 +65,7 @@ class Collections
 
             'corePath' => $corePath,
             'srcPath' => $corePath . 'src/',
-            'modelPath' => $corePath . 'src/model/',
+            'modelPath' => $corePath . 'src/Model/',
             'chunksPath' => $corePath . 'elements/chunks/',
             'chunkSuffix' => '.chunk.tpl',
             'snippetsPath' => $corePath . 'elements/snippets/',
@@ -77,7 +77,6 @@ class Collections
             'fredInstalled' => $fred !== null,
         ], $config);
 
-        $this->modx->addPackage('collections', $this->config['modelPath']);
         $this->modx->lexicon->load('collections:default');
         $this->modx->lexicon->load('collections:selections');
     }

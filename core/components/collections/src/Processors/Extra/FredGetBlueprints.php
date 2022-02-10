@@ -7,7 +7,7 @@ use xPDO\Om\xPDOQuery;
 
 class FredGetBlueprints extends GetListProcessor
 {
-    public $classKey = 'FredBlueprint';
+    public $classKey = 'Fred\\Model\\FredBlueprint';
     public $defaultSortField = 'name';
     public $defaultSortDirection = 'asc';
     public $checkListPermission = true;
@@ -15,18 +15,7 @@ class FredGetBlueprints extends GetListProcessor
 
     public function initialize()
     {
-        $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
-        /** @var Fred $fred */
-        $fred = $this->modx->getService(
-            'fred',
-            'Fred',
-            $corePath . 'model/fred/',
-            [
-                'core_path' => $corePath
-            ]
-        );
-
-        if (!($fred instanceof Fred)) {
+        if (!$this->modx->services->has('fred')) {
             return false;
         }
 
@@ -82,13 +71,13 @@ class FredGetBlueprints extends GetListProcessor
 
     public function prepareQueryAfterCount(xPDOQuery $c)
     {
-        $c->leftJoin('FredBlueprintCategory', 'Category');
-        $c->leftJoin('FredTheme', 'Theme', 'Category.theme = Theme.id');
-        $c->leftJoin('FredThemedTemplate', 'Templates', 'Templates.theme = Theme.id');
+        $c->leftJoin('Fred\\Model\\FredBlueprintCategory', 'Category');
+        $c->leftJoin('Fred\\Model\\FredTheme', 'Theme', 'Category.theme = Theme.id');
+        $c->leftJoin('Fred\\Model\\FredThemedTemplate', 'Templates', 'Templates.theme = Theme.id');
 
-        $c->select($this->modx->getSelectColumns('FredBlueprint', 'FredBlueprint', '', ['data'], true));
-        $c->select($this->modx->getSelectColumns('FredBlueprintCategory', 'Category', 'category_', ['name']));
-        $c->select($this->modx->getSelectColumns('FredTheme', 'Theme', 'theme_', ['name']));
+        $c->select($this->modx->getSelectColumns('Fred\\Model\\FredBlueprint', 'FredBlueprint', '', ['data'], true));
+        $c->select($this->modx->getSelectColumns('Fred\\Model\\FredBlueprintCategory', 'Category', 'category_', ['name']));
+        $c->select($this->modx->getSelectColumns('Fred\\Model\\FredTheme', 'Theme', 'theme_', ['name']));
 
         return parent::prepareQueryAfterCount($c);
     }

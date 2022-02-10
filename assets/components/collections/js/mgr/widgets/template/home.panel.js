@@ -16,6 +16,7 @@ collections.panel.TemplateHome = function(config) {
             ,hideMode: 'offsets'
             ,items: [{
                 title: _('collections.template.templates')
+                ,layout: 'form'
                 ,items: [{
                     html: '<p>'+_('collections.template.templates_desc')+'</p>'
                     ,border: false

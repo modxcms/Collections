@@ -2,6 +2,8 @@
 namespace Collections\Events;
 
 use Collections\Model\CollectionContainer;
+use Collections\Model\CollectionSelection;
+use MODX\Revolution\modResource;
 
 class OnBeforeEmptyTrash extends Event
 {
@@ -12,10 +14,10 @@ class OnBeforeEmptyTrash extends Event
 
         foreach ($ids as $id) {
             /** @var \modResource $resource */
-            $resource = $this->modx->getObject('modResource', $id);
+            $resource = $this->modx->getObject(modResource::class, $id);
             if (!$resource) return;
 
-            $this->modx->removeCollection('CollectionSelection', ['resource' => $resource->id]);
+            $this->modx->removeCollection(CollectionSelection::class, ['resource' => $resource->id]);
 
             /** @var \modResource $parent */
             $parent = $resource->Parent;

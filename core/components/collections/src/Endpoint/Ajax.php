@@ -30,19 +30,8 @@ class Ajax
         $this->collections =& $collections;
         $this->modx =& $collections->modx;
 
-        $corePath = $this->modx->getOption('fred.core_path', null, $this->modx->getOption('core_path', null, MODX_CORE_PATH) . 'components/fred/');
-        /** @var \Fred $fred */
-        $fred = $this->modx->getService(
-            'fred',
-            'Fred',
-            $corePath . 'model/fred/',
-            [
-                'core_path' => $corePath
-            ]
-        );
-
-        if (($fred instanceof \Fred)) {
-            $this->fred = $fred;
+        if ($this->modx->services->has('fred')) {
+            $this->fred = $this->modx->services->get('fred');
         }
     }
 

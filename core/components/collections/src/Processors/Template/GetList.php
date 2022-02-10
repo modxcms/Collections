@@ -1,6 +1,8 @@
 <?php
 namespace Collections\Processors\Template;
+use Collections\Model\CollectionResourceTemplate;
 use Collections\Model\CollectionTemplate;
+use MODX\Revolution\modTemplate;
 use MODX\Revolution\Processors\Model\GetListProcessor;
 use xPDO\Om\xPDOObject;
 
@@ -29,8 +31,8 @@ class GetList extends GetListProcessor
     {
         $template = $object->toArray();
 
-        $c = $this->modx->newQuery('CollectionResourceTemplate');
-        $c->leftJoin('modTemplate', 'ResourceTemplate');
+        $c = $this->modx->newQuery(CollectionResourceTemplate::class);
+        $c->leftJoin(modTemplate::class, 'ResourceTemplate');
         $c->where([
             'collection_template' => $template['id']
         ]);

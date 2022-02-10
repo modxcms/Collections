@@ -31,7 +31,7 @@ class Create extends CreateProcessor
 
         $global = $this->handleComboBoolean('global_template');
         if ($global == false) {
-            $templatesCount = $this->modx->getCount('CollectionTemplate', ['global_template' => 1, 'id:!=' => $this->object->id]);
+            $templatesCount = $this->modx->getCount(CollectionTemplate::class, ['global_template' => 1, 'id:!=' => $this->object->id]);
             if ($templatesCount == 0) {
                 $this->setProperty('global_template', true);
             }

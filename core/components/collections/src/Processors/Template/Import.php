@@ -27,16 +27,16 @@ class Import extends Processor
         foreach ($templates as $template) {
             if (!in_array($template['name'], $importTemplates) || $importTemplates === null) continue;
 
-            $exists = $this->modx->getCount('CollectionTemplate', ['name' => $template['name']]);
+            $exists = $this->modx->getCount(CollectionTemplate::class, ['name' => $template['name']]);
             if ($exists > 0) {
                 $newName = $template['name'] . ' Imported';
-                $exists = $this->modx->getCount('CollectionTemplate', ['name' => $newName]);
+                $exists = $this->modx->getCount(CollectionTemplate::class, ['name' => $newName]);
 
                 $i = 0;
                 $testName = $newName;
                 while ($exists > 0) {
                     $testName = $newName . $i;
-                    $exists = $this->modx->getCount('CollectionTemplate', ['name' => $testName]);
+                    $exists = $this->modx->getCount(CollectionTemplate::class, ['name' => $testName]);
                     $i++;
                 }
 
