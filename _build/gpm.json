@@ -101,6 +101,7 @@
   },
   "build": {
     "scriptsBefore": [
+      "resolve.fixoldcollections.php",
       "resolve.customevents.php",
       "resolve.switchback.php"
     ],
