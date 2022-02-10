@@ -3,6 +3,7 @@ collections.panel.Template = function(config) {
     Ext.applyIf(config,{
         border: false
         ,id: 'collections-panel-template'
+        ,baseCls: 'modx-formpanel'
         ,cls: 'container'
         ,url: MODx.config.connector_url
         ,baseParams: {
