@@ -50,17 +50,17 @@ $_lang['collections.global.import'] = 'Импорт';
 
 // Children
 $_lang['collections.children'] = 'Дочерние ресурсы';
-$_lang['collections.children.create'] = 'Создать дочерний ресурс';
+$_lang['collections.children.create'] = 'Создать';
 $_lang['collections.children.quick_create'] = 'Быстро создать';
-$_lang['collections.children.view'] = 'Просмотреть дочерний ресурс';
-$_lang['collections.children.edit'] = 'Изменить дочерний ресурс';
-$_lang['collections.children.quickupdate'] = 'Быстрое обновление';
-$_lang['collections.children.publish'] = 'Опубликовать дочерний ресурс';
-$_lang['collections.children.unpublish'] = 'Отменить публикацию дочернего ресурса';
-$_lang['collections.children.duplicate'] = 'Копировать дочерний ресурс';
-$_lang['collections.children.delete'] = 'Удалить дочерний ресурс';
-$_lang['collections.children.undelete'] = 'Восстановить дочерний ресурс';
-$_lang['collections.children.delete_confirm'] = 'Удалить дочерний ресурс?';
+$_lang['collections.children.view'] = 'Просмотреть';
+$_lang['collections.children.edit'] = 'Изменить';
+$_lang['collections.children.quickupdate'] = 'Быстро изменить';
+$_lang['collections.children.publish'] = 'Опубликовать';
+$_lang['collections.children.unpublish'] = 'Снять с публикации';
+$_lang['collections.children.duplicate'] = 'Копировать';
+$_lang['collections.children.delete'] = 'Удалить';
+$_lang['collections.children.undelete'] = 'Восстановить';
+$_lang['collections.children.delete_confirm'] = 'Вы уверены, что хотите удалить этот ресурс?';
 $_lang['collections.children.publish_multiple'] = 'Опубликовать выбранные';
 $_lang['collections.children.unpublish_multiple'] = 'Отменить публикацию выбранных';
 $_lang['collections.children.delete_multiple'] = 'Удалить выбранные';

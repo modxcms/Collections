@@ -15,7 +15,7 @@ $_lang['selections.system.new_container'] = 'Новая Подборка';
 // Selection
 $_lang['selections.create'] = 'Привязать ресурс';
 $_lang['selections.resource'] = 'Ресурс';
-$_lang['selections.view'] = 'Просмотр ресурса';
+$_lang['selections.view'] = 'Просмотреть ресурс';
 $_lang['selections.edit'] = 'Изменить ресурс';
 $_lang['selections.publish'] = 'Опубликовать ресурс';
 $_lang['selections.unpublish'] = 'Отменить публикацию ресурса';

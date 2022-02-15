@@ -51,7 +51,7 @@ $_lang['collections.global.import'] = 'Importieren';
 // Children
 $_lang['collections.children'] = 'Unterressourcen';
 $_lang['collections.children.create'] = 'Unterressource erstellen';
-$_lang['collections.children.quick_create'] = 'Quick Create child';
+$_lang['collections.children.quick_create'] = 'Unterressource schnell erstellen';
 $_lang['collections.children.view'] = 'Anzeigen';
 $_lang['collections.children.edit'] = 'Bearbeiten';
 $_lang['collections.children.quickupdate'] = 'Schnell bearbeiten';
@@ -73,8 +73,8 @@ $_lang['collections.children.remove_action'] = 'Löschen';
 $_lang['collections.children.remove'] = 'Löschen';
 $_lang['collections.children.remove_confirm'] = 'Sind Sie sicher, dass Sie diese Unterressource endgültig löschen möchten?<br /><strong>Dies kann nicht rückgängig gemacht werden.</strong>';
 $_lang['collections.children.back_to_collection_label'] = 'Zurück zur Kollektion';
-$_lang['collections.children.changeparent'] = 'Change Parent';
-$_lang['collections.children.parent'] = 'Parent';
+$_lang['collections.children.changeparent'] = 'Eltern-Element ändern';
+$_lang['collections.children.parent'] = 'Eltern-Element';
 
 // Template
 $_lang['collections.template.page_title'] = 'Kollektionen-Ansichten';
@@ -145,13 +145,13 @@ $_lang['collections.template.selection_link_condition_desc'] = 'JSON kodierter x
 $_lang['collections.template.export_more'] = 'Ansichten exportieren';
 $_lang['collections.template.export'] = 'Ansicht exportieren';
 $_lang['collections.template.import'] = 'Ansichten importieren';
-$_lang['collections.template.search_query_exclude_tvs'] = 'Search - Exclude TV columns';
-$_lang['collections.template.search_query_exclude_tagger'] = 'Search - Exclude Tagger';
-$_lang['collections.template.search_query_title_only'] = 'Search - Title only';
-$_lang['collections.template.show_quick_create'] = 'Show Quick Create button';
-$_lang['collections.template.quick_create_label'] = 'Quick Create button label';
-$_lang['collections.template.fred_default_blueprint'] = 'Fred Default Blueprint';
-$_lang['collections.template.fred_default_blueprint_desc'] = 'When creating children from Fred, this blueprint will get preselected by default.';
+$_lang['collections.template.search_query_exclude_tvs'] = 'Suche - TV-Spalten ausschließen';
+$_lang['collections.template.search_query_exclude_tagger'] = 'Suche - Tagger ausschließen';
+$_lang['collections.template.search_query_title_only'] = 'Nur Titel durchsuchen';
+$_lang['collections.template.show_quick_create'] = 'Schnell-Erstellen-Button anzeigen';
+$_lang['collections.template.quick_create_label'] = 'Beschriftung Schnell-Erstellen-Button ';
+$_lang['collections.template.fred_default_blueprint'] = 'Fred Standard Blaupause';
+$_lang['collections.template.fred_default_blueprint_desc'] = 'Beim Erstellen von Unterressource mit Fred wird dieses Blueprint standardmäßig vorgewählt.';
 
 $_lang['collections.template.column.none'] = 'Diese Ansicht enthält noch keine Spalten.';
 $_lang['collections.template.column.name'] = 'Name';
@@ -166,7 +166,7 @@ $_lang['collections.template.column.width'] = 'Breite';
 $_lang['collections.template.column.position'] = 'Position';
 $_lang['collections.template.column.editor'] = 'Editor';
 $_lang['collections.template.column.renderer'] = 'Renderer';
-$_lang['collections.template.column.php_renderer'] = 'Snippet Renderer';
+$_lang['collections.template.column.php_renderer'] = 'Snippet-Renderer';
 $_lang['collections.template.column.sort_type'] = 'Sortierungsart';
 
 $_lang['collections.template.sort_type_default'] = 'Standard';
