@@ -40,6 +40,12 @@ var pagetitleLink = new Ext.XTemplate('<tpl for="."><div class="collections-titl
     compiled: true
 });
 
+var linkNameToRecord = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
+    + '<a href="{[ parent.self.getEditChildUrl(parent) ]}" title="Edit {displayName}">{displayName}</a>'
+    + '</div></tpl>', {
+    compiled: true
+});
+
 var pagetitleWithIcons = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
     +'<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="{[ parent.self.getEditChildUrl(parent) ]}" title="Edit {pagetitle}">{pagetitle}</a></h3>'
     +'<ul class="actions">'
@@ -112,6 +118,13 @@ collections.renderer.pagetitleLink = function(value, metaData, record, rowIndex,
     var data = JSON.parse(JSON.stringify(record.data));
     data.self = this;
     return pagetitleLink.apply(data);
+};
+
+collections.renderer.linkNameToRecord = function(value, metaData, record, rowIndex, colIndex, store) {
+    var data = JSON.parse(JSON.stringify(record.data));
+    data.self = this;
+    data.displayName = value;
+    return linkNameToRecord.apply(data);
 };
 
 collections.renderer.datetimeTwoLines = function(value, metaData, record, rowIndex, colIndex, store) {
