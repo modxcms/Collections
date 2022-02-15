@@ -318,24 +318,23 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
      * @deprecated use getEditChildUrl instead
      */
     ,editChild: function(btn,e) {
-        console.log('update');
-        // var selection = '';
-        // if (collections.template.parent != MODx.request.id){
-        //    selection = '&selection=' + MODx.request.id;
-        // }
-        //
-        // var collectionGet = '';
-        // if (this.currentFolder) {
-        //     collectionGet = '&collection=' + collections.template.parent
-        // }
-        //
-        // var folderGet = '';
-        // var query = Ext.urlDecode(location.search.replace('?', ''));
-        // if (parseInt(query.folder) > 0) {
-        //     folderGet = '&folder=' + parseInt(query.folder);
-        // }
-        //
-        // MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection + collectionGet + folderGet);
+        var selection = '';
+        if (collections.template.parent != MODx.request.id){
+           selection = '&selection=' + MODx.request.id;
+        }
+
+        var collectionGet = '';
+        if (this.currentFolder) {
+            collectionGet = '&collection=' + collections.template.parent
+        }
+
+        var folderGet = '';
+        var query = Ext.urlDecode(location.search.replace('?', ''));
+        if (parseInt(query.folder) > 0) {
+            folderGet = '&folder=' + parseInt(query.folder);
+        }
+
+        MODx.loadPage(MODx.request.a, 'id=' + this.menu.record.id + selection + collectionGet + folderGet);
     }
 
     ,getViewChildUrl: function(data) {
