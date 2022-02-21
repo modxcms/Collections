@@ -5,8 +5,6 @@
  * @var array $options
  */
 
-use Collections\Model\CollectionContainer;
-use Collections\Model\SelectionContainer;
 use MODX\Revolution\modResource;
 
 set_time_limit(0);
@@ -16,19 +14,14 @@ switch ($options[xPDOTransport::PACKAGE_ACTION]) {
     case xPDOTransport::ACTION_UPGRADE:
         $modx =& $transport->xpdo;
 
+        if (isset($modx->packages['collections'])) {
+            unset($modx->packages['collections']);
+        }
+
         $modx->removeExtensionPackage('collections');
 
-        $oldCollections = $modx->getIterator(modResource::class, ['class_key' => 'CollectionContainer']);
-        foreach ($oldCollections as $oldCollection) {
-            $oldCollection->set('class_key', CollectionContainer::class);
-            $oldCollection->save();
-        }
-
-        $oldSelections = $modx->getIterator(modResource::class, ['class_key' => 'SelectionContainer']);
-        foreach ($oldSelections as $oldSelection) {
-            $oldSelection->set('class_key', SelectionContainer::class);
-            $oldSelection->save();
-        }
+        $modx->updateCollection(modResource::class, ['class_key' => 'Collections\\Model\\CollectionContainer'], ['class_key' => 'CollectionContainer']);
+        $modx->updateCollection(modResource::class, ['class_key' => 'Collections\\Model\\SelectionContainer'], ['class_key' => 'SelectionContainer']);
 
         break;
 }
