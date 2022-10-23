@@ -779,7 +779,7 @@ Ext.extend(collections.panel.Template, MODx.FormPanel,{
                         ,hiddenName: 'child_resource_type'
                         ,allowBlank: false
                         ,editable: false
-                        ,value: (config.record) ? config.record.child_resource_type : 'modDocument'
+                        ,value: (config.record) ? config.record.child_resource_type : 'MODX\Revolution\modDocument'
                     }]
                 }]
             }]
