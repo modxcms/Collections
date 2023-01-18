@@ -4,7 +4,9 @@ namespace Collections;
 class Utils {
     public static function explodeAndClean($array, $delimiter = ',', $keepDuplicates = 0)
     {
-        $array = explode($delimiter, $array);     // Explode fields to array
+        if (!is_array($array)) {
+            $array = explode($delimiter, $array);     // Explode fields to array
+        }
         $array = array_map('trim', $array);       // Trim array's values
 
         if ($keepDuplicates == 0) {
