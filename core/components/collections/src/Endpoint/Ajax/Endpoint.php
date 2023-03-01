@@ -30,7 +30,7 @@ abstract class Endpoint
      * @param \Collections\Collections $collections
      * @param $payload
      */
-    public function __construct(\Collections\Collections &$collections, \Fred &$fred, $payload)
+    public function __construct(\Collections\Collections &$collections, \Fred\Fred &$fred, $payload)
     {
         $this->collections =& $collections;
         $this->fred =& $fred;
