@@ -40,7 +40,7 @@
     "gulp-util": "^3.0.6",
     "merge-stream": "^1.0.1",
     "object-assign": "^4.0.1",
-    "webpack": "^1.12.11",
+    "webpack": "^5.75.0",
     "webpack-node-externals": "^0.4.1"
   },
   "library": {
