@@ -933,7 +933,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         MODx.Ajax.request({
             url: MODx.config.connector_url
             ,params: {
-                action: 'MODX\\Revoltion\\Processors\\Resource\\Get'
+                action: 'MODX\\Revolution\\Processors\\Resource\\Get'
                 ,id: this.menu.record.id
                 ,skipFormatDates: true
             }
