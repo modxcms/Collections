@@ -99,7 +99,13 @@ class Create extends CreateProcessor
         }
 
         $templates = $this->getProperty('templates');
-        $templates = Utils::explodeAndClean($templates);
+        $templates = array_filter($templates, function ($var) {
+            if ($var == '') {
+                return false;
+            }
+
+            return true;
+        });
 
         if (count($templates) > 0) {
             $validateTemplates = $this->validateTemplates($templates);
@@ -321,7 +327,13 @@ class Create extends CreateProcessor
         }
 
         $templates = $this->getProperty('templates');
-        $templates = Utils::explodeAndClean($templates);
+        $templates = array_filter($templates, function ($var) {
+            if ($var == '') {
+                return false;
+            }
+
+            return true;
+        });
 
         $this->object->setTemplates($templates);
 
