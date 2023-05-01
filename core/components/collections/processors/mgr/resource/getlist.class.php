@@ -365,7 +365,7 @@ class CollectionsResourceGetListProcessor extends modObjectGetListProcessor
     public function prepareQueryAfterCount(xPDOQuery $c)
     {
 
-        $c->select($this->modx->getSelectColumns('modResource', 'modResource'));
+        $c->select('DISTINCT ' . $this->modx->getSelectColumns('modResource', 'modResource'));
         $c->select(array(
             'has_children' => "EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
         ));
