@@ -3,6 +3,10 @@ Changelog for Collections.
 Collections 4.0.0
 ===================
 - Support for MODX Revolution 3.0.0
+- Fix Fred endpoints
+- Fix quick update action
+- Fix view for Create New
+- Fetch distinct resources for collection
 
 Collections 3.7.1
 ===================
