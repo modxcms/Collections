@@ -380,7 +380,7 @@ class GetList extends GetListProcessor
     public function prepareQueryAfterCount(xPDOQuery $c)
     {
 
-        $c->select($this->modx->getSelectColumns(modResource::class, 'modResource'));
+        $c->select('DISTINCT ' . $this->modx->getSelectColumns(modResource::class, 'modResource'));
         $c->select([
             'has_children' => "EXISTS (SELECT 1 FROM {$this->modx->getTableName(modResource::class)} r WHERE r.parent = modResource.id)"
         ]);
