@@ -1,4 +1,7 @@
 export default class Actions {
+    private config: any;
+    private fetch: any;
+    private emitter: any;
     constructor(config, fetch, emitter) {
         this.config = config;
         this.fetch = fetch;

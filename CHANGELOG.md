@@ -1,5 +1,9 @@
 Changelog for Collections.
 
+Collections 4.1.0
+===================
+- Refactor Fred integration
+
 Collections 4.0.0
 ===================
 - Support for MODX Revolution 3.0.0

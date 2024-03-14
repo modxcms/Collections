@@ -1,5 +1,5 @@
 import Actions from './Actions';
-import Tabulator from 'tabulator-tables';
+import { Tabulator } from 'tabulator-tables';
 import {debounce} from './Utils';
 
 export default config => (fred, Plugin, pluginTools) => {
@@ -79,7 +79,8 @@ export default config => (fred, Plugin, pluginTools) => {
                 },
                 ajaxSorting: true,
                 columnHeaderSortMulti: false,
-                pagination: "remote",
+                pagination: true,
+                paginationMode: "remote",
                 paginationSize: 5,
                 ajaxFiltering: true,
                 responsiveLayout: "hide",
@@ -138,28 +139,46 @@ export default config => (fred, Plugin, pluginTools) => {
 
                             return `${edit} ${publish} ${deleteAction}`;
                         },
-                        align: "left",
+                        hozAlign: "left",
                         cellClick: (e, cell) => {
-                            if (e.target.dataset.action) {
+                            // @ts-ignore
+                            if (e.target?.dataset.action) {
+                                // @ts-ignore
                                 switch (e.target.dataset.action) {
                                     case 'publish':
                                         publishResource(cell.getRow().getData().id).then(() => {
-                                            table.setPage(table.getPage());
+                                            let page = table.getPage();
+                                            if (page === false) {
+                                                page = 1;
+                                            }
+                                            table.setPage(page);
                                         });
                                         break;
                                     case 'unpublish':
                                         unpublishResource(cell.getRow().getData().id).then(() => {
-                                            table.setPage(table.getPage());
+                                            let page = table.getPage();
+                                            if (page === false) {
+                                                page = 1;
+                                            }
+                                            table.setPage(page);
                                         });
                                         break;
                                     case 'delete':
                                         deleteResource(cell.getRow().getData().id).then(() => {
-                                            table.setPage(table.getPage());
+                                            let page = table.getPage();
+                                            if (page === false) {
+                                                page = 1;
+                                            }
+                                            table.setPage(page);
                                         });
                                         break;
                                     case 'undelete':
                                         undeleteResource(cell.getRow().getData().id).then(() => {
-                                            table.setPage(table.getPage());
+                                            let page = table.getPage();
+                                            if (page === false) {
+                                                page = 1;
+                                            }
+                                            table.setPage(page);
                                         });
                                         break;
                                 }
@@ -258,7 +277,13 @@ export default config => (fred, Plugin, pluginTools) => {
 
             const fields = fieldSet();
 
-            const state = {
+            const state: {
+                pagetitle: string,
+                parent: number,
+                blueprint: number,
+                template: number,
+                theme: string
+            } = {
                 pagetitle: '',
                 parent: collection.id,
                 blueprint: 0,
@@ -285,7 +310,7 @@ export default config => (fred, Plugin, pluginTools) => {
                                     const options = [];
 
                                     category.blueprints.forEach(blueprint => {
-                                        const blueprintOption = {
+                                        const blueprintOption: {label: string, value: string, selected?:boolean} = {
                                             label: blueprint.name,
                                             value: '' + blueprint.id
                                         };
@@ -326,7 +351,7 @@ export default config => (fred, Plugin, pluginTools) => {
                 choicesInstance.passedElement.addEventListener('removeItem', event => {
                     const value = choicesInstance.getValue(false);
                     if (value === undefined) {
-                        state.blueprint = '0';
+                        state.blueprint = 0;
                     }
                 });
             });
@@ -349,7 +374,7 @@ export default config => (fred, Plugin, pluginTools) => {
                             let defaultTemplate = null;
 
                             for (let template of data.data.templates) {
-                                if (parseInt(template.id) === parseInt(state.template)) {
+                                if (parseInt(template.id) === state.template) {
                                     template.selected = true;
                                     defaultTemplate = template;
                                     defaultSet = true;
@@ -381,7 +406,7 @@ export default config => (fred, Plugin, pluginTools) => {
                     return;
                 }
 
-                if (!state.parent === 0 && !pluginTools.fredConfig.permission.new_document_in_root) {
+                if (!(state.parent === 0) && !pluginTools.fredConfig.permission.new_document_in_root) {
                     alert(pluginTools.fredConfig.lng('fred.fe.permission.new_document_in_root'));
                     return;
                 }
