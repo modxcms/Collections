@@ -1,5 +1,5 @@
 import Actions from './Actions';
-import { Tabulator } from 'tabulator-tables';
+import { Tabulator, AjaxModule, ResponsiveLayoutModule, FilterModule, FormatModule, InteractionModule, SortModule, PageModule } from 'tabulator-tables';
 import {debounce} from './Utils';
 
 export default config => (fred, Plugin, pluginTools) => {
@@ -64,7 +64,29 @@ export default config => (fred, Plugin, pluginTools) => {
                     dir: "desc"
                 });
             }
+            Tabulator.registerModule(AjaxModule);
+            Tabulator.registerModule(ResponsiveLayoutModule);
+            Tabulator.registerModule(FilterModule);
+            Tabulator.registerModule(FormatModule);
+            Tabulator.extendModule("format", "formatters", {
+                pagetitle: (cell, formatterParams, onRendered) => {
+                    const data = cell.getRow().getData();
 
+                    return cell.getValue() + `<br><a href="${data.fullUrl}">${data.url}</a>`;
+                },
+                actions: (cell, formatterParams, onRendered) => {
+                    const data = cell.getRow().getData();
+
+                    const edit = (data.deleted) ? '' : `<a href="${data.fullUrl}" class="fred--btn fred--btn-collections-icon fred--btn-collections-edit" title="${pluginTools.fredConfig.lng('collections.fred.edit')}"></a>`;
+                    const publish = (data.published) ? (pluginTools.fredConfig.permission.unpublish_document ? `<button data-action='unpublish' class="fred--btn fred--btn-collections-icon fred--btn-collections-unpublish" title="${pluginTools.fredConfig.lng('collections.fred.unpublish')}"></button>` : '') : (pluginTools.fredConfig.permission.publish_document ? `<button data-action='publish' class="fred--btn fred--btn-collections-icon fred--btn-collections-publish" title="${pluginTools.fredConfig.lng('collections.fred.publish')}"></button>` : '');
+                    const deleteAction = (data.deleted) ? (pluginTools.fredConfig.permission.undelete_document ? `<button data-action='undelete' class="fred--btn fred--btn-collections-icon fred--btn-collections-undelete" title="${pluginTools.fredConfig.lng('collections.fred.undelete')}"></button>` : '') : (pluginTools.fredConfig.permission.delete_document ? `<button data-action='delete' class="fred--btn fred--btn-collections-icon fred--btn-collections-delete" title="${pluginTools.fredConfig.lng('collections.fred.delete')}"></button>` : '');
+
+                    return `${edit} ${publish} ${deleteAction}`;
+                }
+            })
+            Tabulator.registerModule(InteractionModule);
+            Tabulator.registerModule(SortModule);
+            Tabulator.registerModule(PageModule);
             const table = new Tabulator(tableWrapper, {
                 ajaxURL: config.endpoint,
                 ajaxParams: {
@@ -78,11 +100,13 @@ export default config => (fred, Plugin, pluginTools) => {
                     }
                 },
                 ajaxSorting: true,
+                sortMode: "remote",
                 columnHeaderSortMulti: false,
                 pagination: true,
                 paginationMode: "remote",
                 paginationSize: 5,
                 ajaxFiltering: true,
+                filterMode: "remote",
                 responsiveLayout: "hide",
                 layout: "fitColumns",
                 initialSort,
@@ -91,11 +115,8 @@ export default config => (fred, Plugin, pluginTools) => {
                         title: pluginTools.fredConfig.lng("collections.fred.pagetitle"),
                         field: "pagetitle",
                         responsive: 0,
-                        formatter: (cell, formatterParams, onRendered) => {
-                            const data = cell.getRow().getData();
-
-                            return cell.getValue() + `<br><a href="${data.fullUrl}">${data.url}</a>`;
-                        }
+                        // @ts-ignore
+                        formatter: "pagetitle",
                     },
                     {
                         title: pluginTools.fredConfig.lng("collections.fred.publish"),
@@ -130,15 +151,8 @@ export default config => (fred, Plugin, pluginTools) => {
                     {
                         title: pluginTools.fredConfig.lng("collections.fred.actions"),
                         headerSort: false,
-                        formatter: (cell, formatterParams, onRendered) => {
-                            const data = cell.getRow().getData();
-
-                            const edit = (data.deleted) ? '' : `<a href="${data.fullUrl}" class="fred--btn fred--btn-collections-icon fred--btn-collections-edit" title="${pluginTools.fredConfig.lng('collections.fred.edit')}"></a>`;
-                            const publish = (data.published) ? (pluginTools.fredConfig.permission.unpublish_document ? `<button data-action='unpublish' class="fred--btn fred--btn-collections-icon fred--btn-collections-unpublish" title="${pluginTools.fredConfig.lng('collections.fred.unpublish')}"></button>` : '') : (pluginTools.fredConfig.permission.publish_document ? `<button data-action='publish' class="fred--btn fred--btn-collections-icon fred--btn-collections-publish" title="${pluginTools.fredConfig.lng('collections.fred.publish')}"></button>` : '');
-                            const deleteAction = (data.deleted) ? (pluginTools.fredConfig.permission.undelete_document ? `<button data-action='undelete' class="fred--btn fred--btn-collections-icon fred--btn-collections-undelete" title="${pluginTools.fredConfig.lng('collections.fred.undelete')}"></button>` : '') : (pluginTools.fredConfig.permission.delete_document ? `<button data-action='delete' class="fred--btn fred--btn-collections-icon fred--btn-collections-delete" title="${pluginTools.fredConfig.lng('collections.fred.delete')}"></button>` : '');
-
-                            return `${edit} ${publish} ${deleteAction}`;
-                        },
+                        // @ts-ignore
+                        formatter: "actions",
                         hozAlign: "left",
                         cellClick: (e, cell) => {
                             // @ts-ignore
@@ -188,7 +202,6 @@ export default config => (fred, Plugin, pluginTools) => {
                     }
                 ]
             });
-
             const filters = {
                 query: '',
                 published: '-1',
