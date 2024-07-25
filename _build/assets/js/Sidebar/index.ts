@@ -1,5 +1,5 @@
 import Actions from './Actions';
-import Tabulator from 'tabulator-tables';
+import { Tabulator, AjaxModule, ResponsiveLayoutModule, FilterModule, FormatModule, InteractionModule, SortModule, PageModule } from 'tabulator-tables';
 import {debounce} from './Utils';
 
 export default config => (fred, Plugin, pluginTools) => {
@@ -64,7 +64,29 @@ export default config => (fred, Plugin, pluginTools) => {
                     dir: "desc"
                 });
             }
+            Tabulator.registerModule(AjaxModule);
+            Tabulator.registerModule(ResponsiveLayoutModule);
+            Tabulator.registerModule(FilterModule);
+            Tabulator.registerModule(FormatModule);
+            Tabulator.extendModule("format", "formatters", {
+                pagetitle: (cell, formatterParams, onRendered) => {
+                    const data = cell.getRow().getData();
 
+                    return cell.getValue() + `<br><a href="${data.fullUrl}">${data.url}</a>`;
+                },
+                actions: (cell, formatterParams, onRendered) => {
+                    const data = cell.getRow().getData();
+
+                    const edit = (data.deleted) ? '' : `<a href="${data.fullUrl}" class="fred--btn fred--btn-collections-icon fred--btn-collections-edit" title="${pluginTools.fredConfig.lng('collections.fred.edit')}"></a>`;
+                    const publish = (data.published) ? (pluginTools.fredConfig.permission.unpublish_document ? `<button data-action='unpublish' class="fred--btn fred--btn-collections-icon fred--btn-collections-unpublish" title="${pluginTools.fredConfig.lng('collections.fred.unpublish')}"></button>` : '') : (pluginTools.fredConfig.permission.publish_document ? `<button data-action='publish' class="fred--btn fred--btn-collections-icon fred--btn-collections-publish" title="${pluginTools.fredConfig.lng('collections.fred.publish')}"></button>` : '');
+                    const deleteAction = (data.deleted) ? (pluginTools.fredConfig.permission.undelete_document ? `<button data-action='undelete' class="fred--btn fred--btn-collections-icon fred--btn-collections-undelete" title="${pluginTools.fredConfig.lng('collections.fred.undelete')}"></button>` : '') : (pluginTools.fredConfig.permission.delete_document ? `<button data-action='delete' class="fred--btn fred--btn-collections-icon fred--btn-collections-delete" title="${pluginTools.fredConfig.lng('collections.fred.delete')}"></button>` : '');
+
+                    return `${edit} ${publish} ${deleteAction}`;
+                }
+            })
+            Tabulator.registerModule(InteractionModule);
+            Tabulator.registerModule(SortModule);
+            Tabulator.registerModule(PageModule);
             const table = new Tabulator(tableWrapper, {
                 ajaxURL: config.endpoint,
                 ajaxParams: {
@@ -78,10 +100,13 @@ export default config => (fred, Plugin, pluginTools) => {
                     }
                 },
                 ajaxSorting: true,
+                sortMode: "remote",
                 columnHeaderSortMulti: false,
-                pagination: "remote",
+                pagination: true,
+                paginationMode: "remote",
                 paginationSize: 5,
                 ajaxFiltering: true,
+                filterMode: "remote",
                 responsiveLayout: "hide",
                 layout: "fitColumns",
                 initialSort,
@@ -90,11 +115,8 @@ export default config => (fred, Plugin, pluginTools) => {
                         title: pluginTools.fredConfig.lng("collections.fred.pagetitle"),
                         field: "pagetitle",
                         responsive: 0,
-                        formatter: (cell, formatterParams, onRendered) => {
-                            const data = cell.getRow().getData();
-
-                            return cell.getValue() + `<br><a href="${data.fullUrl}">${data.url}</a>`;
-                        }
+                        // @ts-ignore
+                        formatter: "pagetitle",
                     },
                     {
                         title: pluginTools.fredConfig.lng("collections.fred.publish"),
@@ -129,37 +151,48 @@ export default config => (fred, Plugin, pluginTools) => {
                     {
                         title: pluginTools.fredConfig.lng("collections.fred.actions"),
                         headerSort: false,
-                        formatter: (cell, formatterParams, onRendered) => {
-                            const data = cell.getRow().getData();
-
-                            const edit = (data.deleted) ? '' : `<a href="${data.fullUrl}" class="fred--btn fred--btn-collections-icon fred--btn-collections-edit" title="${pluginTools.fredConfig.lng('collections.fred.edit')}"></a>`;
-                            const publish = (data.published) ? (pluginTools.fredConfig.permission.unpublish_document ? `<button data-action='unpublish' class="fred--btn fred--btn-collections-icon fred--btn-collections-unpublish" title="${pluginTools.fredConfig.lng('collections.fred.unpublish')}"></button>` : '') : (pluginTools.fredConfig.permission.publish_document ? `<button data-action='publish' class="fred--btn fred--btn-collections-icon fred--btn-collections-publish" title="${pluginTools.fredConfig.lng('collections.fred.publish')}"></button>` : '');
-                            const deleteAction = (data.deleted) ? (pluginTools.fredConfig.permission.undelete_document ? `<button data-action='undelete' class="fred--btn fred--btn-collections-icon fred--btn-collections-undelete" title="${pluginTools.fredConfig.lng('collections.fred.undelete')}"></button>` : '') : (pluginTools.fredConfig.permission.delete_document ? `<button data-action='delete' class="fred--btn fred--btn-collections-icon fred--btn-collections-delete" title="${pluginTools.fredConfig.lng('collections.fred.delete')}"></button>` : '');
-
-                            return `${edit} ${publish} ${deleteAction}`;
-                        },
-                        align: "left",
+                        // @ts-ignore
+                        formatter: "actions",
+                        hozAlign: "left",
                         cellClick: (e, cell) => {
-                            if (e.target.dataset.action) {
+                            // @ts-ignore
+                            if (e.target?.dataset.action) {
+                                // @ts-ignore
                                 switch (e.target.dataset.action) {
                                     case 'publish':
                                         publishResource(cell.getRow().getData().id).then(() => {
-                                            table.setPage(table.getPage());
+                                            let page = table.getPage();
+                                            if (page === false) {
+                                                page = 1;
+                                            }
+                                            table.setPage(page);
                                         });
                                         break;
                                     case 'unpublish':
                                         unpublishResource(cell.getRow().getData().id).then(() => {
-                                            table.setPage(table.getPage());
+                                            let page = table.getPage();
+                                            if (page === false) {
+                                                page = 1;
+                                            }
+                                            table.setPage(page);
                                         });
                                         break;
                                     case 'delete':
                                         deleteResource(cell.getRow().getData().id).then(() => {
-                                            table.setPage(table.getPage());
+                                            let page = table.getPage();
+                                            if (page === false) {
+                                                page = 1;
+                                            }
+                                            table.setPage(page);
                                         });
                                         break;
                                     case 'undelete':
                                         undeleteResource(cell.getRow().getData().id).then(() => {
-                                            table.setPage(table.getPage());
+                                            let page = table.getPage();
+                                            if (page === false) {
+                                                page = 1;
+                                            }
+                                            table.setPage(page);
                                         });
                                         break;
                                 }
@@ -169,7 +202,6 @@ export default config => (fred, Plugin, pluginTools) => {
                     }
                 ]
             });
-
             const filters = {
                 query: '',
                 published: '-1',
@@ -258,14 +290,18 @@ export default config => (fred, Plugin, pluginTools) => {
 
             const fields = fieldSet();
 
-            const state = {
+            const state: {
+                pagetitle: string,
+                parent: number,
+                blueprint: number,
+                template: number,
+                theme: string
+            } = {
                 pagetitle: '',
                 parent: collection.id,
                 blueprint: 0,
                 template: view.template,
-                theme: pluginTools.fredConfig.config.theme,
-                hidemenu: view.hidemenu,
-                published: view.published,
+                theme: pluginTools.fredConfig.config.theme
             };
 
             const onChange = (name, value) => {
@@ -287,7 +323,7 @@ export default config => (fred, Plugin, pluginTools) => {
                                     const options = [];
 
                                     category.blueprints.forEach(blueprint => {
-                                        const blueprintOption = {
+                                        const blueprintOption: {label: string, value: string, selected?:boolean} = {
                                             label: blueprint.name,
                                             value: '' + blueprint.id
                                         };
@@ -328,7 +364,7 @@ export default config => (fred, Plugin, pluginTools) => {
                 choicesInstance.passedElement.addEventListener('removeItem', event => {
                     const value = choicesInstance.getValue(false);
                     if (value === undefined) {
-                        state.blueprint = '0';
+                        state.blueprint = 0;
                     }
                 });
             });
@@ -351,7 +387,7 @@ export default config => (fred, Plugin, pluginTools) => {
                             let defaultTemplate = null;
 
                             for (let template of data.data.templates) {
-                                if (parseInt(template.id) === parseInt(state.template)) {
+                                if (parseInt(template.id) === state.template) {
                                     template.selected = true;
                                     defaultTemplate = template;
                                     defaultSet = true;
@@ -383,14 +419,14 @@ export default config => (fred, Plugin, pluginTools) => {
                     return;
                 }
 
-                if (!state.parent === 0 && !pluginTools.fredConfig.permission.new_document_in_root) {
+                if (!(state.parent === 0) && !pluginTools.fredConfig.permission.new_document_in_root) {
                     alert(pluginTools.fredConfig.lng('fred.fe.permission.new_document_in_root'));
                     return;
                 }
 
                 emitter.emit('fred-loading', pluginTools.fredConfig.lng('fred.fe.pages.creating_page'));
 
-                createResource(state.parent, state.template, state.pagetitle, state.blueprint, state.published, state.hidemenu)
+                createResource(state.parent, state.template, state.pagetitle, state.blueprint)
                     .then(json => {
                         location.href = json.url;
                         emitter.emit('fred-loading-hide');

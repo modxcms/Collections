@@ -25,5 +25,4 @@ node_modules
 npm-debug.log
 .sass-cache
 assets/components/collections/web/fred_integration.*
-package-lock.json
 core/components/collections/model/vendor
