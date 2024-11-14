@@ -12,8 +12,8 @@ class GetCollection extends Endpoint
         $collection = isset($_GET['collection']) ? intval($_GET['collection']) : 0;
         $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
         $size = isset($_GET['size']) ? intval($_GET['size']) : 10;
-        $sorters = isset($_GET['sorters']) ? $_GET['sorters'] : [];
-        $filters = isset($_GET['filters']) ? $_GET['filters'] : [];
+        $sorters = isset($_GET['sort']) ? $_GET['sort'] : [];
+        $filters = isset($_GET['filter']) ? $_GET['filter'] : [];
 
         $this->availableFilters = array_flip($this->availableFilters);
 
