@@ -13,14 +13,14 @@ var iconClass = {
 };
 
 var pagetitleWithButtons = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
-    +'<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="{[ parent.self.getEditChildUrl(parent) ]}" title="Edit {pagetitle}">{pagetitle}</a></h3>'
+    +'<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="{[ parent.self.getEditChildUrl(parent) ]}" title=\'' + _('edit') + ' "{pagetitle}"\'>{pagetitle}</a></h3>'
     +'<ul class="actions">'
     +'<tpl for="actions">'
     +'<tpl if="values.urlFunction">'
-    +'<li><a href="{[ parent.self[values.urlFunction](parent) ]}" class="{className}">{text}</a></li>'
+    +'<li><a href="{[ parent.self[values.urlFunction](parent) ]}" class="{className}" {attributes}>{text}</a></li>'
     +'</tpl>'
     +'<tpl if="!values.urlFunction">'
-    +'<li><a href="javascript:void(0);" class="controlBtn {className}">{text}</a></li>'
+    +'<li><a href="javascript:void(0);" class="controlBtn {className}" {attributes}>{text}</a></li>'
     +'</tpl>'
     +'</tpl>'
     +'</ul>'
@@ -29,25 +29,25 @@ var pagetitleWithButtons = new Ext.XTemplate('<tpl for="."><div class="collectio
 });
 
 var pagetitle = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
-    + '<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="{[ parent.self.getEditChildUrl(parent) ]}" title="Edit {pagetitle}">{pagetitle}</a></h3>'
+    + '<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="{[ parent.self.getEditChildUrl(parent) ]}" title=\'' + _('edit') + ' "{pagetitle}"\'>{pagetitle}</a></h3>'
     + '</div></tpl>', {
     compiled: true
 });
 
 var pagetitleLink = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
-    + '<a href="{[ parent.self.getEditChildUrl(parent) ]}" title="Edit {pagetitle}">{pagetitle}</a>'
+    + '<a href="{[ parent.self.getEditChildUrl(parent) ]}" title=\'' + _('edit') + ' "{pagetitle}"\'>{pagetitle}</a>'
     + '</div></tpl>', {
     compiled: true
 });
 
 var linkNameToRecord = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
-    + '<a href="{[ parent.self.getEditChildUrl(parent) ]}" title="Edit {displayName}">{displayName}</a>'
+    + '<a href="{[ parent.self.getEditChildUrl(parent) ]}" title=\'' + _('edit') + ' "{displayName}"\'>{displayName}</a>'
     + '</div></tpl>', {
     compiled: true
 });
 
 var pagetitleWithIcons = new Ext.XTemplate('<tpl for="."><div class="collections-title-column">'
-    +'<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="{[ parent.self.getEditChildUrl(parent) ]}" title="Edit {pagetitle}">{pagetitle}</a></h3>'
+    +'<span class="collections-children-icon x-tree-node-collapsed"><i class="{icons}"></i></span><h3 class="main-column buttons"><a href="{[ parent.self.getEditChildUrl(parent) ]}" title=\'' + _('edit') + ' "{pagetitle}"\'>{pagetitle}</a></h3>'
     +'<ul class="actions">'
     +'<tpl for="actions">'
     +'<tpl if="values.urlFunction">'

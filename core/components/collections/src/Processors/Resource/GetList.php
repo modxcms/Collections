@@ -181,7 +181,8 @@ class GetList extends GetListProcessor
             'className' => 'view',
             'text' => $this->modx->lexicon('view'),
             'key' => 'view',
-            'urlFunction' => 'getViewChildUrl'
+            'urlFunction' => 'getViewChildUrl',
+            'attributes' => 'target="_blank"'
         ];
         $this->actions['edit'] = [
             'className' => 'edit',
