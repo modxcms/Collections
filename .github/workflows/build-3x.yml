@@ -38,9 +38,6 @@ jobs:
             git fetch origin
             git checkout -f $BRANCH
             git pull origin $BRANCH
-            cd /www/pkgs/collections/core/components/collections/
-            /home/.bin/composer install --no-dev
-            cd /www/pkgs/collections/
             npm install
             npm run build
             /www/pkgs/gpm/bin/gpm collections:update --alterDB
