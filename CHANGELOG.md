@@ -1,5 +1,11 @@
 Changelog for Collections.
 
+Collections 4.1.1
+===================
+- Fix action buttons in grdit
+- Fix snippet error
+- Fixes for Fred integration
+
 Collections 4.1.0
 ===================
 - Refactor Fred integration
