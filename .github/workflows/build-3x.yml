@@ -1,0 +1,48 @@
+name: Build Package 3.x
+
+on:
+  workflow_dispatch:
+
+jobs:
+
+  deploy:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+    environment: 3.x
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Get Branch Name
+        uses: nelonoel/branch-name@v1.0.1
+
+      - run: echo "BRANCH_NAME=${BRANCH_NAME}" >> $GITHUB_ENV
+
+      - name: Build & Deploy GPM Package
+        uses: appleboy/ssh-action@v1.0.3
+        env:
+          BRANCH: ${{ env.BRANCH_NAME }}
+        with:
+          command_timeout: 20m
+          host: ${{ secrets.DEPLOY_HOST }}
+          key: ${{ secrets.DEPLOY_KEY }}
+          username: ${{ secrets.DEPLOY_USER }}
+          envs: BRANCH
+          script_stop: true
+          script: |
+            cd /www/pkgs/collections/
+            git add .
+            git stash
+            git fetch origin
+            git checkout -f $BRANCH
+            git pull origin $BRANCH
+            cd /www/pkgs/collections/core/components/collections/
+            /home/.bin/composer install --no-dev
+            cd /www/pkgs/collections/
+            npm install
+            npm run build
+            /www/pkgs/gpm/bin/gpm collections:update --alterDB
+            /www/pkgs/gpm/bin/gpm collections:build
+            
