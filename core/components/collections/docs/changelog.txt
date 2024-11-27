@@ -1,5 +1,9 @@
 Changelog for Collections.
 
+Collections 3.8.1
+===================
+- Fix Fred integration
+
 Collections 3.8.0
 ===================
 - Rebuild Fred plugin to work with Fred 3.0
