@@ -539,9 +539,9 @@ class GetList extends GetListProcessor
                         }
                         break;
                     case 'open':
-//                        if ($resourceArray['has_children'] == '1') {
-                        $resourceArray['actions'][] = $this->actions['open'];
-//                        }
+                        if ($resourceArray['class_key'] != 'Collections\Model\CollectionContainer' && $resourceArray['class_key'] != 'Collections\Model\SelectionContainer') {
+                        							$resourceArray['actions'][] = $this->actions['open'];
+						}
                         break;
                     case 'edit':
                         if ($this->permissions['edit_document']) {
