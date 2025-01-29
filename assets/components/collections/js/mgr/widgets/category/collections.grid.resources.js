@@ -356,13 +356,7 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
             collectionGet = '&collection=' + collections.template.parent
         }
 
-        var folderGet = '';
-        var query = Ext.urlDecode(location.search.replace('?', ''));
-        if (parseInt(query.folder) > 0) {
-            folderGet = '&folder=' + parseInt(query.folder);
-        }
-
-        return collections.getPageUrl(MODx.request.a, 'id=' + data.id + selection + collectionGet + folderGet);
+        return collections.getPageUrl(MODx.request.a, 'id=' + data.id + selection + collectionGet );
     }
 
     ,createChild: function(btn,e) {
