@@ -684,6 +684,13 @@ class GetList extends GetListProcessor
             $iconCls[] = 'parent-resource';
         }
 
+	if ($resourceArray['class_key'] == 'Collections\Model\SelectionContainer' ) {
+                $iconCls[] = 'selectioncontainer';
+        }
+        if ($resourceArray['class_key'] == 'Collections\Model\CollectionContainer' ) {
+                $iconCls[] = 'collectioncontainer';
+        }
+
         $resourceArray['icons'] = implode(' ', $iconCls);
 
         return $resourceArray;
