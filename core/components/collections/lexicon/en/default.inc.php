@@ -31,6 +31,8 @@ $_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection
 $_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
 $_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
 $_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
+$_lang['setting_collections.mostra_cs_testata'] = 'Show Header for Collection/Selection';
+$_lang['setting_collections.mostra_cs_testata_desc'] = 'Decide if you want to show Header for Collection/Selection';
 
 
 // System lexicons
