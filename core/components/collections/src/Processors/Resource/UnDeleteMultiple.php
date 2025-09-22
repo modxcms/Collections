@@ -21,7 +21,7 @@ class UnDeleteMultiple extends ModelProcessor
         foreach ($ids as $id) {
             if (empty($id)) continue;
             $lastId = $id;
-            $this->modx->runProcessor('Collections\\Processors\\Resource\\UndDelete', [
+            $this->modx->runProcessor('Collections\\Processors\\Resource\\UnDelete', [
                 'id' => $id,
                 'skipClearCache' => true,
             ]);
