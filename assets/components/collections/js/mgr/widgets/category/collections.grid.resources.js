@@ -51,6 +51,11 @@ collections.grid.ContainerCollections = function(config) {
 
     window.history.replaceState({}, '', window.location.href);
 
+    if(MODx.config.mostra_cs_testata == true)
+	{
+		this.getTestataCollection(config);
+	}
+
     this.initBreadCrumbs(config);
 
     if (collections.template.allowDD) {
@@ -1177,7 +1182,50 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
         });
         this.getTopToolbar().add(this.bc);
     }
+    
+,getTestataCollection: function(config) {
+		
+		var collection = parseInt(MODx.request.id);
 
+		MODx.Ajax.request({
+                    url: MODx.config.connector_url
+                    ,params: {
+                        action: 'Collections\\Processors\\Extra\\Testata'
+                        ,collection: collection
+                        ,selection: 0
+                    }
+                    ,listeners: {
+                        success: {
+                            fn: function(r) {
+                               this.printTestataCollection(r);
+                            },scope: this 
+                        },
+                        failure: {
+                            fn: function(){
+                                this.store.removeAll();
+                                this.currentFolder = collections.template.parent;
+                                this.getStore().baseParams.parent = collections.template.parent;
+                                this.getBottomToolbar().changePage(1);
+                            },
+                            scope: this
+                        }
+                    }
+                });
+				
+		
+	}
+    ,printTestataCollection: function(r) {
+	   this.testata = ({
+			items   : [{
+					html: '<div class="titoloTestataCS">'+r.results[1]+'</div>'+
+						  '<div class="menuTestataCS">'+r.results[0]+'</div>'
+					,bodyCssClass: 'contentTestataCS'
+					,anchor: '100%'
+				}]
+		});
+		this.getTopToolbar().insert(1,this.testata);
+    }
+    
     ,setPaginationState: function(start, limit) {
         var query = Ext.urlDecode(location.search.replace('?', ''));
         var folder = query.folder || collections.template.parent;
