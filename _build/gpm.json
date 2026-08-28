@@ -32,6 +32,9 @@
     "snippets": [
         {
             "name": "getSelections"
+        },
+        {
+            "name": "renderSourceImage"
         }
     ],
     "systemSettings": [
