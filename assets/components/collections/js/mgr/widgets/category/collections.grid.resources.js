@@ -541,7 +541,12 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 ,id: this.menu.record.id
             }
             ,listeners: {
-                'success':{fn:this.refresh,scope:this}
+                'success':{fn:function(r) {
+                    this.refresh();
+					if(MODx.config.mostra_sub_collections_tree == true){
+						Ext.getCmp('modx-layout').refreshTrees();
+					}
+                },scope:this}
             }
         });
     }
@@ -556,7 +561,12 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 ,id: this.menu.record.id
             }
             ,listeners: {
-                'success':{fn:this.refresh,scope:this}
+                'success':{fn:function(r) {
+                    this.refresh();
+					if(MODx.config.mostra_sub_collections_tree == true){
+						Ext.getCmp('modx-layout').refreshTrees();
+					}
+                },scope:this}
             }
         });
     }
@@ -577,6 +587,9 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 'success': {fn:function(r) {
                     this.getSelectionModel().clearSelections(true);
                     this.refresh();
+                    if(MODx.config.mostra_sub_collections_tree == true){
+						Ext.getCmp('modx-layout').refreshTrees();
+					}
                 },scope:this}
             }
         });
@@ -597,6 +610,9 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 'success': {fn:function(r) {
                     this.getSelectionModel().clearSelections(true);
                     this.refresh();
+                    if(MODx.config.mostra_sub_collections_tree == true){
+						Ext.getCmp('modx-layout').refreshTrees();
+					}
                 },scope:this}
             }
         });
@@ -630,6 +646,9 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 'success': {fn:function(r) {
                     this.getSelectionModel().clearSelections(true);
                     this.refresh();
+                    if(MODx.config.mostra_sub_collections_tree == true){
+						Ext.getCmp('modx-layout').refreshTrees();
+					}
                 },scope:this}
             }
         });
@@ -650,6 +669,9 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 'success': {fn:function(r) {
                     this.getSelectionModel().clearSelections(true);
                     this.refresh();
+                    if(MODx.config.mostra_sub_collections_tree == true){
+						Ext.getCmp('modx-layout').refreshTrees();
+					}
                 },scope:this}
             }
         });
@@ -664,7 +686,12 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 ,id: this.menu.record.id
             }
             ,listeners: {
-                'success':{fn:this.refresh,scope:this}
+                'success':{fn:function(r) {
+                    this.refresh();
+					if(MODx.config.mostra_sub_collections_tree == true){
+						Ext.getCmp('modx-layout').refreshTrees();
+					}
+                },scope:this}
             }
         });
     }
@@ -677,7 +704,12 @@ Ext.extend(collections.grid.ContainerCollections,MODx.grid.Grid,{
                 ,id: this.menu.record.id
             }
             ,listeners: {
-                'success':{fn:this.refresh,scope:this}
+                'success':{fn:function(r) {
+                    this.refresh();
+					if(MODx.config.mostra_sub_collections_tree == true){
+						Ext.getCmp('modx-layout').refreshTrees();
+					}
+                },scope:this}
             }
         });
     }
