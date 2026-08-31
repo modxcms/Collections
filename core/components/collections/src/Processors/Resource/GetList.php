@@ -366,10 +366,13 @@ class GetList extends GetListProcessor
                 break;
         }
 
-        $c->where([
-            'class_key:!=' => CollectionContainer::class,
-//            "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
-        ]);
+        
+        if (!$this->modx->getOption('mostra_sub_collections', null, false)) {
+                $c->where([
+                    'class_key:!=' => CollectionContainer::class,
+        //            "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
+                ]);
+		}
 
         foreach ($this->tvColumns as $column) {
             $c->leftJoin(modTemplateVarResource::class, '`TemplateVarResources_' . $column['column'] . '`', '`TemplateVarResources_' . $column['column'] . '`.`contentid` = modResource.id AND `TemplateVarResources_' . $column['column'] . '`.`tmplvarid` = ' . $column['id']);
@@ -679,6 +682,13 @@ class GetList extends GetListProcessor
             }
 
             $iconCls[] = 'parent-resource';
+        }
+
+	if ($resourceArray['class_key'] == 'Collections\Model\SelectionContainer' ) {
+                $iconCls[] = 'selectioncontainer';
+        }
+        if ($resourceArray['class_key'] == 'Collections\Model\CollectionContainer' ) {
+                $iconCls[] = 'collectioncontainer';
         }
 
         $resourceArray['icons'] = implode(' ', $iconCls);
