@@ -7,7 +7,7 @@ use MODX\Revolution\Processors\Model\GetListProcessor;
 class GetContentTypes extends GetListProcessor
 {
     public $classKey = modContentType::class;
-    public $languageTopics = ['content_type'];
+    public $languageTopics = ['content_type','collections:default'];
 
     public function afterIteration(array $list)
     {
