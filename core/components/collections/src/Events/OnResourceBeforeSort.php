@@ -36,7 +36,12 @@ class OnResourceBeforeSort extends Event
 //            }
 
             if ($resource->class_key == CollectionContainer::class) {
-                $resource->set('show_in_tree', 1);
+                if ($this->modx->getOption('mostra_sub_collections_tree', null, true)==false && $parent && ($parent->class_key == CollectionContainer::class))
+				{
+					$resource->set('show_in_tree', 0);
+				}else{
+					$resource->set('show_in_tree', 1);
+				}
             }
 
             $resource->save();

@@ -31,6 +31,8 @@ $_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection
 $_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
 $_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
 $_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
+$_lang['setting_collections.mostra_sub_collections_tree'] = 'Show Nested Collection/Selection in Tree';
+$_lang['setting_collections.mostra_sub_collections_tree_desc'] = 'Decide if you want, or not, show nested Collection/Selection in resorce's tree';
 
 
 // System lexicons
