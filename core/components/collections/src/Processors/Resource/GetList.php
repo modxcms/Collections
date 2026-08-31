@@ -654,16 +654,18 @@ class GetList extends GetListProcessor
             $iconCls[] = $classKeyIcon;
         }
 
-        switch ($classKey) {
-            case 'weblink':
+        //MABOL, i change only this but error for class_key exist in before line
+		$classKeyNew = strtolower($resourceArray['class_key']);
+        switch ($classKeyNew) {
+            case 'modx\revolution\modweblink':
                 $iconCls[] = $this->iconMap['weblink'];
                 break;
 
-            case 'symlink':
+            case 'modx\revolution\modsymlink':
                 $iconCls[] = $this->iconMap['symlink'];
                 break;
 
-            case 'staticresource':
+            case 'modx\revolution\modstaticresource':
                 $iconCls[] = $this->iconMap['staticresource'];
                 break;
         }
