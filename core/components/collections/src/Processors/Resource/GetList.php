@@ -366,10 +366,23 @@ class GetList extends GetListProcessor
                 break;
         }
 
-        $c->where([
-            'class_key:!=' => CollectionContainer::class,
-//            "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
-        ]);
+        $showCollectionsInGrid = explode(',', $this->modx->getOption('collections.mgr_show_collections_in_grid'));
+        if (!empty($showCollectionsInGrid)) {
+            $c->where([
+                'parent' => $parent,
+                'AND:template:IN' => $showCollectionsInGrid,
+                'AND:class_key:=' => CollectionContainer::class,
+            ]);
+            $c->where([
+                'parent' => $parent,
+                'AND:class_key:!=' => CollectionContainer::class,
+            ], xPDOQuery::SQL_OR);
+        } else {
+            $c->where([
+                'class_key:!=' => CollectionContainer::class,
+                // "NOT EXISTS (SELECT 1 FROM {$this->modx->getTableName('modResource')} r WHERE r.parent = modResource.id)"
+            ]);
+        }
 
         foreach ($this->tvColumns as $column) {
             $c->leftJoin(modTemplateVarResource::class, '`TemplateVarResources_' . $column['column'] . '`', '`TemplateVarResources_' . $column['column'] . '`.`contentid` = modResource.id AND `TemplateVarResources_' . $column['column'] . '`.`tmplvarid` = ' . $column['id']);
