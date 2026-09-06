@@ -190,7 +190,10 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
                 ,id: this.menu.record.id
             }
             ,listeners: {
-                'success':{fn:this.refresh,scope:this}
+                'success':{fn:function(r) {
+                    this.refresh();
+					Ext.getCmp('modx-layout').refreshTrees();
+                },scope:this}
             }
         });
     }
@@ -205,7 +208,10 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
                 ,id: this.menu.record.id
             }
             ,listeners: {
-                'success':{fn:this.refresh,scope:this}
+                'success':{fn:function(r) {
+                    this.refresh();
+					Ext.getCmp('modx-layout').refreshTrees();
+                },scope:this}
             }
         });
     }
@@ -226,6 +232,7 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
                 'success': {fn:function(r) {
                     this.getSelectionModel().clearSelections(true);
                     this.refresh();
+                    Ext.getCmp('modx-layout').refreshTrees();
                 },scope:this}
             }
         });
