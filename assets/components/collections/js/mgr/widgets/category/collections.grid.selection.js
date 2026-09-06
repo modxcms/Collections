@@ -273,6 +273,7 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
 
 
     ,handleButtons: function(e){
+
         var t = e.getTarget();
         var elm;
         var action = null;
@@ -280,20 +281,23 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
             action = t.dataset.action;
         } else {
             elm = t.className.split(' ')[0];
-            if(elm == 'controlBtn') {
+            if(elm === 'controlBtn') {
                 action = t.className.split(' ')[1];
-
             }
         }
 
         if(action) {
             var record = this.getSelectionModel().getSelected();
             if (t.dataset.id) {
-                record = {id: t.dataset.id};
+                record = this.store.getById(t.dataset.id);
             }
 
             if (!record) {
                 return;
+            }
+
+            if (record.data) {
+                record = record.data;
             }
 
             this.menu.record = record;
@@ -326,7 +330,6 @@ Ext.extend(collections.grid.ContainerSelection,collections.grid.ContainerCollect
                     this.quickupdateChild();
                     break;
                 default:
-                    window.location = record.data.edit_action;
                     break;
             }
         }
