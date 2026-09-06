@@ -163,6 +163,9 @@ collections.renderer.boolean = function(value, metaData, record, rowIndex, colIn
     return '<div style="text-align:center;"><i class="icon ' + iconclass + '"></i></div>';
 };
 
+collections.renderer.html = function(value, metaData, record, rowIndex, colIndex, store) {
+    return value;
+};
 
 // Backwards compatibility
 Collections.renderer = {
