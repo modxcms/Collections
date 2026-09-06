@@ -73,6 +73,11 @@
             "namespace": "core"
         },
         {
+            "key": "mgr_show_collections_in_grid",
+            "area": "manager",
+            "value": ""
+        },
+        {
             "key": "renderer_image_path",
             "area": "manager",
             "value": ""

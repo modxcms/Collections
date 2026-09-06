@@ -31,6 +31,8 @@ $_lang['setting_collections.tree_tbar_collection'] = 'Tree Tool Bar - Collection
 $_lang['setting_collections.tree_tbar_collection_desc'] = 'Show "New Collection" button in Tree tool bar';
 $_lang['setting_collections.tree_tbar_selection'] = 'Tree Tool Bar - Selection';
 $_lang['setting_collections.tree_tbar_selection_desc'] = 'Show "New Selection" button in Tree tool bar';
+$_lang['setting_collections.mgr_show_collections_in_grid'] = 'Collection templates displayed in grid';
+$_lang['setting_collections.mgr_show_collections_in_grid_desc'] = 'You can specify Collection templates, separated by commas, that will be displayed inside Collection grid.';
 
 
 // System lexicons

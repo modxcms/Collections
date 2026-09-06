@@ -22,7 +22,11 @@ class OnBeforeDocFormSave extends Event
         }
 
         if ($resource->class_key == CollectionContainer::class) {
-            $resource->set('show_in_tree', 1);
+            if (in_array($resource->get('template'), explode(',', $this->modx->getOption('collections.mgr_show_collections_in_grid')))) {
+                $resource->set('show_in_tree', 0);
+            } else {
+                $resource->set('show_in_tree', 1);
+            }
         }
 
         /** @var modResource $original */
