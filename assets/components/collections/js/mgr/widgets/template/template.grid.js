@@ -50,7 +50,7 @@ collections.grid.Template = function(config) {
             ,width: 100
             ,editor: {xtype: 'textfield'}
         },{
-            header: 'Default for Templates'
+            header: _('collections.template.defaultfortemplates')
             ,dataIndex: 'default_for_templates'
             ,sortable: false
             ,width: 60
