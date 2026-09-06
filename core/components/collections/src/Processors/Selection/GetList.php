@@ -590,6 +590,7 @@ class GetList extends GetListProcessor
         $resourceArray = $this->prepareSupportFields($resourceArray);
         $resourceArray = $this->prepareActions($resourceArray);
         $resourceArray = $this->prepareMenuActions($resourceArray);
+        $resourceArray['icons'] = 'icon icon-chain';
 
         return $resourceArray;
     }
